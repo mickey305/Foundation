@@ -43,7 +43,7 @@ public class Composite<T> extends Component<T> {
         if (this.equals(targetComponent))
             return false;
 
-        // 全ノードを再帰的に検索
+        // 全子ノードを再帰的に検索（自分自身は上記で排除済みのため、検索されない）
         return contains(this, targetComponent);
     }
 
