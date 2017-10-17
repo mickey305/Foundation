@@ -1,4 +1,4 @@
-# Foundation(infrastructure component for Java)
+# Foundation(part of infrastructure component for Java)
 
 | | branch | travis ci | JitPack |
 |:---:|:---|:---|:---|
