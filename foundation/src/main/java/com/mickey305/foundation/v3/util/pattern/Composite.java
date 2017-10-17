@@ -33,7 +33,7 @@ public class Composite<T> extends Component<T> {
         // targetChildに任意の親ノードが存在する場合は、その親ノードからtargetChildを削除する
         Composite<T> targetParent = (Composite<T>) targetChild.getParent();
         if (targetParent != null) {
-            boolean status = targetParent.removeChild(targetChild);
+            boolean status = targetParent.remove(targetChild);
             assert status;
         }
 
@@ -45,21 +45,21 @@ public class Composite<T> extends Component<T> {
         return added;
     }
 
-    public boolean removeChild(Component<T> targetChild) {
+    public boolean remove(Component<T> targetChild) {
         boolean removed = this.getChildren().remove(targetChild);
         if (removed) targetChild.setParent(null);
         return removed;
     }
 
-    public boolean removeChildren(Collection<Component<T>> targetChildren) {
+    public boolean removeAll(Collection<Component<T>> targetChildren) {
         for (Component<T> targetChild: targetChildren) {
-            if (!this.removeChild(targetChild))
+            if (!this.remove(targetChild))
                 return false;
         }
         return true;
     }
 
-    public void clearChildren() {
+    public void clear() {
         for (Component<T> child: this.getChildren()) {
             child.setParent(null);
         }
