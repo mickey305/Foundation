@@ -1,4 +1,4 @@
-package com.mickey305.foundation.v3.util;
+package com.mickey305.foundation.v3.util.pattern;
 
 public abstract class Component<T> {
     private T object;

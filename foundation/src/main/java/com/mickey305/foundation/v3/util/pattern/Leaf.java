@@ -1,4 +1,4 @@
-package com.mickey305.foundation.v3.util;
+package com.mickey305.foundation.v3.util.pattern;
 
 public class Leaf<T> extends Component<T> {
 

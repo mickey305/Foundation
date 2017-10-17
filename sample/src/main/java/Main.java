@@ -1,6 +1,6 @@
-import com.mickey305.foundation.v3.util.Component;
-import com.mickey305.foundation.v3.util.Composite;
-import com.mickey305.foundation.v3.util.Leaf;
+import com.mickey305.foundation.v3.util.pattern.Component;
+import com.mickey305.foundation.v3.util.pattern.Composite;
+import com.mickey305.foundation.v3.util.pattern.Leaf;
 
 import java.util.HashSet;
 

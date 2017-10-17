@@ -1,4 +1,4 @@
-package com.mickey305.foundation.v3.util;
+package com.mickey305.foundation.v3.util.pattern;
 
 import com.mickey305.foundation.v3.compat.stream.Supplier;
 
@@ -29,12 +29,40 @@ public class Composite<T> extends Component<T> {
     //===----------------------------------------------------------------------------------------------------------===//
     // Methods                                                                                                        //
     //===----------------------------------------------------------------------------------------------------------===//
-    public boolean add(Component<T> component) {
-        component.setParent(this);
-        return this.getChildren().add(component);
+    public boolean add(Component<T> targetChild) {
+        // targetChildに任意の親ノードが存在する場合は、その親ノードからtargetChildを削除する
+        Composite<T> targetParent = (Composite<T>) targetChild.getParent();
+        if (targetParent != null) {
+            boolean status = targetParent.removeChild(targetChild);
+            assert status;
+        }
+
+        boolean added = this.getChildren().add(targetChild);
+        if (added) {
+            assert targetChild.getParent() == null;
+            targetChild.setParent(this);
+        }
+        return added;
     }
 
-    public void removeChildren() {
+    public boolean removeChild(Component<T> targetChild) {
+        boolean removed = this.getChildren().remove(targetChild);
+        if (removed) targetChild.setParent(null);
+        return removed;
+    }
+
+    public boolean removeChildren(Collection<Component<T>> targetChildren) {
+        for (Component<T> targetChild: targetChildren) {
+            if (!this.removeChild(targetChild))
+                return false;
+        }
+        return true;
+    }
+
+    public void clearChildren() {
+        for (Component<T> child: this.getChildren()) {
+            child.setParent(null);
+        }
         this.getChildren().clear();
     }
 
