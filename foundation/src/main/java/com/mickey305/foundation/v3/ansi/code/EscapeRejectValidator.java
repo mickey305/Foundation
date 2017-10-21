@@ -1,7 +1,6 @@
-package com.mickey305.foundation.v3.validation;
+package com.mickey305.foundation.v3.ansi.code;
 
 import com.mickey305.foundation.v3.validation.annotation.EscapeReject;
-import com.mickey305.foundation.v3.ansi.code.Escape;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

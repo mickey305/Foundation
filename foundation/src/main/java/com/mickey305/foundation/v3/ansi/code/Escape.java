@@ -67,7 +67,7 @@ public enum Escape {
         this.setCode(code);
     }
 
-    public String code() {
+    String code() {
         return this.getCode();
     }
 
