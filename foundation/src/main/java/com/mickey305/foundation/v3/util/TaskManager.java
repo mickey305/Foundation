@@ -1,17 +1,18 @@
 package com.mickey305.foundation.v3.util;
 
-import java.util.Stack;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 public class TaskManager<R, C extends Executable<R>> implements BufferingInterface<R> {
-    private Stack<C> commands;
-    private Stack<C> trashCommands;
+    private Deque<C> commands;
+    private Deque<C> trashCommands;
 
     //===----------------------------------------------------------------------------------------------------------===//
     // Constructor                                                                                                    //
     //===----------------------------------------------------------------------------------------------------------===//
     public TaskManager() {
-        this.setCommands(new Stack<C>());
-        this.setTrashCommands(new Stack<C>());
+        this.setCommands(new ArrayDeque<C>());
+        this.setTrashCommands(new ArrayDeque<C>());
     }
 
     //===----------------------------------------------------------------------------------------------------------===//
@@ -48,7 +49,7 @@ public class TaskManager<R, C extends Executable<R>> implements BufferingInterfa
 
     public R execute(C command) {
         if (!this.getTrashCommands().isEmpty())
-            this.setTrashCommands(new Stack<C>());
+            this.setTrashCommands(new ArrayDeque<C>());
         this.getCommands().push(command);
         return command.execute();
     }
@@ -56,19 +57,19 @@ public class TaskManager<R, C extends Executable<R>> implements BufferingInterfa
     //===----------------------------------------------------------------------------------------------------------===//
     // Accessor                                                                                                       //
     //===----------------------------------------------------------------------------------------------------------===//
-    protected Stack<C> getCommands() {
+    protected Deque<C> getCommands() {
         return commands;
     }
 
-    protected void setCommands(Stack<C> commands) {
+    protected void setCommands(Deque<C> commands) {
         this.commands = commands;
     }
 
-    protected Stack<C> getTrashCommands() {
+    protected Deque<C> getTrashCommands() {
         return trashCommands;
     }
 
-    protected void setTrashCommands(Stack<C> trashCommands) {
+    protected void setTrashCommands(Deque<C> trashCommands) {
         this.trashCommands = trashCommands;
     }
 }
