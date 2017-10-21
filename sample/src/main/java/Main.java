@@ -1,4 +1,5 @@
 import com.mickey305.foundation.v3.ansi.code.AnsiStringBuilder;
+import com.mickey305.foundation.v3.ansi.code.AnsiStringBuilder.Without;
 import com.mickey305.foundation.v3.ansi.code.Escape;
 import com.mickey305.foundation.v3.util.Log;
 import com.mickey305.foundation.v3.util.pattern.Component;
@@ -54,7 +55,31 @@ public class Main {
 //        System.out.println("T: " + cmp4.contains(lef5));
 //        System.out.println("F: " + cmp4.contains(lef7));
 //        Log.i("F: " + cmp6.contains(lef2));
-//
-//        new AnsiStringBuilder(Escape.Red.code());
+
+
+        long start2 = System.currentTimeMillis();
+        StringBuilder tmp2 = new StringBuilder();
+        for (int j=0; j<10000; j++) { tmp2.append("[").append(j).append("]"); }
+        long end2 = System.currentTimeMillis();
+        Log.i((end2 - start2) + "(ms)");
+
+
+        long start3 = System.currentTimeMillis();
+        AnsiStringBuilder tmp3 = new AnsiStringBuilder();
+        for (int k=0; k<10000; k++) { tmp3.append("[").append(k).append("]"); }
+        long end3 = System.currentTimeMillis();
+        Log.i((end3 - start3) + "(ms)");
+
+
+        long start1 = System.currentTimeMillis();
+        String tmp = "";
+        for (int i=0; i<10000; i++) { tmp += "["+i+"]"; }
+        long end1 = System.currentTimeMillis();
+        Log.i((end1 - start1) + "(ms)");
+
+
+//        Log.i(tmp);
+//        Log.i("");
+//        Log.i(tmp2.toString());
     }
 }
