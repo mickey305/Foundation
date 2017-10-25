@@ -3,12 +3,21 @@ package com.mickey305.foundation.v3.ansi.code;
 import com.mickey305.foundation.v3.validation.BeanValidationException;
 import com.mickey305.foundation.v3.validation.ValidationInvoker;
 import org.apache.commons.lang3.tuple.Pair;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.lang.reflect.Constructor;
 
 public class AnsiStringBuilderTest {
+    @Before
+    public void setUp() throws Exception {
+    }
+
+    @After
+    public void tearDown() throws Exception {
+    }
 
     /**
      * <p>CASE 1-1

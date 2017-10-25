@@ -1,17 +1,23 @@
 package com.mickey305.foundation.v3.ansi.code;
 
+import com.mickey305.foundation.v3.util.Log;
 import com.mickey305.foundation.v3.validation.annotation.EscapeReject;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public final class AnsiStringBuilder extends AbstractAnsiStringBuilder
         implements AnsiAppendable, CharSequence, Serializable {
     /** use serialVersionUID for interoperability */
-    static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -5604652767773735825L;
 
     private StringBuilder stringBuilder;
     private int codeLength;
+    private boolean reliableCodeLength;
 
     //===----------------------------------------------------------------------------------------------------------===//
     // Constructor                                                                                                    //
@@ -28,13 +34,14 @@ public final class AnsiStringBuilder extends AbstractAnsiStringBuilder
         this(new StringBuilder(str));
     }
 
-    public AnsiStringBuilder(CharSequence seq) {
+    public AnsiStringBuilder(@EscapeReject CharSequence seq) {
         this(new StringBuilder(seq));
     }
 
     public AnsiStringBuilder(@EscapeReject StringBuilder stringBuilder) {
         this.setStringBuilder(stringBuilder);
         this.setCodeLength(0);
+        this.setReliableCodeLength(false);
     }
 
     //===----------------------------------------------------------------------------------------------------------===//
@@ -42,40 +49,50 @@ public final class AnsiStringBuilder extends AbstractAnsiStringBuilder
     //===----------------------------------------------------------------------------------------------------------===//
     @Override
     public AnsiStringBuilder append(CharSequence csq) throws IOException {
-        // todo feature: validation-check impl
+        this.setReliableCodeLength(false);
         this.getStringBuilder().append(csq);
         return this;
     }
 
     @Override
     public AnsiStringBuilder append(CharSequence csq, int start, int end) throws IOException {
-        // todo feature: validation-check impl
+        this.setReliableCodeLength(false);
         this.getStringBuilder().append(csq, start, end);
         return this;
     }
 
     @Override
     public AnsiStringBuilder append(char c) throws IOException {
-        // todo feature: validation-check impl
+        this.setReliableCodeLength(false);
         this.getStringBuilder().append(c);
         return this;
     }
 
     @Override
     public AnsiStringBuilder append(Escape escape) {
+        this.setReliableCodeLength(false);
         this.getStringBuilder().append(escape.code());
-        this.addCodeLength(escape.code().length());
         return this;
     }
 
     public AnsiStringBuilder append(@EscapeReject String target) {
+        this.setReliableCodeLength(false);
         this.getStringBuilder().append(target);
         return this;
     }
 
     public AnsiStringBuilder append(@EscapeReject Object object) {
+        this.setReliableCodeLength(false);
         this.getStringBuilder().append(object);
         return this;
+    }
+
+    public AnsiStringBuilder clear() {
+        return this.delete();
+    }
+
+    public AnsiStringBuilder delete() {
+        return this.delete(0, this.getStringBuilder().length());
     }
 
     public AnsiStringBuilder delete(@EscapeReject String target) {
@@ -90,8 +107,6 @@ public final class AnsiStringBuilder extends AbstractAnsiStringBuilder
         int index = 0;
         do {
             index = this.deleteFirst(escape.code(), index);
-            if (index >= 0)
-                this.addCodeLength( - escape.code().length());
         } while (index >= 0);
         return this;
     }
@@ -102,6 +117,7 @@ public final class AnsiStringBuilder extends AbstractAnsiStringBuilder
             this.delete(escape.code());
         }
         this.setCodeLength(0);
+        this.setReliableCodeLength(true);
         return this;
     }
 
@@ -109,7 +125,7 @@ public final class AnsiStringBuilder extends AbstractAnsiStringBuilder
         return this.deleteFirst(target, 0);
     }
 
-    public int deleteFirst( String target, int fromIndex) {
+    public int deleteFirst(@EscapeReject String target, int fromIndex) {
         StringBuilder sb = this.getStringBuilder();
         final int index = sb.indexOf(target, fromIndex);
         if (index >= 0) {
@@ -120,23 +136,26 @@ public final class AnsiStringBuilder extends AbstractAnsiStringBuilder
     }
 
     public AnsiStringBuilder insert(int offset, @EscapeReject String str) {
+        this.setReliableCodeLength(false);
         this.getStringBuilder().insert(offset, str);
         return this;
     }
 
     public AnsiStringBuilder insert(int offset, Escape escape) {
+        this.setReliableCodeLength(false);
         this.insert(offset, escape.code());
-        this.addCodeLength(escape.code().length());
         return this;
     }
 
     public AnsiStringBuilder insert(int offset, @EscapeReject Object object) {
+        this.setReliableCodeLength(false);
         this.getStringBuilder().insert(offset, object);
         return this;
     }
 
     @Override
     public int length() {
+        this.updateCodeLength();
         int escapeLen = (this.getCodeLength() == 0)
                 ? 0
                 : Escape.Reset.code().length();
@@ -144,6 +163,7 @@ public final class AnsiStringBuilder extends AbstractAnsiStringBuilder
     }
 
     public int length(Without without) {
+        this.updateCodeLength();
         if (without == Without.EscapeCode) {
             return this.getStringBuilder().length() - this.getCodeLength();
         }
@@ -155,6 +175,10 @@ public final class AnsiStringBuilder extends AbstractAnsiStringBuilder
         return this.getStringBuilder().charAt(index);
     }
 
+    public void setLength(int newLength) {
+        this.getStringBuilder().setLength(newLength);
+    }
+
     @Override
     public CharSequence subSequence(int start, int end) {
         return this.getStringBuilder().subSequence(start, end);
@@ -162,6 +186,7 @@ public final class AnsiStringBuilder extends AbstractAnsiStringBuilder
 
     @Override
     public String toString() {
+        this.updateCodeLength();
         if (this.getCodeLength() != 0)
             this.append(Escape.Reset.code());
         StringBuilder sb = this.getStringBuilder();
@@ -182,7 +207,7 @@ public final class AnsiStringBuilder extends AbstractAnsiStringBuilder
     public String toString(Without without) {
         if (without == Without.EscapeCode) {
             String target = this.getStringBuilder().toString();
-            target = target.replaceAll("\u001b\\[[;\\d]*m", "");
+            target = target.replaceAll(ANSI_CODE_REGEX, "");
             return target;
         }
         return null;
@@ -192,9 +217,89 @@ public final class AnsiStringBuilder extends AbstractAnsiStringBuilder
         this.setCodeLength(this.getCodeLength() + offset);
     }
 
+    private String buildHexString(String data) {
+        return this.buildHexString(data, 4, null, null, " ");
+    }
+
+    private String buildHexString(String data, int shift,
+                                  String startSpacer, String endSpacer, String spacer) {
+        if (startSpacer == null) startSpacer = "";
+        if (endSpacer == null) endSpacer = "";
+        if (spacer == null) spacer = "";
+        StringBuilder hexValue = new StringBuilder();
+        String format = "%" + shift + "s";
+        char[] dataAry = data.toCharArray();
+        for (int i = 0; i < dataAry.length; i++) {
+            char ch = dataAry[i];
+            String hex = Integer.toHexString(ch);
+            hexValue.append(String.format(format, hex));
+            if (i != dataAry.length - 1)
+                hexValue.append("#");
+        }
+        return startSpacer + hexValue.toString()
+                .replace(" ", "0")
+                .replace("#", spacer) + endSpacer;
+    }
+
     private AnsiStringBuilder delete(int start, int end) {
+        this.setReliableCodeLength(false);
         this.getStringBuilder().delete(start, end);
         return this;
+    }
+
+    private void dump(int expectedLength, int actualLength,
+                      StringBuilder testData, Map<Integer, String> resultEscapeMap, Throwable th) {
+        // waring performance!
+        StringBuilder result = new StringBuilder();
+        result.append(System.lineSeparator());
+        result.append("//===--- DATA INFO ----------------------------------------------------------------------===//");
+        result.append(System.lineSeparator());
+        result.append("testDataLength             :").append(testData.length());
+        result.append(System.lineSeparator());
+        result.append("expectedEscapeDataLength   :").append(expectedLength);
+        result.append(System.lineSeparator());
+        result.append("actualEscapeDataLength     :").append(actualLength);
+        result.append(System.lineSeparator());
+        result.append("testDataHex                :").append(this.buildHexString(testData.toString()));
+        result.append(System.lineSeparator());
+        int number = 1;
+        for (Map.Entry<Integer, String> entry: resultEscapeMap.entrySet()) {
+            result.append(String.format("resultEscapeMapValueHex%03d ", number)).append(":");
+            for (int i = 0; i < entry.getKey(); i++) {
+                result.append("     ");
+            }
+            result.append(this.buildHexString(entry.getValue()));
+            result.append(System.lineSeparator());
+            number++;
+        }
+        result.append("//===--- CLASS INFO ---------------------------------------------------------------------===//");
+        result.append(System.lineSeparator());
+        result.append("testData                   :").append(ToStringBuilder.reflectionToString(testData));
+        result.append(System.lineSeparator());
+        result.append("resultEscapeMap            :").append(ToStringBuilder.reflectionToString(resultEscapeMap));
+        result.append(System.lineSeparator());
+        result.append("//===--- ESCAPE CODE INFO ---------------------------------------------------------------===//");
+        result.append(System.lineSeparator());
+        for (Escape escape: Escape.values()) {
+            result.append(this.buildHexString(escape.code())).append(" // ").append(escape.name());
+            result.append(System.lineSeparator());
+        }
+        Log.d(AnsiStringBuilder.class, "dump", result.toString());
+        Log.i(th.getMessage());
+        for (StackTraceElement e: th.getStackTrace())
+            Log.i(e.toString());
+    }
+
+    private void updateCodeLength() {
+        if (!this.isReliableCodeLength()) {
+            StringBuilder sb = this.getStringBuilder();
+            Pattern p = Pattern.compile(ANSI_CODE_REGEX);
+            Matcher m = p.matcher(sb);
+            this.setCodeLength(0);
+            while (m.find())
+                this.addCodeLength(m.group().length());
+            this.setReliableCodeLength(true);
+        }
     }
 
     //===----------------------------------------------------------------------------------------------------------===//
@@ -214,6 +319,14 @@ public final class AnsiStringBuilder extends AbstractAnsiStringBuilder
 
     private void setCodeLength(int codeLength) {
         this.codeLength = codeLength;
+    }
+
+    private boolean isReliableCodeLength() {
+        return reliableCodeLength;
+    }
+
+    private void setReliableCodeLength(boolean reliableCodeLength) {
+        this.reliableCodeLength = reliableCodeLength;
     }
 
     //===----------------------------------------------------------------------------------------------------------===//

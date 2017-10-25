@@ -11,7 +11,7 @@ public final class ValidatorProvider {
         this.build();
     }
 
-    public static Validator getInstance() {
+    public static Validator get() {
         return ValidatorHolder
                 .INSTANCE
                 .getValidator();

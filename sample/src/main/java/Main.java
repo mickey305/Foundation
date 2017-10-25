@@ -57,29 +57,51 @@ public class Main {
 //        Log.i("F: " + cmp6.contains(lef2));
 
 
-        long start2 = System.currentTimeMillis();
-        StringBuilder tmp2 = new StringBuilder();
-        for (int j=0; j<10000; j++) { tmp2.append("[").append(j).append("]"); }
-        long end2 = System.currentTimeMillis();
-        Log.i((end2 - start2) + "(ms)");
+        for (int a = 0; a < 10; a++) {
+            final int loop = 100000;
+
+            Log.i("// count " + a);
+
+            long start2 = System.currentTimeMillis();
+            StringBuilder tmp2 = new StringBuilder();
+            for (int j = 0; j < loop; j++) { tmp2.append("[").append(j).append("]"); }
+//            tmp2.toString();
+            long end2 = System.currentTimeMillis();
+            Log.i((end2 - start2) + "(ms)");
 
 
-        long start3 = System.currentTimeMillis();
-        AnsiStringBuilder tmp3 = new AnsiStringBuilder();
-        for (int k=0; k<10000; k++) { tmp3.append("[").append(k).append("]"); }
-        long end3 = System.currentTimeMillis();
-        Log.i((end3 - start3) + "(ms)");
+            long start3 = System.currentTimeMillis();
+            AnsiStringBuilder tmp3 = new AnsiStringBuilder();
+            for (int k = 0; k < loop; k++) { tmp3.append("[").append(k).append("]"); }
+//            tmp3.toString();
+            long end3 = System.currentTimeMillis();
+            Log.i((end3 - start3) + "(ms)");
 
 
-        long start1 = System.currentTimeMillis();
-        String tmp = "";
-        for (int i=0; i<10000; i++) { tmp += "["+i+"]"; }
-        long end1 = System.currentTimeMillis();
-        Log.i((end1 - start1) + "(ms)");
+            long start1 = System.currentTimeMillis();
+            String tmp = "";
+            for (int i = 0; i < loop; i++) { tmp += "[" + i + "]"; }
+//            tmp.toString();
+            long end1 = System.currentTimeMillis();
+            Log.i((end1 - start1) + "(ms)");
+        }
 
 
-//        Log.i(tmp);
-//        Log.i("");
-//        Log.i(tmp2.toString());
+//        AnsiStringBuilder sb = new AnsiStringBuilder();
+//        sb.append(Escape.Red);
+//        sb.append(Escape.Yellow);
+//        sb.append(Escape.Magenta);
+//        sb.append(Escape.Underline);
+//        sb.append(Escape.BkgYellow);
+//        sb.append("\u001b");
+//        sb.append("[33m");
+//        sb.append("japanese food");
+//        sb.append("寿司");
+//        sb.append(Escape.Magenta);
+//        sb.append(Escape.Underline);
+//        sb.append(Escape.BkgBlue);
+//        sb.delete(Escape.Magenta);
+//        Log.i(sb.toString().length()+"");
+//        Log.i(sb.toString(Without.EscapeCode).length()+"");
     }
 }

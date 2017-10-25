@@ -55,3 +55,6 @@ crashlytics-build.properties
 # Build directory
 /build
 */build
+
+# Custom ###############################################################################################################
+/sample/src/main/java/vendor/

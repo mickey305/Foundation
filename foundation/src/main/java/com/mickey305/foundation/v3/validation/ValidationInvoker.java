@@ -15,14 +15,14 @@ public class ValidationInvoker {
 
     public static <T>
     void validateConstructor(T object) {
-        Validator validator = ValidatorProvider.getInstance();
+        Validator validator = ValidatorProvider.get();
         Set<ConstraintViolation<T>> validatorSet = validator.validate(object);
         ValidationInvoker.check(validatorSet);
     }
 
     public static <T, C extends Constructor<T>>
     void validateConstructor(C bean, Object[] parameter) {
-        ExecutableValidator validator = ValidatorProvider.getInstance().forExecutables();
+        ExecutableValidator validator = ValidatorProvider.get().forExecutables();
         Set<ConstraintViolation<T>> validatorSet = validator.validateConstructorParameters(bean, parameter);
         ValidationInvoker.check(validatorSet);
     }
@@ -31,7 +31,7 @@ public class ValidationInvoker {
     public static <T>
     void validateMethod(
             T object, String methodName, Pair<Class<?>, Object>... arguments) throws NoSuchMethodException {
-        ExecutableValidator validator = ValidatorProvider.getInstance().forExecutables();
+        ExecutableValidator validator = ValidatorProvider.get().forExecutables();
         Class<?>[] types = new Class[arguments.length];
         Object[] parameter = new Object[arguments.length];
         for (int i = 0; i < arguments.length; i++) {
@@ -45,7 +45,7 @@ public class ValidationInvoker {
 
     public static <T>
     void validateMethod(T object, Method method, Object[] parameter) {
-        ExecutableValidator validator = ValidatorProvider.getInstance().forExecutables();
+        ExecutableValidator validator = ValidatorProvider.get().forExecutables();
         Set<ConstraintViolation<T>> validatorSet = validator.validateParameters(object, method, parameter);
         ValidationInvoker.check(validatorSet);
     }
