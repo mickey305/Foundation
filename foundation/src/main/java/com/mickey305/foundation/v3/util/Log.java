@@ -64,4 +64,28 @@ public class Log {
                 .append(msg);
         System.err.println(sb.toString());
     }
+
+    /**
+     * ログ情報を出力する（標準出力）
+     * 改行コードをなくした状態で、現在のカーソル行を上書きする
+     * @param line
+     */
+    public synchronized static void update(String line) {
+        line = line.replace("\n", "");
+        AnsiStringBuilder sb = new AnsiStringBuilder()
+                .append("\r")
+                .append(Escape.Green)
+                .append(createHeader())
+                .append("  U  ")
+                .append(Escape.Reset)
+                .append(line);
+        System.out.print(sb.toString());
+    }
+
+    /**
+     * 改行する
+     */
+    public synchronized static void ln() {
+        System.out.println();
+    }
 }

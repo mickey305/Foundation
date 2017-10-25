@@ -1,12 +1,5 @@
 import com.mickey305.foundation.v3.ansi.code.AnsiStringBuilder;
-import com.mickey305.foundation.v3.ansi.code.AnsiStringBuilder.Without;
-import com.mickey305.foundation.v3.ansi.code.Escape;
 import com.mickey305.foundation.v3.util.Log;
-import com.mickey305.foundation.v3.util.pattern.Component;
-import com.mickey305.foundation.v3.util.pattern.Composite;
-import com.mickey305.foundation.v3.util.pattern.Leaf;
-
-import java.util.HashSet;
 
 public class Main {
     public static void main(String[] args) {
@@ -103,5 +96,14 @@ public class Main {
 //        sb.delete(Escape.Magenta);
 //        Log.i(sb.toString().length()+"");
 //        Log.i(sb.toString(Without.EscapeCode).length()+"");
+
+        for (int i = 0; i < 1000; i++) {
+            Log.update("message is sample. ["+i+"]");
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
