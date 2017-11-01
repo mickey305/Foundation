@@ -12,16 +12,18 @@ public final class ValidatorProvider {
     }
 
     public static Validator get() {
-        return ValidatorHolder
-                .INSTANCE
-                .getValidator();
+        return ValidatorHolder.INSTANCE.getValidator();
+    }
+
+    public static void rebuild() {
+        ValidatorHolder.INSTANCE.build();
     }
 
     private static class ValidatorHolder {
         private static final ValidatorProvider INSTANCE = new ValidatorProvider();
     }
 
-    public void build() {
+    private void build() {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
         this.setValidator(validator);
