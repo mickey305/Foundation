@@ -3,7 +3,7 @@ package com.mickey305.foundation.v3.util;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-public class TaskManager<R, C extends Executable<R>> implements BufferingInterface<R> {
+public class TaskManager<R, C extends Executable<R> & Cancelable<R>> implements BufferingInterface<R> {
     private Deque<C> commands;
     private Deque<C> trashCommands;
 
@@ -23,7 +23,7 @@ public class TaskManager<R, C extends Executable<R>> implements BufferingInterfa
         if (!this.getCommands().isEmpty()) {
             C command = this.getCommands().pop();
             this.getTrashCommands().push(command);
-            return command.execute();
+            return command.cancel();
         }
         return null;
     }
@@ -33,15 +33,6 @@ public class TaskManager<R, C extends Executable<R>> implements BufferingInterfa
         if (!this.getTrashCommands().isEmpty()) {
             C command = this.getTrashCommands().pop();
             this.getCommands().push(command);
-            return command.execute();
-        }
-        return null;
-    }
-
-    @Override
-    public R execute() {
-        if (!this.getCommands().isEmpty()) {
-            C command = this.getCommands().peek();
             return command.execute();
         }
         return null;
