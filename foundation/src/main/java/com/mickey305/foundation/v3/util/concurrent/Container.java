@@ -3,13 +3,14 @@ package com.mickey305.foundation.v3.util.concurrent;
 import com.mickey305.foundation.v3.util.Executable;
 import org.apache.commons.lang3.tuple.Pair;
 
+import javax.security.auth.Destroyable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Container implements Runnable, Killable {
+public class Container implements Runnable, Killable, Destroyable {
     private volatile boolean doneSignal;
     private volatile boolean finish;
     private Collection<Executable> commands;
@@ -41,6 +42,11 @@ public class Container implements Runnable, Killable {
         return !this.isFinish();
     }
 
+    @Override
+    public boolean isDestroyed() {
+        return this.isFinish() && this.isDoneSignal();
+    }
+
     public void reactivation() {
         this.activation(this.getCommands());
     }
@@ -64,6 +70,11 @@ public class Container implements Runnable, Killable {
             listener.onFinish(this.getCommands(), this.getResultManager());
         // ---> Signal update
         this.setFinish(true);
+    }
+
+    @Override
+    public void destroy() {
+        this.shutdown();
     }
 
     @Override
