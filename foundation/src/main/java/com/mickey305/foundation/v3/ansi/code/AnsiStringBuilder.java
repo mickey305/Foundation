@@ -92,6 +92,8 @@ public final class AnsiStringBuilder extends AbstractAnsiStringBuilder
     }
 
     public AnsiStringBuilder delete() {
+        this.setCodeLength(0);
+        this.setReliableCodeLength(true);
         return this.delete(0, this.getStringBuilder().length());
     }
 
@@ -182,6 +184,10 @@ public final class AnsiStringBuilder extends AbstractAnsiStringBuilder
     @Override
     public CharSequence subSequence(int start, int end) {
         return this.getStringBuilder().subSequence(start, end);
+    }
+
+    public void trimToSize() {
+        this.getStringBuilder().trimToSize();
     }
 
     @Override
