@@ -1,5 +1,6 @@
-package com.mickey305.foundation.v3.util;
+package com.mickey305.foundation.v3.util.concurrent;
 
+import com.mickey305.foundation.v3.util.Executable;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Collection;
