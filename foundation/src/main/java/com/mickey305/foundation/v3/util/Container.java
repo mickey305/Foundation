@@ -37,7 +37,7 @@ public class Container implements Runnable, Killable {
 
     @Override
     public boolean isAlive() {
-        return !this.isDoneSignal() && !this.isFinish();
+        return !this.isFinish();
     }
 
     public void reactivation() {
@@ -51,7 +51,9 @@ public class Container implements Runnable, Killable {
         Iterator<Executable> commandItr = this.getCommands().iterator();
         while (!this.isDoneSignal() && commandItr.hasNext()) {
             Executable command = commandItr.next();
-            this.getResultPool().add(Pair.of(command, command.execute()));
+            // invoke command
+            final Object result = command.execute();
+            this.getResultPool().add(Pair.of(command, result));
             commandItr.remove();
         }
         // ---> Finish event task
@@ -69,6 +71,18 @@ public class Container implements Runnable, Killable {
         while (!this.isFinish()) {
             // nop
         }
+    }
+
+    public Collection<Executable> timeOverCommands() {
+        if (!this.isFinish())
+            return new LinkedList<>();
+        return this.getCommands();
+    }
+
+    public ResultManager resultManager() {
+        if (!this.isFinish())
+            return new ResultManager(new LinkedList<Pair<Executable, Object>>());
+        return this.getResultManager();
     }
 
     //===----------------------------------------------------------------------------------------------------------===//
@@ -115,7 +129,7 @@ public class Container implements Runnable, Killable {
         this.onFinishEventListener = onFinishEventListener;
     }
 
-    public ResultManager getResultManager() {
+    private ResultManager getResultManager() {
         return resultManager;
     }
 

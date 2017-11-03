@@ -12,7 +12,7 @@ import java.util.Collection;
 import java.util.List;
 
 public class ContainerTest {
-    private static final int CMD_CNT = 1000;
+    private static final int CMD_CNT = 100;
     private List<Executable<?>> commands;
 
     @Before
@@ -47,7 +47,7 @@ public class ContainerTest {
         th.start();
         Thread.sleep((long) (2.5 * 1000));
         container.shutdown();
-        final int execCnt = container.getResultManager().getResultPool().size();
+        final int execCnt = container.resultManager().getResultPool().size();
         th.join();
         Log.i("main: tread1 end");
         th = new Thread(container);
@@ -61,14 +61,14 @@ public class ContainerTest {
                 }
                 Assert.assertEquals(CMD_CNT - execCnt,
                         timeOverCommands.size() + resultManager.getResultPool().size());
-                Assert.assertEquals(0, resultManager.findResultBy(commands.get(execCnt)));
-                Assert.assertEquals(1, resultManager.findResultBy(commands.get(execCnt + 1)));
-                Assert.assertEquals(0, resultManager.findResultBy(commands.get(execCnt + 2)));
+                Assert.assertEquals(execCnt % 2, resultManager.findResultBy(commands.get(execCnt)));
+                Assert.assertEquals((execCnt + 1) % 2, resultManager.findResultBy(commands.get(execCnt + 1)));
+                Assert.assertEquals((execCnt + 2) % 2, resultManager.findResultBy(commands.get(execCnt + 2)));
             }
         });
         Log.i("main: tread2 start");
         th.start();
-        Thread.sleep((long) (5.2 * 1000));
+        Thread.sleep((long) (3.7 * 1000));
         container.shutdown();
         th.join();
         Log.i("main: tread2 end");
@@ -76,15 +76,17 @@ public class ContainerTest {
 
     private class TestCommand implements Executable<Integer> {
         private int id;
+        private long millis;
 
         public TestCommand(int id) {
             this.setId(id);
+            this.setMillis((long) (Math.random() * 400) + 100);
         }
 
         @Override
         public Integer execute() {
             try {
-                Thread.sleep(220);
+                Thread.sleep(this.getMillis());
                 Log.i("command invoked! id=[" + this.getId() + "]");
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -100,6 +102,14 @@ public class ContainerTest {
 
         public void setId(int id) {
             this.id = id;
+        }
+
+        public long getMillis() {
+            return millis;
+        }
+
+        public void setMillis(long millis) {
+            this.millis = millis;
         }
 
         @Override public int hashCode() {
