@@ -1,18 +1,25 @@
 package com.mickey305.foundation.v3.util;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.tuple.Pair;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 public class ContainerTest {
+    private static final int CMD_CNT = 1000;
+    private List<Executable<?>> commands;
+
     @Before
     public void setUp() throws Exception {
+        commands = new ArrayList<>();
+        for (int i = 0; i < CMD_CNT; i++)
+            commands.add(new TestCommand(i));
     }
 
     @After
@@ -21,27 +28,50 @@ public class ContainerTest {
 
     @Test
     public void testCase_01_01() throws Exception {
-        final int cmdCnt = 100;
-        List<Executable<Integer>> commands = new ArrayList<>();
-        for (int i = 0; i < cmdCnt; i++)
-            commands.add(new TestCommand(i));
-//        for (Executable<Integer> command: commands)
-//            Log.i("code="+command.hashCode());
-        Container<Integer> container = new Container<>(commands);
+        Container container = new Container(commands);
+        container.setOnFinishEventListener(new Container.OnFinishEventListener() {
+            @Override
+            public void onFinish(Collection<Executable> timeOverCommands, Container.ResultManager resultManager) {
+                Log.i("main: result1...");
+                for (Pair<Executable, Object> entry: resultManager.getResultPool()) {
+                    Log.i("key="+entry.getKey()+", value="+entry.getValue());
+                }
+                Assert.assertEquals(CMD_CNT, timeOverCommands.size() + resultManager.getResultPool().size());
+                Assert.assertEquals(0, resultManager.findResultBy(commands.get(0)));
+                Assert.assertEquals(1, resultManager.findResultBy(commands.get(1)));
+                Assert.assertEquals(0, resultManager.findResultBy(commands.get(2)));
+            }
+        });
         Thread th = new Thread(container);
-        Log.i("main: tread start");
+        Log.i("main: tread1 start");
         th.start();
-        Thread.sleep(10 * 1000);
+        Thread.sleep((long) (2.5 * 1000));
         container.shutdown();
-        Log.i("main: tread end");
-        Log.i("main: result...");
-        for (Map.Entry<Integer, Integer> entry: container.getResultPool().entrySet()) {
-            Log.i("key="+entry.getKey()+", value="+entry.getValue());
-        }
-        Assert.assertEquals(cmdCnt, container.getCommands().size() + container.getExecutedCommands().size());
-        Assert.assertEquals(new Integer(0), container.getResultPool().get(629));
-        Assert.assertEquals(new Integer(0), container.getResultPool().get(630));
-        Assert.assertEquals(new Integer(0), container.getResultPool().get(631));
+        final int execCnt = container.getResultManager().getResultPool().size();
+        th.join();
+        Log.i("main: tread1 end");
+        th = new Thread(container);
+        container.reactivation();
+        container.setOnFinishEventListener(new Container.OnFinishEventListener() {
+            @Override
+            public void onFinish(Collection<Executable> timeOverCommands, Container.ResultManager resultManager) {
+                Log.i("main: result2...");
+                for (Pair<Executable, Object> entry: resultManager.getResultPool()) {
+                    Log.i("key="+entry.getKey()+", value="+entry.getValue());
+                }
+                Assert.assertEquals(CMD_CNT - execCnt,
+                        timeOverCommands.size() + resultManager.getResultPool().size());
+                Assert.assertEquals(0, resultManager.findResultBy(commands.get(execCnt)));
+                Assert.assertEquals(1, resultManager.findResultBy(commands.get(execCnt + 1)));
+                Assert.assertEquals(0, resultManager.findResultBy(commands.get(execCnt + 2)));
+            }
+        });
+        Log.i("main: tread2 start");
+        th.start();
+        Thread.sleep((long) (5.2 * 1000));
+        container.shutdown();
+        th.join();
+        Log.i("main: tread2 end");
     }
 
     private class TestCommand implements Executable<Integer> {
@@ -54,11 +84,13 @@ public class ContainerTest {
         @Override
         public Integer execute() {
             try {
-                Thread.sleep(3000);
-                Log.i("command invoked! id=[" + (this.getId()+1) + "]");
+                Thread.sleep(220);
+                Log.i("command invoked! id=[" + this.getId() + "]");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            if (id % 2 == 1)
+                return 1;
             return 0;
         }
 

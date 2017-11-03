@@ -1,95 +1,169 @@
 package com.mickey305.foundation.v3.util;
 
-import java.util.ArrayDeque;
+import org.apache.commons.lang3.tuple.Pair;
+
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Iterator;
-import java.util.Map;
+import java.util.LinkedList;
+import java.util.List;
 
-public class Container<R> implements Runnable, Killable {
-    private volatile boolean done;
-    private Collection<Executable<R>> commands;
-    private Collection<Executable<R>> executedCommands;
-    private Map<Integer, R> resultPool;
-    private HashCodeCreator<R> hashCodeCreator;
+public class Container implements Runnable, Killable {
+    private volatile boolean doneSignal;
+    private volatile boolean finish;
+    private Collection<Executable> commands;
+    private Collection<Pair<Executable, Object>> resultPool;
+    private OnFinishEventListener onFinishEventListener;
+    private ResultManager resultManager;
 
-    public Container(Collection<Executable<R>> commands) {
-        this.setDone(false);
-        this.setCommands(commands);
-        this.setExecutedCommands(new ArrayDeque<Executable<R>>(commands.size()));
-        this.setResultPool(new HashMap<Integer, R>());
-        this.setHashCodeCreator(null);
+    //===----------------------------------------------------------------------------------------------------------===//
+    // Constructor                                                                                                    //
+    //===----------------------------------------------------------------------------------------------------------===//
+    public Container(Collection<? extends Executable> commands) {
+        this.activation(commands);
     }
 
-    @Override
-    public void shutdown() {
-        this.setDone(true);
+    //===----------------------------------------------------------------------------------------------------------===//
+    // Methods                                                                                                        //
+    //===----------------------------------------------------------------------------------------------------------===//
+    public void activation(Collection<? extends Executable> commands) {
+        this.setDoneSignal(false);
+        this.setFinish(false);
+        this.setCommands(Collections.synchronizedCollection(new LinkedList<>(commands)));
+        this.setResultPool(Collections.synchronizedCollection(new LinkedList<Pair<Executable, Object>>()));
+        this.setOnFinishEventListener(null);
+        this.setResultManager(null);
     }
 
     @Override
     public boolean isAlive() {
-        return !this.isDone();
+        return !this.isDoneSignal() && !this.isFinish();
+    }
+
+    public void reactivation() {
+        this.activation(this.getCommands());
     }
 
     @Override
     public synchronized void run() {
-        Iterator<Executable<R>> commandItr = this.getCommands().iterator();
-        while (this.isAlive() && commandItr.hasNext()) {
-            Executable<R> command = commandItr.next();
-            this.getResultPool().put(this.createHashCode(command), command.execute());
-            boolean added = this.getExecutedCommands().add(command);
-            assert added;
+        if (this.isFinish()) return;
+        // ---> Main task
+        Iterator<Executable> commandItr = this.getCommands().iterator();
+        while (!this.isDoneSignal() && commandItr.hasNext()) {
+            Executable command = commandItr.next();
+            this.getResultPool().add(Pair.of(command, command.execute()));
             commandItr.remove();
+        }
+        // ---> Finish event task
+        OnFinishEventListener listener = this.getOnFinishEventListener();
+        this.setResultManager(new ResultManager(this.getResultPool()));
+        if (listener != null && !this.getResultPool().isEmpty())
+            listener.onFinish(this.getCommands(), this.getResultManager());
+        // ---> Signal update
+        this.setFinish(true);
+    }
+
+    @Override
+    public void shutdown() {
+        this.setDoneSignal(true);
+        while (!this.isFinish()) {
+            // nop
         }
     }
 
-    private int createHashCode(Executable<R> command) {
-        return (this.getHashCodeCreator() == null)
-                ? command.hashCode()
-                : this.getHashCodeCreator().create(command);
+    //===----------------------------------------------------------------------------------------------------------===//
+    // Accessor                                                                                                       //
+    //===----------------------------------------------------------------------------------------------------------===//
+    private boolean isDoneSignal() {
+        return doneSignal;
     }
 
-    private boolean isDone() {
-        return done;
+    private void setDoneSignal(boolean doneSignal) {
+        this.doneSignal = doneSignal;
     }
 
-    private void setDone(boolean done) {
-        this.done = done;
+    private boolean isFinish() {
+        return finish;
     }
 
-    public Collection<Executable<R>> getCommands() {
+    private void setFinish(boolean finish) {
+        this.finish = finish;
+    }
+
+    private Collection<Executable> getCommands() {
         return commands;
     }
 
-    private void setCommands(Collection<Executable<R>> commands) {
+    private void setCommands(Collection<Executable> commands) {
         this.commands = commands;
     }
 
-    public Collection<Executable<R>> getExecutedCommands() {
-        return executedCommands;
-    }
+    private Collection<Pair<Executable, Object>> getResultPool() {
 
-    private void setExecutedCommands(Collection<Executable<R>> executedCommands) {
-        this.executedCommands = executedCommands;
-    }
-
-    public Map<Integer, R> getResultPool() {
         return resultPool;
     }
 
-    private void setResultPool(Map<Integer, R> resultPool) {
+    private void setResultPool(Collection<Pair<Executable, Object>> resultPool) {
         this.resultPool = resultPool;
     }
 
-    private HashCodeCreator<R> getHashCodeCreator() {
-        return hashCodeCreator;
+    private OnFinishEventListener getOnFinishEventListener() {
+        return onFinishEventListener;
     }
 
-    public void setHashCodeCreator(HashCodeCreator<R> hashCodeCreator) {
-        this.hashCodeCreator = hashCodeCreator;
+    public void setOnFinishEventListener(OnFinishEventListener onFinishEventListener) {
+        this.onFinishEventListener = onFinishEventListener;
     }
 
-    public interface HashCodeCreator<R> {
-        int create(Executable<R> command);
+    public ResultManager getResultManager() {
+        return resultManager;
+    }
+
+    private void setResultManager(ResultManager resultManager) {
+        this.resultManager = resultManager;
+    }
+
+    //===----------------------------------------------------------------------------------------------------------===//
+    // Innerclass                                                                                                     //
+    //===----------------------------------------------------------------------------------------------------------===//
+    public interface OnFinishEventListener {
+        void onFinish(Collection<Executable> timeOverCommands, ResultManager resultManager);
+    }
+
+    public class ResultManager {
+        private Collection<Pair<Executable, Object>> resultPool;
+
+        ResultManager(Collection<Pair<Executable, Object>> resultPool) {
+            this.setResultPool(resultPool);
+        }
+
+        public Object findResultBy(Executable key) {
+            return this.getResultFirstValue(key);
+        }
+
+        public List getResultValues(Executable key) {
+            Collection<Pair<Executable, Object>> resultPool = this.getResultPool();
+            List<Object> results = new LinkedList<>();
+            for (Pair<Executable, Object> result: resultPool) {
+                if (result.getKey().equals(key))
+                    results.add(result.getValue());
+            }
+            return results;
+        }
+
+        public Object getResultFirstValue(Executable key) {
+            List results = this.getResultValues(key);
+            if (results.isEmpty())
+                return null;
+            return results.get(0);
+        }
+
+        public Collection<Pair<Executable, Object>> getResultPool() {
+            return resultPool;
+        }
+
+        private void setResultPool(Collection<Pair<Executable, Object>> resultPool) {
+            this.resultPool = resultPool;
+        }
     }
 }
