@@ -91,6 +91,10 @@ public class Container implements Runnable, Killable, Destroyable {
         return this.getCommands();
     }
 
+    public List<Executable> timeOverCommandsToList() {
+        return (List<Executable>) this.timeOverCommands();
+    }
+
     public ResultManager resultManager() {
         if (!this.isFinish())
             return new ResultManager(new LinkedList<Pair<Executable, Object>>());
@@ -163,7 +167,7 @@ public class Container implements Runnable, Killable, Destroyable {
             this.setResultPool(resultPool);
         }
 
-        public Object findResultBy(Executable key) {
+        public Object findBy(Executable key) {
             return this.getResultFirstValue(key);
         }
 
@@ -182,6 +186,31 @@ public class Container implements Runnable, Killable, Destroyable {
             if (results.isEmpty())
                 return null;
             return results.get(0);
+        }
+
+        public Object getResultFirstValue() {
+            List<Pair<Executable, Object>> resultPool = this.getResultPoolToList();
+            if (resultPool.isEmpty())
+                return null;
+            return resultPool.get(0);
+        }
+
+        public Object getResultLastValue(Executable key) {
+            List results = this.getResultValues(key);
+            if (results.isEmpty())
+                return null;
+            return results.get(results.size() - 1);
+        }
+
+        public Object getResultLastValue() {
+            List<Pair<Executable, Object>> resultPool = this.getResultPoolToList();
+            if (resultPool.isEmpty())
+                return null;
+            return resultPool.get(resultPool.size() - 1);
+        }
+
+        public List<Pair<Executable, Object>> getResultPoolToList() {
+            return (List<Pair<Executable, Object>>) this.getResultPool();
         }
 
         public Collection<Pair<Executable, Object>> getResultPool() {

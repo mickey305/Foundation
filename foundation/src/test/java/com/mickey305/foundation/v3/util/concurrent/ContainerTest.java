@@ -39,9 +39,9 @@ public class ContainerTest {
                     Log.i("key="+entry.getKey()+", value="+entry.getValue());
                 }
                 Assert.assertEquals(CMD_CNT, timeOverCommands.size() + resultManager.getResultPool().size());
-                Assert.assertEquals(0, resultManager.findResultBy(commands.get(0)));
-                Assert.assertEquals(1, resultManager.findResultBy(commands.get(1)));
-                Assert.assertEquals(0, resultManager.findResultBy(commands.get(2)));
+                Assert.assertEquals(0, resultManager.findBy(commands.get(0)));
+                Assert.assertEquals(1, resultManager.findBy(commands.get(1)));
+                Assert.assertEquals(0, resultManager.findBy(commands.get(2)));
             }
         });
         Thread th = new Thread(container);
@@ -63,9 +63,9 @@ public class ContainerTest {
                 }
                 Assert.assertEquals(CMD_CNT - execCnt,
                         timeOverCommands.size() + resultManager.getResultPool().size());
-                Assert.assertEquals(execCnt % 2, resultManager.findResultBy(commands.get(execCnt)));
-                Assert.assertEquals((execCnt + 1) % 2, resultManager.findResultBy(commands.get(execCnt + 1)));
-                Assert.assertEquals((execCnt + 2) % 2, resultManager.findResultBy(commands.get(execCnt + 2)));
+                Assert.assertEquals(execCnt % 2, resultManager.findBy(commands.get(execCnt)));
+                Assert.assertEquals((execCnt + 1) % 2, resultManager.findBy(commands.get(execCnt + 1)));
+                Assert.assertEquals((execCnt + 2) % 2, resultManager.findBy(commands.get(execCnt + 2)));
             }
         });
         Log.i("main: tread2 start");
