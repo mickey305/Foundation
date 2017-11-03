@@ -54,6 +54,12 @@ public class ContainerTest {
         Log.i("main: tread1 end");
         th = new Thread(container);
         container.reactivation();
+        container.setOnStepFinishEventListener(new Container.OnStepFinishEventListener() {
+            @Override
+            public boolean nextStepExecutionJudge(Container.ResultManager results) {
+                return results.last().equals(1);
+            }
+        });
         container.setOnFinishEventListener(new Container.OnFinishEventListener() {
             @Override
             public void onFinish(Collection<Executable> timeOverCommands, Container.ResultManager resultManager) {
@@ -64,8 +70,6 @@ public class ContainerTest {
                 Assert.assertEquals(CMD_CNT - execCnt,
                         timeOverCommands.size() + resultManager.getResultPool().size());
                 Assert.assertEquals(execCnt % 2, resultManager.findBy(commands.get(execCnt)));
-                Assert.assertEquals((execCnt + 1) % 2, resultManager.findBy(commands.get(execCnt + 1)));
-                Assert.assertEquals((execCnt + 2) % 2, resultManager.findBy(commands.get(execCnt + 2)));
             }
         });
         Log.i("main: tread2 start");
