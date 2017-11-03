@@ -54,6 +54,13 @@ public class Container implements Runnable, Killable, Destroyable {
         this.activation(this.getCommands());
     }
 
+    /**
+     * 並列実行処理
+     * <p>コレクションに格納されているコマンド群を順次実行する。呼び出し元などの他のスレッドから終了信号が通知された場合、
+     * 通知時点で実行中のコマンドを最後として、並列処理を中断（強制終了）する。また、各実行コマンド終了時に発生する判定イベント
+     * （デフォルトでは未実施）にて不合格（false）となった場合も、同様に並列処理を中断（強制終了）する。なお、当並列処理は
+     * 正常終了・中断（強制終了）に関わらず、終了イベント（デフォルトでは未実施）を実行する。</p>
+     */
     @Override
     public synchronized void run() {
         if (this.isFinish()) return;
@@ -65,9 +72,10 @@ public class Container implements Runnable, Killable, Destroyable {
         while (judge && !this.isDoneSignal() && commandItr.hasNext()) {
             Executable command = commandItr.next();
             // invoke command
-            final Object result = command.execute();
+            final Object result = command.execute(); // Executable<R>#execute():R method calling
             this.getResultPool().add(Pair.of(command, result));
             commandItr.remove();
+            // Step finish event task
             if (stpFinListener != null) {
                 resultManager.setResultPool(this.getResultPool());
                 judge = stpFinListener.nextStepExecutionJudge(resultManager);
