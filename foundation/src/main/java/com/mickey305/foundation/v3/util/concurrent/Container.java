@@ -104,7 +104,7 @@ public class Container implements Runnable, Killable, Destroyable {
     //===----------------------------------------------------------------------------------------------------------===//
     // Accessor                                                                                                       //
     //===----------------------------------------------------------------------------------------------------------===//
-    private boolean isDoneSignal() {
+    protected boolean isDoneSignal() {
         return doneSignal;
     }
 
@@ -112,7 +112,7 @@ public class Container implements Runnable, Killable, Destroyable {
         this.doneSignal = doneSignal;
     }
 
-    private boolean isFinish() {
+    protected boolean isFinish() {
         return finish;
     }
 
@@ -120,7 +120,7 @@ public class Container implements Runnable, Killable, Destroyable {
         this.finish = finish;
     }
 
-    private Collection<Executable> getCommands() {
+    protected Collection<Executable> getCommands() {
         return commands;
     }
 
@@ -128,7 +128,7 @@ public class Container implements Runnable, Killable, Destroyable {
         this.commands = commands;
     }
 
-    private Collection<Pair<Executable, Object>> getResultPool() {
+    protected Collection<Pair<Executable, Object>> getResultPool() {
 
         return resultPool;
     }
@@ -137,7 +137,7 @@ public class Container implements Runnable, Killable, Destroyable {
         this.resultPool = resultPool;
     }
 
-    private OnFinishEventListener getOnFinishEventListener() {
+    protected OnFinishEventListener getOnFinishEventListener() {
         return onFinishEventListener;
     }
 
@@ -145,7 +145,7 @@ public class Container implements Runnable, Killable, Destroyable {
         this.onFinishEventListener = onFinishEventListener;
     }
 
-    private ResultManager getResultManager() {
+    protected ResultManager getResultManager() {
         return resultManager;
     }
 
