@@ -1,0 +1,122 @@
+package com.mickey305.foundation.v3.lang.builder;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.Map;
+
+public class DownCastBuilder {
+
+    /**
+     * インスタンスの生成を試行する
+     * @param targetClass 生成するインスタンスのクラス
+     * @param <T> 生成インスタンスの総称型
+     * @return 生成されたインスタンス。失敗した場合は、nullを返却する
+     */
+    @SuppressWarnings("unchecked")
+    private static <T> T createInstanceChallenge(Class<T> targetClass) {
+        T targetInstance = null;
+        Constructor<?>[] constructors = targetClass.getDeclaredConstructors();
+        for (Constructor<?> constructor : constructors) {
+            constructor.setAccessible(true);
+            try {
+                Class<?>[] parameterTypes = constructor.getParameterTypes();
+                if (parameterTypes == null || parameterTypes.length == 0) {
+                    targetInstance = (T) constructor.newInstance();
+                } else {
+                    Object[] parameters = new Object[parameterTypes.length];
+                    for (int i = 0; i < parameterTypes.length; i++) {
+                        Class<?> type = parameterTypes[i];
+                        if (type.equals(byte.class)) {
+                            parameters[i] = (byte) 0;
+                        } else if (type.equals(short.class)) {
+                            parameters[i] = (short) 0;
+                        } else if (type.equals(int.class)) {
+                            parameters[i] = 0;
+                        } else if (type.equals(long.class)) {
+                            parameters[i] = 0L;
+                        } else if (type.equals(float.class)) {
+                            parameters[i] = 0.0f;
+                        } else if (type.equals(double.class)) {
+                            parameters[i] = 0.0f;
+                        } else if (type.equals(char.class)) {
+                            parameters[i] = '\u0000';
+                        } else if (type.equals(boolean.class)) {
+                            parameters[i] = false;
+                        } else {
+                            parameters[i] = null;
+                        }
+                    }
+                    targetInstance = (T) constructor.newInstance(parameters);
+                }
+            } catch (InstantiationException | IllegalAccessException | InvocationTargetException ignored) {}
+            if (targetInstance != null) break;
+        }
+        return targetInstance;
+    }
+
+    /**
+     * ダウンキャスト実装用のリフレクションメソッド
+     * @param destClass キャスト先のクラス
+     * @param srcInstance キャスト元（キャスト対象）のインスタンス
+     * @param <S> 移動元の総称型
+     * @param <D> 移動先の総称型
+     * @return キャスト先（ダウンキャスト後）のインスタンス
+     */
+    @SuppressWarnings("unchecked")
+    public static <S, D> D reflectionDownCast(Class<D> destClass, S srcInstance) {
+        // ---> Input data check
+        if (!srcInstance.getClass().isAssignableFrom(destClass) || srcInstance.getClass().equals(destClass))
+            return null;
+
+        // ---> Dest-Instance creation
+        D subInstance = createInstanceChallenge(destClass);
+        // ---> Dest-Instance injection of Src fields
+        if (subInstance != null) {
+            subInstance = reflectionDownCast(subInstance, srcInstance);
+        }
+        return subInstance;
+    }
+
+    /**
+     * ダウンキャスト実装用のリフレクションメソッド
+     * @param destInstance キャスト先のインスタンス
+     * @param srcInstance キャスト元（キャスト対象）のインスタンス
+     * @param <S> 移動元の総称型
+     * @param <D> 移動先の総称型
+     * @return キャスト先（ダウンキャスト後）のインスタンス
+     */
+    public static <S, D> D reflectionDownCast(D destInstance, S srcInstance) {
+        // ---> Input data check
+        if (!srcInstance.getClass().isAssignableFrom(destInstance.getClass())
+                || srcInstance.getClass().equals(destInstance.getClass()))
+            return null;
+
+        // ---> Dest-Instance injection of Src fields
+        Field[] superFields = srcInstance.getClass().getDeclaredFields();
+        Map<String, Object> superFieldsMap = new HashMap<>();
+        for (Field superField : superFields) {
+            superField.setAccessible(true);
+            try {
+                superFieldsMap.put(superField.getName(), superField.get(srcInstance));
+            } catch (IllegalAccessException ignored) {}
+        }
+        Class<?> injectionTargetClass = destInstance.getClass();
+        while (!injectionTargetClass.equals(srcInstance.getClass())) {
+            injectionTargetClass = injectionTargetClass.getSuperclass();
+            if (injectionTargetClass == null) break;
+        }
+        assert injectionTargetClass != null;
+        Field[] injectionTargetFields = injectionTargetClass.getDeclaredFields();
+        for (Field injectionTargetField : injectionTargetFields) {
+            injectionTargetField.setAccessible(true);
+            String fieldName = injectionTargetField.getName();
+            try {
+                // Sallow Copy: from srcInstance(superInstance) to destInstance(destInstance)
+                injectionTargetField.set(destInstance, superFieldsMap.get(fieldName));
+            } catch (IllegalAccessException ignored) {}
+        }
+        return destInstance;
+    }
+}

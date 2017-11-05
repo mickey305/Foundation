@@ -8,7 +8,7 @@ public interface Killable {
 
     /**
      * プロセスの生存確認
-     * @return 生存している場合はtrueで、そうでない場合はfalse
+     * @return 生存している場合はtrueで、そうでない場合はfalseを返却する
      */
     boolean isAlive();
 }
