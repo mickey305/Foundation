@@ -31,7 +31,7 @@ public class DownCastBuilder {
             constructor.setAccessible(true);
             try {
                 Class<?>[] parameterTypes = constructor.getParameterTypes();
-                if (parameterTypes == null || parameterTypes.length == 0) {
+                if (parameterTypes.length == 0) {
                     targetInstance = (T) constructor.newInstance();
                 } else {
                     Object[] parameters = new Object[parameterTypes.length];
