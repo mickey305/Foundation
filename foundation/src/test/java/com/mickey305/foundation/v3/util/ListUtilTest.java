@@ -68,6 +68,10 @@ public class ListUtilTest {
             super(10);
             this.setAge(age);
         }
+
+        private Sub2() {
+            this(5);
+        }
 //        private Sub2(int parm1) {
 //            super(parm1);
 //        }

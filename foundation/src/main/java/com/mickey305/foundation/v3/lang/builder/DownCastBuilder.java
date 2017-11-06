@@ -3,6 +3,8 @@ package com.mickey305.foundation.v3.lang.builder;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,6 +20,13 @@ public class DownCastBuilder {
     private static <T> T createInstanceChallenge(Class<T> targetClass) {
         T targetInstance = null;
         Constructor<?>[] constructors = targetClass.getDeclaredConstructors();
+        Arrays.sort(constructors, new Comparator<Constructor<?>>() {
+            @Override
+            public int compare(Constructor<?> o1, Constructor<?> o2) {
+                return o1.getParameterTypes().length - o2.getParameterTypes().length;
+            }
+        });
+        // 引数の少ないコンストラクタから順番にインスタンス生成が可能かを試行する
         for (Constructor<?> constructor : constructors) {
             constructor.setAccessible(true);
             try {
@@ -64,7 +73,6 @@ public class DownCastBuilder {
      * @param <D> 移動先の総称型
      * @return キャスト先（ダウンキャスト後）のインスタンス
      */
-    @SuppressWarnings("unchecked")
     public static <S, D> D reflectionDownCast(Class<D> destClass, S srcInstance) {
         // ---> Input data check
         if (!srcInstance.getClass().isAssignableFrom(destClass) || srcInstance.getClass().equals(destClass))
