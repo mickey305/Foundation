@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class ListUtilTest {
@@ -29,6 +30,39 @@ public class ListUtilTest {
         }
         for (Sub2 elm: subList2) {
             Log.i("Sub2: "+elm.getParm1()+" "+elm.getName()+" "+elm.getAge());
+        }
+    }
+
+    @Test
+    public void testCase_01_02() throws Exception {
+        List<Super> superList = new ArrayList<>();
+        for (int i = 0; i < 100; i++)
+            superList.add(new Super(i));
+        Super[] superArray = ListUtil.toArray(superList);
+        for (Super elm: superArray) {
+            Log.i("Super: "+elm.getParm1());
+        }
+    }
+
+    @Test
+    public void testCase_01_03() throws Exception {
+        Super[] superArray = new Super[100];
+        for (int i = 0; i < superArray.length; i++)
+            superArray[i] = new Super(i);
+        List<Super> superList = ListUtil.fromArray(superArray);
+        for (Super elm: superList) {
+            Log.i("Super: "+elm.getParm1());
+        }
+    }
+
+    @Test
+    public void testCase_01_04() throws Exception {
+        Collection<Super> superCollection = new ArrayList<>();
+        for (int i = 0; i < 100; i++)
+            superCollection.add(new Super(i));
+        List<Super> superList = ListUtil.downCastFrom(superCollection);
+        for (Super elm: superList) {
+            Log.i("Super: "+elm.getParm1());
         }
     }
 
