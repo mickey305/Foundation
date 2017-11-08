@@ -41,7 +41,7 @@ public class SetUtil {
      * @param <E> 要素の総称型
      * @return 変換後の配列
      */
-    @SuppressWarnings("unchecked")
+    @SafeVarargs
     public static <E> E[] toArray(Set<E> elements, E... dummy) {
         return CollectionUtil.toArray(elements, dummy);
     }
@@ -55,7 +55,6 @@ public class SetUtil {
      * @return 変換後の配列
      * @throws IllegalArgumentException 引数例外
      */
-    @SuppressWarnings("unchecked")
     public static <E> E[] toArray(Set<E> elements, Class<E> elementType) {
         return CollectionUtil.toArray(elements, elementType);
     }
