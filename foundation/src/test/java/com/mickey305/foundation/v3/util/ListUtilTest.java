@@ -2,6 +2,7 @@ package com.mickey305.foundation.v3.util;
 
 import com.mickey305.foundation.v3.lang.builder.DownCastBuilder;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,7 +20,7 @@ public class ListUtilTest {
     }
 
     @Test
-    public void testCase_01_01() throws Exception {
+    public void testCase_02_01() throws Exception {
         List<Super> superList = new ArrayList<>();
         for (int i = 0; i < 100; i++)
             superList.add(new Super(i));
@@ -34,18 +35,30 @@ public class ListUtilTest {
     }
 
     @Test
-    public void testCase_01_02() throws Exception {
+    public void testCase_02_02() throws Exception {
         List<Super> superList = new ArrayList<>();
+        Super[] superArray = ListUtil.toArray(superList);
+        for (Super elm: superArray) {
+            Log.i("Super: "+elm.getParm1());
+        }
+
+        superList = new ArrayList<>();
+        for (int i = 0; i < 100; i++)
+            superList.add(null);
+        superArray = ListUtil.toArray(superList);
+        Assert.assertEquals(100, superArray.length);
+
+        superList = new ArrayList<>();
         for (int i = 0; i < 100; i++)
             superList.add(new Super(i));
-        Super[] superArray = ListUtil.toArray(superList);
+        superArray = ListUtil.toArray(superList);
         for (Super elm: superArray) {
             Log.i("Super: "+elm.getParm1());
         }
     }
 
     @Test
-    public void testCase_01_03() throws Exception {
+    public void testCase_02_03() throws Exception {
         Super[] superArray = new Super[100];
         for (int i = 0; i < superArray.length; i++)
             superArray[i] = new Super(i);
@@ -56,7 +69,7 @@ public class ListUtilTest {
     }
 
     @Test
-    public void testCase_01_04() throws Exception {
+    public void testCase_02_04() throws Exception {
         Collection<Super> superCollection = new ArrayList<>();
         for (int i = 0; i < 100; i++)
             superCollection.add(new Super(i));

@@ -42,15 +42,30 @@ public class ListUtil {
     /**
      * リスト型から配列に変換する
      * @param elements 変換対象のリスト
+     * @param dummy 要素の型パラメータ（未入力可）
      * @param <E> 要素の総称型
      * @return 変換後の配列
      */
     @SuppressWarnings("unchecked")
-    public static <E> E[] toArray(List<E> elements) {
-        if (elements.isEmpty())
-            return null;
-        E element = elements.get(0);
-        E[] result = (E[]) Array.newInstance(element.getClass(), elements.size());
+    public static <E> E[] toArray(List<E> elements, E... dummy) {
+        Class<E> type = (Class<E>) dummy.getClass().getComponentType();
+        return toArray(elements, type);
+    }
+
+    /**
+     * リスト型から配列に変換する
+     * <p>要素クラスがnullの場合、{@link IllegalArgumentException}が発生する</p>
+     * @param elements 変換対象のリスト
+     * @param elementType 要素のクラス
+     * @param <E> 要素の総称型
+     * @return 変換後の配列
+     * @throws IllegalArgumentException 引数例外
+     */
+    @SuppressWarnings("unchecked")
+    public static <E> E[] toArray(List<E> elements, Class<E> elementType) {
+        if (elementType == null)
+            throw new IllegalArgumentException("elementType is rejected: reason NULL-VALUE");
+        E[] result = (E[]) Array.newInstance(elementType, elements.size());
         return elements.toArray(result);
     }
 
