@@ -87,7 +87,7 @@ public class ListUtilTest {
         }
 
         @Override
-        public <T extends DownCastable> T downcast(Class<T> subClass) {
+        public <T extends DownCastable> T downcastTo(Class<T> subClass) {
             return DownCastBuilder.reflectionDownCast(subClass, this);
         }
 

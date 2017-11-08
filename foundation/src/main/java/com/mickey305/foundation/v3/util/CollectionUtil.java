@@ -21,7 +21,7 @@ public class CollectionUtil {
         for (SUPER parent : castTarget) {
             if (!parent.getClass().isAssignableFrom(subClass) || parent.getClass().equals(subClass))
                 throw new ClassCastException("castTarget#" + parent.toString() + " parameter rejected");
-            output.add(parent.downcast(subClass));
+            output.add(parent.downcastTo(subClass));
         }
         return output;
     }
