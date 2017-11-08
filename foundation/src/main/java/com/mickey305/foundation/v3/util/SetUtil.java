@@ -1,72 +1,72 @@
 package com.mickey305.foundation.v3.util;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-public class ListUtil {
+public class SetUtil {
 
-    private ListUtil() {}
+    private SetUtil() {}
 
     /**
      * 要素をダウンキャストする
      * @param subClass キャスト先のクラス
-     * @param castTarget キャスト対象のリスト
+     * @param castTarget キャスト対象のセット
      * @param <SUPER> キャスト対象の総称型
      * @param <SUB> キャスト先の総称型
-     * @return キャスト後のリスト
+     * @return キャスト後のセット
      */
     public static <SUPER extends DownCastable, SUB extends SUPER>
-    List<SUB> downCastElementTo(Class<SUB> subClass, List<SUPER> castTarget) {
-        List<SUB> castedLst =  new ArrayList<>(castTarget.size());
-        CollectionUtil.downCastElementTo(subClass, castTarget, castedLst);
-        return castedLst;
+    Set<SUB> downCastElementTo(Class<SUB> subClass, Set<SUPER> castTarget) {
+        Set<SUB> castedSet =  new HashSet<>();
+        CollectionUtil.downCastElementTo(subClass, castTarget, castedSet);
+        return castedSet;
     }
 
     /**
-     * コレクション型からリスト型に変換する
+     * コレクション型からセット型に変換する
      * @param elements 変換対象のコレクション
      * @param <E> 要素の総称型
-     * @return 変換後のリスト
+     * @return 変換後のセット
      */
-    public static <E> List<E> downCastFrom(Collection<E> elements) {
-        return new ArrayList<>(elements);
+    public static <E> Set<E> downCastFrom(Collection<E> elements) {
+        return new HashSet<>(elements);
     }
 
     /**
-     * リスト型から配列に変換する
-     * @param elements 変換対象のリスト
+     * セット型から配列に変換する
+     * @param elements 変換対象のセット
      * @param dummy 要素の型パラメータ（未入力可）
      * @param <E> 要素の総称型
      * @return 変換後の配列
      */
     @SuppressWarnings("unchecked")
-    public static <E> E[] toArray(List<E> elements, E... dummy) {
+    public static <E> E[] toArray(Set<E> elements, E... dummy) {
         return CollectionUtil.toArray(elements, dummy);
     }
 
     /**
-     * リスト型から配列に変換する
+     * セット型から配列に変換する
      * <p>要素クラスがnullの場合、{@link IllegalArgumentException}が発生する</p>
-     * @param elements 変換対象のリスト
+     * @param elements 変換対象のセット
      * @param elementType 要素のクラス
      * @param <E> 要素の総称型
      * @return 変換後の配列
      * @throws IllegalArgumentException 引数例外
      */
     @SuppressWarnings("unchecked")
-    public static <E> E[] toArray(List<E> elements, Class<E> elementType) {
+    public static <E> E[] toArray(Set<E> elements, Class<E> elementType) {
         return CollectionUtil.toArray(elements, elementType);
     }
 
     /**
-     * 配列からリスト型に変換する
+     * 配列からセット型に変換する
      * @param elements 変換対象の配列
      * @param <E> 要素の総称型
-     * @return 変換後のリスト
+     * @return 変換後のセット
      */
-    public static <E> List<E> fromArray(E[] elements) {
-        return new ArrayList<>(Arrays.asList(elements));
+    public static <E> Set<E> fromArray(E[] elements) {
+        return new HashSet<>(Arrays.asList(elements));
     }
 }
