@@ -1,12 +1,9 @@
 package com.mickey305.foundation.v3.lang.builder;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
 
 public class DownCastBuilder {
 
@@ -17,7 +14,7 @@ public class DownCastBuilder {
      * @return 生成されたインスタンス。失敗した場合は、nullを返却する
      */
     @SuppressWarnings("unchecked")
-    private static <T> T createInstanceChallenge(Class<T> targetClass) {
+    static <T> T createInstanceChallenge(Class<T> targetClass) {
         T targetInstance = null;
         Constructor<?>[] constructors = targetClass.getDeclaredConstructors();
         Arrays.sort(constructors, new Comparator<Constructor<?>>() {
@@ -96,35 +93,6 @@ public class DownCastBuilder {
      * @return キャスト先（ダウンキャスト後）のインスタンス
      */
     public static <S, D> D reflectionDownCast(D destInstance, S srcInstance) {
-        // ---> Input data check
-        if (!srcInstance.getClass().isAssignableFrom(destInstance.getClass())
-                || srcInstance.getClass().equals(destInstance.getClass()))
-            return null;
-
-        // ---> Dest-Instance injection of Src fields
-        Field[] superFields = srcInstance.getClass().getDeclaredFields();
-        Map<String, Object> superFieldsMap = new HashMap<>();
-        for (Field superField : superFields) {
-            superField.setAccessible(true);
-            try {
-                superFieldsMap.put(superField.getName(), superField.get(srcInstance));
-            } catch (IllegalAccessException ignored) {}
-        }
-        Class<?> injectionTargetClass = destInstance.getClass();
-        while (!injectionTargetClass.equals(srcInstance.getClass())) {
-            injectionTargetClass = injectionTargetClass.getSuperclass();
-            if (injectionTargetClass == null) break;
-        }
-        assert injectionTargetClass != null;
-        Field[] injectionTargetFields = injectionTargetClass.getDeclaredFields();
-        for (Field injectionTargetField : injectionTargetFields) {
-            injectionTargetField.setAccessible(true);
-            String fieldName = injectionTargetField.getName();
-            try {
-                // Sallow Copy: from srcInstance(superInstance) to destInstance(destInstance)
-                injectionTargetField.set(destInstance, superFieldsMap.get(fieldName));
-            } catch (IllegalAccessException ignored) {}
-        }
-        return destInstance;
+        return ObservableDownCastBuilder.reflectionDownCast(destInstance, srcInstance, null);
     }
 }

@@ -79,16 +79,79 @@ public class ListUtilTest {
         }
     }
 
-    private class Super implements DownCastable {
+    private abstract class AbstractSuper {
+        List<String> dataLst;
+
+        public AbstractSuper() {
+            this.setDataLst(new ArrayList<String>());
+            List<String> list = this.getDataLst();
+            list.add("apple");
+            list.add("orange");
+            list.add("grape");
+            list.add("lemon");
+            list.add("melon");
+            list.add("cherry");
+        }
+
+        public List<String> getDataLst() {
+            return dataLst;
+        }
+
+        public void setDataLst(List<String> dataLst) {
+            this.dataLst = dataLst;
+        }
+    }
+
+    private class Super extends AbstractSuper implements DownCastable {
         private int parm1;
 
         public Super(int parm1) {
+            super();
             this.setParm1(parm1);
         }
 
         @Override
         public <T extends DownCastable> T downcastTo(Class<T> subClass) {
             return DownCastBuilder.reflectionDownCast(subClass, this);
+//            return ObservableDownCastBuilder.reflectionDownCast(subClass, this, new InjectionEventListener() {
+//                @Override
+//                public void before(Map<Class<?>, Map<String, Object>> dest, Map<Class<?>, Map<String, Object>> src) {
+//                    Log.i("<< Before >>");
+//                    for (Map.Entry<Class<?>, Map<String, Object>> entry1: dest.entrySet()) {
+//                        Log.i("* dest class:"+entry1.getKey().getSimpleName());
+//                        for (Map.Entry<String, Object> entry2: entry1.getValue().entrySet()) {
+//                            Log.i("  key:" + entry2.getKey() + ", value:" + entry2.getValue());
+//                        }
+//                    }
+//
+//                    for (Map.Entry<Class<?>, Map<String, Object>> entry1: src.entrySet()) {
+//                        Log.i("* src class:"+entry1.getKey().getSimpleName());
+//                        for (Map.Entry<String, Object> entry2: entry1.getValue().entrySet()) {
+//                            Log.i("  key:" + entry2.getKey() + ", value:" + entry2.getValue());
+//                        }
+//                    }
+//                    Log.i("-------------------------------------------------------------------------------------");
+//                }
+//
+//                @Override
+//                public void after(Map<Class<?>, Map<String, Object>> dest, Map<Class<?>, Map<String, Object>> src) {
+//                    Log.i("<< After >>");
+//                    for (Map.Entry<Class<?>, Map<String, Object>> entry1: dest.entrySet()) {
+//                        Log.i("* dest class:"+entry1.getKey().getSimpleName());
+//                        for (Map.Entry<String, Object> entry2: entry1.getValue().entrySet()) {
+//                            Log.i("  key:" + entry2.getKey() + ", value:" + entry2.getValue());
+//                        }
+//                    }
+//
+//                    for (Map.Entry<Class<?>, Map<String, Object>> entry1: src.entrySet()) {
+//                        Log.i("* src class:"+entry1.getKey().getSimpleName());
+//                        for (Map.Entry<String, Object> entry2: entry1.getValue().entrySet()) {
+//                            Log.i("  key:" + entry2.getKey() + ", value:" + entry2.getValue());
+//                        }
+//                    }
+//                    Log.i("-------------------------------------------------------------------------------------");
+//                }
+//            });
         }
 
         public int getParm1() {
@@ -114,6 +177,10 @@ public class ListUtilTest {
         private Sub2(int age) {
             super(10);
             this.setAge(age);
+            List<String> list = super.getDataLst();
+            list.add("car");
+            list.add("train");
+            list.remove("apple");
         }
 
         private Sub2() {
