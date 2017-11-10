@@ -1,6 +1,7 @@
-package com.mickey305.foundation.v3.lang.builder;
+package com.mickey305.foundation.v3.lang.builder.unsafe;
 
 import com.mickey305.foundation.v3.lang.reflect.FieldMapCreator;
+import com.mickey305.foundation.v3.util.ClassCollections;
 
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -40,19 +41,16 @@ public class ObservableDownCastBuilder {
      * @return キャスト先（ダウンキャスト後）のインスタンス
      */
     public static <S, D> D reflectionDownCast(D destInstance, S srcInstance, InjectionEventListener listener) {
-        FieldMapCreator fieldMapCreator = new FieldMapCreator();
-        Object adam = new Object();
         // ---> Input data check
         if (!srcInstance.getClass().isAssignableFrom(destInstance.getClass())
                 || srcInstance.getClass().equals(destInstance.getClass()))
             return null;
 
         // ---> Dest-Instance injection of Src fields
-        Map<Class<?>, Map<String, Object>> superFieldsMap = fieldMapCreator.createUntilAdam(srcInstance);
+        Map<Class<?>, Map<String, Object>> superFieldsMap = new FieldMapCreator().createUntilAdam(srcInstance);
         // before injection
         if (listener != null)
-            listener.before(fieldMapCreator.create(destInstance, adam), superFieldsMap);
-        Class<?> injectionTargetClass = srcInstance.getClass();
+            listener.before(new EasilyAccessibleContainer(destInstance), new EasilyAccessibleContainer(srcInstance));
         // e.g. expected situation
         //+-----+------+---------------+------+--------------------+
         // cast |      |               |      |
@@ -70,7 +68,7 @@ public class ObservableDownCastBuilder {
         //+-----+------+---------------+------+--------------------+
         // - copy is sallow-copy
         // - check logic impl with InjectionEventListener
-        for (;;) {
+        for (Class<?> injectionTargetClass: ClassCollections.untilAdam(srcInstance.getClass())) {
             Field[] injectionTargetFields = injectionTargetClass.getDeclaredFields();
             // do injection
             for (Field injectionTargetField : injectionTargetFields) {
@@ -82,12 +80,10 @@ public class ObservableDownCastBuilder {
                     injectionTargetField.set(destInstance, superFieldsMap.get(injectionTargetClass).get(fieldName));
                 } catch (IllegalAccessException ignored) {}
             }
-            injectionTargetClass = injectionTargetClass.getSuperclass();
-            if (injectionTargetClass == null) break;
         }
         // after injection
         if (listener != null)
-            listener.after(fieldMapCreator.create(destInstance, adam), superFieldsMap);
+            listener.after(new EasilyAccessibleContainer(destInstance), new EasilyAccessibleContainer(srcInstance));
         return destInstance;
     }
 }

@@ -1,6 +1,9 @@
 package com.mickey305.foundation.v3.util;
 
-import com.mickey305.foundation.v3.lang.builder.DownCastBuilder;
+import com.mickey305.foundation.v3.lang.builder.unsafe.EasilyAccessibleContainer;
+import com.mickey305.foundation.v3.lang.builder.unsafe.EasilyContainer;
+import com.mickey305.foundation.v3.lang.builder.unsafe.InjectionEventListener;
+import com.mickey305.foundation.v3.lang.builder.unsafe.ObservableDownCastBuilder;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -9,6 +12,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 public class ListUtilTest {
     @Before
@@ -22,7 +26,7 @@ public class ListUtilTest {
     @Test
     public void testCase_02_01() throws Exception {
         List<Super> superList = new ArrayList<>();
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < 1; i++)
             superList.add(new Super(i));
         List<Sub> subList = ListUtil.downCastElementTo(Sub.class, superList);
         List<Sub2> subList2 = ListUtil.downCastElementTo(Sub2.class, superList);
@@ -112,46 +116,47 @@ public class ListUtilTest {
 
         @Override
         public <T extends DownCastable> T downcastTo(Class<T> subClass) {
-            return DownCastBuilder.reflectionDownCast(subClass, this);
-//            return ObservableDownCastBuilder.reflectionDownCast(subClass, this, new InjectionEventListener() {
-//                @Override
-//                public void before(Map<Class<?>, Map<String, Object>> dest, Map<Class<?>, Map<String, Object>> src) {
-//                    Log.i("<< Before >>");
-//                    for (Map.Entry<Class<?>, Map<String, Object>> entry1: dest.entrySet()) {
-//                        Log.i("* dest class:"+entry1.getKey().getSimpleName());
-//                        for (Map.Entry<String, Object> entry2: entry1.getValue().entrySet()) {
-//                            Log.i("  key:" + entry2.getKey() + ", value:" + entry2.getValue());
-//                        }
-//                    }
-//
-//                    for (Map.Entry<Class<?>, Map<String, Object>> entry1: src.entrySet()) {
-//                        Log.i("* src class:"+entry1.getKey().getSimpleName());
-//                        for (Map.Entry<String, Object> entry2: entry1.getValue().entrySet()) {
-//                            Log.i("  key:" + entry2.getKey() + ", value:" + entry2.getValue());
-//                        }
-//                    }
-//                    Log.i("-------------------------------------------------------------------------------------");
-//                }
-//
-//                @Override
-//                public void after(Map<Class<?>, Map<String, Object>> dest, Map<Class<?>, Map<String, Object>> src) {
-//                    Log.i("<< After >>");
-//                    for (Map.Entry<Class<?>, Map<String, Object>> entry1: dest.entrySet()) {
-//                        Log.i("* dest class:"+entry1.getKey().getSimpleName());
-//                        for (Map.Entry<String, Object> entry2: entry1.getValue().entrySet()) {
-//                            Log.i("  key:" + entry2.getKey() + ", value:" + entry2.getValue());
-//                        }
-//                    }
-//
-//                    for (Map.Entry<Class<?>, Map<String, Object>> entry1: src.entrySet()) {
-//                        Log.i("* src class:"+entry1.getKey().getSimpleName());
-//                        for (Map.Entry<String, Object> entry2: entry1.getValue().entrySet()) {
-//                            Log.i("  key:" + entry2.getKey() + ", value:" + entry2.getValue());
-//                        }
-//                    }
-//                    Log.i("-------------------------------------------------------------------------------------");
-//                }
-//            });
+//            return DownCastBuilder.reflectionDownCast(subClass, this);
+            return ObservableDownCastBuilder.reflectionDownCast(subClass, this, new InjectionEventListener() {
+                @Override
+                public void before(EasilyAccessibleContainer dest, EasilyContainer src) {
+                    Log.i("<< Before >>");
+                    for (Map.Entry<Class<?>, Map<String, Object>> entry1: dest.getFieldDataMap().entrySet()) {
+                        Log.i("* dest class:"+entry1.getKey().getSimpleName());
+                        for (Map.Entry<String, Object> entry2: entry1.getValue().entrySet()) {
+                            Log.i("  key:" + entry2.getKey() + ", value:" + entry2.getValue());
+                        }
+                    }
+
+                    for (Map.Entry<Class<?>, Map<String, Object>> entry1: src.getFieldDataMap().entrySet()) {
+                        Log.i("* src class:"+entry1.getKey().getSimpleName());
+                        for (Map.Entry<String, Object> entry2: entry1.getValue().entrySet()) {
+                            Log.i("  key:" + entry2.getKey() + ", value:" + entry2.getValue());
+                        }
+                    }
+                    dest.updateField(Sub2.class, "age", 99999999);
+                    Log.i("-------------------------------------------------------------------------------------");
+                }
+
+                @Override
+                public void after(EasilyAccessibleContainer dest, EasilyContainer src) {
+                    Log.i("<< After >>");
+                    for (Map.Entry<Class<?>, Map<String, Object>> entry1: dest.getFieldDataMap().entrySet()) {
+                        Log.i("* dest class:"+entry1.getKey().getSimpleName());
+                        for (Map.Entry<String, Object> entry2: entry1.getValue().entrySet()) {
+                            Log.i("  key:" + entry2.getKey() + ", value:" + entry2.getValue());
+                        }
+                    }
+
+                    for (Map.Entry<Class<?>, Map<String, Object>> entry1: src.getFieldDataMap().entrySet()) {
+                        Log.i("* src class:"+entry1.getKey().getSimpleName());
+                        for (Map.Entry<String, Object> entry2: entry1.getValue().entrySet()) {
+                            Log.i("  key:" + entry2.getKey() + ", value:" + entry2.getValue());
+                        }
+                    }
+                    Log.i("-------------------------------------------------------------------------------------");
+                }
+            });
         }
 
         public int getParm1() {
