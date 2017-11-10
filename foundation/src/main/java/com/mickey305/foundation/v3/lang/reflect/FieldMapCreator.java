@@ -6,7 +6,15 @@ import java.util.Map;
 
 public class FieldMapCreator {
 
-    public FieldMapCreator() {}
+    private FieldMapCreator() {}
+
+    public static FieldMapCreator get() {
+        return FieldMapCreatorHolder.INSTANCE;
+    }
+
+    private static class FieldMapCreatorHolder {
+        private static final FieldMapCreator INSTANCE = new FieldMapCreator();
+    }
 
     public Map<Class<?>, Map<String, Object>> create(Object fromInstance, Object toInstance) {
         Map<String, Object> fieldMap;

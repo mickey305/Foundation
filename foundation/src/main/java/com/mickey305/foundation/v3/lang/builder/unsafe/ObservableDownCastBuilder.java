@@ -47,10 +47,10 @@ public class ObservableDownCastBuilder {
             return null;
 
         // ---> Dest-Instance injection of Src fields
-        Map<Class<?>, Map<String, Object>> superFieldsMap = new FieldMapCreator().createUntilAdam(srcInstance);
+        Map<Class<?>, Map<String, Object>> superFieldsMap = FieldMapCreator.get().createUntilAdam(srcInstance);
         // before injection
         if (listener != null)
-            listener.before(new EasilyAccessibleContainer(destInstance), new EasilyAccessibleContainer(srcInstance));
+            listener.before(EasilyAccessibleContainer.of(destInstance), EasilyAccessibleContainer.of(srcInstance));
         // e.g. expected situation
         //+-----+------+---------------+------+--------------------+
         // cast |      |               |      |
@@ -83,7 +83,7 @@ public class ObservableDownCastBuilder {
         }
         // after injection
         if (listener != null)
-            listener.after(new EasilyAccessibleContainer(destInstance), new EasilyAccessibleContainer(srcInstance));
+            listener.after(EasilyAccessibleContainer.of(destInstance), EasilyAccessibleContainer.of(srcInstance));
         return destInstance;
     }
 }

@@ -7,8 +7,12 @@ import java.util.Map;
 public class EasilyContainer {
     private Map<Class<?>, Map<String, Object>> fieldDataMap;
 
-    public EasilyContainer(Object targetInstance) {
-        this.setFieldDataMap(new FieldMapCreator().createUntilAdam(targetInstance));
+    EasilyContainer(Object targetInstance) {
+        this.setFieldDataMap(FieldMapCreator.get().createUntilAdam(targetInstance));
+    }
+
+    public static EasilyContainer of (Object targetInstance) {
+        return new EasilyContainer(targetInstance);
     }
 
     public Map<Class<?>, Map<String, Object>> getFieldDataMap() {
