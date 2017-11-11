@@ -47,7 +47,6 @@ public class ObservableDownCastBuilder {
             return null;
 
         // ---> Dest-Instance injection of Src fields
-        Map<Class<?>, Map<String, Object>> superFieldsMap = FieldMapCreator.get().createUntilAdam(srcInstance);
         // before injection
         if (listener != null)
             listener.before(EasilyAccessibleContainer.of(destInstance), EasilyAccessibleContainer.of(srcInstance));
@@ -68,6 +67,7 @@ public class ObservableDownCastBuilder {
         //+-----+------+---------------+------+--------------------+
         // - copy is sallow-copy
         // - check logic impl with InjectionEventListener
+        final Map<Class<?>, Map<String, Object>> superFieldsMap = FieldMapCreator.get().createUntilAdam(srcInstance);
         for (Class<?> injectionTargetClass: ClassCollections.untilAdam(srcInstance.getClass())) {
             Field[] injectionTargetFields = injectionTargetClass.getDeclaredFields();
             // do injection
