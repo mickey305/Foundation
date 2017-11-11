@@ -43,7 +43,7 @@
 
 # <a name="requirements"> Requirements
 - JDK `>= 1.7`
-- Gradle `>= 3.5-rc-2`
+- Gradle `>= 3.5-rc-2` (in the case of gradle project)
 
 <!--
 
@@ -76,7 +76,10 @@ dependencies {
 ```
 -->
 
-# <a name="installation2"> Installation(Pattern 2) - how to use the JitPack service
+# <a name="installation2"> Installation(Pattern 2)
+
+how to use the JitPack service [![](https://jitpack.io/v/mickey305/Foundation.svg)](https://jitpack.io/#mickey305/Foundation)
+
 ## 1 - Register repository in local library
 
 ```
