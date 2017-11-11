@@ -1,4 +1,9 @@
-# Foundation
+
+<p align="center">
+  <img src="asset/brick.svg" height="50"> Foundation
+</p>
+
+# Overview
 
 `Foundation` is part of infrastructure component for Java.
 
