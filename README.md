@@ -11,17 +11,17 @@
 ![Java Version](https://img.shields.io/badge/JDK-1.7-yellowgreen.svg?style=flat)
 [![Apache License](http://img.shields.io/badge/license-Apache2.0-blue.svg?style=flat)](LICENSE)
 
--[x] source compatibility `java7`
--[x] easily usable
--[x] some design patterns
--[x] some utility classes
--[x] multi-thread API
--[x] downcast API(unsafe)
+- [x] source compatibility `java7`
+- [x] easily usable
+- [x] some design patterns
+- [x] some utility classes
+- [x] multi-thread API
+- [x] downcast API(unsafe)
 <!--
--[x] benchmark API
--[x] java source builder annotations
+- [x] benchmark API
+- [x] java source builder annotations
 -->
--[x] and more...
+- [x] and more...
 
 <!--
 
