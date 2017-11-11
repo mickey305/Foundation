@@ -1,4 +1,5 @@
 rootProject.name = 'Foundation'
 include 'foundation'
-include 'sample'
+if (!System.env.JITPACK)
+    include ':sample'
 
