@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img src="asset/brick.svg" height="50"> Foundation
+  <img src="asset/brick.svg" height="50"> <img src="asset/foundation_title.svg" height="50>
 </p>
 
 # Overview
