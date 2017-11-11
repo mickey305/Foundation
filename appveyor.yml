@@ -1,3 +1,4 @@
+version: "{branch} {build}"
 platform: x64
 environment:
   matrix:
@@ -6,10 +7,13 @@ branches:
   only:
     - master
     - develop
-install:
-  - cmd: echo %JAVA_HOME%
-test_script: ./.test.sh
+build_script:
+  - gradlew.bat assemble
+test_script:
+  - gradlew.bat check
 deploy: off
+cache:
+  - C:\Users\appveyor\.gradle
 
 ## Notes:
 ##   - Minimal appveyor.yml file is an empty file. All sections are optional.
