@@ -23,9 +23,22 @@
 -->
 - [x] and more...
 
+# Contents
+- [Usage](#usage)
+- [Requirements](#requirements)
+- [Installation Pattern#1](#installation1)
+- [Installation Pattern#2](#installation2)
+- [History](#history)
+
+# <a name="usage"> Usage
+
+# <a name="requirements"> Requirements
+- JDK `>= 1.7`
+- Gradle `>= 3.5-rc-2`
+
 <!--
 
-# Installation(Pattern 1)
+# <a name="installation1"> Installation(Pattern 1)
 ## 1 - Register repository in local library
 
 ```
@@ -54,7 +67,7 @@ dependencies {
 ```
 -->
 
-# Installation(Pattern 2) - how to use the JitPack service
+# <a name="installation2"> Installation(Pattern 2) - how to use the JitPack service
 ## 1 - Register repository in local library
 
 ```
@@ -74,6 +87,6 @@ dependencies {
 }
 ```
 
-# History
+# <a name="history"> History
  * version 0.5.0 deploy - 2017-11-11
  * version 0.0.1-SNAPSHOT deploy(Test version) - 2017-10-09
