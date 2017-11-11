@@ -5,6 +5,24 @@
 | release | master | [![Build Status](https://travis-ci.org/mickey305/Foundation.svg?branch=master)](https://travis-ci.org/mickey305/Foundation) | [![](https://jitpack.io/v/mickey305/Foundation.svg)](https://jitpack.io/#mickey305/Foundation) |
 | - | develop | [![Build Status](https://travis-ci.org/mickey305/Foundation.svg?branch=develop)](https://travis-ci.org/mickey305/Foundation) |  |
 
+# Features
+
+![Library Version](https://img.shields.io/badge/Foundation%20library-v0.5.0-green.svg?style=flat)
+![Java Version](https://img.shields.io/badge/JDK-1.7-yellowgreen.svg?style=flat)
+[![Apache License](http://img.shields.io/badge/license-Apache2.0-blue.svg?style=flat)](LICENSE)
+
+-[x] source compatibility `java7`
+-[x] easily usable
+-[x] some design patterns
+-[x] some utility classes
+-[x] multi-thread API
+-[x] downcast API(unsafe)
+<!--
+-[x] benchmark API
+-[x] java source builder annotations
+-->
+-[x] and more...
+
 <!--
 
 # Installation(Pattern 1)
@@ -57,4 +75,5 @@ dependencies {
 ```
 
 # History
+ * version 0.5.0 deploy - 2017-11-11
  * version 0.0.1-SNAPSHOT deploy(Test version) - 2017-10-09
