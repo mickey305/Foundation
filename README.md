@@ -1,4 +1,6 @@
-# Foundation(part of infrastructure component for Java)
+# Foundation
+
+`Foundation` is part of infrastructure component for Java.
 
 | | branch | travis ci | JitPack |
 |:---:|:---|:---|:---|
