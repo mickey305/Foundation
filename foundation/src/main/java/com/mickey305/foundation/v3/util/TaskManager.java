@@ -10,6 +10,9 @@ public class TaskManager<R, C extends Executable<R> & Cancelable<R>> implements 
     //===----------------------------------------------------------------------------------------------------------===//
     // Constructor                                                                                                    //
     //===----------------------------------------------------------------------------------------------------------===//
+    /**
+     * コンストラクタ
+     */
     public TaskManager() {
         this.setCommands(new ArrayDeque<C>());
         this.setTrashCommands(new ArrayDeque<C>());
@@ -18,6 +21,10 @@ public class TaskManager<R, C extends Executable<R> & Cancelable<R>> implements 
     //===----------------------------------------------------------------------------------------------------------===//
     // Methods                                                                                                        //
     //===----------------------------------------------------------------------------------------------------------===//
+    /**
+     * 直前のコマンドを取り消す
+     * @return 処理結果
+     */
     @Override
     public R undo() {
         if (!this.getCommands().isEmpty()) {
@@ -28,6 +35,10 @@ public class TaskManager<R, C extends Executable<R> & Cancelable<R>> implements 
         return null;
     }
 
+    /**
+     * 取り消した直後のコマンドを再実行する
+     * @return 処理結果
+     */
     @Override
     public R redo() {
         if (!this.getTrashCommands().isEmpty()) {
@@ -38,6 +49,13 @@ public class TaskManager<R, C extends Executable<R> & Cancelable<R>> implements 
         return null;
     }
 
+    /**
+     * コマンド実行メソッド
+     * <p>実行対象コマンド内の実行メソッド{@link Executable#execute()}を実行し、処理結果を返却する。
+     * 実行コマンドを内部プールに保管する</p>
+     * @param command 実行対象コマンド
+     * @return 処理結果
+     */
     public R execute(C command) {
         if (!this.getTrashCommands().isEmpty())
             this.setTrashCommands(new ArrayDeque<C>());

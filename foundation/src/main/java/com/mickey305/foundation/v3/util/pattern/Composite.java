@@ -148,8 +148,8 @@ public class Composite<T> extends Component<T> {
                 return true;
             if (Composite.class.isAssignableFrom(component.getClass())
                     || Composite.class.isInstance(component)) {
-                Composite<T> castedChild = (Composite<T>) component;
-                stack.addAll(castedChild.getChildren());
+                Composite<T> castedComponent = (Composite<T>) component;
+                stack.addAll(castedComponent.getChildren());
             }
             component = stack.pollFirst();
         } while (component != null);
