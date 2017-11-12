@@ -124,13 +124,13 @@ public class CompositeTest extends AbstractCompositePatternTest {
         Log.i("additional data creation start!");
         StringBuilder sb = new StringBuilder();
         final int offset = cs1.size() -1;
-        for (int i = 0; i < 6_000_000; i++) {
+        for (int i = 0; i < 1_000_000; i++) {
             cs1.add(new Composite<>(new TestBean(sb.append("added-bean-").append(i).toString())));
             cs1.get(i + offset).add(cs1.get(i + offset +1));
             sb.setLength(0);
         }
         Log.i("additional data creation complete!");
-        Component<TestBean> target = cs1.get(5_500_000);
+        Component<TestBean> target = cs1.get(950_000);
         Composite<TestBean> cmp1 = cs1.get(1);
         Assert.assertTrue(cmp1.contains(target));
         Log.i("big collection data test complete!");
