@@ -20,7 +20,26 @@ public abstract class Pair<L, R> extends org.apache.commons.lang3.tuple.Pair<L, 
     /** use serialVersionUID for interoperability */
     private static final long serialVersionUID = -3295903317432570398L;
 
+    //===----------------------------------------------------------------------------------------------------------===//
+    // Methods                                                                                                        //
+    //===----------------------------------------------------------------------------------------------------------===//
     public static <L, R> Pair<L, R> of(final L left, final R right) {
         return ImmutablePair.of(left, right);
+    }
+
+    public L left() {
+        return this.getLeft();
+    }
+
+    public R right() {
+        return this.getRight();
+    }
+
+    public L key() {
+        return this.getKey();
+    }
+
+    public R value() {
+        return this.getValue();
     }
 }
