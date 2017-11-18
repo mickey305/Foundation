@@ -18,7 +18,7 @@
 | Service Name | Link |
 |:---|:---|
 | JitPack | [![](https://jitpack.io/v/mickey305/Foundation.svg)](https://jitpack.io/#mickey305/Foundation) |
-| Bintray | [![Bintray](https://img.shields.io/bintray/v/mickey305/maven/foundation.svg)](https://bintray.com/mickey305/maven/foundation) |
+| Bintray | [![Download](https://api.bintray.com/packages/mickey305/maven/foundation/images/download.svg)](https://bintray.com/mickey305/maven/foundation/_latestVersion) |
 
 # Features
 
