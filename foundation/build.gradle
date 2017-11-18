@@ -3,6 +3,7 @@ version '0.5.2-beta'
 
 apply plugin: 'java'
 apply plugin: 'maven'
+apply plugin: 'com.novoda.bintray-release'
 
 sourceCompatibility = 1.7
 
@@ -19,4 +20,14 @@ dependencies {
     compile     group: 'org.hibernate'           , name: 'hibernate-validator', version: '6.0.5.Final'
     compile     group: 'org.glassfish'           , name: 'javax.el'           , version: '3.0.1-b08'
     compile     group: 'com.google.code.findbugs', name: 'jsr305'             , version: '3.0.2'
+}
+
+publish {
+    userOrg = 'mickey305'
+    groupId = this.getGroup()
+    artifactId = 'foundation'
+    version = this.getVersion()
+    desc = 'The "Foundation" library is part of infrastructure component for Java.'
+    website = 'https://github.com/mickey305/Foundation'
+    licences = ['Apache-2.0']
 }

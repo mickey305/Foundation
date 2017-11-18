@@ -9,10 +9,16 @@
 
 `Foundation` is part of infrastructure component for Java.
 
-| | branch | travis ci | AppVeyor | JitPack |
-|:---:|:---|:---|:---|:---|
-| release | master | [![Build Status](https://travis-ci.org/mickey305/Foundation.svg?branch=master)](https://travis-ci.org/mickey305/Foundation) | [![Build status](https://ci.appveyor.com/api/projects/status/kw8u113ot8x8by9i/branch/master?svg=true)](https://ci.appveyor.com/project/mickey305/foundation/branch/master) | [![](https://jitpack.io/v/mickey305/Foundation.svg)](https://jitpack.io/#mickey305/Foundation) |
-| - | develop | [![Build Status](https://travis-ci.org/mickey305/Foundation.svg?branch=develop)](https://travis-ci.org/mickey305/Foundation) | [![Build status](https://ci.appveyor.com/api/projects/status/kw8u113ot8x8by9i/branch/develop?svg=true)](https://ci.appveyor.com/project/mickey305/foundation/branch/develop) |  |
+| | branch | travis ci | AppVeyor |
+|:---:|:---|:---|:---|
+| release | master | [![Build Status](https://travis-ci.org/mickey305/Foundation.svg?branch=master)](https://travis-ci.org/mickey305/Foundation) | [![Build status](https://ci.appveyor.com/api/projects/status/kw8u113ot8x8by9i/branch/master?svg=true)](https://ci.appveyor.com/project/mickey305/foundation/branch/master) |
+| - | develop | [![Build Status](https://travis-ci.org/mickey305/Foundation.svg?branch=develop)](https://travis-ci.org/mickey305/Foundation) | [![Build status](https://ci.appveyor.com/api/projects/status/kw8u113ot8x8by9i/branch/develop?svg=true)](https://ci.appveyor.com/project/mickey305/foundation/branch/develop) |
+
+## Repository hosting services
+| Service Name | Link |
+|:---|:---|
+| JitPack | [![](https://jitpack.io/v/mickey305/Foundation.svg)](https://jitpack.io/#mickey305/Foundation) |
+| Bintray | [![Bintray](https://img.shields.io/bintray/v/asciidoctor/maven/asciidoctorj.svg)](https://bintray.com/mickey305/maven/foundation) |
 
 # Features
 
