@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 public final class AnsiStringBuilder extends AbstractAnsiStringBuilder
         implements AnsiAppendable, CharSequence, Serializable {
     /** use serialVersionUID for interoperability */
-    private static final long serialVersionUID = -5604652767773735825L;
+    private static final long serialVersionUID = 5357077699693625877L;
 
     private StringBuilder stringBuilder;
     private int codeLength;

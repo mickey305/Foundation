@@ -76,7 +76,7 @@ public class ObservableDownCastBuilder {
                 String fieldName = injectionTargetField.getName();
 //                if (fieldName.equals("this$0")) continue;
                 try {
-                    // Sallow Copy: from srcInstance(superInstance) to destInstance(destInstance)
+                    // Sallow Copy: from srcInstance(superInstance) to destInstance(subInstance)
                     injectionTargetField.set(destInstance, superFieldsMap.get(injectionTargetClass).get(fieldName));
                 } catch (IllegalAccessException ignored) {}
             }
