@@ -7,14 +7,14 @@
 
 # Overview
 
-`Foundation` is part of infrastructure component for Java.
+`Foundation` is part of infrastructure component for Java. You can easily extend the basic functions. This makes it easier to implement event driven processing and design patterns which are not provided by the standard API.
 
 | | branch | travis ci | AppVeyor |
 |:---:|:---|:---|:---|
 | release | master | [![Build Status](https://travis-ci.org/mickey305/Foundation.svg?branch=master)](https://travis-ci.org/mickey305/Foundation) | [![Build status](https://ci.appveyor.com/api/projects/status/kw8u113ot8x8by9i/branch/master?svg=true)](https://ci.appveyor.com/project/mickey305/foundation/branch/master) |
 | - | develop | [![Build Status](https://travis-ci.org/mickey305/Foundation.svg?branch=develop)](https://travis-ci.org/mickey305/Foundation) | [![Build status](https://ci.appveyor.com/api/projects/status/kw8u113ot8x8by9i/branch/develop?svg=true)](https://ci.appveyor.com/project/mickey305/foundation/branch/develop) |
 
-## Repository hosting services
+### Repository hosting services
 | Service Name | Link |
 |:---|:---|
 | JitPack | [![](https://jitpack.io/v/mickey305/Foundation.svg)](https://jitpack.io/#mickey305/Foundation) |
@@ -34,7 +34,6 @@
 - [x] downcast API(unsafe)
 <!--
 - [x] benchmark API
-- [x] java source builder annotations
 -->
 - [x] and more...
 
