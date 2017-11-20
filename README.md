@@ -9,6 +9,8 @@
 
 `Foundation` is part of infrastructure component for Java. You can easily extend the basic functions. This makes it easier to implement event driven processing and design patterns which are not provided by the standard API.
 
+The following table shows status status of external CI service.
+
 | | branch | travis ci | AppVeyor |
 |:---:|:---|:---|:---|
 | release | master | [![Build Status](https://travis-ci.org/mickey305/Foundation.svg?branch=master)](https://travis-ci.org/mickey305/Foundation) | [![Build status](https://ci.appveyor.com/api/projects/status/kw8u113ot8x8by9i/branch/master?svg=true)](https://ci.appveyor.com/project/mickey305/foundation/branch/master) |
