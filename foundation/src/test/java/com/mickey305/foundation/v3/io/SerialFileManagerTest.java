@@ -15,7 +15,7 @@ public class SerialFileManagerTest {
 
     @Before
     public void setUp() throws Exception {
-        this.filePath = System.getProperty("java.io.tmpdir") + SerialTestBean.class.getName() + ".txt";
+        this.filePath = this.createTmpPath() + SerialTestBean.class.getName() + ".txt";
         this.file = new File(this.filePath);
         this.file.delete();
     }
@@ -47,5 +47,11 @@ public class SerialFileManagerTest {
         Assert.assertEquals("hoge", bean.getName());
     }
 
+    private String createTmpPath() {
+        String tmpPath = System.getProperty("java.io.tmpdir");
+        if (!tmpPath.endsWith(File.separator))
+            tmpPath += File.separator;
+        return tmpPath;
+    }
 }
 
