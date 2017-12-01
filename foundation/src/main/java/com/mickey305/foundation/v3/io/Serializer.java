@@ -40,7 +40,6 @@ public class Serializer {
             ois = new ObjectInputStream(is);
             return (T) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
             return null;
         } finally {
             try {

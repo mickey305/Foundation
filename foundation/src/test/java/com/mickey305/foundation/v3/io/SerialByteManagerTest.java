@@ -32,7 +32,7 @@ public class SerialByteManagerTest {
                 .deserialize();
 
         Log.i("serialized data -> " + Arrays.toString(data));
-        Log.i("Serialized data length -> " + data.length);
+        Log.i("serialized data length -> " + data.length);
         for (int i = 0; i < data.length; i++)
             Log.i(String.format("data[%03d] -> ", i) +
                     "original-value: " + ((char) data[i]) +
