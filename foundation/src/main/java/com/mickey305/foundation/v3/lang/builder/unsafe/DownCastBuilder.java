@@ -34,6 +34,10 @@ public class DownCastBuilder {
                     Object[] parameters = new Object[parameterTypes.length];
                     for (int i = 0; i < parameterTypes.length; i++) {
                         Class<?> type = parameterTypes[i];
+                        /**
+                         * 初期値を設定する
+                         * @see <a href="https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html">Default Values(by Oracle)</a>
+                         */
                         if (type.equals(byte.class)) {
                             parameters[i] = (byte) 0;
                         } else if (type.equals(short.class)) {
@@ -45,7 +49,7 @@ public class DownCastBuilder {
                         } else if (type.equals(float.class)) {
                             parameters[i] = 0.0f;
                         } else if (type.equals(double.class)) {
-                            parameters[i] = 0.0f;
+                            parameters[i] = 0.0d;
                         } else if (type.equals(char.class)) {
                             parameters[i] = '\u0000';
                         } else if (type.equals(boolean.class)) {

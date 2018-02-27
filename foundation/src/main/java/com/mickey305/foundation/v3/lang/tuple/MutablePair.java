@@ -1,17 +1,17 @@
 package com.mickey305.foundation.v3.lang.tuple;
 
-public class ImmutablePair<L, R> extends Pair<L, R> {
+public class MutablePair<L, R> extends Pair<L, R> {
     /** use serialVersionUID for interoperability */
-    private static final long serialVersionUID = 1833572580381837926L;
+    private static final long serialVersionUID = 3488116292685483870L;
 
     private org.apache.commons.lang3.tuple.ImmutablePair<L, R> pair;
 
-    private ImmutablePair(final L left, final R right) {
+    private MutablePair(final L left, final R right) {
         this.setPair(org.apache.commons.lang3.tuple.ImmutablePair.of(left, right));
     }
 
-    public static <L, R> ImmutablePair<L, R> of(final L left, final R right) {
-        return new ImmutablePair<>(left, right);
+    public static <L, R> MutablePair<L, R> of(final L left, final R right) {
+        return new MutablePair<>(left, right);
     }
 
     @Override
@@ -36,8 +36,8 @@ public class ImmutablePair<L, R> extends Pair<L, R> {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public ImmutablePair<R, L> swap() {
-        return new ImmutablePair<>(this.getRight(), this.getLeft());
+    public MutablePair<R, L> swap() {
+        return new MutablePair<>(this.getRight(), this.getLeft());
     }
 
     private org.apache.commons.lang3.tuple.ImmutablePair<L, R> getPair() {

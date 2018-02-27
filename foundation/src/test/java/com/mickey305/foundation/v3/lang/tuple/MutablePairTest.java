@@ -6,7 +6,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ImmutablePairTest {
+public class MutablePairTest {
     @Before
     public void setUp() throws Exception {
     }

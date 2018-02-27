@@ -13,7 +13,7 @@ public abstract class Single<T> implements Serializable {
     }
 
     public static <T> Single<T> of(T object) {
-        return new ImmutableSingle<>(object);
+        return new MutableSingle<>(object);
     }
 
     //===----------------------------------------------------------------------------------------------------------===//

@@ -1,7 +1,7 @@
 package com.mickey305.foundation.v3;
 
 import com.mickey305.foundation.v3.ansi.code.AnsiStringBuilderTest;
-import com.mickey305.foundation.v3.lang.tuple.ImmutablePairTest;
+import com.mickey305.foundation.v3.lang.tuple.MutablePairTest;
 import com.mickey305.foundation.v3.util.ListUtilTest;
 import com.mickey305.foundation.v3.util.concurrent.ContainerTest;
 import com.mickey305.foundation.v3.util.pattern.ComponentTest;
@@ -14,7 +14,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         AnsiStringBuilderTest.class,
-        ImmutablePairTest.class,
+        MutablePairTest.class,
         ContainerTest.class,
         ComponentTest.class,
         CompositeTest.class,
