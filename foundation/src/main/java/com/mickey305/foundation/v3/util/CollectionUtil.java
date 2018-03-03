@@ -132,6 +132,8 @@ public class CollectionUtil {
      * @return
      */
     public static <E> Collection<E> protectedCollection(@Nonnull Collection<? extends E> collection) {
+        if (collection.isEmpty())
+            return new ProtectedCollection<>(collection);
         Class<?> clz = firstNonnullElementOf(collection).getClass();
         if (ClassUtil.isBoxing(clz) || R.knownImmutableClasses().contains(clz))
             return new ProtectedCollection<>(collection);
@@ -147,6 +149,8 @@ public class CollectionUtil {
      * @return
      */
     public static <E> List<E> protectedList(@Nonnull List<? extends E> list) {
+        if (list.isEmpty())
+            return new ProtectedList<>(list);
         Class<?> clz = firstNonnullElementOf(list).getClass();
         if (ClassUtil.isBoxing(clz) || R.knownImmutableClasses().contains(clz))
             return new ProtectedList<>(list);
@@ -162,6 +166,8 @@ public class CollectionUtil {
      * @return
      */
     public static <E> Set<E> protectedSet(@Nonnull Set<? extends E> set) {
+        if (set.isEmpty())
+            return new ProtectedSet<>(set);
         Class<?> clz = firstNonnullElementOf(set).getClass();
         if (ClassUtil.isBoxing(clz) || R.knownImmutableClasses().contains(clz))
             return new ProtectedSet<>(set);
@@ -178,6 +184,8 @@ public class CollectionUtil {
      * @return
      */
     public static <K, V> Map<K, V> protectedMap(@Nonnull Map<? extends K, ? extends V> map) {
+        if (map.isEmpty())
+            return new ProtectedMap<>(map);
         Class<?> kc = firstNonnullElementOf(map.keySet()).getClass();
         Class<?> vc = firstNonnullElementOf(map.values()).getClass();
         if ((ClassUtil.isBoxing(kc) || R.knownImmutableClasses().contains(kc))
