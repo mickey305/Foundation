@@ -1,6 +1,7 @@
 package com.mickey305.foundation.v3;
 
 import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
@@ -28,6 +29,7 @@ import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -62,17 +64,17 @@ final class Workflow {
     }
 
     private void buildResourceClass() throws NoSuchMethodException, IOException {
-        Set<Class<?>> allClasses = new HashSet<>();
-        allClasses.addAll(new Reflections("java.",
-                new SubTypesScanner(false)).getSubTypesOf(Object.class));
-        allClasses.addAll(new Reflections("javax.",
-                new SubTypesScanner(false)).getSubTypesOf(Object.class));
-        allClasses.addAll(new Reflections("org.omg.",
-                new SubTypesScanner(false)).getSubTypesOf(Object.class));
-        allClasses.addAll(new Reflections("org.w3c.dom.",
-                new SubTypesScanner(false)).getSubTypesOf(Object.class));
-        allClasses.addAll(new Reflections("org.xml.sax.",
-                new SubTypesScanner(false)).getSubTypesOf(Object.class));
+        final String resourceClassName = "R";
+        final String cacheFieldName = "cn1_" + System.currentTimeMillis();
+        final String buildImmutableClassesMethodName = "buildImmutableClasses";
+        final String getImmutableClassesMethodName = "knownImmutableClasses";
+        final SubTypesScanner scanner = new SubTypesScanner(false);
+        final Set<Class<?>> allClasses = new HashSet<>();
+        allClasses.addAll(new Reflections("java.", scanner).getSubTypesOf(Object.class));
+        allClasses.addAll(new Reflections("javax.", scanner).getSubTypesOf(Object.class));
+        allClasses.addAll(new Reflections("org.omg.", scanner).getSubTypesOf(Object.class));
+        allClasses.addAll(new Reflections("org.w3c.dom.", scanner).getSubTypesOf(Object.class));
+        allClasses.addAll(new Reflections("org.xml.sax.", scanner).getSubTypesOf(Object.class));
 
         Method dummyMethod;
         dummyMethod = Workflow.class.getDeclaredMethod("dummy", Class.class);
@@ -84,44 +86,58 @@ final class Workflow {
         ClassName hashSet = ClassName.get(HashSet.class);
         TypeName setOfClass = ParameterizedTypeName.get(set, classElement);
 
-        MethodSpec.Builder getImmutableClassesMethodBuilder = MethodSpec
-                .methodBuilder("knownImmutableClasses")
-                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+        FieldSpec immutableClassesField = FieldSpec
+                .builder(setOfClass, cacheFieldName, Modifier.PRIVATE, Modifier.STATIC)
+                .build();
+        MethodSpec getImmutableClassesMethod = MethodSpec
+                .methodBuilder(getImmutableClassesMethodName)
+                .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.SYNCHRONIZED)
                 .returns(setOfClass)
-                .addStatement("$T result = new $T<>()", setOfClass, hashSet);
+                .beginControlFlow("if ("+ cacheFieldName +" == null)")
+                    .addStatement(buildImmutableClassesMethodName + "()")
+                .endControlFlow()
+                .addStatement("return $T.unmodifiableSet(" + cacheFieldName + ")", Collections.class)
+                .build();
+        MethodSpec.Builder buildImmutableClassesMethodBuilder = MethodSpec
+                .methodBuilder(buildImmutableClassesMethodName)
+                .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
+                .returns(void.class)
+                .addStatement(cacheFieldName + " = new $T<>()", hashSet);
         for (Class<?> elm: allClasses) {
             if (!elm.getName().contains("$")
                     && java.lang.reflect.Modifier.isPublic(elm.getModifiers())
                     && !Cloneable.class.isAssignableFrom(elm)
                     && checkImmutableClass(elm)) {
                 try {
-                    getImmutableClassesMethodBuilder.addStatement("result.add($T.class)", elm);
+                    buildImmutableClassesMethodBuilder.addStatement(cacheFieldName + ".add($T.class)", elm);
                 } catch (RuntimeException ignored) {}
             }
         }
-        MethodSpec getImmutableClasses = getImmutableClassesMethodBuilder
-                .addStatement("return result")
+        MethodSpec buildImmutableClassesMethod = buildImmutableClassesMethodBuilder
                 .build();
         MethodSpec privateCons = MethodSpec.constructorBuilder()
                 .addModifiers(Modifier.PRIVATE)
+                .addComment("This class is static view only class.")
                 .build();
-        TypeSpec ResourceClass = TypeSpec
-                .classBuilder("R")
+        TypeSpec resourceClass = TypeSpec
+                .classBuilder(resourceClassName)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addJavadoc("This class generated by Foundation workflow. Timestamp: " +
                         new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
                                 .format(new Timestamp(System.currentTimeMillis())) + System.lineSeparator())
+                .addField(immutableClassesField)
                 .addMethod(privateCons)
-                .addMethod(getImmutableClasses)
+                .addMethod(getImmutableClassesMethod)
+                .addMethod(buildImmutableClassesMethod)
                 .build();
         JavaFile javaFile = JavaFile
-                .builder(GEN_PKG, ResourceClass)
+                .builder(GEN_PKG, resourceClass)
                 .build();
 
         javaFile.writeTo(this.targetJavaFolder);
 
         System.out.println("Update class -> " +
-                javaFile.packageName + "." + ResourceClass.name + " of " + this.targetJavaFolder);
+                javaFile.packageName + "." + resourceClass.name + " of " + this.targetJavaFolder);
     }
 
     /**
