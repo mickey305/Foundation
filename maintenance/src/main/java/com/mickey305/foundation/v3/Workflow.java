@@ -1,5 +1,6 @@
 package com.mickey305.foundation.v3;
 
+import com.mickey305.foundation.v3.maintenance.tools.ReflectionsUtil;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
@@ -9,8 +10,6 @@ import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import com.squareup.javapoet.WildcardTypeName;
 import org.apache.commons.lang3.StringUtils;
-import org.reflections.Reflections;
-import org.reflections.scanners.SubTypesScanner;
 
 import javax.lang.model.element.Modifier;
 import java.io.File;
@@ -34,6 +33,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.Function;
 import java.util.regex.Pattern;
 
 final class Workflow {
@@ -68,13 +68,13 @@ final class Workflow {
         final String cacheFieldName = "cn1_" + System.currentTimeMillis();
         final String buildImmutableClassesMethodName = "buildImmutableClasses";
         final String getImmutableClassesMethodName = "knownImmutableClasses";
-        final SubTypesScanner scanner = new SubTypesScanner(false);
         final Set<Class<?>> allClasses = new HashSet<>();
-        allClasses.addAll(new Reflections("java.", scanner).getSubTypesOf(Object.class));
-        allClasses.addAll(new Reflections("javax.", scanner).getSubTypesOf(Object.class));
-        allClasses.addAll(new Reflections("org.omg.", scanner).getSubTypesOf(Object.class));
-        allClasses.addAll(new Reflections("org.w3c.dom.", scanner).getSubTypesOf(Object.class));
-        allClasses.addAll(new Reflections("org.xml.sax.", scanner).getSubTypesOf(Object.class));
+        final Function<String, Set<Class<?>>> searcher = ReflectionsUtil.getInstance().classSearcher();
+        allClasses.addAll(searcher.apply("java."));
+        allClasses.addAll(searcher.apply("javax."));
+        allClasses.addAll(searcher.apply("org.omg."));
+        allClasses.addAll(searcher.apply("org.w3c.dom."));
+        allClasses.addAll(searcher.apply("org.xml.sax."));
 
         Method dummyMethod;
         dummyMethod = Workflow.class.getDeclaredMethod("dummy", Class.class);

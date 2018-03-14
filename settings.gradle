@@ -1,6 +1,7 @@
 rootProject.name = 'Foundation'
-include 'maintenance'
 include 'foundation'
-if (!System.env.JITPACK)
+if (!System.env.JITPACK) {
+    include 'maintenance'
     include ':sample'
+}
 
