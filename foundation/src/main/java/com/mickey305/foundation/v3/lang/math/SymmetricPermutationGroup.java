@@ -2,6 +2,7 @@ package com.mickey305.foundation.v3.lang.math;
 
 public class SymmetricPermutationGroup extends AbstractNumberTable {
     public static final int SYMMETRIC_GROUP_ID = 0;
+    private static final long serialVersionUID = -3458582469777749583L;
 
     protected SymmetricPermutationGroup(int row, int column) {
         super(row, column);
@@ -23,5 +24,10 @@ public class SymmetricPermutationGroup extends AbstractNumberTable {
 
     private boolean checkPermutation() {
         return this.getRowSize() == 2 && this.getColumnSize() >= 1;
+    }
+
+    // todo
+    public SymmetricPermutationGroup compact() {
+        return null;
     }
 }

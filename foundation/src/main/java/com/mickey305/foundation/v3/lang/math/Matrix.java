@@ -30,6 +30,7 @@ public class Matrix extends AbstractNumberTable {
                 throw new IllegalArgumentException();
             System.arraycopy(initialTable[i], 0, this.getTable()[i], 0, this.getColumnSize());
         }
+        AbstractNumberTable.putSameValueTable(CONTAINS_SIGNATURE, this.getSignatureTable());
         // create metadata
         for (int i = 0; i < this.getRowSize(); i++)
             this.rowMetadataSet.add(new Metadata(i));
@@ -527,6 +528,7 @@ public class Matrix extends AbstractNumberTable {
      */
     public void putCellForcibly(Metadata row, Metadata column, Number cell) {
         this.getTable()[row.getIndex()][column.getIndex()] = cell;
+        this.getSignatureTable()[row.getIndex()][column.getIndex()] = CONTAINS_SIGNATURE;
         this.rowMetadataSet.add(row);
         this.columnMetadataSet.add(column);
     }
@@ -585,7 +587,8 @@ public class Matrix extends AbstractNumberTable {
      */
     public boolean putCell(Metadata row, Metadata column, Number cell) {
         final Number targetCell = this.getCell(row, column);
-        if (RelationalOperator.EQ.f.apply(targetCell, 0)) {
+        if (RelationalOperator.EQ.f.apply(targetCell, 0)
+                && this.getSignatureTable()[row.index][column.index] == NULL_SIGNATURE) {
             this.putCellForcibly(row, column, cell);
             return true;
         } else {

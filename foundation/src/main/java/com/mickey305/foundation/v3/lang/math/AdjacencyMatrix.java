@@ -1,6 +1,8 @@
 package com.mickey305.foundation.v3.lang.math;
 
 public class AdjacencyMatrix extends SquareMatrix {
+    private static final long serialVersionUID = 5050943778982300438L;
+
     protected AdjacencyMatrix(int size) {
         super(size);
     }

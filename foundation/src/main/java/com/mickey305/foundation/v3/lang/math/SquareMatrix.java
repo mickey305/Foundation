@@ -1,6 +1,8 @@
 package com.mickey305.foundation.v3.lang.math;
 
 public class SquareMatrix extends Matrix {
+    private static final long serialVersionUID = 8693082481180061222L;
+
     protected SquareMatrix(int size) {
         super(size, size);
     }

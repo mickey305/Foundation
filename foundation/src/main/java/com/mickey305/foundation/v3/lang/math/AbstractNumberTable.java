@@ -19,10 +19,13 @@ import java.io.Serializable;
 import java.util.Objects;
 
 abstract class AbstractNumberTable implements Serializable {
-    private static final long serialVersionUID = 786273423134669420L;
+    private static final long serialVersionUID = 3760170640858663146L;
+    protected static final int NULL_SIGNATURE = 0;
+    protected static final int CONTAINS_SIGNATURE = 1;
     private final int rowSize;
     private final int columnSize;
     private final Number[][] table;
+    private final int[][] signatureTable;
 
     protected enum Operator {
         ADD   (0x0101, OperationLogicHolder.ADD_DEFAULT_FUNC),
@@ -63,8 +66,10 @@ abstract class AbstractNumberTable implements Serializable {
         this.checkArgument(row, column);
         // initialize
         this.table = new Number[row][column];
+        this.signatureTable = new int[row][column];
         this.rowSize = row;
         this.columnSize = column;
+        AbstractNumberTable.putSameValueTable(NULL_SIGNATURE, this.signatureTable);
     }
 
     protected AbstractNumberTable(Number[][] initialTable) {
@@ -77,6 +82,7 @@ abstract class AbstractNumberTable implements Serializable {
                 throw new IllegalArgumentException();
             System.arraycopy(initialTable[i], 0, this.table[i], 0, this.getColumnSize());
         }
+        AbstractNumberTable.putSameValueTable(CONTAINS_SIGNATURE, this.signatureTable);
     }
 
     protected AbstractNumberTable(AbstractNumberTable table) {
@@ -95,6 +101,19 @@ abstract class AbstractNumberTable implements Serializable {
     private void checkArgument(int row, int column) {
         if (row <= 0 || column <= 0)
             throw new IllegalArgumentException();
+    }
+
+    /**
+     *
+     * @param data
+     * @param dest
+     * @return
+     */
+    protected static int[][] putSameValueTable(int data, int[][] dest) {
+        for (int i = 0; i < dest.length; i++)
+            for (int j = 0; j< dest[i].length; j++)
+                dest[i][j] = data;
+        return dest;
     }
     
     /**
@@ -155,6 +174,7 @@ abstract class AbstractNumberTable implements Serializable {
      */
     public void putCellForcibly(int row, int column, Number cell) {
         this.table[row][column] = cell;
+        this.signatureTable[row][column] = CONTAINS_SIGNATURE;
     }
 
     /**
@@ -166,7 +186,8 @@ abstract class AbstractNumberTable implements Serializable {
      */
     public boolean putCell(int row, int column, Number cell) {
         final Number targetCell = this.getCell(row, column);
-        if (RelationalOperator.EQ.f.apply(targetCell, 0)) {
+        if (RelationalOperator.EQ.f.apply(targetCell, 0)
+                && this.signatureTable[row][column] == NULL_SIGNATURE) {
             this.putCellForcibly(row, column, cell);
             return true;
         } else {
@@ -201,7 +222,7 @@ abstract class AbstractNumberTable implements Serializable {
      * @return
      */
     public Number getMaxCell() {
-        Number max = Double.MIN_VALUE;
+        Number max = this.getCell(0, 0);
         Number target;
         for (int i = 0; i < this.getRowSize(); i++) {
             for (int j = 0; j < this.getColumnSize(); j++) {
@@ -217,7 +238,7 @@ abstract class AbstractNumberTable implements Serializable {
      * @return
      */
     public Number getMinCell() {
-        Number min = Double.MAX_VALUE;
+        Number min = this.getCell(0, 0);
         Number target;
         for (int i = 0; i < this.getRowSize(); i++) {
             for (int j = 0; j < this.getColumnSize(); j++) {
@@ -414,6 +435,10 @@ abstract class AbstractNumberTable implements Serializable {
 
     public Number[][] getTable() {
         return table;
+    }
+
+    public int[][] getSignatureTable() {
+        return signatureTable;
     }
 
     public int getRowSize() {
