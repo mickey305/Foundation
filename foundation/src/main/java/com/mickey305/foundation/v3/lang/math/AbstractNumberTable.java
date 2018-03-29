@@ -19,9 +19,9 @@ import java.io.Serializable;
 import java.util.Objects;
 
 abstract class AbstractNumberTable implements Serializable {
-    private static final long serialVersionUID = 3760170640858663146L;
     protected static final int NULL_SIGNATURE = 0;
     protected static final int CONTAINS_SIGNATURE = 1;
+    private static final long serialVersionUID = -6616915381207491692L;
     private final int rowSize;
     private final int columnSize;
     private final Number[][] table;
@@ -437,7 +437,7 @@ abstract class AbstractNumberTable implements Serializable {
         return table;
     }
 
-    public int[][] getSignatureTable() {
+    protected int[][] getSignatureTable() {
         return signatureTable;
     }
 
