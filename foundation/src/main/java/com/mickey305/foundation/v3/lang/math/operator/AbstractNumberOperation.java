@@ -23,17 +23,17 @@ public abstract class AbstractNumberOperation<R> implements BinaryFunction<Numbe
 
     @Override
     public R apply(Number l, Number r) {
-        R result;
-
-        // default operation invoke
-        result = this.operationDefault(l, r);
-
-        if(result != null)
-            return result;
+        R result = null;
 
         // extension operation invoke
         if (this.getExtension() != null)
             result = this.getExtension().apply(l, r);
+
+        if(result != null)
+            return result;
+
+        // default operation invoke
+        result = this.operationDefault(l, r);
 
         if(result != null)
             return result;

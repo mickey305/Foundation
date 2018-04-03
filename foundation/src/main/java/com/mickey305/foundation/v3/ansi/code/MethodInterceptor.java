@@ -25,11 +25,11 @@
 //        Set<ConstraintViolation<Object>> violations;
 //        ExecutableValidator executableValidator = validator.forExecutables();
 //        violations = executableValidator.validateParameters(
-//                context.getTarget(), context.getMethod(), context.getParameters());
+//                context.getElements(), context.getMethod(), context.getParameters());
 //        processViolations(violations);
 //        Object result = context.proceed();
 //        violations = executableValidator.validateReturnValue(
-//                context.getTarget(), context.getMethod(), result);
+//                context.getElements(), context.getMethod(), result);
 //        processViolations(violations);
 //        return result;
 //    }

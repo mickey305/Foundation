@@ -2,8 +2,10 @@ package com.mickey305.foundation.v3.lang.math;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -12,6 +14,11 @@ public class SymmetricPermutationGroup extends AbstractNumberTable {
     public static final int SYMMETRIC_GROUP_ID = 0;
     private static final long serialVersionUID = 4695627851459302091L;
     private final Set<Number> dataSet;
+
+    public enum Type {
+        Even,
+        Odd
+    }
 
     protected SymmetricPermutationGroup(Number[][] table) {
         super(table);
@@ -31,7 +38,7 @@ public class SymmetricPermutationGroup extends AbstractNumberTable {
             final boolean status1 = this.dataSet.contains(data);
             final boolean status2 = dataSet.add(data);
             if (!(status1 && status2))
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException("status1=" + status1 + ", status2=" + status2);
         }
     }
 
@@ -155,6 +162,15 @@ public class SymmetricPermutationGroup extends AbstractNumberTable {
 
     /**
      *
+     * @param permutation
+     * @return
+     */
+    public static int sgn(SymmetricPermutationGroup permutation) {
+        return (permutation.is(Type.Even))? 1: -1;
+    }
+
+    /**
+     *
      * @return
      */
     private boolean checkPermutation() {
@@ -172,6 +188,61 @@ public class SymmetricPermutationGroup extends AbstractNumberTable {
     }
     @Override public boolean putCell(int row, int column, Number data) {
         throw new UnsupportedOperationException();
+    }
+
+    /**
+     *
+     * @return
+     */
+    public List<? extends SymmetricCycleGroup> convertCycle() {
+        List<SymmetricCycleGroup> resultCycle = new ArrayList<>();
+        Set<Number> checkedElms = new HashSet<>();
+
+        for (Number tpData: this.getHorizontalArray(0)) {
+            if (checkedElms.contains(tpData))
+                continue;
+
+            // search
+            List<Pair<Number, Number>> list = new ArrayList<>();
+            Number tmpData = tpData;
+            do {
+                checkedElms.add(tmpData);
+                list.add(Pair.of(tmpData, this.getPairOf(tmpData)));
+                tmpData = this.getPairOf(tmpData);
+            } while (!tmpData.equals(tpData));
+
+            resultCycle.add(new SymmetricCycleGroup(list));
+        }
+
+        return resultCycle;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public List<? extends SymmetricTransPositionGroup> convertTransPosition() {
+        List<SymmetricTransPositionGroup> resultTransPosition = new ArrayList<>();
+        final List<? extends SymmetricCycleGroup> cycles = this.convertCycle();
+        for (SymmetricCycleGroup cycle: cycles) {
+            if (cycle.getColumnSize() == 2) {
+                resultTransPosition.add(new SymmetricTransPositionGroup(cycle.getTable()));
+            } else {
+                Number suffix = null;
+                final Deque<Number> numbers = new ArrayDeque<>(cycle.getColumnSize() -1);
+                for (Number data: cycle.getHorizontalArray(0)) {
+                    if (suffix == null)
+                        suffix = data;
+                    else
+                        numbers.offerFirst(data);
+                }
+                while (!numbers.isEmpty()) {
+                    resultTransPosition.add(
+                            new SymmetricTransPositionGroup(Pair.of(suffix, numbers.pollFirst())));
+                }
+            }
+        }
+        return resultTransPosition;
     }
 
     /**
@@ -231,5 +302,19 @@ public class SymmetricPermutationGroup extends AbstractNumberTable {
     public Number getPairOf(Number num) {
         final Number[][] table = this.getTable();
         return table[1][this.getColumnIndexOf(num)];
+    }
+
+    /**
+     *
+     * @param type
+     * @return
+     */
+    public boolean is(Type type) {
+        return type == Type.Even && this.convertTransPosition().size() % 2 == 0
+            || type == Type.Odd  && this.convertTransPosition().size() % 2 != 0;
+    }
+
+    protected Set<Number> getDataSet() {
+        return dataSet;
     }
 }
