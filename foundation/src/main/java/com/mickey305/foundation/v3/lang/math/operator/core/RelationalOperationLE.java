@@ -17,6 +17,10 @@ public class RelationalOperationLE extends RelationalOperationEQ {
 
     @Override
     protected Boolean operationDefault(Number l, Number r) {
-        return super.operationDefault(l, r) || opLT.operationDefault(l, r);
+        final Boolean status1 = super.operationDefault(l, r);
+        final Boolean status2 = opLT.operationDefault(l, r);
+        return (status1 == null || status2 == null)
+                ? null
+                : status1 || status2;
     }
 }

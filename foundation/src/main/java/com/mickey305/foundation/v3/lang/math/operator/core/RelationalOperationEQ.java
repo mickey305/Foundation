@@ -2,6 +2,10 @@ package com.mickey305.foundation.v3.lang.math.operator.core;
 
 import com.mickey305.foundation.v3.compat.util.BinaryFunction;
 import com.mickey305.foundation.v3.lang.math.operator.AbstractNumberOperation;
+import org.apache.commons.math3.fraction.BigFraction;
+import org.apache.commons.math3.fraction.Fraction;
+
+import java.math.BigInteger;
 
 public class RelationalOperationEQ extends AbstractNumberOperation<Boolean> {
     public RelationalOperationEQ() {
@@ -32,6 +36,15 @@ public class RelationalOperationEQ extends AbstractNumberOperation<Boolean> {
 
         if (targetClazz.equals(Byte.class))
             return l.byteValue()   == r.byteValue();
+
+        if (targetClazz.equals(BigInteger.class))
+            return ((BigInteger) l).compareTo(super.convertToBigInteger(r)) == 0;
+
+        if (targetClazz.equals(Fraction.class))
+            return ((Fraction) l).compareTo(super.convertToFraction(r)) == 0;
+
+        if (targetClazz.equals(BigFraction.class))
+            return ((BigFraction) l).compareTo(super.convertToBigFraction(r)) == 0;
 
         return null;
     }

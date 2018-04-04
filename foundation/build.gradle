@@ -22,6 +22,8 @@ dependencies {
     compile     group: 'org.hibernate'           , name: 'hibernate-validator', version: '6.0.5.Final'
     compile     group: 'org.glassfish'           , name: 'javax.el'           , version: '3.0.1-b08'
     compile     group: 'com.google.code.findbugs', name: 'jsr305'             , version: '3.0.2'
+    compile     group: 'org.apache.commons'      , name: 'commons-math3'      , version: '3.6.1'
+
 
     // - Maven repository hosting
     //  URL: http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22uk.com.robust-it%22%20AND%20a%3A%22cloning%22

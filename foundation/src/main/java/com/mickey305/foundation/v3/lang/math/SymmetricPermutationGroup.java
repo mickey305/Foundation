@@ -12,7 +12,7 @@ import java.util.Set;
 
 public class SymmetricPermutationGroup extends AbstractNumberTable {
     public static final int SYMMETRIC_GROUP_ID = 0;
-    private static final long serialVersionUID = 4695627851459302091L;
+    private static final long serialVersionUID = -6564909210449073110L;
     private final Set<Number> dataSet;
 
     public enum Type {

@@ -17,6 +17,10 @@ public class RelationalOperationGE extends RelationalOperationEQ {
 
     @Override
     protected Boolean operationDefault(Number l, Number r) {
-        return super.operationDefault(l, r) || opGT.operationDefault(l, r);
+        final Boolean status1 = super.operationDefault(l, r);
+        final Boolean status2 = opGT.operationDefault(l, r);
+        return (status1 == null || status2 == null)
+                ? null
+                : status1 || status2;
     }
 }

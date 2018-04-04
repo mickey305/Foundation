@@ -1,6 +1,8 @@
 package com.mickey305.foundation.v3.lang.math;
 
+import com.mickey305.foundation.v3.util.Permutation;
 import org.apache.commons.lang3.tuple.Triple;
+import org.apache.commons.math3.fraction.BigFraction;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -9,7 +11,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 public class Matrix extends AbstractNumberTable {
-    private static final long serialVersionUID = 1425558936393536592L;
+    private static final long serialVersionUID = -6834786104759193928L;
     private final Set<Metadata> rowMetadataSet;
     private final Set<Metadata> columnMetadataSet;
 
@@ -313,18 +315,76 @@ public class Matrix extends AbstractNumberTable {
         return matrix;
     }
 
-    // todo
     /**
      *
      * @return
      */
     public Matrix createInverseMatrix() {
-        if(!this.isSquare())
+        if(!this.isRegular())
             throw new UnsupportedOperationException();
 
-        final Matrix resultMatrix = Matrix.of(this);
-        final Matrix extensionMatrix = Matrix.horizontalBind(this, this.createIdentityMatrix());
-        return resultMatrix;
+        final BigFraction bigFractionZero     = BigFraction.ZERO;
+        final BigFraction bigFractionOne      = BigFraction.ONE;
+        final BigFraction bigFractionMinusOne = BigFraction.MINUS_ONE;
+        final Matrix em = Matrix.horizontalBind(this, this.createIdentityMatrix());
+        for (int i = 0; i < em.getRowSize(); i++)
+            for (int j = 0; j < em.getColumnSize(); j++)
+                em.putCellForcibly(i, j, Operator.ADD.f.apply(bigFractionZero, em.getCell(i,j)));
+
+        // CELL(i,i) <==> NE ZERO transformation
+        for (int i = 0; i < this.getRowSize(); i++) {
+            if (RelationalOperator.EQ.f.apply(em.getCell(i, i), bigFractionZero)) {
+                final Number[] vertical = em.getVerticalArray(i);
+                for (int j = 0; j < vertical.length; j++) {
+                    if (j != i && RelationalOperator.NE.f.apply(vertical[j], bigFractionZero)) {
+                        em.multiAndAddRow(bigFractionOne, j, i);
+                        break;
+                    }
+                }
+            }
+        }
+
+        // CELL(i,j), i != j <==> EQ ZERO transformation
+        for (int j = 0; j < this.getColumnSize(); j++) {
+            for (int i = 0; i < this.getRowSize(); i++) {
+                final Number targetCell = em.getCell(i, j);
+                final Number[] vertical = em.getVerticalArray(j);
+                if (j != i && RelationalOperator.NE.f.apply(vertical[j], bigFractionZero)) {
+                    int kk = 0;
+                    int max = Integer.MIN_VALUE;
+                    for (int k = 0; k < vertical.length; k++) {
+                        int cntZero = 0;
+                        final Number[] horizontal = em.getHorizontalArray(k);
+                        for (int l = 0; l < this.getColumnSize(); l++) {
+                            if (RelationalOperator.EQ.f.apply(horizontal[l], bigFractionZero))
+                                cntZero++;
+                        }
+                        if (i != k && RelationalOperator.NE.f.apply(vertical[k], bigFractionZero)) {
+                            if (max < cntZero) {
+                                max = cntZero;
+                                kk = k;
+                            }
+                        }
+                    }
+                    Number scalar = Operator.DIV.f.apply(targetCell, vertical[kk]);
+                    scalar = Operator.MULTI.f.apply(scalar, bigFractionMinusOne);
+                    em.multiAndAddRow(scalar, kk, i);
+                }
+            }
+        }
+
+        // CELL(i,i) <==> EQ ONE transformation
+        for (int i = 0; i < this.getRowSize(); i++) {
+            if (RelationalOperator.NE.f.apply(em.getCell(i, i), bigFractionOne)) {
+                em.multiRow(Operator.DIV.f.apply(bigFractionOne, em.getCell(i, i)), i);
+            }
+        }
+
+        final Matrix result = Matrix.of(this);
+        for (int i = 0; i < result.getRowSize(); i++)
+            for (int j = 0; j < result.getColumnSize(); j++)
+                result.putCellForcibly(i, j, em.getCell(i, this.getColumnSize() + j));
+        return result;
     }
 
     /**
@@ -342,6 +402,46 @@ public class Matrix extends AbstractNumberTable {
             }
         }
         return matrix;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Number determinant() {
+        if (!this.isSquare())
+            throw new UnsupportedOperationException();
+
+        Number result = 0;
+        final Integer[] rowIndexes = new Integer[this.getColumnSize()];
+        for (int i = 0; i < rowIndexes.length; i++)
+            rowIndexes[i] = i;
+        final Permutation<Integer> rowPermutation = new Permutation<>(rowIndexes);
+
+        do {
+            final SymmetricPermutationGroup permutationGroup = new SymmetricPermutationGroup(
+                    new Integer[][]{rowIndexes, rowPermutation.getElements()});
+
+            Number multiResult = 1;
+            final int sgn = SymmetricPermutationGroup.sgn(permutationGroup);
+            for (int j = 0; j < permutationGroup.getColumnSize(); j++) {
+                final Number data = this.getCell(j, (Integer) permutationGroup.getPairOf(j));
+                multiResult = Operator.MULTI.f.apply(data, multiResult);
+            }
+            multiResult = Operator.MULTI.f.apply(multiResult, sgn);
+
+            result = Operator.ADD.f.apply(multiResult, result);
+        } while (rowPermutation.next());
+
+        return result;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isRegular() {
+        return this.isSquare() && RelationalOperator.NE.f.apply(this.determinant(), 0);
     }
 
     /**
@@ -412,7 +512,7 @@ public class Matrix extends AbstractNumberTable {
      * @param row
      * @return
      */
-    public Number[] multiRow(int scalar, int row) {
+    public Number[] multiRow(Number scalar, int row) {
         final Matrix matrix = Matrix.of(new Number[][]{this.getHorizontalArray(row)});
         final Number[] rowData = Matrix.multi(scalar, matrix).getHorizontalArray(0);
         this.putRowForcibly(row, rowData);
@@ -425,7 +525,7 @@ public class Matrix extends AbstractNumberTable {
      * @param column
      * @return
      */
-    public Number[] multiColumn(int scalar, int column) {
+    public Number[] multiColumn(Number scalar, int column) {
         final Matrix matrix = Matrix.of(new Number[][]{this.getVerticalArray(column)});
         final Number[] columnData = Matrix.multi(scalar, matrix).getHorizontalArray(0);
         this.putColumnForcibly(column, columnData);
@@ -438,7 +538,7 @@ public class Matrix extends AbstractNumberTable {
      * @param multiRow
      * @param addRow
      */
-    public void multiAndAddRow(int scalar, int multiRow, int addRow) {
+    public void multiAndAddRow(Number scalar, int multiRow, int addRow) {
         Matrix matrix;
         matrix = Matrix.of(new Number[][]{this.getHorizontalArray(multiRow)});
         final Matrix multiMatrix = Matrix.multi(scalar, matrix);
@@ -454,7 +554,7 @@ public class Matrix extends AbstractNumberTable {
      * @param multiColumn
      * @param addColumn
      */
-    public void multiAndAddColumn(int scalar, int multiColumn, int addColumn) {
+    public void multiAndAddColumn(Number scalar, int multiColumn, int addColumn) {
         Matrix matrix;
         matrix = Matrix.of(new Number[][]{this.getVerticalArray(multiColumn)});
         final Matrix multiMatrix = Matrix.multi(scalar, matrix);
@@ -479,7 +579,7 @@ public class Matrix extends AbstractNumberTable {
      * @param rowData
      */
     protected void putRowForcibly(Metadata row, Number[] rowData) {
-        if (rowData.length != this.getRowSize())
+        if (rowData.length != this.getColumnSize())
             throw new IllegalArgumentException();
 
         int i = 0;
@@ -502,7 +602,7 @@ public class Matrix extends AbstractNumberTable {
      * @param columnData
      */
     protected void putColumnForcibly(Metadata column, Number[] columnData) {
-        if (columnData.length != this.getColumnSize())
+        if (columnData.length != this.getRowSize())
             throw new IllegalArgumentException();
 
         int i = 0;

@@ -2,6 +2,10 @@ package com.mickey305.foundation.v3.lang.math.operator.core;
 
 import com.mickey305.foundation.v3.compat.util.BinaryFunction;
 import com.mickey305.foundation.v3.lang.math.operator.AbstractNumberOperation;
+import org.apache.commons.math3.fraction.BigFraction;
+import org.apache.commons.math3.fraction.Fraction;
+
+import java.math.BigInteger;
 
 public class NumberOperationSub extends AbstractNumberOperation<Number> {
     public NumberOperationSub() {
@@ -32,6 +36,15 @@ public class NumberOperationSub extends AbstractNumberOperation<Number> {
 
         if (targetClazz.equals(Byte.class))
             return l.byteValue()   - r.byteValue();
+
+        if (targetClazz.equals(BigInteger.class))
+            return ((BigInteger) l).subtract(super.convertToBigInteger(r));
+
+        if (targetClazz.equals(Fraction.class))
+            return ((Fraction) l).subtract(super.convertToFraction(r));
+
+        if (targetClazz.equals(BigFraction.class))
+            return ((BigFraction) l).subtract(super.convertToBigFraction(r));
 
         return null;
     }
