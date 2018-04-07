@@ -4,22 +4,13 @@ import com.mickey305.foundation.v3.util.Permutation;
 import org.apache.commons.lang3.tuple.Triple;
 import org.apache.commons.math3.fraction.BigFraction;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 public class Matrix extends AbstractNumberTable {
-    private static final long serialVersionUID = -6834786104759193928L;
-    private final Set<Metadata> rowMetadataSet;
-    private final Set<Metadata> columnMetadataSet;
+    private static final long serialVersionUID = 1685829924081972076L;
 
     protected Matrix(int row, int column) {
         super(row, column);
-        // initialize
-        this.rowMetadataSet = new HashSet<>(row);
-        this.columnMetadataSet = new HashSet<>(column);
     }
 
     protected Matrix(Number[][] initialTable) {
@@ -33,20 +24,10 @@ public class Matrix extends AbstractNumberTable {
             System.arraycopy(initialTable[i], 0, this.getTable()[i], 0, this.getColumnSize());
         }
         AbstractNumberTable.putSameValueTable(CONTAINS_SIGNATURE, this.getSignatureTable());
-        // create metadata
-        for (int i = 0; i < this.getRowSize(); i++)
-            this.rowMetadataSet.add(new Metadata(i));
-        for (int i = 0; i < this.getColumnSize(); i++)
-            this.columnMetadataSet.add(new Metadata(i));
     }
 
     protected Matrix(Matrix matrix) {
         this(matrix.getTable());
-        // recreate metadata
-        this.rowMetadataSet.retainAll(Collections.emptySet());
-        this.columnMetadataSet.retainAll(Collections.emptySet());
-        this.rowMetadataSet.addAll(matrix.rowMetadataSet);
-        this.columnMetadataSet.addAll(matrix.columnMetadataSet);
     }
 
     protected Matrix(Number scalar) {
@@ -149,10 +130,6 @@ public class Matrix extends AbstractNumberTable {
             throw new UnsupportedOperationException();
 
         final Matrix resultMatrix = Matrix.of(new Number[leftMatrix.getRowSize()][rightMatrix.getColumnSize()]);
-        resultMatrix.rowMetadataSet.retainAll(Collections.emptySet());
-        resultMatrix.columnMetadataSet.retainAll(Collections.emptySet());
-        resultMatrix.rowMetadataSet.addAll(leftMatrix.rowMetadataSet);
-        resultMatrix.columnMetadataSet.addAll(rightMatrix.columnMetadataSet);
         for (int i = 0; i < leftMatrix.getRowSize(); i++) {
             Number[] leftRec = leftMatrix.getHorizontalArray(i);
             for (int j = 0; j < rightMatrix.getColumnSize(); j++) {
@@ -163,9 +140,11 @@ public class Matrix extends AbstractNumberTable {
                 Number[] multiRec = new Number[leftRec.length];
                 for (int k = 0; k < multiRec.length; k++)
                     multiRec[k] = Operator.MULTI.f.apply(leftRec[k], rightRec[k]);
+
                 Number resultCell = 0;
                 for (Number cell: multiRec)
                     resultCell = Operator.ADD.f.apply(cell, resultCell);
+
                 resultMatrix.putCellForcibly(i, j, resultCell);
             }
         }
@@ -211,6 +190,7 @@ public class Matrix extends AbstractNumberTable {
         Matrix resultMatrix = matrix;
         for (int i = 0; i < index - 1; i++)
             resultMatrix = Matrix.multi(resultMatrix, matrix);
+
         return resultMatrix;
     }
 
@@ -225,14 +205,6 @@ public class Matrix extends AbstractNumberTable {
             throw new UnsupportedOperationException();
 
         final Matrix resultMatrix = Matrix.of(l.getRowSize(), l.getColumnSize() + r.getColumnSize());
-        final Set<Metadata> newColumnMetadataSet = new HashSet<>(r.getColumnSize());
-        for (Metadata metadata: r.columnMetadataSet)
-            newColumnMetadataSet.add(Metadata.of(metadata.getIndex() + l.getColumnSize(), metadata.getTitle()));
-        resultMatrix.rowMetadataSet.retainAll(Collections.emptySet());
-        resultMatrix.rowMetadataSet.addAll(l.rowMetadataSet);
-        resultMatrix.columnMetadataSet.retainAll(Collections.emptySet());
-        resultMatrix.columnMetadataSet.addAll(l.columnMetadataSet);
-        resultMatrix.columnMetadataSet.addAll(newColumnMetadataSet);
         for(int i = 0; i < resultMatrix.getRowSize(); i++) {
             for (int j = 0; j < resultMatrix.getColumnSize(); j++) {
                 Matrix targetMatrix = r;
@@ -259,14 +231,6 @@ public class Matrix extends AbstractNumberTable {
             throw new UnsupportedOperationException();
 
         final Matrix resultMatrix = Matrix.of(t.getRowSize() + b.getRowSize(), t.getColumnSize());
-        final Set<Metadata> newRowMetadataSet = new HashSet<>(b.getRowSize());
-        for (Metadata metadata: b.rowMetadataSet)
-            newRowMetadataSet.add(Metadata.of(metadata.getIndex() + t.getRowSize(), metadata.getTitle()));
-        resultMatrix.rowMetadataSet.retainAll(Collections.emptySet());
-        resultMatrix.rowMetadataSet.addAll(t.rowMetadataSet);
-        resultMatrix.rowMetadataSet.addAll(newRowMetadataSet);
-        resultMatrix.columnMetadataSet.retainAll(Collections.emptySet());
-        resultMatrix.columnMetadataSet.addAll(t.columnMetadataSet);
         for(int i = 0; i < resultMatrix.getRowSize(); i++) {
             Matrix targetMatrix = b;
             int ii = i - t.getRowSize();
@@ -307,11 +271,10 @@ public class Matrix extends AbstractNumberTable {
      */
     public Matrix createZeroMatrix() {
         final Matrix matrix = Matrix.of(this);
-        for(int i = 0; i < this.getRowSize(); i++) {
-            for (int j = 0; j < this.getColumnSize(); j++) {
+        for(int i = 0; i < this.getRowSize(); i++)
+            for (int j = 0; j < this.getColumnSize(); j++)
                 matrix.putCellForcibly(i, j ,0);
-            }
-        }
+
         return matrix;
     }
 
@@ -355,10 +318,10 @@ public class Matrix extends AbstractNumberTable {
                     for (int k = 0; k < vertical.length; k++) {
                         int cntZero = 0;
                         final Number[] horizontal = em.getHorizontalArray(k);
-                        for (int l = 0; l < this.getColumnSize(); l++) {
+                        for (int l = 0; l < this.getColumnSize(); l++)
                             if (RelationalOperator.EQ.f.apply(horizontal[l], bigFractionZero))
                                 cntZero++;
-                        }
+
                         if (i != k && RelationalOperator.NE.f.apply(vertical[k], bigFractionZero)) {
                             if (max < cntZero) {
                                 max = cntZero;
@@ -374,11 +337,9 @@ public class Matrix extends AbstractNumberTable {
         }
 
         // CELL(i,i) <==> EQ ONE transformation
-        for (int i = 0; i < this.getRowSize(); i++) {
-            if (RelationalOperator.NE.f.apply(em.getCell(i, i), bigFractionOne)) {
+        for (int i = 0; i < this.getRowSize(); i++)
+            if (RelationalOperator.NE.f.apply(em.getCell(i, i), bigFractionOne))
                 em.multiRow(Operator.DIV.f.apply(bigFractionOne, em.getCell(i, i)), i);
-            }
-        }
 
         final Matrix result = Matrix.of(this);
         for (int i = 0; i < result.getRowSize(); i++)
@@ -445,42 +406,6 @@ public class Matrix extends AbstractNumberTable {
     }
 
     /**
-     *
-     * @param rowMetadata
-     * @return
-     */
-    public boolean addRowMetadata(Metadata rowMetadata) {
-        return this.rowMetadataSet.add(rowMetadata);
-    }
-
-    /**
-     *
-     * @param columnMetadata
-     * @return
-     */
-    public boolean addColumnMetadata(Metadata columnMetadata) {
-        return this.columnMetadataSet.add(columnMetadata);
-    }
-
-    /**
-     *
-     * @param rowMetadataCollection
-     * @return
-     */
-    public boolean addRowMetadataCollection(Collection<? extends Metadata> rowMetadataCollection) {
-        return this.rowMetadataSet.addAll(rowMetadataCollection);
-    }
-
-    /**
-     *
-     * @param columnMetadataCollection
-     * @return
-     */
-    public boolean addColumnMetadataCollection(Collection<? extends Metadata> columnMetadataCollection) {
-        return this.columnMetadataSet.addAll(columnMetadataCollection);
-    }
-
-    /**
      * elementary transformation method - 1 (row method - 1)
      * @param row1
      * @param row2
@@ -489,8 +414,6 @@ public class Matrix extends AbstractNumberTable {
         Number[] tmpRec = this.getHorizontalArray(row1);
         this.putRowForcibly(row1, this.getHorizontalArray(row2));
         this.putRowForcibly(row2, tmpRec);
-        this.findRowMetadata(row1).index = row2;
-        this.findRowMetadata(row2).index = row1;
     }
 
     /**
@@ -502,8 +425,6 @@ public class Matrix extends AbstractNumberTable {
         Number[] tmpRec = this.getVerticalArray(column1);
         this.putColumnForcibly(column1, this.getVerticalArray(column2));
         this.putColumnForcibly(column2, tmpRec);
-        this.findColumnMetadata(column1).index = column2;
-        this.findColumnMetadata(column2).index = column1;
     }
 
     /**
@@ -570,21 +491,12 @@ public class Matrix extends AbstractNumberTable {
      * @param rowData
      */
     @Override protected void putRowForcibly(int row, Number[] rowData) {
-        this.putRowForcibly(new Metadata(row), rowData);
-    }
-
-    /**
-     *
-     * @param row
-     * @param rowData
-     */
-    protected void putRowForcibly(Metadata row, Number[] rowData) {
         if (rowData.length != this.getColumnSize())
             throw new IllegalArgumentException();
 
         int i = 0;
         for(Number cell: rowData)
-            this.putCellForcibly(row, new Metadata(i++), cell);
+            this.putCellForcibly(row, i++, cell);
     }
 
     /**
@@ -593,21 +505,12 @@ public class Matrix extends AbstractNumberTable {
      * @param columnData
      */
     @Override protected void putColumnForcibly(int column, Number[] columnData) {
-        this.putColumnForcibly(new Metadata(column), columnData);
-    }
-
-    /**
-     *
-     * @param column
-     * @param columnData
-     */
-    protected void putColumnForcibly(Metadata column, Number[] columnData) {
         if (columnData.length != this.getRowSize())
             throw new IllegalArgumentException();
 
         int i = 0;
         for(Number cell: columnData)
-            this.putCellForcibly(new Metadata(i++), column, cell);
+            this.putCellForcibly(i++, column, cell);
     }
 
     /**
@@ -617,35 +520,15 @@ public class Matrix extends AbstractNumberTable {
      * @param cell
      */
     @Override public void putCellForcibly(int row, int column, Number cell) {
-        this.putCellForcibly(new Metadata(row), new Metadata(column), cell);
-    }
-
-    /**
-     *
-     * @param row
-     * @param column
-     * @param cell
-     */
-    public void putCellForcibly(Metadata row, Metadata column, Number cell) {
-        this.getTable()[row.getIndex()][column.getIndex()] = cell;
-        this.getSignatureTable()[row.getIndex()][column.getIndex()] = CONTAINS_SIGNATURE;
-        this.rowMetadataSet.add(row);
-        this.columnMetadataSet.add(column);
+        this.getTable()[row][column] = cell;
+        this.getSignatureTable()[row][column] = CONTAINS_SIGNATURE;
     }
 
     /**
      *
      * @param point
      */
-    private void putCellForcibly(Triple<Metadata, Metadata, Number> point) {
-        this.putCellForcibly(point.getLeft(), point.getMiddle(), point.getRight());
-    }
-
-    /**
-     *
-     * @param point
-     */
-    private void putCellForciblyWithIndex(Triple<Integer, Integer, Number> point) {
+    private void putCellForcibly(Triple<Integer, Integer, Number> point) {
         this.putCellForcibly(point.getLeft(), point.getMiddle(), point.getRight());
     }
 
@@ -653,18 +536,9 @@ public class Matrix extends AbstractNumberTable {
      *
      * @param points
      */
-    public void putCellsForcibly(Set<Triple<Metadata, Metadata, Number>> points) {
-        for (Triple<Metadata, Metadata, Number> point: points)
-            this.putCellForcibly(point);
-    }
-
-    /**
-     *
-     * @param points
-     */
-    public void putCellsForciblyWithIndex(Set<Triple<Integer, Integer, Number>> points) {
+    public void putCellsForcibly(Set<Triple<Integer, Integer, Number>> points) {
         for (Triple<Integer, Integer, Number> point: points)
-            this.putCellForciblyWithIndex(point);
+            this.putCellForcibly(point);
     }
 
     /**
@@ -675,20 +549,9 @@ public class Matrix extends AbstractNumberTable {
      * @return
      */
     @Override public boolean putCell(int row, int column, Number cell) {
-        return this.putCell(new Metadata(row), new Metadata(column), cell);
-    }
-
-    /**
-     *
-     * @param row
-     * @param column
-     * @param cell
-     * @return
-     */
-    public boolean putCell(Metadata row, Metadata column, Number cell) {
         final Number targetCell = this.getCell(row, column);
         if (RelationalOperator.EQ.f.apply(targetCell, 0)
-                && this.getSignatureTable()[row.index][column.index] == NULL_SIGNATURE) {
+                && this.getSignatureTable()[row][column] == NULL_SIGNATURE) {
             this.putCellForcibly(row, column, cell);
             return true;
         } else {
@@ -701,16 +564,7 @@ public class Matrix extends AbstractNumberTable {
      * @param point
      * @return
      */
-    private boolean putCell(Triple<Metadata, Metadata, Number> point) {
-        return this.putCell(point.getLeft(), point.getMiddle(), point.getRight());
-    }
-
-    /**
-     *
-     * @param point
-     * @return
-     */
-    private boolean putCellWithIndex(Triple<Integer, Integer, Number> point) {
+    private boolean putCell(Triple<Integer, Integer, Number> point) {
         return this.putCell(point.getLeft(), point.getMiddle(), point.getRight());
     }
 
@@ -719,57 +573,14 @@ public class Matrix extends AbstractNumberTable {
      * @param points
      * @return
      */
-    public boolean putCells(Set<Triple<Metadata, Metadata, Number>> points) {
+    public boolean putCells(Set<Triple<Integer, Integer, Number>> points) {
         boolean status;
-        for (Triple<Metadata, Metadata, Number> point: points) {
+        for (Triple<Integer, Integer, Number> point: points) {
             status = this.putCell(point);
             if (!status)
                 return false;
         }
         return true;
-    }
-
-    /**
-     *
-     * @param points
-     * @return
-     */
-    public boolean putCellsWithIndex(Set<Triple<Integer, Integer, Number>> points) {
-        boolean status;
-        for (Triple<Integer, Integer, Number> point: points) {
-            status = this.putCellWithIndex(point);
-            if (!status)
-                return false;
-        }
-        return true;
-    }
-
-    /**
-     *
-     * @param row
-     * @param column
-     * @return
-     */
-    public Number getCell(Metadata row, Metadata column) {
-        return this.getCell(row.getIndex(), column.getIndex());
-    }
-
-    /**
-     *
-     * @param row
-     * @return
-     */
-    public Number[] getHorizontalArray(Metadata row) {
-        return this.getHorizontalArray(row.getIndex());
-    }
-
-    /**
-     *
-     * @param column
-     * @return
-     */
-    public Number[] getVerticalArray(Metadata column) {
-        return this.getVerticalArray(column.getIndex());
     }
 
     /**
@@ -790,10 +601,7 @@ public class Matrix extends AbstractNumberTable {
         final Number[][] table = new Number[this.getRowSize()][1];
         for (int i = 0; i < this.getRowSize(); i++)
             table[i][0] = ary[i];
-        Matrix matrix = Matrix.of(table);
-        matrix.rowMetadataSet.retainAll(Collections.emptySet());
-        matrix.rowMetadataSet.addAll(this.rowMetadataSet);
-        return matrix;
+        return Matrix.of(table);
     }
 
     /**
@@ -805,10 +613,7 @@ public class Matrix extends AbstractNumberTable {
         final Number[][] table = new Number[this.getRowSize()][1];
         for (int i = 0; i < this.getRowSize(); i++)
             table[i][0] = ary[i];
-        Matrix matrix = Matrix.of(table);
-        matrix.rowMetadataSet.retainAll(Collections.emptySet());
-        matrix.rowMetadataSet.addAll(this.rowMetadataSet);
-        return matrix;
+        return Matrix.of(table);
     }
 
     /**
@@ -819,10 +624,7 @@ public class Matrix extends AbstractNumberTable {
         final Number[] ary = this.sumArrayOfColumn();
         final Number[][] table = new Number[1][this.getColumnSize()];
         System.arraycopy(ary, 0, table[0], 0, this.getColumnSize());
-        Matrix matrix = Matrix.of(table);
-        matrix.columnMetadataSet.retainAll(Collections.emptySet());
-        matrix.columnMetadataSet.addAll(this.columnMetadataSet);
-        return matrix;
+        return Matrix.of(table);
     }
 
     /**
@@ -833,85 +635,6 @@ public class Matrix extends AbstractNumberTable {
         final Number[] ary = this.averageArrayOfColumn();
         final Number[][] table = new Number[1][this.getColumnSize()];
         System.arraycopy(ary, 0, table[0], 0, this.getColumnSize());
-        Matrix matrix = Matrix.of(table);
-        matrix.columnMetadataSet.retainAll(Collections.emptySet());
-        matrix.columnMetadataSet.addAll(this.columnMetadataSet);
-        return matrix;
-    }
-
-    /**
-     *
-     * @param row
-     * @return
-     */
-    public Metadata findRowMetadata(int row) {
-        Iterator<Metadata> rows = this.rowMetadataSet.iterator();
-        Metadata result;
-        while (rows.hasNext()) {
-            result = rows.next();
-            if (result.index == row)
-                return result;
-        }
-        return null;
-    }
-
-    /**
-     *
-     * @param column
-     * @return
-     */
-    public Metadata findColumnMetadata(int column) {
-        Iterator<Metadata> columns = this.columnMetadataSet.iterator();
-        Metadata result;
-        while (columns.hasNext()) {
-            result = columns.next();
-            if (result.index == column)
-                return result;
-        }
-        return null;
-    }
-
-    public static class Metadata {
-        private int index;
-        private String title;
-
-        public Metadata(int index, String title) {
-            this.setIndex(index);
-            this.setTitle(title);
-        }
-
-        public Metadata(int index) {
-            this(index, "");
-        }
-
-        public static Metadata of (int index, String title) {
-            return new Metadata(index, title);
-        }
-
-        public int getIndex() {
-            return index;
-        }
-
-        private void setIndex(int index) {
-            this.index = index;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        private void setTitle(String title) {
-            this.title = title;
-        }
-
-        @Override public int hashCode() {
-            return this.getIndex();
-        }
-
-        @Override public boolean equals(Object target) {
-            if (target instanceof Metadata)
-                return this.index == ((Metadata) target).index;
-            return false;
-        }
+        return Matrix.of(table);
     }
 }

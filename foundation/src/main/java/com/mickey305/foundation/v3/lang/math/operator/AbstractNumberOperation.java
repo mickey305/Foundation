@@ -6,7 +6,10 @@ import org.apache.commons.math3.fraction.Fraction;
 
 import java.math.BigInteger;
 
-public abstract class AbstractNumberOperation<R> implements BinaryFunction<Number, Number, R> {
+public abstract class AbstractNumberOperation<R> implements
+        BinaryFunction<Number, Number, R>,
+        OperationExtensions<Number, Number, R>
+{
     private BinaryFunction<Number, Number, R> extension;
 
     public AbstractNumberOperation() {
@@ -21,6 +24,7 @@ public abstract class AbstractNumberOperation<R> implements BinaryFunction<Numbe
         return extension;
     }
 
+    @Override
     public void setExtension(BinaryFunction<Number, Number, R> extension) {
         this.extension = extension;
     }

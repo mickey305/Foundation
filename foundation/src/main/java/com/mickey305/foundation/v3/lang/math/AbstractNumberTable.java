@@ -2,6 +2,8 @@ package com.mickey305.foundation.v3.lang.math;
 
 import com.mickey305.foundation.v3.compat.util.BinaryFunction;
 import com.mickey305.foundation.v3.compat.util.Function;
+import com.mickey305.foundation.v3.lang.math.operator.AbstractNumberOperation;
+import com.mickey305.foundation.v3.lang.math.operator.OperationExtensions;
 import com.mickey305.foundation.v3.lang.math.operator.core.NumberOperationAdd;
 import com.mickey305.foundation.v3.lang.math.operator.core.NumberOperationDiv;
 import com.mickey305.foundation.v3.lang.math.operator.core.NumberOperationMax;
@@ -35,13 +37,15 @@ abstract class AbstractNumberTable implements Serializable {
         MAX   (0x0F01, OperationLogicHolder.MAX_DEFAULT_FUNC),
         MIN   (0x0F02, OperationLogicHolder.MIN_DEFAULT_FUNC);
 
-        Operator(int id, BinaryFunction<Number, Number, Number> function) {
+        Operator(int id, AbstractNumberOperation<Number> function) {
             this.id = id;
             this.f = function;
+            this.ext = function;
         }
 
         public final int id;
-        public BinaryFunction<Number, Number, Number> f;
+        public final BinaryFunction<Number, Number, Number> f;
+        public final OperationExtensions<Number, Number, Number> ext;
     }
 
     protected enum RelationalOperator {
@@ -52,13 +56,15 @@ abstract class AbstractNumberTable implements Serializable {
         GT (0x0105, OperationLogicHolder.GT_DEFAULT_FUNC),
         GE (0x0106, OperationLogicHolder.GE_DEFAULT_FUNC);
 
-        RelationalOperator(int id, BinaryFunction<Number, Number, Boolean> function) {
+        RelationalOperator(int id, AbstractNumberOperation<Boolean> function) {
             this.id = id;
             this.f = function;
+            this.callbacks = function;
         }
 
         public final int id;
-        public BinaryFunction<Number, Number, Boolean> f;
+        public final BinaryFunction<Number, Number, Boolean> f;
+        public final OperationExtensions<Number, Number, Boolean> callbacks;
     }
 
     protected AbstractNumberTable(int row, int column) {
@@ -450,18 +456,18 @@ abstract class AbstractNumberTable implements Serializable {
     }
 
     private static final class OperationLogicHolder {
-        private static final BinaryFunction<Number, Number, Number> ADD_DEFAULT_FUNC = new NumberOperationAdd();
-        private static final BinaryFunction<Number, Number, Number> SUB_DEFAULT_FUNC = new NumberOperationSub();
-        private static final BinaryFunction<Number, Number, Number> MULTI_DEFAULT_FUNC = new NumberOperationMulti();
-        private static final BinaryFunction<Number, Number, Number> DIV_DEFAULT_FUNC = new NumberOperationDiv();
-        private static final BinaryFunction<Number, Number, Number> MAX_DEFAULT_FUNC = new NumberOperationMax();
-        private static final BinaryFunction<Number, Number, Number> MIN_DEFAULT_FUNC = new NumberOperationMin();
+        private static final AbstractNumberOperation<Number> ADD_DEFAULT_FUNC   = new NumberOperationAdd();
+        private static final AbstractNumberOperation<Number> SUB_DEFAULT_FUNC   = new NumberOperationSub();
+        private static final AbstractNumberOperation<Number> MULTI_DEFAULT_FUNC = new NumberOperationMulti();
+        private static final AbstractNumberOperation<Number> DIV_DEFAULT_FUNC   = new NumberOperationDiv();
+        private static final AbstractNumberOperation<Number> MAX_DEFAULT_FUNC   = new NumberOperationMax();
+        private static final AbstractNumberOperation<Number> MIN_DEFAULT_FUNC   = new NumberOperationMin();
         // relational operator
-        private static final BinaryFunction<Number, Number, Boolean> EQ_DEFAULT_FUNC = new RelationalOperationEQ();
-        private static final BinaryFunction<Number, Number, Boolean> NE_DEFAULT_FUNC = new RelationalOperationNE();
-        private static final BinaryFunction<Number, Number, Boolean> LT_DEFAULT_FUNC = new RelationalOperationLT();
-        private static final BinaryFunction<Number, Number, Boolean> LE_DEFAULT_FUNC = new RelationalOperationLE();
-        private static final BinaryFunction<Number, Number, Boolean> GT_DEFAULT_FUNC = new RelationalOperationGT();
-        private static final BinaryFunction<Number, Number, Boolean> GE_DEFAULT_FUNC = new RelationalOperationGE();
+        private static final AbstractNumberOperation<Boolean> EQ_DEFAULT_FUNC   = new RelationalOperationEQ();
+        private static final AbstractNumberOperation<Boolean> NE_DEFAULT_FUNC   = new RelationalOperationNE();
+        private static final AbstractNumberOperation<Boolean> LT_DEFAULT_FUNC   = new RelationalOperationLT();
+        private static final AbstractNumberOperation<Boolean> LE_DEFAULT_FUNC   = new RelationalOperationLE();
+        private static final AbstractNumberOperation<Boolean> GT_DEFAULT_FUNC   = new RelationalOperationGT();
+        private static final AbstractNumberOperation<Boolean> GE_DEFAULT_FUNC   = new RelationalOperationGE();
     }
 }
