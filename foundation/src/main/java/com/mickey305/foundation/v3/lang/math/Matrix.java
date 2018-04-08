@@ -131,9 +131,9 @@ public class Matrix extends AbstractNumberTable {
 
         final Matrix resultMatrix = Matrix.of(new Number[leftMatrix.getRowSize()][rightMatrix.getColumnSize()]);
         for (int i = 0; i < leftMatrix.getRowSize(); i++) {
-            Number[] leftRec = leftMatrix.getHorizontalArray(i);
+            Number[] leftRec = leftMatrix.getRow(i);
             for (int j = 0; j < rightMatrix.getColumnSize(); j++) {
-                Number[] rightRec = rightMatrix.getVerticalArray(j);
+                Number[] rightRec = rightMatrix.getColumn(j);
 
                 assert leftRec.length == rightRec.length;
 
@@ -297,7 +297,7 @@ public class Matrix extends AbstractNumberTable {
         // CELL(i,i) <==> NE ZERO transformation
         for (int i = 0; i < this.getRowSize(); i++) {
             if (RelationalOperator.EQ.f.apply(em.getCell(i, i), bigFractionZero)) {
-                final Number[] vertical = em.getVerticalArray(i);
+                final Number[] vertical = em.getColumn(i);
                 for (int j = 0; j < vertical.length; j++) {
                     if (j != i && RelationalOperator.NE.f.apply(vertical[j], bigFractionZero)) {
                         em.multiAndAddRow(bigFractionOne, j, i);
@@ -311,13 +311,13 @@ public class Matrix extends AbstractNumberTable {
         for (int j = 0; j < this.getColumnSize(); j++) {
             for (int i = 0; i < this.getRowSize(); i++) {
                 final Number targetCell = em.getCell(i, j);
-                final Number[] vertical = em.getVerticalArray(j);
+                final Number[] vertical = em.getColumn(j);
                 if (j != i && RelationalOperator.NE.f.apply(vertical[j], bigFractionZero)) {
                     int kk = 0;
                     int max = Integer.MIN_VALUE;
                     for (int k = 0; k < vertical.length; k++) {
                         int cntZero = 0;
-                        final Number[] horizontal = em.getHorizontalArray(k);
+                        final Number[] horizontal = em.getRow(k);
                         for (int l = 0; l < this.getColumnSize(); l++)
                             if (RelationalOperator.EQ.f.apply(horizontal[l], bigFractionZero))
                                 cntZero++;
@@ -411,8 +411,8 @@ public class Matrix extends AbstractNumberTable {
      * @param row2
      */
     @Override public void swapRow(int row1, int row2) {
-        Number[] tmpRec = this.getHorizontalArray(row1);
-        this.putRowForcibly(row1, this.getHorizontalArray(row2));
+        Number[] tmpRec = this.getRow(row1);
+        this.putRowForcibly(row1, this.getRow(row2));
         this.putRowForcibly(row2, tmpRec);
     }
 
@@ -422,8 +422,8 @@ public class Matrix extends AbstractNumberTable {
      * @param column2
      */
     @Override public void swapColumn(int column1, int column2) {
-        Number[] tmpRec = this.getVerticalArray(column1);
-        this.putColumnForcibly(column1, this.getVerticalArray(column2));
+        Number[] tmpRec = this.getColumn(column1);
+        this.putColumnForcibly(column1, this.getColumn(column2));
         this.putColumnForcibly(column2, tmpRec);
     }
 
@@ -434,8 +434,8 @@ public class Matrix extends AbstractNumberTable {
      * @return
      */
     public Number[] multiRow(Number scalar, int row) {
-        final Matrix matrix = Matrix.of(new Number[][]{this.getHorizontalArray(row)});
-        final Number[] rowData = Matrix.multi(scalar, matrix).getHorizontalArray(0);
+        final Matrix matrix = Matrix.of(new Number[][]{this.getRow(row)});
+        final Number[] rowData = Matrix.multi(scalar, matrix).getRow(0);
         this.putRowForcibly(row, rowData);
         return rowData;
     }
@@ -447,8 +447,8 @@ public class Matrix extends AbstractNumberTable {
      * @return
      */
     public Number[] multiColumn(Number scalar, int column) {
-        final Matrix matrix = Matrix.of(new Number[][]{this.getVerticalArray(column)});
-        final Number[] columnData = Matrix.multi(scalar, matrix).getHorizontalArray(0);
+        final Matrix matrix = Matrix.of(new Number[][]{this.getColumn(column)});
+        final Number[] columnData = Matrix.multi(scalar, matrix).getRow(0);
         this.putColumnForcibly(column, columnData);
         return columnData;
     }
@@ -461,11 +461,11 @@ public class Matrix extends AbstractNumberTable {
      */
     public void multiAndAddRow(Number scalar, int multiRow, int addRow) {
         Matrix matrix;
-        matrix = Matrix.of(new Number[][]{this.getHorizontalArray(multiRow)});
+        matrix = Matrix.of(new Number[][]{this.getRow(multiRow)});
         final Matrix multiMatrix = Matrix.multi(scalar, matrix);
-        matrix = Matrix.of(new Number[][]{this.getHorizontalArray(addRow)});
+        matrix = Matrix.of(new Number[][]{this.getRow(addRow)});
         final Matrix addMatrix = Matrix.add(multiMatrix, matrix);
-        final Number[] rowData = addMatrix.getHorizontalArray(0);
+        final Number[] rowData = addMatrix.getRow(0);
         this.putRowForcibly(addRow, rowData);
     }
 
@@ -477,11 +477,11 @@ public class Matrix extends AbstractNumberTable {
      */
     public void multiAndAddColumn(Number scalar, int multiColumn, int addColumn) {
         Matrix matrix;
-        matrix = Matrix.of(new Number[][]{this.getVerticalArray(multiColumn)});
+        matrix = Matrix.of(new Number[][]{this.getColumn(multiColumn)});
         final Matrix multiMatrix = Matrix.multi(scalar, matrix);
-        matrix = Matrix.of(new Number[][]{this.getVerticalArray(addColumn)});
+        matrix = Matrix.of(new Number[][]{this.getColumn(addColumn)});
         final Matrix addMatrix = Matrix.add(multiMatrix, matrix);
-        final Number[] columnData = addMatrix.getHorizontalArray(0);
+        final Number[] columnData = addMatrix.getRow(0);
         this.putColumnForcibly(addColumn, columnData);
     }
 

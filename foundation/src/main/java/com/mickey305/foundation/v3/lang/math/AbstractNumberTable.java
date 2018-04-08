@@ -23,7 +23,7 @@ import java.util.Objects;
 abstract class AbstractNumberTable implements Serializable {
     protected static final int NULL_SIGNATURE = 0;
     protected static final int CONTAINS_SIGNATURE = 1;
-    private static final long serialVersionUID = -6616915381207491692L;
+    private static final long serialVersionUID = 9068089860957512191L;
     private final int rowSize;
     private final int columnSize;
     private final Number[][] table;
@@ -128,8 +128,8 @@ abstract class AbstractNumberTable implements Serializable {
      * @param row2
      */
     public void swapRow(int row1, int row2) {
-        Number[] tmpRec = this.getHorizontalArray(row1);
-        this.putRowForcibly(row1, this.getHorizontalArray(row2));
+        Number[] tmpRec = this.getRow(row1);
+        this.putRowForcibly(row1, this.getRow(row2));
         this.putRowForcibly(row2, tmpRec);
     }
 
@@ -139,8 +139,8 @@ abstract class AbstractNumberTable implements Serializable {
      * @param column2
      */
     public void swapColumn(int column1, int column2) {
-        Number[] tmpRec = this.getVerticalArray(column1);
-        this.putColumnForcibly(column1, this.getVerticalArray(column2));
+        Number[] tmpRec = this.getColumn(column1);
+        this.putColumnForcibly(column1, this.getColumn(column2));
         this.putColumnForcibly(column2, tmpRec);
     }
 
@@ -308,7 +308,16 @@ abstract class AbstractNumberTable implements Serializable {
      * @param row
      * @return
      */
-    public Number[] getHorizontalArray(int row) {
+    public Number[] getRecord(int row) {
+        return this.getRow(row);
+    }
+
+    /**
+     *
+     * @param row
+     * @return
+     */
+    public Number[] getRow(int row) {
         return this.getTable()[row];
     }
     
@@ -317,7 +326,7 @@ abstract class AbstractNumberTable implements Serializable {
      * @param column
      * @return
      */
-    public Number[] getVerticalArray(int column) {
+    public Number[] getColumn(int column) {
         final Number[] ary = new Number[this.getRowSize()];
         for (int i = 0; i < this.getRowSize(); i ++)
             ary[i] = this.getTable()[i][column];
@@ -339,7 +348,7 @@ abstract class AbstractNumberTable implements Serializable {
      * @return
      */
     public Number sumOfRow(int row) {
-        final Number[] record = this.getHorizontalArray(row);
+        final Number[] record = this.getRow(row);
         Number sum = 0;
         for (Number cell: record)
             sum = Operator.ADD.f.apply(cell, sum);
@@ -384,7 +393,7 @@ abstract class AbstractNumberTable implements Serializable {
      * @return
      */
     public Number sumOfColumn(int column) {
-        final Number[] record = this.getVerticalArray(column);
+        final Number[] record = this.getColumn(column);
         Number sum = 0;
         for (Number cell: record)
             sum = Operator.ADD.f.apply(cell, sum);

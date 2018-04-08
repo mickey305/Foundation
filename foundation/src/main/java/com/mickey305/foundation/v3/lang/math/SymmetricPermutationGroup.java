@@ -91,8 +91,8 @@ public class SymmetricPermutationGroup extends AbstractNumberTable {
             isLeftSmall = true;
         }
 
-        final Number[] bigTopAry = big.getHorizontalArray(0);
-        final Number[] smallTopAry = small.getHorizontalArray(0);
+        final Number[] bigTopAry = big.getRow(0);
+        final Number[] smallTopAry = small.getRow(0);
         final List<Pair<Number, Number>> result = new ArrayList<>();
 
         for (int i = 0; i < big.getColumnSize(); i++) {
@@ -125,7 +125,7 @@ public class SymmetricPermutationGroup extends AbstractNumberTable {
         l = pair.getLeft();
         r = pair.getRight();
 
-        final Number[] leftAry = l.getHorizontalArray(0);
+        final Number[] leftAry = l.getRow(0);
         final List<Pair<Number, Number>> result = new ArrayList<>();
         for (int i = 0; i < l.getColumnSize(); i++) {
             final Number rightBottom = r.getPairOf(leftAry[i]);
@@ -141,7 +141,7 @@ public class SymmetricPermutationGroup extends AbstractNumberTable {
      * @return
      */
     public static SymmetricPermutationGroup createIdentityPermutation(SymmetricPermutationGroup permutation) {
-        final Number[] ary = permutation.getHorizontalArray(0);
+        final Number[] ary = permutation.getRow(0);
         final List<Pair<Number, Number>> result = new ArrayList<>();
         for (int i = 0; i < permutation.getColumnSize(); i++) {
             result.add(Pair.of(ary[i], ary[i]));
@@ -198,7 +198,7 @@ public class SymmetricPermutationGroup extends AbstractNumberTable {
         List<SymmetricCycleGroup> resultCycle = new ArrayList<>();
         Set<Number> checkedElms = new HashSet<>();
 
-        for (Number tpData: this.getHorizontalArray(0)) {
+        for (Number tpData: this.getRow(0)) {
             if (checkedElms.contains(tpData))
                 continue;
 
@@ -230,7 +230,7 @@ public class SymmetricPermutationGroup extends AbstractNumberTable {
             } else {
                 Number suffix = null;
                 final Deque<Number> numbers = new ArrayDeque<>(cycle.getColumnSize() -1);
-                for (Number data: cycle.getHorizontalArray(0)) {
+                for (Number data: cycle.getRow(0)) {
                     if (suffix == null)
                         suffix = data;
                     else

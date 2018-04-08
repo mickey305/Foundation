@@ -31,7 +31,7 @@ public class SymmetricCycleGroup extends SymmetricPermutationGroup {
      * @return
      */
     private boolean checkCycle() {
-        final Number tpData = this.getHorizontalArray(0)[0];
+        final Number tpData = this.getRow(0)[0];
         int cnt = 0;
         Number btmData = tpData;
         do {
