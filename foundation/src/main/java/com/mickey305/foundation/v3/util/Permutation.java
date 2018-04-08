@@ -5,7 +5,7 @@ import java.io.Serializable;
 public final class Permutation<T extends Serializable> {
     private final int baseIndex;
     private int index;
-    private T[] elements;
+    private final T[] elements;
     private Permutation<T> nextPermutation;
 
     public Permutation(T[] elements) {
@@ -22,7 +22,7 @@ public final class Permutation<T extends Serializable> {
         this.elements  = elements;
 
         if (this.index < this.elements.length - 1)
-            this.nextPermutation = new Permutation<>(this.baseIndex + 1, this.index + 1, this.elements);
+            this.nextPermutation = new Permutation<>(this.baseIndex +1, this.index +1, this.elements);
     }
 
     public T[] getElements() {
@@ -30,8 +30,8 @@ public final class Permutation<T extends Serializable> {
     }
 
     /**
-     *
-     * @return
+     * 順列トークンイテレーションメソッド
+     * @return イテレーション結果
      */
     public boolean next() {
         if (this.nextPermutation == null)
@@ -55,11 +55,11 @@ public final class Permutation<T extends Serializable> {
     }
 
     /**
-     *
-     * @param i1
-     * @param i2
-     * @param dest
-     * @param <T>
+     * 要素入れ替えメソッド
+     * @param i1 要素番号１
+     * @param i2 要素番号２
+     * @param dest 入れ替え対象配列
+     * @param <T> 入れ替え対象配列型
      */
     private static <T extends Serializable> void swap(int i1, int i2, T[] dest) {
         final T element = dest[i1];
