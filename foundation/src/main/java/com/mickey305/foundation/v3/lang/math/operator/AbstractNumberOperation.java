@@ -4,6 +4,7 @@ import com.mickey305.foundation.v3.compat.util.BinaryFunction;
 import org.apache.commons.math3.fraction.BigFraction;
 import org.apache.commons.math3.fraction.Fraction;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 
 public abstract class AbstractNumberOperation<R> implements
@@ -37,15 +38,16 @@ public abstract class AbstractNumberOperation<R> implements
         if (this.getExtension() != null)
             result = this.getExtension().apply(l, r);
 
-        if(result != null)
+        if (result != null)
             return result;
 
         // default operation invoke
         result = this.operationDefault(l, r);
 
-        if(result != null)
+        if (result != null)
             return result;
 
+        // throwing exception
         throw new UnsupportedOperationException();
     }
 
@@ -55,30 +57,22 @@ public abstract class AbstractNumberOperation<R> implements
      * @return
      */
     protected BigInteger convertToBigInteger(Number data) {
-        if(data.getClass().equals(Integer.class))
-            return new BigInteger(data.intValue() + "");
+        if (data.getClass().equals(Integer.class))
+            return new BigInteger(String.valueOf(data.intValue()));
 
-        if(data.getClass().equals(Long.class))
-            return new BigInteger(data.longValue() + "");
+        if (data.getClass().equals(Long.class))
+            return new BigInteger(String.valueOf(data.longValue()));
 
-        if(data.getClass().equals(Float.class))
-            return new BigInteger(data.floatValue() + "");
+        if (data.getClass().equals(Short.class))
+            return new BigInteger(String.valueOf(data.shortValue()));
 
-        if(data.getClass().equals(Double.class))
-            return new BigInteger(data.doubleValue() + "");
+        if (data.getClass().equals(Byte.class))
+            return new BigInteger(String.valueOf(data.byteValue()));
 
-        if(data.getClass().equals(Short.class))
-            return new BigInteger(data.shortValue() + "");
-
-        if(data.getClass().equals(Byte.class))
-            return new BigInteger(data.byteValue() + "");
-
-        if(data.getClass().equals(Byte.class))
-            return new BigInteger(data.byteValue() + "");
-
-        if(data.getClass().equals(BigInteger.class))
+        if (data.getClass().equals(BigInteger.class))
             return (BigInteger) data;
 
+        // throwing exception
         throw new UnsupportedOperationException();
     }
 
@@ -88,27 +82,28 @@ public abstract class AbstractNumberOperation<R> implements
      * @return
      */
     protected Fraction convertToFraction(Number data) {
-        if(data.getClass().equals(Integer.class))
+        if (data.getClass().equals(Integer.class))
             return new Fraction(data.intValue());
 
-        if(data.getClass().equals(Long.class))
+        if (data.getClass().equals(Long.class))
             return new Fraction(data.longValue());
 
-        if(data.getClass().equals(Float.class))
+        if (data.getClass().equals(Float.class))
             return new Fraction(data.floatValue());
 
-        if(data.getClass().equals(Double.class))
+        if (data.getClass().equals(Double.class))
             return new Fraction(data.doubleValue());
 
-        if(data.getClass().equals(Short.class))
+        if (data.getClass().equals(Short.class))
             return new Fraction(data.shortValue());
 
-        if(data.getClass().equals(Byte.class))
+        if (data.getClass().equals(Byte.class))
             return new Fraction(data.byteValue());
 
-        if(data.getClass().equals(Fraction.class))
+        if (data.getClass().equals(Fraction.class))
             return (Fraction) data;
 
+        // throwing exception
         throw new UnsupportedOperationException();
     }
 
@@ -118,34 +113,45 @@ public abstract class AbstractNumberOperation<R> implements
      * @return
      */
     protected BigFraction convertToBigFraction(Number data) {
-        if(data.getClass().equals(Integer.class))
+        if (data.getClass().equals(Integer.class))
             return new BigFraction(data.intValue());
 
-        if(data.getClass().equals(Long.class))
+        if (data.getClass().equals(Long.class))
             return new BigFraction(data.longValue());
 
-        if(data.getClass().equals(Float.class))
+        if (data.getClass().equals(Float.class))
             return new BigFraction(data.floatValue());
 
-        if(data.getClass().equals(Double.class))
+        if (data.getClass().equals(Double.class))
             return new BigFraction(data.doubleValue());
 
-        if(data.getClass().equals(Short.class))
+        if (data.getClass().equals(Short.class))
             return new BigFraction(data.shortValue());
 
-        if(data.getClass().equals(Byte.class))
+        if (data.getClass().equals(Byte.class))
             return new BigFraction(data.byteValue());
 
-        if(data.getClass().equals(BigInteger.class))
+        if (data.getClass().equals(BigInteger.class))
             return new BigFraction((BigInteger) data);
 
-        if(data.getClass().equals(Fraction.class))
+        if (data.getClass().equals(BigDecimal.class)) {
+            final BigDecimal decimal = (BigDecimal) data;
+            final BigInteger ten = BigInteger.TEN;
+            if (decimal.scale() >= 0) {
+                return new BigFraction(decimal.unscaledValue(), ten.pow(decimal.scale()));
+            } else {
+                return new BigFraction(decimal.unscaledValue().multiply(ten.pow(-1 * decimal.scale())));
+            }
+        }
+
+        if (data.getClass().equals(Fraction.class))
             return new BigFraction(
                     ((Fraction) data).getNumerator(), ((Fraction) data).getDenominator());
 
-        if(data.getClass().equals(BigFraction.class))
+        if (data.getClass().equals(BigFraction.class))
             return (BigFraction) data;
 
+        // throwing exception
         throw new UnsupportedOperationException();
     }
 

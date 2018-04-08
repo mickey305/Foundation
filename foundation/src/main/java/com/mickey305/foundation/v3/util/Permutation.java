@@ -10,7 +10,7 @@ public final class Permutation<T extends Serializable> {
 
     public Permutation(T[] elements) {
         this(0, 0, elements.clone());
-            }
+    }
 
     private Permutation(int baseIndex, int index, T[] elements) {
         if (elements == null || elements.length == 0)
