@@ -54,9 +54,9 @@ public class SymmetricPermutationGroup extends AbstractNumberTable {
     }
 
     /**
-     *
-     * @param columnList
-     * @return
+     * ペアリスト⇒2次元配列変換メソッド
+     * @param columnList ペアリスト
+     * @return 2次元配列
      */
     private static Number[][] covertTable(List<Pair<Number, Number>> columnList) {
         final Number[][] table = new Number[2][columnList.size()];
@@ -70,10 +70,14 @@ public class SymmetricPermutationGroup extends AbstractNumberTable {
     }
 
     /**
-     *
-     * @param l
-     * @param r
-     * @return
+     * 置換データ拡張メソッド
+     * <p>
+     *     入力された置換データのうち要素数の多い置換データの内容をもとに、要素数の少ない置換データの内容を拡張し、
+     *     同一要素数の置換データを返却する。
+     * </p>
+     * @param l 拡張対象置換データ１
+     * @param r 拡張対象置換データ２
+     * @return 拡張置換データセット
      */
     public static Pair<SymmetricPermutationGroup, SymmetricPermutationGroup> extension(SymmetricPermutationGroup l, SymmetricPermutationGroup r) {
         if (l.getColumnSize() == r.getColumnSize())
@@ -111,10 +115,10 @@ public class SymmetricPermutationGroup extends AbstractNumberTable {
     }
 
     /**
-     *
-     * @param l
-     * @param r
-     * @return
+     * 乗算処理
+     * @param l 左置換データ
+     * @param r 右置換データ
+     * @return 演算結果置換データ
      */
     public static SymmetricPermutationGroup multi(SymmetricPermutationGroup l, SymmetricPermutationGroup r) {
         if (!(r.dataSet.containsAll(l.dataSet) || l.dataSet.containsAll(r.dataSet)))
@@ -136,9 +140,9 @@ public class SymmetricPermutationGroup extends AbstractNumberTable {
     }
 
     /**
-     *
-     * @param permutation
-     * @return
+     * 単位置換取得メソッド
+     * @param permutation 置換
+     * @return 単位置換
      */
     public static SymmetricPermutationGroup createIdentityPermutation(SymmetricPermutationGroup permutation) {
         final Number[] ary = permutation.getRow(0);
@@ -150,9 +154,9 @@ public class SymmetricPermutationGroup extends AbstractNumberTable {
     }
 
     /**
-     *
-     * @param permutation
-     * @return
+     * 逆置換取得メソッド
+     * @param permutation 置換
+     * @return 逆置換
      */
     public static SymmetricPermutationGroup createInversePermutation(SymmetricPermutationGroup permutation) {
         final SymmetricPermutationGroup result = new SymmetricPermutationGroup(permutation);
@@ -161,17 +165,17 @@ public class SymmetricPermutationGroup extends AbstractNumberTable {
     }
 
     /**
-     *
-     * @param permutation
-     * @return
+     * 符号取得メソッド
+     * @param permutation 置換
+     * @return 符号
      */
     public static int sgn(SymmetricPermutationGroup permutation) {
         return (permutation.is(Type.Even))? 1: -1;
     }
 
     /**
-     *
-     * @return
+     * 置換データチェック
+     * @return 判定結果
      */
     private boolean checkPermutation() {
         return this.getRowSize() == 2 && this.getColumnSize() >= 1;
@@ -191,8 +195,8 @@ public class SymmetricPermutationGroup extends AbstractNumberTable {
     }
 
     /**
-     *
-     * @return
+     * 置換⇒巡回置換変換メソッド
+     * @return 巡回置換リスト
      */
     public List<? extends SymmetricCycleGroup> convertCycle() {
         List<SymmetricCycleGroup> resultCycle = new ArrayList<>();
@@ -218,8 +222,8 @@ public class SymmetricPermutationGroup extends AbstractNumberTable {
     }
 
     /**
-     *
-     * @return
+     * 置換⇒互換変換メソッド
+     * @return 互換リスト
      */
     public List<? extends SymmetricTransPositionGroup> convertTransPosition() {
         List<SymmetricTransPositionGroup> resultTransPosition = new ArrayList<>();
@@ -246,8 +250,8 @@ public class SymmetricPermutationGroup extends AbstractNumberTable {
     }
 
     /**
-     *
-     * @return
+     * 置換省略形データ生成メソッド
+     * @return 省略型置換データ
      */
     public SymmetricPermutationGroup compact() {
         final List<Integer> samePairRowIndexes = getColumnIndexOfSamePair();
@@ -265,8 +269,8 @@ public class SymmetricPermutationGroup extends AbstractNumberTable {
     }
 
     /**
-     *
-     * @return
+     * 未遷移要素番号取得メソッド
+     * @return 未遷移要素番号リスト
      */
     public List<Integer> getColumnIndexOfSamePair() {
         final Number[][] table = this.getTable();
@@ -280,9 +284,9 @@ public class SymmetricPermutationGroup extends AbstractNumberTable {
     }
 
     /**
-     *
-     * @param num
-     * @return
+     * 対象要素番号取得メソッド
+     * @param num 対象要素
+     * @return 対象要素番号
      */
     public Integer getColumnIndexOf(Number num) {
         final Number[][] table = this.getTable();
@@ -295,9 +299,9 @@ public class SymmetricPermutationGroup extends AbstractNumberTable {
     }
 
     /**
-     *
-     * @param num
-     * @return
+     * 遷移先要素取得メソッド
+     * @param num 遷移元要素
+     * @return 遷移先要素
      */
     public Number getPairOf(Number num) {
         final Number[][] table = this.getTable();
@@ -305,9 +309,9 @@ public class SymmetricPermutationGroup extends AbstractNumberTable {
     }
 
     /**
-     *
-     * @param type
-     * @return
+     * 偶置換／奇置換判定メソッド
+     * @param type 置換タイプ{@link Type}
+     * @return 判定結果
      */
     public boolean is(Type type) {
         return type == Type.Even && this.convertTransPosition().size() % 2 == 0

@@ -31,8 +31,8 @@ public class SymmetricTransPositionGroup extends SymmetricCycleGroup {
     }
 
     /**
-     *
-     * @return
+     * 互換データチェック
+     * @return 判定結果
      */
     private boolean checkTransPosition() {
         return this.getDataSet().size() == 2;

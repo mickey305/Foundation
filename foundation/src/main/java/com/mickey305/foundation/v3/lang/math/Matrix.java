@@ -35,77 +35,67 @@ public class Matrix extends AbstractNumberTable {
     }
 
     /**
-     *
-     * @param row
-     * @param column
-     */
-    private void checkArgument(int row, int column) {
-        if (row <= 0 || column <= 0)
-            throw new IllegalArgumentException();
-    }
-
-    /**
-     *
-     * @param row
-     * @param column
-     * @return
+     * インスタンス生成メソッド
+     * @param row 行サイズ
+     * @param column 列サイズ
+     * @return インスタンス
      */
     public static Matrix of(int row, int column) {
         return new Matrix(row, column);
     }
 
     /**
-     *
-     * @param initialTable
-     * @return
+     * インスタンス生成メソッド
+     * @param initialTable 初期化テーブル
+     * @return インスタンス
      */
     public static Matrix of(Number[][] initialTable) {
         return new Matrix(initialTable);
     }
 
     /**
-     *
-     * @param matrix
-     * @return
+     * インスタンス生成メソッド
+     * @param matrix 初期化インスタンス
+     * @return インスタンス
      */
     public static Matrix of(Matrix matrix) {
         return new Matrix(matrix);
     }
 
     /**
-     *
-     * @param scalar
-     * @return
+     * インスタンス生成メソッド
+     * @param scalar 初期化スカラー
+     * @return インスタンス
      */
     public static Matrix of(Number scalar) {
         return new Matrix(scalar);
     }
 
     /**
-     *
-     * @param leftMatrix
-     * @param rightMatrix
-     * @return
+     * 加算処理
+     * @param leftMatrix 左行列
+     * @param rightMatrix 右行列
+     * @return 演算結果行列
      */
     public static Matrix add(Matrix leftMatrix, Matrix rightMatrix) {
         return Matrix.simplyOperate(leftMatrix, rightMatrix, Operator.ADD);
     }
 
     /**
-     *
-     * @param leftMatrix
-     * @param rightMatrix
-     * @return
+     * 減算処理
+     * @param leftMatrix 左行列
+     * @param rightMatrix 右行列
+     * @return 演算結果行列
      */
     public static Matrix sub(Matrix leftMatrix, Matrix rightMatrix) {
         return Matrix.simplyOperate(leftMatrix, rightMatrix, Operator.SUB);
     }
 
     /**
-     *
-     * @param scalar
-     * @param matrix
-     * @return
+     * 乗算処理
+     * @param scalar スカラー
+     * @param matrix 行列
+     * @return 演算結果行列
      */
     public static Matrix multi(Number scalar, Matrix matrix) {
         Number resultCell;
@@ -120,10 +110,10 @@ public class Matrix extends AbstractNumberTable {
     }
 
     /**
-     *
-     * @param leftMatrix
-     * @param rightMatrix
-     * @return
+     * 乗算処理
+     * @param leftMatrix 左行列
+     * @param rightMatrix 右行列
+     * @return 演算結果行列
      */
     public static Matrix multi(Matrix leftMatrix, Matrix rightMatrix) {
         if (leftMatrix.getColumnSize() != rightMatrix.getRowSize())
@@ -152,11 +142,11 @@ public class Matrix extends AbstractNumberTable {
     }
 
     /**
-     *
-     * @param leftMatrix
-     * @param rightMatrix
-     * @param operator
-     * @return
+     * 演算処理
+     * @param leftMatrix 左行列
+     * @param rightMatrix 右行列
+     * @param operator オペレータ
+     * @return 演算結果行列
      */
     private static Matrix simplyOperate(Matrix leftMatrix, Matrix rightMatrix, Operator operator) {
         if (leftMatrix.getRowSize() != rightMatrix.getRowSize()
@@ -175,10 +165,10 @@ public class Matrix extends AbstractNumberTable {
     }
 
     /**
-     *
-     * @param matrix
-     * @param index
-     * @return
+     * べき乗処理
+     * @param matrix 行列
+     * @param index 指数（自然数）
+     * @return 演算結果行列
      */
     public static Matrix exp(Matrix matrix, int index) {
         if (index < 0)
@@ -195,10 +185,10 @@ public class Matrix extends AbstractNumberTable {
     }
 
     /**
-     *
-     * @param l
-     * @param r
-     * @return
+     * 水平連結
+     * @param l 左行列
+     * @param r 右行列
+     * @return 連結行列
      */
     public static Matrix horizontalBind(Matrix l, Matrix r) {
         if(l.getRowSize() != r.getRowSize())
@@ -221,10 +211,10 @@ public class Matrix extends AbstractNumberTable {
     }
 
     /**
-     *
-     * @param t
-     * @param b
-     * @return
+     * 垂直連結
+     * @param t 上行列
+     * @param b 下行列
+     * @return 連結行列
      */
     public static Matrix verticalBind(Matrix t, Matrix b) {
         if(t.getColumnSize() != b.getColumnSize())
@@ -247,8 +237,8 @@ public class Matrix extends AbstractNumberTable {
     }
 
     /**
-     *
-     * @return
+     * 単位行列取得メソッド
+     * @return 単位行列
      */
     public Matrix createIdentityMatrix() {
         if (!this.isSquare())
@@ -266,8 +256,8 @@ public class Matrix extends AbstractNumberTable {
     }
 
     /**
-     *
-     * @return
+     * 零行列取得メソッド
+     * @return 零行列
      */
     public Matrix createZeroMatrix() {
         final Matrix matrix = Matrix.of(this);
@@ -279,8 +269,8 @@ public class Matrix extends AbstractNumberTable {
     }
 
     /**
-     *
-     * @return
+     * 逆行列取得メソッド
+     * @return 逆行列
      */
     public Matrix createInverseMatrix() {
         if(!this.isRegular())
@@ -349,8 +339,12 @@ public class Matrix extends AbstractNumberTable {
     }
 
     /**
-     *
-     * @return
+     * 2値行列取得メソッド
+     * <p>
+     *     行列内の要素を<code>0</code>と<code>1</code>の2値に変換する。
+     *     <code>0</code>以下の数は<code>0</code>に、<code>0</code>を越える数は<code>1</code>に変換する。
+     * </p>
+     * @return 2値行列
      */
     public Matrix createLogicalMatrix() {
         final Matrix matrix = Matrix.of(this);
@@ -366,8 +360,8 @@ public class Matrix extends AbstractNumberTable {
     }
 
     /**
-     *
-     * @return
+     * 行列式メソッド
+     * @return 計算結果
      */
     public Number determinant() {
         if (!this.isSquare())
@@ -398,8 +392,8 @@ public class Matrix extends AbstractNumberTable {
     }
 
     /**
-     *
-     * @return
+     * 正則行列判定メソッド
+     * @return 判定結果
      */
     public boolean isRegular() {
         return this.isSquare() && RelationalOperator.NE.f.apply(this.determinant(), 0);
@@ -407,8 +401,8 @@ public class Matrix extends AbstractNumberTable {
 
     /**
      * elementary transformation method - 1 (row method - 1)
-     * @param row1
-     * @param row2
+     * @param row1 swap target row number first
+     * @param row2 swap target row number second
      */
     @Override public void swapRow(int row1, int row2) {
         Number[] tmpRec = this.getRow(row1);
@@ -418,8 +412,8 @@ public class Matrix extends AbstractNumberTable {
 
     /**
      * elementary transformation method - 2 (column method - 1)
-     * @param column1
-     * @param column2
+     * @param column1 swap target column number first
+     * @param column2 swap target column number second
      */
     @Override public void swapColumn(int column1, int column2) {
         Number[] tmpRec = this.getColumn(column1);
@@ -429,9 +423,9 @@ public class Matrix extends AbstractNumberTable {
 
     /**
      * elementary transformation method - 3 (row method - 2)
-     * @param scalar
-     * @param row
-     * @return
+     * @param scalar scalar value
+     * @param row target row number
+     * @return result
      */
     public Number[] multiRow(Number scalar, int row) {
         final Matrix matrix = Matrix.of(new Number[][]{this.getRow(row)});
@@ -442,9 +436,9 @@ public class Matrix extends AbstractNumberTable {
 
     /**
      * elementary transformation method - 4 (column method - 2)
-     * @param scalar
-     * @param column
-     * @return
+     * @param scalar scalar value
+     * @param column target column number
+     * @return result
      */
     public Number[] multiColumn(Number scalar, int column) {
         final Matrix matrix = Matrix.of(new Number[][]{this.getColumn(column)});
@@ -455,9 +449,10 @@ public class Matrix extends AbstractNumberTable {
 
     /**
      * elementary transformation method - 5 (row method - 3)
-     * @param scalar
-     * @param multiRow
-     * @param addRow
+     * <p>algorithm: matrix[addRow, i] += scalar * matrix[multiRow, i], (i = 0,1,2...n)</p>
+     * @param scalar scalar value
+     * @param multiRow multiply target row number
+     * @param addRow add target row number
      */
     public void multiAndAddRow(Number scalar, int multiRow, int addRow) {
         Matrix matrix;
@@ -471,9 +466,10 @@ public class Matrix extends AbstractNumberTable {
 
     /**
      * elementary transformation method - 6 (column method - 3)
-     * @param scalar
-     * @param multiColumn
-     * @param addColumn
+     * <p>algorithm: matrix[i, addColumn] += scalar * matrix[i, multiColumn], (i = 0,1,2...n)</p>
+     * @param scalar scalar value
+     * @param multiColumn multiply target column number
+     * @param addColumn add target column number
      */
     public void multiAndAddColumn(Number scalar, int multiColumn, int addColumn) {
         Matrix matrix;
@@ -485,11 +481,6 @@ public class Matrix extends AbstractNumberTable {
         this.putColumnForcibly(addColumn, columnData);
     }
 
-    /**
-     *
-     * @param row
-     * @param rowData
-     */
     @Override protected void putRowForcibly(int row, Number[] rowData) {
         if (rowData.length != this.getColumnSize())
             throw new IllegalArgumentException();
@@ -499,11 +490,6 @@ public class Matrix extends AbstractNumberTable {
             this.putCellForcibly(row, i++, cell);
     }
 
-    /**
-     *
-     * @param column
-     * @param columnData
-     */
     @Override protected void putColumnForcibly(int column, Number[] columnData) {
         if (columnData.length != this.getRowSize())
             throw new IllegalArgumentException();
@@ -513,41 +499,34 @@ public class Matrix extends AbstractNumberTable {
             this.putCellForcibly(i++, column, cell);
     }
 
-    /**
-     *
-     * @param row
-     * @param column
-     * @param cell
-     */
     @Override public void putCellForcibly(int row, int column, Number cell) {
         this.getTable()[row][column] = cell;
         this.getSignatureTable()[row][column] = CONTAINS_SIGNATURE;
     }
 
     /**
-     *
-     * @param point
+     * セル更新メソッド
+     * <p>
+     *     更新対象行列番号のセルデータを更新データに置き換える。
+     * </p>
+     * @param point 更新データ
      */
     private void putCellForcibly(Triple<Integer, Integer, Number> point) {
         this.putCellForcibly(point.getLeft(), point.getMiddle(), point.getRight());
     }
 
     /**
-     *
-     * @param points
+     * セル更新メソッド
+     * <p>
+     *     更新対象行列番号のセルデータを更新データに置き換える。
+     * </p>
+     * @param points 更新データ
      */
     public void putCellsForcibly(Set<Triple<Integer, Integer, Number>> points) {
         for (Triple<Integer, Integer, Number> point: points)
             this.putCellForcibly(point);
     }
 
-    /**
-     *
-     * @param row
-     * @param column
-     * @param cell
-     * @return
-     */
     @Override public boolean putCell(int row, int column, Number cell) {
         final Number targetCell = this.getCell(row, column);
         if (RelationalOperator.EQ.f.apply(targetCell, 0)
@@ -560,41 +539,52 @@ public class Matrix extends AbstractNumberTable {
     }
 
     /**
-     *
-     * @param point
-     * @return
+     * セル更新メソッド
+     * <p>
+     *     更新対象行列番号のセルデータを更新データに置き換える。
+     *     シグネチャテーブルが<code>CONTAINS_SIGNATURE</code>更新済（更新対象セルに、既にデータが明示的に追加されている）
+     *     の場合、更新を実行しない。
+     * </p>
+     * @param point 更新データ
+     * @return 処理結果
      */
     private boolean putCell(Triple<Integer, Integer, Number> point) {
         return this.putCell(point.getLeft(), point.getMiddle(), point.getRight());
     }
 
     /**
-     *
-     * @param points
-     * @return
+     * セル更新メソッド
+     * <p>
+     *     更新対象行列番号のセルデータを更新データに置き換える。
+     *     シグネチャテーブルが１つでも<code>CONTAINS_SIGNATURE</code>更新済（更新対象セルに、既にデータが明示的に追加されている）
+     *     の場合、更新を実行しない。
+     * </p>
+     * @param points 更新データ
+     * @return 処理結果
      */
     public boolean putCells(Set<Triple<Integer, Integer, Number>> points) {
         boolean status;
+        final Number[][] cacheTable = this.getTable();
+        final int[][] cacheSignatureTable = this.getSignatureTable();
         for (Triple<Integer, Integer, Number> point: points) {
+            // insert logic
             status = this.putCell(point);
-            if (!status)
+
+            if (!status) {
+                // rollback
+                for (int i = 0; i < this.getRowSize(); i++) {
+                    System.arraycopy(cacheTable[i], 0, this.getTable()[i], 0, this.getColumnSize());
+                    System.arraycopy(cacheSignatureTable[i], 0, this.getSignatureTable()[i], 0, this.getColumnSize());
+                }
                 return false;
+            }
         }
         return true;
     }
 
     /**
-     *
-     * @return
-     */
-    private Class<? extends Number> getElementType() {
-        final Number elm = this.getCell(0, 0);
-        return elm.getClass();
-    }
-
-    /**
-     *
-     * @return
+     * 行合計
+     * @return 計算結果行列
      */
     public Matrix sumOfRow() {
         final Number[] ary = this.sumArrayOfRow();
@@ -605,8 +595,8 @@ public class Matrix extends AbstractNumberTable {
     }
 
     /**
-     *
-     * @return
+     * 行平均
+     * @return 計算結果行列
      */
     public Matrix averageOfRow() {
         final Number[] ary = this.averageArrayOfRow();
@@ -617,8 +607,8 @@ public class Matrix extends AbstractNumberTable {
     }
 
     /**
-     *
-     * @return
+     * 列合計
+     * @return 計算結果行列
      */
     public Matrix sumOfColumn() {
         final Number[] ary = this.sumArrayOfColumn();
@@ -628,8 +618,8 @@ public class Matrix extends AbstractNumberTable {
     }
 
     /**
-     *
-     * @return
+     * 列平均
+     * @return 計算結果行列
      */
     public Matrix averageOfColumn() {
         final Number[] ary = this.averageArrayOfColumn();

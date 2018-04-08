@@ -52,9 +52,12 @@ public abstract class AbstractNumberOperation<R> implements
     }
 
     /**
-     *
-     * @param data
-     * @return
+     * 数値変換メソッド
+     * <p>
+     *     数値クラス{@link Number}を任意精度整数クラス{@link BigInteger}に変換する。
+     * </p>
+     * @param data 変換前数値データ
+     * @return 変換後数値データ
      */
     protected BigInteger convertToBigInteger(Number data) {
         if (data.getClass().equals(Integer.class))
@@ -77,9 +80,12 @@ public abstract class AbstractNumberOperation<R> implements
     }
 
     /**
-     *
-     * @param data
-     * @return
+     * 数値変換メソッド
+     * <p>
+     *     数値クラス{@link Number}を分数クラス{@link Fraction}に変換する。
+     * </p>
+     * @param data 変換前数値データ
+     * @return 変換後数値データ
      */
     protected Fraction convertToFraction(Number data) {
         if (data.getClass().equals(Integer.class))
@@ -108,9 +114,12 @@ public abstract class AbstractNumberOperation<R> implements
     }
 
     /**
-     *
-     * @param data
-     * @return
+     * 数値変換メソッド
+     * <p>
+     *     数値クラス{@link Number}を任意精度分数クラス{@link BigFraction}に変換する。
+     * </p>
+     * @param data 変換前数値データ
+     * @return 変換後数値データ
      */
     protected BigFraction convertToBigFraction(Number data) {
         if (data.getClass().equals(Integer.class))
@@ -155,5 +164,11 @@ public abstract class AbstractNumberOperation<R> implements
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * デフォルト演算・実装メソッド
+     * @param l 演算項１
+     * @param r 演算項２
+     * @return 演算結果
+     */
     protected abstract R operationDefault(Number l, Number r);
 }

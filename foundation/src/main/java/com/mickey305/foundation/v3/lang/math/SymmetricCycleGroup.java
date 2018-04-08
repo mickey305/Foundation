@@ -27,8 +27,8 @@ public class SymmetricCycleGroup extends SymmetricPermutationGroup {
     }
 
     /**
-     *
-     * @return
+     * 巡回置換データチェック
+     * @return 判定結果
      */
     private boolean checkCycle() {
         final Number tpData = this.getRow(0)[0];
@@ -41,11 +41,7 @@ public class SymmetricCycleGroup extends SymmetricPermutationGroup {
         return cnt == this.getDataSet().size();
     }
 
-    /**
-     *
-     * @return
-     */
-    public SymmetricCycleGroup compact() {
+    @Override public SymmetricCycleGroup compact() {
         return new SymmetricCycleGroup(super.compact().getTable());
     }
 }

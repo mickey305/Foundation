@@ -18,35 +18,35 @@ public class SquareMatrix extends Matrix {
     }
 
     /**
-     *
-     * @param size
-     * @return
+     * インスタンス生成メソッド
+     * @param size 行・列サイズ
+     * @return インスタンス
      */
     public static SquareMatrix of(int size) {
         return new SquareMatrix(size);
     }
 
     /**
-     *
-     * @param initialTable
-     * @return
+     * インスタンス生成メソッド
+     * @param initialTable 初期化テーブル
+     * @return インスタンス
      */
     public static SquareMatrix of(Number[][] initialTable) {
         return new SquareMatrix(initialTable);
     }
 
     /**
-     *
-     * @param matrix
-     * @return
+     * インスタンス生成メソッド
+     * @param matrix 初期化インスタンス
+     * @return インスタンス
      */
     public static SquareMatrix of(SquareMatrix matrix) {
         return new SquareMatrix(matrix);
     }
 
     /**
-     *
-     * @return
+     * 行列サイズ取得処理
+     * @return 行列サイズ
      */
     public int getSize() {
         return super.getRowSize();

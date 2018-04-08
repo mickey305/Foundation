@@ -18,27 +18,27 @@ public class AdjacencyMatrix extends SquareMatrix {
     }
 
     /**
-     *
-     * @param size
-     * @return
+     * インスタンス生成メソッド
+     * @param size 行・列サイズ
+     * @return インスタンス
      */
     public static AdjacencyMatrix of(int size) {
         return new AdjacencyMatrix(size);
     }
 
     /**
-     *
-     * @param initialTable
-     * @return
+     * インスタンス生成メソッド
+     * @param initialTable 初期化テーブル
+     * @return インスタンス
      */
     public static AdjacencyMatrix of(Number[][] initialTable) {
         return new AdjacencyMatrix(initialTable);
     }
 
     /**
-     *
-     * @param matrix
-     * @return
+     * インスタンス生成メソッド
+     * @param matrix 初期化インスタンス
+     * @return インスタンス
      */
     public static AdjacencyMatrix of(AdjacencyMatrix matrix) {
         return new AdjacencyMatrix(matrix);
@@ -46,9 +46,9 @@ public class AdjacencyMatrix extends SquareMatrix {
 
     // todo
     /**
-     *
-     * @param matrix
-     * @return
+     * 木判定メソッド
+     * @param matrix 判定対象の隣接行列
+     * @return 判定結果
      */
     public static boolean isTree(AdjacencyMatrix matrix) {
         final Number[][] table = matrix.getTable();
@@ -57,9 +57,9 @@ public class AdjacencyMatrix extends SquareMatrix {
     }
 
     /**
-     *
-     * @param matrix
-     * @return
+     * 有向グラフ判定メソッド
+     * @param matrix 判定対象の隣接行列
+     * @return 判定結果
      */
     public static boolean isDirectedGraph(AdjacencyMatrix matrix) {
         for (int i = 0; i < matrix.getSize(); i++)
