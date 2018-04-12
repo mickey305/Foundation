@@ -51,8 +51,6 @@ public class AdjacencyMatrix extends SquareMatrix {
      * @return 判定結果
      */
     public static boolean isTree(AdjacencyMatrix matrix) {
-        final Number[][] table = matrix.getTable();
-        final int size = matrix.getSize();
         return false;
     }
 

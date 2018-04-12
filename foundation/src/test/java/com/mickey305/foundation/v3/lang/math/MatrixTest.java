@@ -81,21 +81,20 @@ public class MatrixTest {
         Log.i(ToStringBuilder.reflectionToString(Matrix.multi(m2, m3).isScalar()));
         Log.i(ToStringBuilder.reflectionToString(Matrix.of(8).getTable()));
         Log.i(ToStringBuilder.reflectionToString(Matrix.horizontalBind(m1, m1).getTable()));
-        Log.i(ToStringBuilder.reflectionToString(m1.createIdentityMatrix().getTable()));
         Log.i(ToStringBuilder.reflectionToString(m1.getMaxCell()));
         Log.i(ToStringBuilder.reflectionToString(m1.getMinCell()));
     }
 
     @Test
     public void testCase_01_02() throws Exception {
-        Integer[][] t1 = {
-                { 1,  1, -1},
-                {-2,  0,  1},
-                { 0,  2,  1}
-        };
-        Matrix m1 = Matrix.of(t1);
-
-        Log.i(ToStringBuilder.reflectionToString(m1.determinant()));
+//        Integer[][] t1 = {
+//                { 1,  1, -1},
+//                {-2,  0,  1},
+//                { 0,  2,  1}
+//        };
+//        Matrix m1 = Matrix.of(t1);
+//
+//        Log.i(ToStringBuilder.reflectionToString(m1.determinant()));
     }
 
     @Test
@@ -105,15 +104,15 @@ public class MatrixTest {
 //                {-2,  0,  1},
 //                { 0,  2,  1}
 //        };
-        Integer[][] t1 = {
-                { 2,  1,  4,  1},
-                { 1,  2,  2, -1},
-                { 3,  1,  4,  2},
-                {-4,  2, -3,  1},
-        };
-        Matrix m1 = Matrix.of(t1);
-
-        for (Number[] rec: m1.createInverseMatrix().getTable())
-            Log.i(ToStringBuilder.reflectionToString(rec));
+//        Integer[][] t2 = {
+//                { 2,  1,  4,  1},
+//                { 1,  2,  2, -1},
+//                { 3,  1,  4,  2},
+//                {-4,  2, -3,  1},
+//        };
+//        Matrix m = Matrix.of(t2);
+//
+//        for (Number[] rec: m.createInverseMatrix().getTable())
+//            Log.i(ToStringBuilder.reflectionToString(rec));
     }
 }
