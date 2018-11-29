@@ -2,6 +2,7 @@ package com.mickey305.foundation.v3.lang.math.operator;
 
 import com.mickey305.foundation.v3.compat.util.BinaryFunction;
 
+@Deprecated
 public interface OperationExtensions<T, U, R> {
 
     /**

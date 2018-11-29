@@ -3,6 +3,7 @@ package com.mickey305.foundation.v3.lang.math;
 import com.mickey305.foundation.v3.util.Permutation;
 import org.apache.commons.math3.fraction.BigFraction;
 
+@Deprecated
 public class SquareMatrix extends Matrix {
     private static final long serialVersionUID = 1206582462762106739L;
 

@@ -2,6 +2,7 @@ package com.mickey305.foundation.v3.lang.math.operator.core;
 
 import com.mickey305.foundation.v3.compat.util.BinaryFunction;
 
+@Deprecated
 public class RelationalOperationLE extends RelationalOperationEQ {
     private final RelationalOperationLT opLT;
 

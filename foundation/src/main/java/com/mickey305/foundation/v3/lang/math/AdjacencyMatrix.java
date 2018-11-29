@@ -2,6 +2,7 @@ package com.mickey305.foundation.v3.lang.math;
 
 import java.util.Arrays;
 
+@Deprecated
 public class AdjacencyMatrix extends SquareMatrix {
     private static final long serialVersionUID = -8268567830873490892L;
 

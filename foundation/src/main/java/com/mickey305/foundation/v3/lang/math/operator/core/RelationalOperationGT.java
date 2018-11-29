@@ -7,6 +7,7 @@ import org.apache.commons.math3.fraction.Fraction;
 
 import java.math.BigInteger;
 
+@Deprecated
 public class RelationalOperationGT extends AbstractNumberOperation<Boolean> {
     public RelationalOperationGT() {
         super();
