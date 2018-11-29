@@ -14,6 +14,6 @@ final class MathConst {
   /*
    * ログキャプチャ判定フラグ
    */
-  static final boolean ABS_NUM_TBL_CAPTURE_INI =      IS_DEBUG_MODE && ABS_NUM_TBL_CAPTURE && CAPTURE_INI;
+  static final boolean ABS_NUM_TBL_CAPTURE_INI      = IS_DEBUG_MODE && ABS_NUM_TBL_CAPTURE && CAPTURE_INI;
   static final boolean ABS_NUM_TBL_CAPTURE_TABLE_IO = IS_DEBUG_MODE && ABS_NUM_TBL_CAPTURE && CAPTURE_TABLE_IO;
 }
