@@ -290,7 +290,7 @@ public final class AnsiStringBuilder extends AbstractAnsiStringBuilder
             result.append(this.buildHexString(escape.code())).append(" // ").append(escape.name());
             result.append(System.lineSeparator());
         }
-        Log.d(AnsiStringBuilder.class, "dump", result.toString());
+        Log.d(result.toString());
         Log.i(th.getMessage());
         for (StackTraceElement e: th.getStackTrace())
             Log.i(e.toString());

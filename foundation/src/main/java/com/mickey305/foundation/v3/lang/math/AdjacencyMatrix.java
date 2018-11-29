@@ -44,15 +44,15 @@ public class AdjacencyMatrix extends SquareMatrix {
         return new AdjacencyMatrix(matrix);
     }
 
-    // todo
-    /**
-     * 木判定メソッド
-     * @param matrix 判定対象の隣接行列
-     * @return 判定結果
-     */
-    public static boolean isTree(AdjacencyMatrix matrix) {
-        return false;
-    }
+//    // todo
+//    /**
+//     * 木判定メソッド
+//     * @param matrix 判定対象の隣接行列
+//     * @return 判定結果
+//     */
+//    public static boolean isTree(AdjacencyMatrix matrix) {
+//        return false;
+//    }
 
     /**
      * 有向グラフ判定メソッド
