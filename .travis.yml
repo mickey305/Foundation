@@ -18,17 +18,16 @@ matrix:
     - script:
       - jdk_switcher use oraclejdk8
       - echo $JAVA_HOME ; javac -version ; java -version
-      - ./gradlew assemble --stacktrace --info
+      - ./gradlew clean compileJava compileTestJava --stacktrace --info
       - jdk_switcher use openjdk8
       - echo $JAVA_HOME ; javac -version ; java -version
       - ./gradlew check --stacktrace --info
     - script:
       - jdk_switcher use openjdk8
       - echo $JAVA_HOME ; javac -version ; java -version
-      - ./gradlew assemble --stacktrace --info
+      - ./gradlew clean compileJava compileTestJava --stacktrace --info
       - export _JAVA_OPTIONS=
       - mkdir -p ${HOME}/tmp
-#      - export JAVA_HOME=${HOME}/tmp/jdk11 && export PATH=${JAVA_HOME}/bin:$PATH
       - JAVA_HOME=`./install-jdk.sh -F 11 -W ${HOME}/tmp -E | tail -n 1`
       - PATH=${JAVA_HOME}/bin:$PATH
       - echo $HOME
