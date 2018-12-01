@@ -1,5 +1,6 @@
 package com.mickey305.foundation.v3.util;
 
+import javax.annotation.Nonnull;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -10,8 +11,9 @@ public class LockManager<T extends LockType> extends AbstractLockableCache<T> im
     lockCache = new ConcurrentHashMap<>();
   }
   
+  @Nonnull
   @Override
-  public ILockable<T> make(String key) {
+  public ILockable<T> make(@Nonnull String key) {
     ILockable<T> lock;
     synchronized (lockCache) {
       lock = lockCache.get(key);
@@ -24,8 +26,17 @@ public class LockManager<T extends LockType> extends AbstractLockableCache<T> im
   }
   
   @Override
-  public ILockable<T> getAndRemove(String key) {
-    return lockCache.remove(key);
+  public ILockable<T> getAndRemove(@Nonnull String key) {
+    ILockable<T> lock;
+    synchronized (lockCache) {
+      lock = lockCache.remove(key);
+    }
+    return lock;
+  }
+  
+  @Override
+  public ILockable<T> get(@Nonnull String key) {
+    return lockCache.get(key);
   }
   
   @Override
