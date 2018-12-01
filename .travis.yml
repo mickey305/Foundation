@@ -6,6 +6,11 @@ branches:
   only:
     - master
     - develop
+env:
+  global:
+    TRAVIS_ENV=true
 script: ./.test.sh
 jdk:
+  - openjdk7
+  - oraclejdk7
   - oraclejdk8

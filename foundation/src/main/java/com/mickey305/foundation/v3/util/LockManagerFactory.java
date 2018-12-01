@@ -7,7 +7,7 @@ public class LockManagerFactory {
     //// initialize component task
     cache = new LockManager<>();
     //// switching task
-    //*/
+    //*
     
     // default lock object creation
     cache.makeDefault();

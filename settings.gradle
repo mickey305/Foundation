@@ -1,7 +1,29 @@
+def sysEnv = System.env
+def varEnv = new Env()
+varEnv.jp    = sysEnv.JITPACK == null            ? false : Boolean.valueOf(sysEnv.JITPACK            as String)
+varEnv.tvCI  = sysEnv.TRAVIS_ENV == null         ? false : Boolean.valueOf(sysEnv.TRAVIS_ENV         as String)
+varEnv.avCI  = sysEnv.APPVEYOR_ENV == null       ? false : Boolean.valueOf(sysEnv.APPVEYOR_ENV       as String)
+varEnv.local = sysEnv.LOCAL_COMPUTER_ENV == null ? false : Boolean.valueOf(sysEnv.LOCAL_COMPUTER_ENV as String)
+/*
+println("JITPACK="            + varEnv.jp)
+println("TRAVIS_ENV="         + varEnv.tvCI)
+println("APPVEYOR_ENV="       + varEnv.avCI)
+println("LOCAL_COMPUTER_ENV=" + varEnv.local)
+//*/
+
+//===--- module include -------------------------------------------------------------------------------------------===//
 rootProject.name = 'Foundation'
-include 'foundation'
-if (!System.env.JITPACK) {
-    include 'maintenance'
+include ':foundation'
+if (!(varEnv.jp || varEnv.tvCI || varEnv.avCI || varEnv.local)) {
+    // ↑の何れの環境でもない場合は、↓のモジュールをビルド対象とする。
+    include ':maintenance'
     include ':sample'
 }
 
+//===--- class define ---------------------------------------------------------------------------------------------===//
+class Env {
+    boolean jp    = false // JitPack
+    boolean tvCI  = false // Travis CI(CI Service)
+    boolean avCI  = false // AppVeyor(CI Service)
+    boolean local = false // Local computer environment flag
+}
