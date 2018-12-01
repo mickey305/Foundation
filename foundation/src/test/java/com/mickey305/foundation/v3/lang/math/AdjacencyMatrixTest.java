@@ -1,7 +1,5 @@
 package com.mickey305.foundation.v3.lang.math;
 
-import com.mickey305.foundation.v3.util.Log;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,13 +45,13 @@ public class AdjacencyMatrixTest {
         };
         AdjacencyMatrix matrix;
 
-        matrix = AdjacencyMatrix.of(t1);
-        Log.i(ToStringBuilder.reflectionToString(AdjacencyMatrix.isTree(matrix)));
-        matrix = AdjacencyMatrix.of(t2);
-        Log.i(ToStringBuilder.reflectionToString(AdjacencyMatrix.isTree(matrix)));
-        matrix = AdjacencyMatrix.of(t3);
-        Log.i(ToStringBuilder.reflectionToString(AdjacencyMatrix.isTree(matrix)));
-        matrix = AdjacencyMatrix.of(t4);
-        Log.i(ToStringBuilder.reflectionToString(AdjacencyMatrix.isTree(matrix)));
+//        matrix = AdjacencyMatrix.of(t1);
+//        Log.i(ToStringBuilder.reflectionToString(AdjacencyMatrix.isTree(matrix)));
+//        matrix = AdjacencyMatrix.of(t2);
+//        Log.i(ToStringBuilder.reflectionToString(AdjacencyMatrix.isTree(matrix)));
+//        matrix = AdjacencyMatrix.of(t3);
+//        Log.i(ToStringBuilder.reflectionToString(AdjacencyMatrix.isTree(matrix)));
+//        matrix = AdjacencyMatrix.of(t4);
+//        Log.i(ToStringBuilder.reflectionToString(AdjacencyMatrix.isTree(matrix)));
     }
 }

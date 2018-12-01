@@ -4,6 +4,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
 
+@Deprecated
 public class SymmetricCycleGroup extends SymmetricPermutationGroup {
     public static final int SYMMETRIC_GROUP_ID = 1;
     private static final long serialVersionUID = 4305739241750291008L;

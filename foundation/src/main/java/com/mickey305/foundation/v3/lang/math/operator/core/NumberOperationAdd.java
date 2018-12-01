@@ -7,6 +7,7 @@ import org.apache.commons.math3.fraction.Fraction;
 
 import java.math.BigInteger;
 
+@Deprecated
 public class NumberOperationAdd extends AbstractNumberOperation<Number> {
     public NumberOperationAdd() {
         super();

@@ -20,6 +20,7 @@ import com.mickey305.foundation.v3.lang.math.operator.core.RelationalOperationNE
 import java.io.Serializable;
 import java.util.Objects;
 
+@Deprecated
 abstract class AbstractNumberTable implements Serializable {
     protected static final int NULL_SIGNATURE = 0;
     protected static final int CONTAINS_SIGNATURE = 1;

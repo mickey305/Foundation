@@ -4,6 +4,7 @@ import org.apache.commons.lang3.tuple.Triple;
 
 import java.util.Set;
 
+@Deprecated
 public class Matrix extends AbstractNumberTable {
     private static final long serialVersionUID = 4340800584382302277L;
 

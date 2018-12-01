@@ -22,21 +22,30 @@ public class Log {
 
     /**
      * ログ情報を出力する（標準出力・デバッグモード）
-     * @param clazz 対象Classクラス
-     * @param methodName 対象メソッド名
+     * @param element スタックトレース情報
      * @param msg メッセージ
      */
-    public synchronized static void d(Class clazz, String methodName, String msg) {
+    public synchronized static void d(StackTraceElement element, String msg) {
+        final int lineNumberWidth = 7;
         AnsiStringBuilder sb = new AnsiStringBuilder()
                 .append(Escape.BkgYellow)
                 .append(Escape.Black)
                 .append("[")
-                .append(clazz.getSimpleName())
-                .append("#").append(methodName)
-                .append("]")
+                .append(element.getClassName())
+                .append("#").append(element.getMethodName())
+                .append("(line:")
+                .append(String.format("%0" + lineNumberWidth + "d", element.getLineNumber()))
+                .append(")]")
                 .append(Escape.Reset)
+                .append(" ")
                 .append(msg);
         i(sb.toString());
+    }
+    
+    public synchronized static void d(String msg) {
+        final int traceTargetIndex = 2;
+        StackTraceElement element = Thread.currentThread().getStackTrace()[traceTargetIndex];
+        d(element, msg);
     }
 
     /**
