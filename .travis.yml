@@ -29,7 +29,8 @@ matrix:
       - export _JAVA_OPTIONS=
       - mkdir -p ${HOME}/tmp
 #      - export JAVA_HOME=${HOME}/tmp/jdk11 && export PATH=${JAVA_HOME}/bin:$PATH
-      - ./install-jdk.sh -F 11 -W ${HOME}/tmp -E
+      - JAVA_HOME=`./install-jdk.sh -F 11 -W ${HOME}/tmp -E | tail -n 1`
+      - PATH=${JAVA_HOME}/bin:$PATH
       - echo $HOME
       - echo $JAVA_HOME ; javac -version ; java -version
       - echo $PATH
