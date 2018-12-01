@@ -1,7 +1,6 @@
 language: groovy
 before_install:
  - chmod +x gradlew
- - chmod +x .test.sh
 branches:
   only:
     - master
@@ -9,11 +8,37 @@ branches:
 env:
   global:
     TRAVIS_ENV=true
-script: ./.test.sh
 jdk:
   - openjdk8
   - openjdk10
   - openjdk11
   - oraclejdk8
   - oraclejdk11
+script:
+  - # pattern 1
+  - jdk_switcher use openjdk8
+  - ./gradlew assemble --stacktrace --info
+  - jdk_switcher use openjdk8
+  - ./gradlew check --stacktrace --info
+  - jdk_switcher use openjdk10
+  - ./gradlew check --stacktrace --info
+  - jdk_switcher use openjdk11
+  - ./gradlew check --stacktrace --info
+  - jdk_switcher use oraclejdk8
+  - ./gradlew check --stacktrace --info
+  - jdk_switcher use oraclejdk11
+  - ./gradlew check --stacktrace --info
+  - # pattern 2
+  - jdk_switcher use oraclejdk8
+  - ./gradlew assemble --stacktrace --info
+  - jdk_switcher use openjdk8
+  - ./gradlew check --stacktrace --info
+  - jdk_switcher use openjdk10
+  - ./gradlew check --stacktrace --info
+  - jdk_switcher use openjdk11
+  - ./gradlew check --stacktrace --info
+  - jdk_switcher use oraclejdk8
+  - ./gradlew check --stacktrace --info
+  - jdk_switcher use oraclejdk11
+  - ./gradlew check --stacktrace --info
 
