@@ -11,6 +11,7 @@ env:
     TRAVIS_ENV=true
 script: ./.test.sh
 jdk:
+  - openjdk8
   - openjdk10
   - openjdk11
   - oraclejdk8
