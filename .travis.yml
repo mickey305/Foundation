@@ -14,27 +14,41 @@ jdk:
   - oraclejdk8
 matrix:
   include:
-    ## build using JDK 8, test using JDK 8(OpenJDK)
     - script:
+        - echo "test using JDK 8(OpenJDK)"
+        - javac -version ; java -version
         - jdk_switcher use openjdk8
+        - javac -version ; java -version
         - ./gradlew check --stacktrace --info
-    ## build using JDK 8, test using JDK 9(OpenJDK)
     - script:
-        - ./install-jdk.sh -F 9 && ./gradlew check --stacktrace --info
-    ## build using JDK 8, test using JDK 10(OpenJDK)
+        - echo "test using JDK 9(OpenJDK)"
+        - javac -version ; java -version
+        - ./install-jdk.sh -F 9         && ./gradlew check --stacktrace --info
+        - javac -version ; java -version
     - script:
-        - ./install-jdk.sh -F 10 && ./gradlew check --stacktrace --info
-    ## build using JDK 8, test using JDK 11(OpenJDK)
+        - echo "test using JDK 10(OpenJDK)"
+        - javac -version ; java -version
+        - ./install-jdk.sh -F 10        && ./gradlew check --stacktrace --info
+        - javac -version ; java -version
     - script:
-        - ./install-jdk.sh -F 11 && ./gradlew check --stacktrace --info
-    ## build using JDK 8, test using JDK 8(OracleJDK)
+        - echo "test using JDK 11(OpenJDK)"
+        - javac -version ; java -version
+        - ./install-jdk.sh -F 11        && ./gradlew check --stacktrace --info
+        - javac -version ; java -version
     - script:
+        - echo "test using JDK 8(OracleJDK)"
+        - javac -version ; java -version
         - jdk_switcher use oraclejdk8
+        - javac -version ; java -version
         - ./gradlew check --stacktrace --info
-    ## build using JDK 8, test using JDK 10(OracleJDK)
     - script:
+        - echo "test using JDK 10(OracleJDK)"
+        - javac -version ; java -version
         - ./install-jdk.sh -F 10 -L BCL && ./gradlew check --stacktrace --info
-    ## build using JDK 8, test using JDK 11(OracleJDK)
+        - javac -version ; java -version
     - script:
+        - echo "test using JDK 11(OracleJDK)"
+        - javac -version ; java -version
         - ./install-jdk.sh -F 11 -L BCL && ./gradlew check --stacktrace --info
+        - javac -version ; java -version
 
