@@ -9,28 +9,26 @@ branches:
 env:
   global:
     TRAVIS_ENV=true
-
+jdk:
+  - openjdk8
+  - oraclejdk8
 matrix:
   include:
-    - jdk:
-        - openjdk8
-        - oraclejdk8
-      script:
-        - echo "test using JDK 8(OpenJDK) ============================================================================="
-        - javac -version ; java -version ; echo $JAVA_HOME
-        - jdk_switcher use openjdk8
-        - javac -version ; java -version ; echo $JAVA_HOME
-        - ls -al
-        - ./gradlew check --stacktrace --info
-    - jdk:
-        - openjdk8
-      script:
-        - jdk_switcher use openjdk8
-        - ./gradlew assemble --stacktrace --info
-        - export JAVA_HOME=$HOME/openjdk11
-        - ./install-jdk.sh --install openjdk11 --target $JAVA_HOME
-        - ./gradlew check --stacktrace --info
-
+    - script:
+      - jdk_switcher use oraclejdk8
+      - echo $JAVA_HOME
+      - ./gradlew assemble --stacktrace --info
+      - jdk_switcher use openjdk8
+      - echo $JAVA_HOME
+      - ./gradlew check --stacktrace --info
+    - script:
+      - jdk_switcher use openjdk8
+      - echo $JAVA_HOME
+      - ./gradlew assemble --stacktrace --info
+      - export JAVA_HOME=$HOME/openjdk11
+      - ./install-jdk.sh --install openjdk11 --target $JAVA_HOME
+      - echo $JAVA_HOME
+      - ./gradlew check --stacktrace --info
 #matrix:
 #  include:
 #    - jdk:
