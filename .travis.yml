@@ -15,40 +15,52 @@ jdk:
 matrix:
   include:
     - script:
-        - echo "test using JDK 8(OpenJDK)"
-        - javac -version ; java -version
+        - echo "test using JDK 8(OpenJDK) #############################################################################"
+        - javac -version ; java -version ; echo $JAVA_HOME
         - jdk_switcher use openjdk8
-        - javac -version ; java -version
+        - javac -version ; java -version ; echo $JAVA_HOME
+        - ls -al
         - ./gradlew check --stacktrace --info
     - script:
-        - echo "test using JDK 9(OpenJDK)"
-        - javac -version ; java -version
-        - ./install-jdk.sh -F 9         && ./gradlew check --stacktrace --info
-        - javac -version ; java -version
+        - echo "test using JDK 9(OpenJDK) #############################################################################"
+        - javac -version ; java -version ; echo $JAVA_HOME
+        - ./install-jdk.sh -F 9
+        - javac -version ; java -version ; echo $JAVA_HOME
+        - ls -al
+        - ./gradlew check --stacktrace --info
     - script:
-        - echo "test using JDK 10(OpenJDK)"
-        - javac -version ; java -version
-        - ./install-jdk.sh -F 10        && ./gradlew check --stacktrace --info
-        - javac -version ; java -version
+        - echo "test using JDK 10(OpenJDK) ############################################################################"
+        - javac -version ; java -version ; echo $JAVA_HOME
+        - ./install-jdk.sh -F 10
+        - javac -version ; java -version ; echo $JAVA_HOME
+        - ls -al
+        - ./gradlew check --stacktrace --info
     - script:
-        - echo "test using JDK 11(OpenJDK)"
-        - javac -version ; java -version
-        - ./install-jdk.sh -F 11        && ./gradlew check --stacktrace --info
-        - javac -version ; java -version
+        - echo "test using JDK 11(OpenJDK) ############################################################################"
+        - javac -version ; java -version ; echo $JAVA_HOME
+        - ./install-jdk.sh -F 11
+        - javac -version ; java -version ; echo $JAVA_HOME
+        - ls -al
+        - ./gradlew check --stacktrace --info
     - script:
-        - echo "test using JDK 8(OracleJDK)"
-        - javac -version ; java -version
+        - echo "test using JDK 8(OracleJDK) ###########################################################################"
+        - javac -version ; java -version ; echo $JAVA_HOME
         - jdk_switcher use oraclejdk8
-        - javac -version ; java -version
+        - javac -version ; java -version ; echo $JAVA_HOME
+        - ls -al
         - ./gradlew check --stacktrace --info
     - script:
-        - echo "test using JDK 10(OracleJDK)"
-        - javac -version ; java -version
-        - ./install-jdk.sh -F 10 -L BCL && ./gradlew check --stacktrace --info
-        - javac -version ; java -version
+        - echo "test using JDK 10(OracleJDK) ##########################################################################"
+        - javac -version ; java -version ; echo $JAVA_HOME
+        - ./install-jdk.sh -F 10 -L BCL
+        - javac -version ; java -version ; echo $JAVA_HOME
+        - ls -al
+        - ./gradlew check --stacktrace --info
     - script:
-        - echo "test using JDK 11(OracleJDK)"
-        - javac -version ; java -version
-        - ./install-jdk.sh -F 11 -L BCL && ./gradlew check --stacktrace --info
-        - javac -version ; java -version
+        - echo "test using JDK 11(OracleJDK) ##########################################################################"
+        - javac -version ; java -version ; echo $JAVA_HOME
+        - ./install-jdk.sh -F 11 -L BCL
+        - javac -version ; java -version ; echo $JAVA_HOME
+        - ls -al
+        - ./gradlew check --stacktrace --info
 
