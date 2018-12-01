@@ -21,7 +21,7 @@ matrix:
       - ./gradlew clean compileJava compileTestJava --stacktrace --info
       - jdk_switcher use openjdk8
       - echo $JAVA_HOME ; javac -version ; java -version
-      - ./gradlew check -x compileJava -x compileTestJava --stacktrace --info
+      - ./gradlew check -x compileJava --stacktrace --debug
     - script:
       - jdk_switcher use openjdk8
       - echo $JAVA_HOME ; javac -version ; java -version
@@ -34,7 +34,7 @@ matrix:
       - echo $JAVA_HOME ; javac -version ; java -version
       - echo $PATH
       - pwd ; ls -al `pwd`
-      - ./gradlew check -x compileJava -x compileTestJava --stacktrace --info
+      - ./gradlew check -x compileJava --stacktrace --debug
 #matrix:
 #  include:
 #    - jdk:
