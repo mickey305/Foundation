@@ -1,6 +1,7 @@
 language: groovy
 before_install:
- - chmod +x gradlew
+ - chmod +x ./gradlew
+ - wget https://github.com/sormuras/bach/raw/master/install-jdk.sh && chmod +x ./install-jdk.sh
 branches:
   only:
     - master
@@ -11,16 +12,29 @@ env:
 jdk:
   - openjdk8
   - oraclejdk8
-script:
-  - # test script
-  - jdk_switcher use openjdk8
-  - ./gradlew check --stacktrace --info
-  - jdk_switcher use openjdk10
-  - ./gradlew check --stacktrace --info
-  - jdk_switcher use openjdk11
-  - ./gradlew check --stacktrace --info
-  - jdk_switcher use oraclejdk8
-  - ./gradlew check --stacktrace --info
-  - jdk_switcher use oraclejdk11
-  - ./gradlew check --stacktrace --info
+matrix:
+  include:
+    ## build using JDK 8, test using JDK 8(OpenJDK)
+    - script:
+        - jdk_switcher use openjdk8
+        - ./gradlew check --stacktrace --info
+    ## build using JDK 8, test using JDK 9(OpenJDK)
+    - script:
+        - ./install-jdk.sh -F 9 && ./gradlew check --stacktrace --info
+    ## build using JDK 8, test using JDK 10(OpenJDK)
+    - script:
+        - ./install-jdk.sh -F 10 && ./gradlew check --stacktrace --info
+    ## build using JDK 8, test using JDK 11(OpenJDK)
+    - script:
+        - ./install-jdk.sh -F 11 && ./gradlew check --stacktrace --info
+    ## build using JDK 8, test using JDK 8(OracleJDK)
+    - script:
+        - jdk_switcher use oraclejdk8
+        - ./gradlew check --stacktrace --info
+    ## build using JDK 8, test using JDK 10(OracleJDK)
+    - script:
+        - ./install-jdk.sh -F 10 -L BCL && ./gradlew check --stacktrace --info
+    ## build using JDK 8, test using JDK 11(OracleJDK)
+    - script:
+        - ./install-jdk.sh -F 11 -L BCL && ./gradlew check --stacktrace --info
 
