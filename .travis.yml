@@ -1,7 +1,8 @@
 language: groovy
 before_install:
  - chmod +x ./gradlew
- - wget https://github.com/sormuras/bach/raw/master/install-jdk.sh && chmod +x ./install-jdk.sh
+# - wget https://github.com/sormuras/bach/raw/master/install-jdk.sh && chmod +x ./install-jdk.sh
+ - chmod +x ./install-jdk.sh
 branches:
   only:
     - master
@@ -25,10 +26,9 @@ matrix:
       - jdk_switcher use openjdk8
       - echo $JAVA_HOME
       - ./gradlew assemble --stacktrace --info
-      - mkdir -p ${HOME}/downloaded-jdks/tmp
-      - mkdir -p ${HOME}/downloaded-jdks/openjdk11
-      - export JAVA_HOME=${HOME}/downloaded-jdks/openjdk11 && export PATH=${JAVA_HOME}/bin:$PATH
-      - ./install-jdk.sh -F 11 --target ${JAVA_HOME} --workspace ${HOME}/downloaded-jdks/tmp
+#      - mkdir -p ${HOME}/tmp
+#      - export JAVA_HOME=${HOME}/tmp/jdk11 && export PATH=${JAVA_HOME}/bin:$PATH
+      - ./install-jdk.sh -F 11 -W ${HOME}/tmp
       - echo $HOME
       - echo $JAVA_HOME
       - echo $PATH
