@@ -25,7 +25,8 @@ matrix:
       - jdk_switcher use openjdk8
       - echo $JAVA_HOME
       - ./gradlew assemble --stacktrace --info
-      - mkdir -p $HOME/openjdk11 && export JAVA_HOME=$HOME/openjdk11 && export PATH=${JAVA_HOME}/bin:$PATH
+      - mkdir -p ./jdks/tmp
+      - mkdir -p ./jdks/openjdk11 && export JAVA_HOME=./jdks/openjdk11 && export PATH=${JAVA_HOME}/bin:$PATH
       - ./install-jdk.sh -F 11 --target $JAVA_HOME
       - echo $JAVA_HOME
       - ./gradlew check --stacktrace --info
