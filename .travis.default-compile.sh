@@ -6,13 +6,9 @@ if [[ $# -ne 0 ]]; then
   exit 1
 fi
 
-# test
-export _JAVA_OPTIONS=
-mkdir -p ${HOME}/tmp
-export JAVA_HOME=`./install-jdk.sh -F 11 -L BCL -W ${HOME}/tmp -E | tail -n 1`
-export PATH=${JAVA_HOME}/bin:$PATH
+# compile
 echo ${JAVA_HOME} ; javac -version ; java -version
-./gradlew check -x compileJava --stacktrace --info
+./gradlew clean compileJava compileTestJava --stacktrace --info
 if [[ $? -ne 0 ]]; then
   exit 1
 fi

@@ -3,6 +3,7 @@ before_install:
  - chmod +x ./gradlew
 # - wget https://github.com/sormuras/bach/raw/master/install-jdk.sh && chmod +x ./install-jdk.sh
  - chmod +x ./install-jdk.sh
+ - chmod +x ./.travis.default-compile.sh
  - chmod +x ./.travis.default-test.sh
  - chmod +x ./.travis.openjdk9-test.sh
  - chmod +x ./.travis.openjdk10-test.sh
@@ -22,62 +23,72 @@ jdk:
 matrix:
   include:
 # ===============================================================
-    - env: IFNO="compile:openjdk8, test:oraclejdk8"
+    - env: TEST_DUMMY_INFO="compile:openjdk8,   test:openjdk8"
       script:
-      - ./.travis.default-test.sh openjdk8 oraclejdk8
+      - jdk_switcher use openjdk8 && ./.travis.default-compile.sh && jdk_switcher use openjdk8 && ./.travis.default-test.sh
 
 # ===============================================================
-    - env: IFNO="compile:oraclejdk8, test:openjdk8"
+    - env: TEST_DUMMY_INFO="compile:oraclejdk8, test:openjdk8"
       script:
-      - ./.travis.default-test.sh oraclejdk8 openjdk8
+      - jdk_switcher use oraclejdk8 && ./.travis.default-compile.sh && jdk_switcher use openjdk8 && ./.travis.default-test.sh
 
 # ===============================================================
-    - env: IFNO="compile:openjdk8, test:openjdk9"
+    - env: TEST_DUMMY_INFO="compile:openjdk8,   test:openjdk9"
       script:
-      - ./.travis.openjdk9-test.sh openjdk8
+      - jdk_switcher use openjdk8 && ./.travis.default-compile.sh && ./.travis.openjdk9-test.sh
 
 # ===============================================================
-    - env: IFNO="compile:oraclejdk8, test:openjdk9"
+    - env: TEST_DUMMY_INFO="compile:oraclejdk8, test:openjdk9"
       script:
-      - ./.travis.openjdk9-test.sh oraclejdk8
+      - jdk_switcher use oraclejdk8 && ./.travis.default-compile.sh && ./.travis.openjdk9-test.sh
 
 # ===============================================================
-    - env: IFNO="compile:openjdk8, test:openjdk10"
+    - env: TEST_DUMMY_INFO="compile:openjdk8,   test:openjdk10"
       script:
-      - ./.travis.openjdk10-test.sh openjdk8
+      - jdk_switcher use openjdk8 && ./.travis.default-compile.sh && ./.travis.openjdk10-test.sh
 
 # ===============================================================
-    - env: IFNO="compile:oraclejdk8, test:openjdk10"
+    - env: TEST_DUMMY_INFO="compile:oraclejdk8, test:openjdk10"
       script:
-      - ./.travis.openjdk10-test.sh oraclejdk8
+      - jdk_switcher use oraclejdk8 && ./.travis.default-compile.sh && ./.travis.openjdk10-test.sh
 
 # ===============================================================
-    - env: IFNO="compile:openjdk8, test:openjdk11"
+    - env: TEST_DUMMY_INFO="compile:openjdk8,   test:openjdk11"
       script:
-      - ./.travis.openjdk11-test.sh openjdk8
+      - jdk_switcher use openjdk8 && ./.travis.default-compile.sh && ./.travis.openjdk11-test.sh
 
 # ===============================================================
-    - env: IFNO="compile:oraclejdk8, test:openjdk11"
+    - env: TEST_DUMMY_INFO="compile:oraclejdk8, test:openjdk11"
       script:
-      - ./.travis.openjdk11-test.sh oraclejdk8
+      - jdk_switcher use oraclejdk8 && ./.travis.default-compile.sh && ./.travis.openjdk11-test.sh
 
 # ===============================================================
-    - env: IFNO="compile:openjdk8, test:oraclejdk10"
+    - env: TEST_DUMMY_INFO="compile:openjdk8,   test:oraclejdk8"
       script:
-      - ./.travis.oraclejdk10-test.sh openjdk8
+      - jdk_switcher use openjdk8 && ./.travis.default-compile.sh && jdk_switcher use oraclejdk8 && ./.travis.default-test.sh
 
 # ===============================================================
-    - env: IFNO="compile:oraclejdk8, test:oraclejdk10"
+    - env: TEST_DUMMY_INFO="compile:oraclejdk8, test:oraclejdk8"
       script:
-      - ./.travis.oraclejdk10-test.sh oraclejdk8
+      - jdk_switcher use oraclejdk8 && ./.travis.default-compile.sh && jdk_switcher use oraclejdk8 && ./.travis.default-test.sh
 
 # ===============================================================
-    - env: IFNO="compile:openjdk8, test:oraclejdk11"
+    - env: TEST_DUMMY_INFO="compile:openjdk8,   test:oraclejdk10"
       script:
-      - ./.travis.oraclejdk11-test.sh openjdk8
+      - jdk_switcher use openjdk8 && ./.travis.default-compile.sh && ./.travis.oraclejdk10-test.sh
 
 # ===============================================================
-    - env: IFNO="compile:oraclejdk8, test:oraclejdk11"
+    - env: TEST_DUMMY_INFO="compile:oraclejdk8, test:oraclejdk10"
       script:
-      - ./.travis.oraclejdk11-test.sh oraclejdk8
+      - jdk_switcher use oraclejdk8 && ./.travis.default-compile.sh && ./.travis.oraclejdk10-test.sh
+
+# ===============================================================
+    - env: TEST_DUMMY_INFO="compile:openjdk8,   test:oraclejdk11"
+      script:
+      - jdk_switcher use openjdk8 && ./.travis.default-compile.sh && ./.travis.oraclejdk11-test.sh
+
+# ===============================================================
+    - env: TEST_DUMMY_INFO="compile:oraclejdk8, test:oraclejdk11"
+      script:
+      - jdk_switcher use oraclejdk8 && ./.travis.default-compile.sh && ./.travis.oraclejdk11-test.sh
 
