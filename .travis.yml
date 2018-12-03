@@ -21,28 +21,63 @@ jdk:
   - oraclejdk8
 matrix:
   include:
-    - script:
+# ===============================================================
+    - env: IFNO="compile:openjdk8, test:oraclejdk8"
+      script:
       - ./.travis.default-test.sh openjdk8 oraclejdk8
-    - script:
+
+# ===============================================================
+    - env: IFNO="compile:oraclejdk8, test:openjdk8"
+      script:
       - ./.travis.default-test.sh oraclejdk8 openjdk8
-    - script:
+
+# ===============================================================
+    - env: IFNO="compile:openjdk8, test:openjdk9"
+      script:
       - ./.travis.openjdk9-test.sh openjdk8
-    - script:
+
+# ===============================================================
+    - env: IFNO="compile:oraclejdk8, test:openjdk9"
+      script:
       - ./.travis.openjdk9-test.sh oraclejdk8
-    - script:
+
+# ===============================================================
+    - env: IFNO="compile:openjdk8, test:openjdk10"
+      script:
       - ./.travis.openjdk10-test.sh openjdk8
-    - script:
+
+# ===============================================================
+    - env: IFNO="compile:oraclejdk8, test:openjdk10"
+      script:
       - ./.travis.openjdk10-test.sh oraclejdk8
-    - script:
+
+# ===============================================================
+    - env: IFNO="compile:openjdk8, test:openjdk11"
+      script:
       - ./.travis.openjdk11-test.sh openjdk8
-    - script:
+
+# ===============================================================
+    - env: IFNO="compile:oraclejdk8, test:openjdk11"
+      script:
       - ./.travis.openjdk11-test.sh oraclejdk8
-    - script:
+
+# ===============================================================
+    - env: IFNO="compile:openjdk8, test:oraclejdk10"
+      script:
       - ./.travis.oraclejdk10-test.sh openjdk8
-    - script:
+
+# ===============================================================
+    - env: IFNO="compile:oraclejdk8, test:oraclejdk10"
+      script:
       - ./.travis.oraclejdk10-test.sh oraclejdk8
-    - script:
+
+# ===============================================================
+    - env: IFNO="compile:openjdk8, test:oraclejdk11"
+      script:
       - ./.travis.oraclejdk11-test.sh openjdk8
-    - script:
+
+# ===============================================================
+    - env: IFNO="compile:oraclejdk8, test:oraclejdk11"
+      script:
       - ./.travis.oraclejdk11-test.sh oraclejdk8
 
