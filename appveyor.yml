@@ -10,7 +10,7 @@ branches:
 build_script:
   - gradlew.bat clean compileJava compileTestJava --stacktrace --info
 test_script:
-  - gradlew.bat check --stacktrace --info
+  - gradlew.bat check -x compileJava --stacktrace --info
 deploy: off
 cache:
   - C:\Users\appveyor\.gradle

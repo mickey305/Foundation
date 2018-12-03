@@ -3,6 +3,12 @@ before_install:
  - chmod +x ./gradlew
 # - wget https://github.com/sormuras/bach/raw/master/install-jdk.sh && chmod +x ./install-jdk.sh
  - chmod +x ./install-jdk.sh
+ - chmod +x ./.travis.default-test.sh
+ - chmod +x ./.travis.openjdk9-test.sh
+ - chmod +x ./.travis.openjdk10-test.sh
+ - chmod +x ./.travis.openjdk11-test.sh
+ - chmod +x ./.travis.oraclejdk10-test.sh
+ - chmod +x ./.travis.oraclejdk11-test.sh
 branches:
   only:
     - master
@@ -16,93 +22,27 @@ jdk:
 matrix:
   include:
     - script:
-      - jdk_switcher use oraclejdk8
-      - echo $JAVA_HOME ; javac -version ; java -version
-      - ./gradlew clean compileJava compileTestJava --stacktrace --info
-      - jdk_switcher use openjdk8
-      - echo $JAVA_HOME ; javac -version ; java -version
-      - ./gradlew check -x compileJava --stacktrace --debug
+      - ./.travis.default-test.sh openjdk8 oraclejdk8
     - script:
-      - jdk_switcher use openjdk8
-      - echo $JAVA_HOME ; javac -version ; java -version
-      - ./gradlew clean compileJava compileTestJava --stacktrace --info
-      - export _JAVA_OPTIONS=
-      - mkdir -p ${HOME}/tmp
-      - export JAVA_HOME=`./install-jdk.sh -F 10 -W ${HOME}/tmp -E | tail -n 1`
-      - export PATH=${JAVA_HOME}/bin:$PATH
-      - echo $JAVA_HOME ; javac -version ; java -version
-      - pwd ; ls -al `pwd`
-      - ./gradlew check -x compileJava --stacktrace --debug
-#matrix:
-#  include:
-#    - jdk:
-#        - openjdk8
-#        - oraclejdk8
-#      script:
-#        - echo "test using JDK 8(OpenJDK) ============================================================================="
-#        - javac -version ; java -version ; echo $JAVA_HOME
-#        - jdk_switcher use openjdk8
-#        - javac -version ; java -version ; echo $JAVA_HOME
-#        - ls -al
-#        - ./gradlew check --stacktrace --info
-#    - jdk:
-#        - openjdk8
-#        - oraclejdk8
-#      script:
-#        - echo "test using JDK 9(OpenJDK) ============================================================================="
-#        - javac -version ; java -version ; echo $JAVA_HOME
-#        - ./install-jdk.sh -F 9
-#        - javac -version ; java -version ; echo $JAVA_HOME
-#        - ls -al
-#        - ./gradlew check --stacktrace --info
-#    - jdk:
-#        - openjdk8
-#        - oraclejdk8
-#      script:
-#        - echo "test using JDK 10(OpenJDK) ============================================================================"
-#        - javac -version ; java -version ; echo $JAVA_HOME
-#        - ./install-jdk.sh -F 10
-#        - javac -version ; java -version ; echo $JAVA_HOME
-#        - ls -al
-#        - ./gradlew check --stacktrace --info
-#    - jdk:
-#        - openjdk8
-#        - oraclejdk8
-#      script:
-#        - echo "test using JDK 11(OpenJDK) ============================================================================"
-#        - javac -version ; java -version ; echo $JAVA_HOME
-#        - ./install-jdk.sh -F 11
-#        - javac -version ; java -version ; echo $JAVA_HOME
-#        - ls -al
-#        - ./gradlew check --stacktrace --info
-#    - jdk:
-#        - openjdk8
-#        - oraclejdk8
-#      script:
-#        - echo "test using JDK 8(OracleJDK) ==========================================================================="
-#        - javac -version ; java -version ; echo $JAVA_HOME
-#        - jdk_switcher use oraclejdk8
-#        - javac -version ; java -version ; echo $JAVA_HOME
-#        - ls -al
-#        - ./gradlew check --stacktrace --info
-#    - jdk:
-#        - openjdk8
-#        - oraclejdk8
-#      script:
-#        - echo "test using JDK 10(OracleJDK) =========================================================================="
-#        - javac -version ; java -version ; echo $JAVA_HOME
-#        - ./install-jdk.sh -F 10 -L BCL
-#        - javac -version ; java -version ; echo $JAVA_HOME
-#        - ls -al
-#        - ./gradlew check --stacktrace --info
-#    - jdk:
-#        - openjdk8
-#        - oraclejdk8
-#      script:
-#        - echo "test using JDK 11(OracleJDK) =========================================================================="
-#        - javac -version ; java -version ; echo $JAVA_HOME
-#        - ./install-jdk.sh -F 11 -L BCL
-#        - javac -version ; java -version ; echo $JAVA_HOME
-#        - ls -al
-#        - ./gradlew check --stacktrace --info
-#
+      - ./.travis.default-test.sh oraclejdk8 openjdk8
+    - script:
+      - ./.travis.openjdk9-test.sh openjdk8
+    - script:
+      - ./.travis.openjdk9-test.sh oraclejdk8
+    - script:
+      - ./.travis.openjdk10-test.sh openjdk8
+    - script:
+      - ./.travis.openjdk10-test.sh oraclejdk8
+    - script:
+      - ./.travis.openjdk11-test.sh openjdk8
+    - script:
+      - ./.travis.openjdk11-test.sh oraclejdk8
+    - script:
+      - ./.travis.oraclejdk10-test.sh openjdk8
+    - script:
+      - ./.travis.oraclejdk10-test.sh oraclejdk8
+    - script:
+      - ./.travis.oraclejdk11-test.sh openjdk8
+    - script:
+      - ./.travis.oraclejdk11-test.sh oraclejdk8
+
