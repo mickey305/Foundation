@@ -9,7 +9,8 @@ branches:
     - develop
 env:
   global:
-    TRAVIS_ENV=true
+    - TRAVIS_ENV=true
+    - GRADLE_OPTS="-Xmx4096m"
 jdk:
   - openjdk8
   - oraclejdk8
@@ -30,9 +31,7 @@ matrix:
       - mkdir -p ${HOME}/tmp
       - JAVA_HOME=`./install-jdk.sh -F 11 -W ${HOME}/tmp -E | tail -n 1`
       - PATH=${JAVA_HOME}/bin:$PATH
-      - echo $HOME
       - echo $JAVA_HOME ; javac -version ; java -version
-      - echo $PATH
       - pwd ; ls -al `pwd`
       - ./gradlew check -x compileJava --stacktrace --debug
 #matrix:
