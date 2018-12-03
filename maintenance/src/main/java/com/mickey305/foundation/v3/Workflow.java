@@ -101,6 +101,7 @@ final class Workflow {
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.SYNCHRONIZED)
                 .returns(setOfClass)
                 .beginControlFlow("if ("+ cacheFieldName +" == null)")
+                    .addStatement(cacheFieldName + " = $T.emptySet()", Collections.class)
                     .addStatement(
                         "if (" + jreFieldName + " == " + jre18 + ") " +
                         buildImmutableClassesMethodNameJre18 + "()"

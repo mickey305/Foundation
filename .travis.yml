@@ -32,7 +32,6 @@ matrix:
       - export PATH=${JAVA_HOME}/bin:$PATH
       - echo $JAVA_HOME ; javac -version ; java -version
       - pwd ; ls -al `pwd`
-#      - echo "org.gradle.java.home=${JAVA_HOME}" >> $HOME/.gradle/gradle.properties
       - ./gradlew check -x compileJava --stacktrace --debug
 #matrix:
 #  include:
