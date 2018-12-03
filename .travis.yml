@@ -28,7 +28,7 @@ matrix:
       - ./gradlew clean compileJava compileTestJava --stacktrace --info
       - export _JAVA_OPTIONS=
       - mkdir -p ${HOME}/tmp
-      - export JAVA_HOME=`./install-jdk.sh -F 11 -W ${HOME}/tmp -E | tail -n 1`
+      - export JAVA_HOME=`./install-jdk.sh -F 10 -W ${HOME}/tmp -E | tail -n 1`
       - export PATH=${JAVA_HOME}/bin:$PATH
       - echo $JAVA_HOME ; javac -version ; java -version
       - pwd ; ls -al `pwd`
