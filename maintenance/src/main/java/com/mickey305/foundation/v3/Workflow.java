@@ -1,6 +1,7 @@
 package com.mickey305.foundation.v3;
 
 import com.mickey305.foundation.v3.maintenance.tools.ReflectionsUtil;
+import com.mickey305.foundation.v3.util.WeakHashSet;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
@@ -85,7 +86,7 @@ final class Workflow {
         final TypeName something = WildcardTypeName.get(((ParameterizedType) types[0]).getActualTypeArguments()[0]);
         final TypeName classElement = ParameterizedTypeName.get(clz, something);
         final ClassName set = ClassName.get(Set.class);
-        final ClassName hashSet = ClassName.get(HashSet.class);
+        final ClassName weakHashSet = ClassName.get(WeakHashSet.class);
         final TypeName setOfClass = ParameterizedTypeName.get(set, classElement);
 
         FieldSpec immutableClassesField = FieldSpec
@@ -113,7 +114,7 @@ final class Workflow {
                 .methodBuilder(buildImmutableClassesMethodNameJre18)
                 .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
                 .returns(void.class)
-                .addStatement(cacheFieldName + " = new $T<>()", hashSet);
+                .addStatement(cacheFieldName + " = new $T<>()", weakHashSet);
         for (Class<?> elm: allClasses) {
             if (!elm.getName().contains("$")
                     && java.lang.reflect.Modifier.isPublic(elm.getModifiers())
