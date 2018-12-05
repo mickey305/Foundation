@@ -26,12 +26,25 @@ public abstract class AbstractReferenceSet<E, M extends Map<E, Object>> extends 
   
   @Override
   public int size() {
-    return map.size();
+    return this.recountSize();
   }
-  
+
   @Override
   public boolean isEmpty() {
-    return map.isEmpty();
+    return this.size() == 0;
+  }
+  
+  /**
+   * キー要素イテレータをもとに、キー要素数を算出する
+   * @return キー要素数
+   */
+  private int recountSize() {
+    final Iterator<E> iterator = this.iterator();
+    int i = 0;
+    while (iterator.hasNext()) {
+      iterator.next(); i++;
+    }
+    return i;
   }
   
   @Override
