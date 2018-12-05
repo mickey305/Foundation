@@ -1,7 +1,7 @@
 package com.mickey305.foundation.v3;
 
 import com.mickey305.foundation.v3.maintenance.tools.ReflectionsUtil;
-import com.mickey305.foundation.v3.util.WeakHashSet;
+import com.mickey305.foundation.v3.util.SoftHashSet;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
@@ -66,9 +66,12 @@ final class Workflow {
 
     private void buildResourceClass() throws NoSuchMethodException, IOException {
         final String resourceClassName = "R";
-        final String cacheFieldName = "cn1_" + System.currentTimeMillis();
+//        final String cacheFieldName = "cn1_" + System.currentTimeMillis();
+        final String cacheFieldName = "cache";
+        final String cacheSizeFieldName = "cacheSize";
         final String jreFieldName = "JRE";
-        final double jre18 = 1.8;
+        final double jreNow = (Double.parseDouble(System.getProperty("java.specification.version")));
+        final double jre18 = jreNow;//1.8;
         final String buildImmutableClassesMethodName = "buildImmutableClasses";
         final String buildImmutableClassesMethodNameJre18 = buildImmutableClassesMethodName + "Jre18";
         final String getImmutableClassesMethodName = "knownImmutableClasses";
@@ -86,22 +89,30 @@ final class Workflow {
         final TypeName something = WildcardTypeName.get(((ParameterizedType) types[0]).getActualTypeArguments()[0]);
         final TypeName classElement = ParameterizedTypeName.get(clz, something);
         final ClassName set = ClassName.get(Set.class);
-        final ClassName weakHashSet = ClassName.get(WeakHashSet.class);
+        final ClassName softHashSet = ClassName.get(SoftHashSet.class);
         final TypeName setOfClass = ParameterizedTypeName.get(set, classElement);
 
         FieldSpec immutableClassesField = FieldSpec
                 .builder(setOfClass, cacheFieldName, Modifier.PRIVATE, Modifier.STATIC)
+                .initializer("null")
                 .build();
         FieldSpec jreField = FieldSpec
                 .builder(double.class, jreFieldName, Modifier.PRIVATE, Modifier.STATIC, Modifier.FINAL)
                 .initializer("($T.parseDouble($T.getProperty(\"java.specification.version\")))",
                     Double.class, System.class)
                 .build();
+        FieldSpec cacheSizeField = FieldSpec
+                .builder(int.class, cacheSizeFieldName, Modifier.PRIVATE, Modifier.STATIC)
+                .initializer("0")
+                .build();
         MethodSpec getImmutableClassesMethod = MethodSpec
                 .methodBuilder(getImmutableClassesMethodName)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.SYNCHRONIZED)
                 .returns(setOfClass)
-                .beginControlFlow("if ("+ cacheFieldName +" == null)")
+                .beginControlFlow(
+                    "if (" + cacheFieldName + " == null || "
+                        + cacheSizeFieldName + " < 3.0 * " + cacheFieldName + ".size())")
+                    .addComment("data NULL-VALUE or less than 1/3 of original collection size")
                     .addStatement(cacheFieldName + " = $T.emptySet()", Collections.class)
                     .addStatement(
                         "if (" + jreFieldName + " == " + jre18 + ") " +
@@ -114,7 +125,7 @@ final class Workflow {
                 .methodBuilder(buildImmutableClassesMethodNameJre18)
                 .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
                 .returns(void.class)
-                .addStatement(cacheFieldName + " = new $T<>()", weakHashSet);
+                .addStatement(cacheFieldName + " = new $T<>()", softHashSet);
         for (Class<?> elm: allClasses) {
             if (!elm.getName().contains("$")
                     && java.lang.reflect.Modifier.isPublic(elm.getModifiers())
@@ -125,6 +136,8 @@ final class Workflow {
                 } catch (RuntimeException ignored) {}
             }
         }
+        buildImmutableClassesJre18MethodBuilder
+                .addStatement(cacheSizeFieldName + " = " + cacheFieldName + ".size()");
         MethodSpec buildImmutableClassesJre18Method = buildImmutableClassesJre18MethodBuilder
                 .build();
         MethodSpec privateCons = MethodSpec.constructorBuilder()
@@ -139,6 +152,7 @@ final class Workflow {
                                 .format(new Timestamp(System.currentTimeMillis())) + System.lineSeparator())
                 .addField(jreField)
                 .addField(immutableClassesField)
+                .addField(cacheSizeField)
                 .addMethod(privateCons)
                 .addMethod(getImmutableClassesMethod)
                 .addMethod(buildImmutableClassesJre18Method)
