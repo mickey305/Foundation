@@ -9,7 +9,7 @@ import java.util.Set;
 
 public abstract class AbstractReferenceSet<E, M extends Map<E, Object>> extends AbstractSet<E>
     implements Set<E>, Serializable, Cloneable {
-  private static final long serialVersionUID = 5891466472351500976L;
+  private static final long serialVersionUID = 888121226761401105L;
   protected transient M map;
   static final Object DUMMY_VAL;
   
@@ -45,6 +45,22 @@ public abstract class AbstractReferenceSet<E, M extends Map<E, Object>> extends 
       iterator.next(); i++;
     }
     return i;
+  }
+  
+  protected int offsetSize() {
+    return this.allocatedSize() - this.size();
+  }
+  
+  protected boolean isFrag() {
+    return this.offsetSize() != 0;
+  }
+  
+  protected int allocatedSize() {
+    return map.keySet().size();
+  }
+  
+  protected boolean isAllocatedEmpty() {
+    return this.allocatedSize() == 0;
   }
   
   @Override
