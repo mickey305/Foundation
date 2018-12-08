@@ -1,6 +1,7 @@
 package com.mickey305.foundation.tools.maintenance.v3;
 
 import com.mickey305.foundation.tools.maintenance.v3.util.JreLibUtils;
+import com.mickey305.foundation.tools.maintenance.v3.util.ReflectionsUtil;
 import com.mickey305.foundation.v3.EnvConfigConst;
 import com.mickey305.foundation.v3.util.Log;
 import com.mickey305.foundation.v3.util.SoftHashSet;
@@ -31,12 +32,15 @@ import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -208,7 +212,11 @@ final class Workflow {
   }
   
   private static Set<Class<?>> createClassesOf(String... prefixes) {
-    return null;
+    final Set<Class<?>> targetClasses = new HashSet<>();
+    final Function<String, Set<Class<?>>> searcher = ReflectionsUtil.getInstance().classSearcher();
+    Arrays.stream(prefixes).forEach(prefix -> targetClasses.addAll(searcher.apply(prefix)));
+    
+    return targetClasses;
   }
   
   /**
