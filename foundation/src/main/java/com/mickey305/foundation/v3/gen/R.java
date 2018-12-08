@@ -3,6 +3,7 @@ package com.mickey305.foundation.v3.gen;
 import com.mickey305.foundation.v3.EnvConfigConst;
 import com.mickey305.foundation.v3.util.Log;
 import com.mickey305.foundation.v3.util.SoftHashSet;
+
 import java.lang.Class;
 import java.lang.Double;
 import java.lang.System;
@@ -14,15 +15,15 @@ import java.util.Set;
  */
 public final class R {
   private static final double JRE = (Double.parseDouble(System.getProperty("java.specification.version")));
-
+  
   private static Set<Class<?>> cache = null;
-
+  
   private static int cacheSize = 0;
-
+  
   private R() {
     // This class is static view only class.
   }
-
+  
   public static synchronized Set<Class<?>> knownImmutableClasses() {
     if (cache == null || 3.0 * cache.size() < cacheSize) {
       // data NULL-VALUE or less than 1/3 of original collection size
@@ -37,7 +38,7 @@ public final class R {
     }
     return Collections.unmodifiableSet(cache);
   }
-
+  
   private static void buildImmutableClassesSE10() {
     cache = new SoftHashSet<>();
     try {
@@ -1039,7 +1040,7 @@ public final class R {
     }
     cacheSize = cache.size();
   }
-
+  
   private static void buildImmutableClassesSE8() {
     cache = new SoftHashSet<>();
     try {
@@ -1848,7 +1849,7 @@ public final class R {
     }
     cacheSize = cache.size();
   }
-
+  
   private static void buildImmutableClassesSE7() {
     cache = new SoftHashSet<>();
     try {

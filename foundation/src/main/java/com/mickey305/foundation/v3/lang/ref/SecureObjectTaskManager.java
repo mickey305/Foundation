@@ -19,12 +19,12 @@ public class SecureObjectTaskManager<I, O> {
   public synchronized O invoke() {
     I obj = ini.ini();
     WeakReference<I> weakObj = new WeakReference<>(obj);
-    if(IS_DEBUG_MODE) Log.d("ref:" + weakObj.get());
+    if (IS_DEBUG_MODE) Log.d("ref:" + weakObj.get());
     O result = task.impl(weakObj);
     obj = null;
-    if(IS_DEBUG_MODE) Log.d("ref:" + weakObj.get());
+    if (IS_DEBUG_MODE) Log.d("ref:" + weakObj.get());
     System.gc();
-    if(IS_DEBUG_MODE) Log.d("ref:" + weakObj.get());
+    if (IS_DEBUG_MODE) Log.d("ref:" + weakObj.get());
     return result;
   }
   

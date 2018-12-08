@@ -35,7 +35,6 @@ public class JreLibUtils {
   }
   
   /**
-   *
    * @param jre
    * @return
    */
@@ -82,7 +81,7 @@ public class JreLibUtils {
                 final String classPath = path
                     .replace(".class", "")
                     .replace("/", ".");
-
+                
                 if (Stream.of(
                     "java.",
                     "javax.",
@@ -92,7 +91,7 @@ public class JreLibUtils {
                     .noneMatch(s -> classPath.toLowerCase().startsWith(s))) {
                   return;
                 }
-
+                
                 try {
                   final Class<?> target = Class.forName(classPath);
                   allClasses.add(target);
@@ -111,7 +110,6 @@ public class JreLibUtils {
   }
   
   /**
-   *
    * @param from
    * @param cache
    */

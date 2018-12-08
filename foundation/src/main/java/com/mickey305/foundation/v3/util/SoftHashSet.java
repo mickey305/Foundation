@@ -13,7 +13,7 @@ import static org.apache.commons.collections4.map.AbstractReferenceMap.Reference
 public class SoftHashSet<E> extends AbstractReferenceSet<E, SoftHashMap<E, Object>>
     implements Set<E>, Serializable, Cloneable {
   private static final float DEFAULT_LOAD_FACTOR = 0.75f;
-  private static final AbstractReferenceMap.ReferenceStrength DEFAULT_KEY_TYPE   = SOFT;
+  private static final AbstractReferenceMap.ReferenceStrength DEFAULT_KEY_TYPE = SOFT;
   private static final AbstractReferenceMap.ReferenceStrength DEFAULT_VALUE_TYPE = WEAK;
   private static final long serialVersionUID = -5802596856478904771L;
   
@@ -22,7 +22,7 @@ public class SoftHashSet<E> extends AbstractReferenceSet<E, SoftHashMap<E, Objec
   }
   
   public SoftHashSet(Collection<? extends E> c) {
-    final int capacity = Math.max((int) (c.size()/.75f) + 1, 16);
+    final int capacity = Math.max((int) (c.size() / .75f) + 1, 16);
     map = new SoftHashMap<>(DEFAULT_KEY_TYPE, DEFAULT_VALUE_TYPE, capacity, DEFAULT_LOAD_FACTOR);
     addAll(c);
   }
@@ -44,7 +44,7 @@ public class SoftHashSet<E> extends AbstractReferenceSet<E, SoftHashMap<E, Objec
   }
   
   protected SoftHashSet(final AbstractReferenceMap.ReferenceStrength keyType, Collection<? extends E> c) {
-    final int capacity = Math.max((int) (c.size()/.75f) + 1, 16);
+    final int capacity = Math.max((int) (c.size() / .75f) + 1, 16);
     map = new SoftHashMap<>(keyType, DEFAULT_VALUE_TYPE, capacity, DEFAULT_LOAD_FACTOR);
     addAll(c);
   }

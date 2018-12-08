@@ -41,248 +41,246 @@ import java.util.stream.Collectors;
 import static com.mickey305.foundation.v3.ExceptionMessageConst.JRE_UNSUPPORTED;
 
 final class Workflow {
-    private static final String GEN_PKG = "com.mickey305.foundation.v3.gen";
-    private static final String TARGET_MODULE = "foundation";
-    private final Path targetJavaFolder;
-    private static final double JRE_NOW;
-    
-    static {
-        JRE_NOW = (Double.parseDouble(System.getProperty("java.specification.version")));
+  private static final String GEN_PKG = "com.mickey305.foundation.v3.gen";
+  private static final String TARGET_MODULE = "foundation";
+  private final Path targetJavaFolder;
+  private static final double JRE_NOW;
+  
+  static {
+    JRE_NOW = (Double.parseDouble(System.getProperty("java.specification.version")));
+  }
+  
+  private Workflow() {
+    final String sp = File.separator;
+    targetJavaFolder = Paths.get(System.getProperty("user.dir") + sp
+        + TARGET_MODULE + sp + "src" + sp + "main" + sp + "java" + sp);
+  }
+  
+  private static class WorkflowHolder {
+    private static final Workflow INSTANCE = new Workflow();
+  }
+  
+  public static Workflow getInstance() {
+    return WorkflowHolder.INSTANCE;
+  }
+  
+  public void updateGenerationClasses() {
+    try {
+      this.buildResourceClass();
+    } catch (NoSuchMethodException | IOException e) {
+      e.printStackTrace();
     }
-
-    private Workflow() {
-        final String sp = File.separator;
-        targetJavaFolder = Paths.get(System.getProperty("user.dir") + sp
-                + TARGET_MODULE + sp + "src" + sp + "main" + sp + "java" + sp);
-    }
-
-    private static class WorkflowHolder {
-        private static final Workflow INSTANCE = new Workflow();
-    }
-
-    public static Workflow getInstance() {
-        return WorkflowHolder.INSTANCE;
-    }
-
-    public void updateGenerationClasses() {
-        try {
-            this.buildResourceClass();
-        } catch (NoSuchMethodException | IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void buildResourceClass() throws NoSuchMethodException, IOException {
-        final String resourceClassName = "R";
+  }
+  
+  private void buildResourceClass() throws NoSuchMethodException, IOException {
+    final String resourceClassName = "R";
 //        final String cacheFieldName = "cn1_" + System.currentTimeMillis();
-        final String cacheName = "cache";
-        final String cacheSizeName = "cacheSize";
-        final String jreFieldName = "JRE";
-        final String methodName = "buildImmutableClasses";
-        final String getImmutableClassesMethodName = "knownImmutableClasses";
-        
-        if ( !(JRE_NOW >= Jre.SE7.getVersion() && JRE_NOW <= Jre.SE11.getVersion()) ) {
-            throw new UnsupportedOperationException(JRE_UNSUPPORTED + " : version " + String.valueOf(JRE_NOW));
-        }
+    final String cacheName = "cache";
+    final String cacheSizeName = "cacheSize";
+    final String jreFieldName = "JRE";
+    final String methodName = "buildImmutableClasses";
+    final String getImmutableClassesMethodName = "knownImmutableClasses";
     
-        final Method dummyMethod = Workflow.class.getDeclaredMethod("dummy", Class.class);
-        final Type[] types = dummyMethod.getGenericParameterTypes();
-        final ClassName clz = ClassName.get(Class.class);
-        final TypeName something = WildcardTypeName.get(((ParameterizedType) types[0]).getActualTypeArguments()[0]);
-        final TypeName classElement = ParameterizedTypeName.get(clz, something);
-        final ClassName set = ClassName.get(Set.class);
-        final TypeName setOfClass = ParameterizedTypeName.get(set, classElement);
-
-        FieldSpec immutableClassesField = FieldSpec
-                .builder(setOfClass, cacheName, Modifier.PRIVATE, Modifier.STATIC)
-                .initializer("null")
-                .build();
-        FieldSpec jreField = FieldSpec
-                .builder(double.class, jreFieldName, Modifier.PRIVATE, Modifier.STATIC, Modifier.FINAL)
-                .initializer("($T.parseDouble($T.getProperty(\"java.specification.version\")))",
-                    Double.class, System.class)
-                .build();
-        FieldSpec cacheSizeField = FieldSpec
-                .builder(int.class, cacheSizeName, Modifier.PRIVATE, Modifier.STATIC)
-                .initializer("0")
-                .build();
-        MethodSpec getImmutableClassesMethod = MethodSpec
-                .methodBuilder(getImmutableClassesMethodName)
-                .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.SYNCHRONIZED)
-                .returns(setOfClass)
-                .beginControlFlow(
-                    "if (" + cacheName + " == null || "
-                        + "3.0 * " + cacheName + ".size() < " + cacheSizeName + ")")
-                    .addComment("data NULL-VALUE or less than 1/3 of original collection size")
-                    .addStatement("if ($T.IS_DEBUG_MODE) $T.d(\"build start\")", EnvConfigConst.class, Log.class)
-                    .addStatement(cacheName + " = $T.emptySet()", Collections.class)
-                    .addStatement("if ("+jreFieldName+" == "+Jre.SE7.getVersion()+") "+methodName+Jre.SE7.name()+"()")
-                    .addStatement("if ("+jreFieldName+" == "+Jre.SE8.getVersion()+") "+methodName+Jre.SE8.name()+"()")
-                    .addStatement("if ("+jreFieldName+" == "+Jre.SE9.getVersion()+") "+methodName+Jre.SE10.name()+"()")
-                    .addStatement("if ("+jreFieldName+" == "+Jre.SE10.getVersion()+") "+methodName+Jre.SE10.name()+"()")
-                    .addStatement("if ("+jreFieldName+" == "+Jre.SE11.getVersion()+") "+methodName+Jre.SE10.name()+"()")
-                    .addStatement("if ($T.IS_DEBUG_MODE) $T.d(\"build finish\")", EnvConfigConst.class, Log.class)
-                .endControlFlow()
-                .addStatement("return $T.unmodifiableSet(" + cacheName + ")", Collections.class)
-                .build();
-        MethodSpec privateCons = MethodSpec.constructorBuilder()
-                .addModifiers(Modifier.PRIVATE)
-                .addComment("This class is static view only class.")
-                .build();
-        TypeSpec resourceClass = TypeSpec
-                .classBuilder(resourceClassName)
-                .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-                .addJavadoc("This class generated by Foundation workflow. Timestamp: " +
-                        new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
-                                .format(new Timestamp(System.currentTimeMillis())) + System.lineSeparator())
-                .addField(jreField)
-                .addField(immutableClassesField)
-                .addField(cacheSizeField)
-                .addMethod(privateCons)
-                .addMethod(getImmutableClassesMethod)
-                .addMethod(createMethod(Jre.SE10, methodName, cacheName, cacheSizeName).build())
-                .addMethod(createMethod(Jre.SE8, methodName, cacheName, cacheSizeName).build())
-                .addMethod(createMethod(Jre.SE7, methodName, cacheName, cacheSizeName).build())
-                .build();
-        JavaFile javaFile = JavaFile
-                .builder(GEN_PKG, resourceClass)
-                .build();
-
-        javaFile.writeTo(this.targetJavaFolder);
-
-        System.out.println("Update class -> " +
-                javaFile.packageName + "." + resourceClass.name + " of " + this.targetJavaFolder);
+    if (!(JRE_NOW >= Jre.SE7.getVersion() && JRE_NOW <= Jre.SE11.getVersion())) {
+      throw new UnsupportedOperationException(JRE_UNSUPPORTED + " : version " + String.valueOf(JRE_NOW));
     }
     
-    /**
-     *
-     * @param jre
-     * @param methodName
-     * @param cacheName
-     * @param cacheSizeName
-     * @return
-     */
-    private static MethodSpec.Builder createMethod(Jre jre, String methodName, String cacheName, String cacheSizeName) {
-        final Set<Class<?>> allClasses = JreLibUtils.commonClassesFor(jre).stream()
-            .sorted(Comparator.comparing(Class::getName)).collect(Collectors.toSet());
-        final ClassName softHashSet = ClassName.get(SoftHashSet.class);
-        
-        MethodSpec.Builder methodBuilder = MethodSpec
-            .methodBuilder(methodName + jre.name())
-            .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
-            .returns(void.class)
-            .addStatement(cacheName + " = new $T<>()", softHashSet);
-        if (allClasses.size() > 0) {
-            methodBuilder
-                .beginControlFlow("try");
-        }
-        for (Class<?> elm: allClasses) {
-            if (!elm.getName().contains("$")
-                && java.lang.reflect.Modifier.isPublic(elm.getModifiers())
-                && !Cloneable.class.isAssignableFrom(elm)
-                && checkImmutableClass(elm)) {
-                try {
-                    methodBuilder
-                        .addStatement(cacheName + ".add(Class.forName(\"" + elm.getName() + "\"))");
-                } catch (RuntimeException e) {
-                    Log.e(e.getMessage());
-                }
-            }
-        }
-        if (allClasses.size() > 0) {
-            methodBuilder
-                .nextControlFlow("catch (ClassNotFoundException e)")
-                .addStatement("$T.e(e.getMessage())", Log.class)
-                .endControlFlow();
-        }
-        methodBuilder
-            .addStatement(cacheSizeName + " = " + cacheName + ".size()");
-        
-        return methodBuilder;
+    final Method dummyMethod = Workflow.class.getDeclaredMethod("dummy", Class.class);
+    final Type[] types = dummyMethod.getGenericParameterTypes();
+    final ClassName clz = ClassName.get(Class.class);
+    final TypeName something = WildcardTypeName.get(((ParameterizedType) types[0]).getActualTypeArguments()[0]);
+    final TypeName classElement = ParameterizedTypeName.get(clz, something);
+    final ClassName set = ClassName.get(Set.class);
+    final TypeName setOfClass = ParameterizedTypeName.get(set, classElement);
+    
+    FieldSpec immutableClassesField = FieldSpec
+        .builder(setOfClass, cacheName, Modifier.PRIVATE, Modifier.STATIC)
+        .initializer("null")
+        .build();
+    FieldSpec jreField = FieldSpec
+        .builder(double.class, jreFieldName, Modifier.PRIVATE, Modifier.STATIC, Modifier.FINAL)
+        .initializer("($T.parseDouble($T.getProperty(\"java.specification.version\")))",
+            Double.class, System.class)
+        .build();
+    FieldSpec cacheSizeField = FieldSpec
+        .builder(int.class, cacheSizeName, Modifier.PRIVATE, Modifier.STATIC)
+        .initializer("0")
+        .build();
+    MethodSpec getImmutableClassesMethod = MethodSpec
+        .methodBuilder(getImmutableClassesMethodName)
+        .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.SYNCHRONIZED)
+        .returns(setOfClass)
+        .beginControlFlow(
+            "if (" + cacheName + " == null || "
+                + "3.0 * " + cacheName + ".size() < " + cacheSizeName + ")")
+        .addComment("data NULL-VALUE or less than 1/3 of original collection size")
+        .addStatement("if ($T.IS_DEBUG_MODE) $T.d(\"build start\")", EnvConfigConst.class, Log.class)
+        .addStatement(cacheName + " = $T.emptySet()", Collections.class)
+        .addStatement("if (" + jreFieldName + " == " + Jre.SE7.getVersion() + ") " + methodName + Jre.SE7.name() + "()")
+        .addStatement("if (" + jreFieldName + " == " + Jre.SE8.getVersion() + ") " + methodName + Jre.SE8.name() + "()")
+        .addStatement("if (" + jreFieldName + " == " + Jre.SE9.getVersion() + ") " + methodName + Jre.SE10.name() + "()")
+        .addStatement("if (" + jreFieldName + " == " + Jre.SE10.getVersion() + ") " + methodName + Jre.SE10.name() + "()")
+        .addStatement("if (" + jreFieldName + " == " + Jre.SE11.getVersion() + ") " + methodName + Jre.SE10.name() + "()")
+        .addStatement("if ($T.IS_DEBUG_MODE) $T.d(\"build finish\")", EnvConfigConst.class, Log.class)
+        .endControlFlow()
+        .addStatement("return $T.unmodifiableSet(" + cacheName + ")", Collections.class)
+        .build();
+    MethodSpec privateCons = MethodSpec.constructorBuilder()
+        .addModifiers(Modifier.PRIVATE)
+        .addComment("This class is static view only class.")
+        .build();
+    TypeSpec resourceClass = TypeSpec
+        .classBuilder(resourceClassName)
+        .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
+        .addJavadoc("This class generated by Foundation workflow. Timestamp: " +
+            new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
+                .format(new Timestamp(System.currentTimeMillis())) + System.lineSeparator())
+        .addField(jreField)
+        .addField(immutableClassesField)
+        .addField(cacheSizeField)
+        .addMethod(privateCons)
+        .addMethod(getImmutableClassesMethod)
+        .addMethod(createMethod(Jre.SE10, methodName, cacheName, cacheSizeName).build())
+        .addMethod(createMethod(Jre.SE8, methodName, cacheName, cacheSizeName).build())
+        .addMethod(createMethod(Jre.SE7, methodName, cacheName, cacheSizeName).build())
+        .build();
+    JavaFile javaFile = JavaFile
+        .builder(GEN_PKG, resourceClass)
+        .build();
+    
+    javaFile.writeTo(this.targetJavaFolder);
+    
+    System.out.println("Update class -> " +
+        javaFile.packageName + "." + resourceClass.name + " of " + this.targetJavaFolder);
+  }
+  
+  /**
+   * @param jre
+   * @param methodName
+   * @param cacheName
+   * @param cacheSizeName
+   * @return
+   */
+  private static MethodSpec.Builder createMethod(Jre jre, String methodName, String cacheName, String cacheSizeName) {
+    final Set<Class<?>> allClasses = JreLibUtils.commonClassesFor(jre).stream()
+        .sorted(Comparator.comparing(Class::getName)).collect(Collectors.toSet());
+    final ClassName softHashSet = ClassName.get(SoftHashSet.class);
+    
+    MethodSpec.Builder methodBuilder = MethodSpec
+        .methodBuilder(methodName + jre.name())
+        .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
+        .returns(void.class)
+        .addStatement(cacheName + " = new $T<>()", softHashSet);
+    if (allClasses.size() > 0) {
+      methodBuilder
+          .beginControlFlow("try");
     }
-
-    /**
-     *
-     * @param target
-     * @return
-     */
-    private static boolean checkImmutableClass(Class<?> target) {
-        // interface check
-        if (target.isInterface())
-            return false;
-
-        // known immutable-class check
-        List<Class<?>> knownClasses = new ArrayList<>();
-        knownClasses.add(String.class);
-        knownClasses.add(Integer.class);
-        knownClasses.add(Long.class);
-        knownClasses.add(Boolean.class);
-        knownClasses.add(Class.class);
-        knownClasses.add(Float.class);
-        knownClasses.add(Double.class);
-        knownClasses.add(Character.class);
-        knownClasses.add(Byte.class);
-        knownClasses.add(Short.class);
-        knownClasses.add(Void.class);
-        knownClasses.add(BigDecimal.class);
-        knownClasses.add(BigInteger.class);
-        knownClasses.add(URI.class);
-        knownClasses.add(URL.class);
-        knownClasses.add(UUID.class);
-        knownClasses.add(Pattern.class);
-        if (knownClasses.contains(target))
-            return true;
-
-        // unknown immutable-class check
+    for (Class<?> elm : allClasses) {
+      if (!elm.getName().contains("$")
+          && java.lang.reflect.Modifier.isPublic(elm.getModifiers())
+          && !Cloneable.class.isAssignableFrom(elm)
+          && checkImmutableClass(elm)) {
         try {
-            // Simply Rule
-            Field[] fields = target.getDeclaredFields();
-            for (Field field : fields) {
-                if (!java.lang.reflect.Modifier.isFinal(field.getModifiers()))
-                    return false;
-            }
-            // Todo: Oracle rule implementation
+          methodBuilder
+              .addStatement(cacheName + ".add(Class.forName(\"" + elm.getName() + "\"))");
+        } catch (RuntimeException e) {
+          Log.e(e.getMessage());
+        }
+      }
+    }
+    if (allClasses.size() > 0) {
+      methodBuilder
+          .nextControlFlow("catch (ClassNotFoundException e)")
+          .addStatement("$T.e(e.getMessage())", Log.class)
+          .endControlFlow();
+    }
+    methodBuilder
+        .addStatement(cacheSizeName + " = " + cacheName + ".size()");
+    
+    return methodBuilder;
+  }
+  
+  /**
+   * @param target
+   * @return
+   */
+  private static boolean checkImmutableClass(Class<?> target) {
+    // interface check
+    if (target.isInterface())
+      return false;
+    
+    // known immutable-class check
+    List<Class<?>> knownClasses = new ArrayList<>();
+    knownClasses.add(String.class);
+    knownClasses.add(Integer.class);
+    knownClasses.add(Long.class);
+    knownClasses.add(Boolean.class);
+    knownClasses.add(Class.class);
+    knownClasses.add(Float.class);
+    knownClasses.add(Double.class);
+    knownClasses.add(Character.class);
+    knownClasses.add(Byte.class);
+    knownClasses.add(Short.class);
+    knownClasses.add(Void.class);
+    knownClasses.add(BigDecimal.class);
+    knownClasses.add(BigInteger.class);
+    knownClasses.add(URI.class);
+    knownClasses.add(URL.class);
+    knownClasses.add(UUID.class);
+    knownClasses.add(Pattern.class);
+    if (knownClasses.contains(target))
+      return true;
+    
+    // unknown immutable-class check
+    try {
+      // Simply Rule
+      Field[] fields = target.getDeclaredFields();
+      for (Field field : fields) {
+        if (!java.lang.reflect.Modifier.isFinal(field.getModifiers()))
+          return false;
+      }
+      // Todo: Oracle rule implementation
 //            return checkImmutableClassByOracleRule(target);
-            return true;
-        } catch (RuntimeException | NoClassDefFoundError e) {
-            Log.e(e.getMessage());
-            return false;
-        }
+      return true;
+    } catch (RuntimeException | NoClassDefFoundError e) {
+      Log.e(e.getMessage());
+      return false;
     }
-
-    /**
-     *
-     * @see <a href="https://docs.oracle.com/javase/tutorial/essential/concurrency/imstrat.html"/>
-     * @param target
-     * @return
-     */
-    private static boolean checkImmutableClassByOracleRule(Class<?> target) {
-        Field[] fields = target.getDeclaredFields();
-        // Rule1
-        List<String> targetMethodNames = new ArrayList<>();
-        for (Field field: fields)
-            targetMethodNames.add("set" + StringUtils.capitalize(field.getName()));
-        for (Method method: target.getDeclaredMethods()) {
-            if (targetMethodNames.contains(method.getName()))
-                return false;
-        }
-        // Rule2
-        for (Field field : fields) {
-            if (!(java.lang.reflect.Modifier.isFinal(field.getModifiers())
-                    && java.lang.reflect.Modifier.isPrivate(field.getModifiers())))
-                return false;
-        }
-        // Rule3
-        if (!java.lang.reflect.Modifier.isFinal(target.getModifiers())) {
-            for (Constructor constructor: target.getDeclaredConstructors()) {
-                if (!java.lang.reflect.Modifier.isPrivate(constructor.getModifiers()))
-                    return false;
-            }
-        }
-        // Rule4
-        // Skip: Contains Rule2
-        return true;
+  }
+  
+  /**
+   * @param target
+   * @return
+   * @see <a href="https://docs.oracle.com/javase/tutorial/essential/concurrency/imstrat.html"/>
+   */
+  private static boolean checkImmutableClassByOracleRule(Class<?> target) {
+    Field[] fields = target.getDeclaredFields();
+    // Rule1
+    List<String> targetMethodNames = new ArrayList<>();
+    for (Field field : fields)
+      targetMethodNames.add("set" + StringUtils.capitalize(field.getName()));
+    for (Method method : target.getDeclaredMethods()) {
+      if (targetMethodNames.contains(method.getName()))
+        return false;
     }
-
-    private void dummy(Class<?> clz) { }
+    // Rule2
+    for (Field field : fields) {
+      if (!(java.lang.reflect.Modifier.isFinal(field.getModifiers())
+          && java.lang.reflect.Modifier.isPrivate(field.getModifiers())))
+        return false;
+    }
+    // Rule3
+    if (!java.lang.reflect.Modifier.isFinal(target.getModifiers())) {
+      for (Constructor constructor : target.getDeclaredConstructors()) {
+        if (!java.lang.reflect.Modifier.isPrivate(constructor.getModifiers()))
+          return false;
+      }
+    }
+    // Rule4
+    // Skip: Contains Rule2
+    return true;
+  }
+  
+  private void dummy(Class<?> clz) {
+  }
 }

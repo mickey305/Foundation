@@ -13,68 +13,70 @@ import java.util.HashSet;
 import java.util.List;
 
 public abstract class AbstractCompositePatternTest {
-    protected List<Composite<TestBean>> cs1;
-    protected List<Component<TestBean>> cn1;
+  protected List<Composite<TestBean>> cs1;
+  protected List<Component<TestBean>> cn1;
 
-    @Before
-    public void setUp() throws Exception {
-        cn1 = new ArrayList<>();
-        cs1 = new ArrayList<>();
-        Supplier<Collection<Component<TestBean>>> supplier = new Supplier<Collection<Component<TestBean>>>() {
-            @Override
-            public Collection<Component<TestBean>> get() {
-                return new HashSet<>();
-            }
-        };
+  @Before
+  public void setUp() throws Exception {
+    cn1 = new ArrayList<>();
+    cs1 = new ArrayList<>();
+    Supplier<Collection<Component<TestBean>>> supplier = new Supplier<Collection<Component<TestBean>>>() {
+      @Override
+      public Collection<Component<TestBean>> get() {
+        return new HashSet<>();
+      }
+    };
 
-        // Create Test Data
-        cs1.add(new Composite<>(new TestBean("cmp0")));
-        cs1.add(new Composite<>(new TestBean("cmp1")));
-        cs1.add(new Composite<>(new TestBean("cmp2")));
-        cs1.add(new Composite<>(new TestBean("cmp3"), supplier));
-        cs1.add(new Composite<>(new TestBean("cmp4"), supplier));
-        cs1.add(new Composite<>(new TestBean("cmp5")));
-        cs1.add(new Composite<>(new TestBean("cmp6"), supplier));
+    // Create Test Data
+    cs1.add(new Composite<>(new TestBean("cmp0")));
+    cs1.add(new Composite<>(new TestBean("cmp1")));
+    cs1.add(new Composite<>(new TestBean("cmp2")));
+    cs1.add(new Composite<>(new TestBean("cmp3"), supplier));
+    cs1.add(new Composite<>(new TestBean("cmp4"), supplier));
+    cs1.add(new Composite<>(new TestBean("cmp5")));
+    cs1.add(new Composite<>(new TestBean("cmp6"), supplier));
 
-        cn1.add(new Composite<>(new TestBean("cmp0"), supplier));
-        cn1.add(new Leaf<>(new TestBean("leaf1")));
-        cn1.add(new Leaf<>(new TestBean("leaf2")));
-        cn1.add(new Leaf<>(new TestBean("leaf3")));
-        cn1.add(new Leaf<>(new TestBean("leaf4")));
-        cn1.add(new Leaf<>(new TestBean("leaf5")));
-        cn1.add(new Leaf<>(new TestBean("leaf6")));
-        cn1.add(new Leaf<>(new TestBean("leaf7")));
-        cn1.add(new Leaf<>(new TestBean("leaf8")));
+    cn1.add(new Composite<>(new TestBean("cmp0"), supplier));
+    cn1.add(new Leaf<>(new TestBean("leaf1")));
+    cn1.add(new Leaf<>(new TestBean("leaf2")));
+    cn1.add(new Leaf<>(new TestBean("leaf3")));
+    cn1.add(new Leaf<>(new TestBean("leaf4")));
+    cn1.add(new Leaf<>(new TestBean("leaf5")));
+    cn1.add(new Leaf<>(new TestBean("leaf6")));
+    cn1.add(new Leaf<>(new TestBean("leaf7")));
+    cn1.add(new Leaf<>(new TestBean("leaf8")));
+  }
+
+  @After
+  public void tearDown() throws Exception {
+  }
+
+  protected class TestBean {
+    private String name;
+    private long timeStamp;
+
+    public TestBean() {
     }
 
-    @After
-    public void tearDown() throws Exception {}
-
-    protected class TestBean {
-        private String name;
-        private long timeStamp;
-
-        public TestBean() {}
-
-        public TestBean(String name) {
-            this.setName(name);
-            this.setTimeStamp(System.currentTimeMillis());
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public long getTimeStamp() {
-            return timeStamp;
-        }
-
-        public void setTimeStamp(long timeStamp) {
-            this.timeStamp = timeStamp;
-        }
+    public TestBean(String name) {
+      this.setName(name);
+      this.setTimeStamp(System.currentTimeMillis());
     }
+
+    public String getName() {
+      return name;
+    }
+
+    public void setName(String name) {
+      this.name = name;
+    }
+
+    public long getTimeStamp() {
+      return timeStamp;
+    }
+
+    public void setTimeStamp(long timeStamp) {
+      this.timeStamp = timeStamp;
+    }
+  }
 }

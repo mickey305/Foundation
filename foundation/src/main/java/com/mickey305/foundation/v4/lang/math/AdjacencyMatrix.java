@@ -14,13 +14,13 @@ public class AdjacencyMatrix<E extends Number> extends SquareMatrix<E> {
                          Map<RelationalOperator, AbstractNumberOperation<E, Boolean>> rop) {
     super(size, initializer, op, rop);
   }
-
+  
   public AdjacencyMatrix(E[][] initialTable, IElementInitializer<E> initializer,
                          Map<Operator, AbstractNumberOperation<E, E>> op,
                          Map<RelationalOperator, AbstractNumberOperation<E, Boolean>> rop) {
     super(initialTable, initializer, op, rop);
   }
-
+  
   public AdjacencyMatrix(AdjacencyMatrix<E> matrix) {
     super(matrix);
   }
@@ -33,16 +33,17 @@ public class AdjacencyMatrix<E extends Number> extends SquareMatrix<E> {
 //    public boolean isTree() {
 //        return false;
 //    }
-
+  
   /**
    * 有向グラフ判定メソッド
+   *
    * @return 判定結果
    */
   public boolean isDirectedGraph() {
     for (int i = 0; i < this.getSize(); i++)
       if (!Arrays.equals(this.getRow(i), this.getColumn(i)))
         return false;
-
+    
     return true;
   }
 }

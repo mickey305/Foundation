@@ -5,45 +5,45 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class AdjacencyMatrixTest {
-    @Before
-    public void setUp() throws Exception {
-    }
+  @Before
+  public void setUp() throws Exception {
+  }
 
-    @After
-    public void tearDown() throws Exception {
-    }
+  @After
+  public void tearDown() throws Exception {
+  }
 
-    @Test
-    public void testCase_01_01() throws Exception {
-        Integer[][] t1 = {
-                {0,1,0,0,1},
-                {1,0,1,0,0},
-                {0,1,0,1,0},
-                {0,0,1,0,1},
-                {1,0,0,1,0}
-        };
-        Integer[][] t2 = {
-                {0,1,0,0,1},
-                {1,0,1,1,0},
-                {0,1,0,0,0},
-                {0,1,0,0,0},
-                {1,0,0,0,0}
-        };
-        Integer[][] t3 = {
-                {0,1,0,1,0},
-                {1,0,1,0,0},
-                {0,1,0,1,1},
-                {1,0,1,0,0},
-                {0,0,1,0,0}
-        };
-        Integer[][] t4 = {
-                {0,1,1,0,0},
-                {1,0,1,0,0},
-                {1,1,0,1,1},
-                {0,0,1,0,1},
-                {0,0,1,1,0}
-        };
-        AdjacencyMatrix matrix;
+  @Test
+  public void testCase_01_01() throws Exception {
+    Integer[][] t1 = {
+        {0, 1, 0, 0, 1},
+        {1, 0, 1, 0, 0},
+        {0, 1, 0, 1, 0},
+        {0, 0, 1, 0, 1},
+        {1, 0, 0, 1, 0}
+    };
+    Integer[][] t2 = {
+        {0, 1, 0, 0, 1},
+        {1, 0, 1, 1, 0},
+        {0, 1, 0, 0, 0},
+        {0, 1, 0, 0, 0},
+        {1, 0, 0, 0, 0}
+    };
+    Integer[][] t3 = {
+        {0, 1, 0, 1, 0},
+        {1, 0, 1, 0, 0},
+        {0, 1, 0, 1, 1},
+        {1, 0, 1, 0, 0},
+        {0, 0, 1, 0, 0}
+    };
+    Integer[][] t4 = {
+        {0, 1, 1, 0, 0},
+        {1, 0, 1, 0, 0},
+        {1, 1, 0, 1, 1},
+        {0, 0, 1, 0, 1},
+        {0, 0, 1, 1, 0}
+    };
+    AdjacencyMatrix matrix;
 
 //        matrix = AdjacencyMatrix.of(t1);
 //        Log.i(ToStringBuilder.reflectionToString(AdjacencyMatrix.isTree(matrix)));
@@ -53,5 +53,5 @@ public class AdjacencyMatrixTest {
 //        Log.i(ToStringBuilder.reflectionToString(AdjacencyMatrix.isTree(matrix)));
 //        matrix = AdjacencyMatrix.of(t4);
 //        Log.i(ToStringBuilder.reflectionToString(AdjacencyMatrix.isTree(matrix)));
-    }
+  }
 }

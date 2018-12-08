@@ -7,7 +7,7 @@ import static org.apache.commons.collections4.map.AbstractReferenceMap.Reference
 import static org.apache.commons.collections4.map.AbstractReferenceMap.ReferenceStrength.SOFT;
 
 public class SoftHashMap<K, V> extends ReferenceMap<K, V> {
-  protected static final AbstractReferenceMap.ReferenceStrength DEFAULT_KEY_TYPE   = HARD;
+  protected static final AbstractReferenceMap.ReferenceStrength DEFAULT_KEY_TYPE = HARD;
   protected static final AbstractReferenceMap.ReferenceStrength DEFAULT_VALUE_TYPE = SOFT;
   private static final long serialVersionUID = 6602325585236293883L;
   

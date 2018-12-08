@@ -8,7 +8,8 @@ import static com.mickey305.foundation.v3.EnvConfigConst.IS_DEBUG_MODE;
 
 public class ResFile {
   
-  private ResFile() { }
+  private ResFile() {
+  }
   
   public static File get(String path) {
     final URL url = ResFile.class.getClassLoader().getResource(path);
@@ -16,7 +17,7 @@ public class ResFile {
     Objects.requireNonNull(url);
     
     final File resFile = new File(url.getPath());
-    boolean isFile   = resFile.isFile();
+    boolean isFile = resFile.isFile();
     boolean readOnly = resFile.setReadOnly();
     
     if (!isFile) {

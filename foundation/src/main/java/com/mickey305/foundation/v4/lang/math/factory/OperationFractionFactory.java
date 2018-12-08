@@ -6,7 +6,8 @@ import org.apache.commons.math3.fraction.Fraction;
 import java.util.Objects;
 
 public class OperationFractionFactory extends AbstractOperationFactory<Fraction> {
-  private OperationFractionFactory() { }
+  private OperationFractionFactory() {
+  }
   
   private static final class OperationFractionFactoryHolder {
     private static OperationFractionFactory Instance = new OperationFractionFactory();
@@ -61,7 +62,7 @@ public class OperationFractionFactory extends AbstractOperationFactory<Fraction>
     return new AbstractNumberOperation<Fraction, Fraction>() {
       @Override
       protected Fraction operationDefault(Fraction l, Fraction r) {
-        return (l.compareTo(r) > 0)? l: r;
+        return (l.compareTo(r) > 0) ? l : r;
       }
     };
   }
@@ -71,7 +72,7 @@ public class OperationFractionFactory extends AbstractOperationFactory<Fraction>
     return new AbstractNumberOperation<Fraction, Fraction>() {
       @Override
       protected Fraction operationDefault(Fraction l, Fraction r) {
-        return (l.compareTo(r) < 0)? l: r;
+        return (l.compareTo(r) < 0) ? l : r;
       }
     };
   }

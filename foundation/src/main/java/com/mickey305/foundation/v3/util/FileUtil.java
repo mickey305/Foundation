@@ -19,7 +19,9 @@ public class FileUtil {
       File item = pool.pollFirst();
       Objects.requireNonNull(item);
       
-      if (item.isFile()) { files.add(item); }
+      if (item.isFile()) {
+        files.add(item);
+      }
       
       if (item.isDirectory()) {
         for (File child : Objects.requireNonNull(item.listFiles())) {

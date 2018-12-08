@@ -7,23 +7,23 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class MatrixTest {
-    @Before
-    public void setUp() throws Exception {
-    }
+  @Before
+  public void setUp() throws Exception {
+  }
 
-    @After
-    public void tearDown() throws Exception {
-    }
+  @After
+  public void tearDown() throws Exception {
+  }
 
-    @Test
-    public void testCase_01_01() throws Exception {
-        Float[][] t1 = {
-                {1.2f, 1.1f, 1.3f, 1.0f, 1.4f},
-                {1.2f, 1.1f, 1.3f, 1.0f, 1.4f},
-                {1.2f, 1.1f, 1.3f, 1.0f, 1.4f},
-                {1.2f, 1.1f, 1.3f, 1.0f, 1.4f},
-                {1.2f, 1.1f, 1.3f, 1.0f, 1.3f}
-        };
+  @Test
+  public void testCase_01_01() throws Exception {
+    Float[][] t1 = {
+        {1.2f, 1.1f, 1.3f, 1.0f, 1.4f},
+        {1.2f, 1.1f, 1.3f, 1.0f, 1.4f},
+        {1.2f, 1.1f, 1.3f, 1.0f, 1.4f},
+        {1.2f, 1.1f, 1.3f, 1.0f, 1.4f},
+        {1.2f, 1.1f, 1.3f, 1.0f, 1.3f}
+    };
 //        Integer[][] t1 = {
 //                {2, 1, 3, -10, 4},
 //                {2, 1, 3, 0, 4},
@@ -31,17 +31,17 @@ public class MatrixTest {
 //                {2, 1, 3, 0, 4},
 //                {2, 1, 3, 1, 3}
 //        };
-        Integer[][] t2 = {
-                {3, -2, 1}
-        };
-        Integer[][] t3 = {
-                {5},
-                {3},
-                {-4}
-        };
-        Matrix m1 = Matrix.of(t1);
-        Matrix m2 = Matrix.of(t2);
-        Matrix m3 = Matrix.of(t3);
+    Integer[][] t2 = {
+        {3, -2, 1}
+    };
+    Integer[][] t3 = {
+        {5},
+        {3},
+        {-4}
+    };
+    Matrix m1 = Matrix.of(t1);
+    Matrix m2 = Matrix.of(t2);
+    Matrix m3 = Matrix.of(t3);
 
 //        Log.i(ToStringBuilder.reflectionToString(m1.sumArrayOfRowWith(Integer.class)));
 //        Log.i(ToStringBuilder.reflectionToString(m1.sumArrayOfRowWith(Long.class)));
@@ -70,23 +70,23 @@ public class MatrixTest {
 //        Log.i(ToStringBuilder.reflectionToString(m1.averageOfColumnWith(Float.class)));
 //        Log.i(ToStringBuilder.reflectionToString(m1.averageOfColumnWith(Short.class)));
 //        Log.i(ToStringBuilder.reflectionToString(m1.averageOfColumnWith(Byte.class)));
-        Log.i(ToStringBuilder.reflectionToString(m1.sumArrayOfRow()));
-        Log.i(ToStringBuilder.reflectionToString(m1.averageArrayOfRow()));
-        Log.i(ToStringBuilder.reflectionToString(m1.sumArrayOfColumn()));
-        Log.i(ToStringBuilder.reflectionToString(m1.averageOfColumn()));
-        Log.i(ToStringBuilder.reflectionToString(Matrix.add(m1, m1).getTable()));
-        Log.i(ToStringBuilder.reflectionToString(Matrix.add(m1, m1).isSquare()));
-        Log.i(ToStringBuilder.reflectionToString(Matrix.multi(m2, m3).getTable()));
-        Log.i(ToStringBuilder.reflectionToString(Matrix.multi(m2, m3).isSquare()));
-        Log.i(ToStringBuilder.reflectionToString(Matrix.multi(m2, m3).isScalar()));
-        Log.i(ToStringBuilder.reflectionToString(Matrix.of(8).getTable()));
-        Log.i(ToStringBuilder.reflectionToString(Matrix.horizontalBind(m1, m1).getTable()));
-        Log.i(ToStringBuilder.reflectionToString(m1.getMaxCell()));
-        Log.i(ToStringBuilder.reflectionToString(m1.getMinCell()));
-    }
+    Log.i(ToStringBuilder.reflectionToString(m1.sumArrayOfRow()));
+    Log.i(ToStringBuilder.reflectionToString(m1.averageArrayOfRow()));
+    Log.i(ToStringBuilder.reflectionToString(m1.sumArrayOfColumn()));
+    Log.i(ToStringBuilder.reflectionToString(m1.averageOfColumn()));
+    Log.i(ToStringBuilder.reflectionToString(Matrix.add(m1, m1).getTable()));
+    Log.i(ToStringBuilder.reflectionToString(Matrix.add(m1, m1).isSquare()));
+    Log.i(ToStringBuilder.reflectionToString(Matrix.multi(m2, m3).getTable()));
+    Log.i(ToStringBuilder.reflectionToString(Matrix.multi(m2, m3).isSquare()));
+    Log.i(ToStringBuilder.reflectionToString(Matrix.multi(m2, m3).isScalar()));
+    Log.i(ToStringBuilder.reflectionToString(Matrix.of(8).getTable()));
+    Log.i(ToStringBuilder.reflectionToString(Matrix.horizontalBind(m1, m1).getTable()));
+    Log.i(ToStringBuilder.reflectionToString(m1.getMaxCell()));
+    Log.i(ToStringBuilder.reflectionToString(m1.getMinCell()));
+  }
 
-    @Test
-    public void testCase_01_02() throws Exception {
+  @Test
+  public void testCase_01_02() throws Exception {
 //        Integer[][] t1 = {
 //                { 1,  1, -1},
 //                {-2,  0,  1},
@@ -95,10 +95,10 @@ public class MatrixTest {
 //        Matrix m1 = Matrix.of(t1);
 //
 //        Log.i(ToStringBuilder.reflectionToString(m1.determinant()));
-    }
+  }
 
-    @Test
-    public void testCase_01_03() throws Exception {
+  @Test
+  public void testCase_01_03() throws Exception {
 //        Integer[][] t1 = {
 //                { 1,  1, -1},
 //                {-2,  0,  1},
@@ -114,5 +114,5 @@ public class MatrixTest {
 //
 //        for (Number[] rec: m.createInverseMatrix().getTable())
 //            Log.i(ToStringBuilder.reflectionToString(rec));
-    }
+  }
 }

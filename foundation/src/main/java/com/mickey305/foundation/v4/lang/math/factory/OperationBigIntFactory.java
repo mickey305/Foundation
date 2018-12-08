@@ -6,7 +6,8 @@ import java.math.BigInteger;
 import java.util.Objects;
 
 public class OperationBigIntFactory extends AbstractOperationFactory<BigInteger> {
-  private OperationBigIntFactory() { }
+  private OperationBigIntFactory() {
+  }
   
   private static final class OperationBigIntFactoryHolder {
     private static OperationBigIntFactory Instance = new OperationBigIntFactory();

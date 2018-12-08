@@ -5,7 +5,8 @@ import com.mickey305.foundation.v4.lang.math.operator.AbstractNumberOperation;
 import java.util.Objects;
 
 public class OperationByteFactory extends AbstractOperationFactory<Byte> {
-  private OperationByteFactory() { }
+  private OperationByteFactory() {
+  }
   
   private static final class OperationByteFactoryHolder {
     private static OperationByteFactory Instance = new OperationByteFactory();

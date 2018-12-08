@@ -9,7 +9,7 @@ public abstract class AbstractElementInitializer<E extends Number> implements IE
   protected AbstractElementInitializer(E... dummy) {
     type = (Class<E>) dummy.getClass().getComponentType();
   }
-
+  
   @Override
   @SuppressWarnings("unchecked")
   public E[] array(int size) {

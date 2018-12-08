@@ -14,9 +14,9 @@ import static org.apache.commons.collections4.map.AbstractReferenceMap.Reference
 import static org.apache.commons.collections4.map.AbstractReferenceMap.ReferenceStrength.WEAK;
 
 public class SoftHashSetTest {
-  private static final AbstractReferenceMap.ReferenceStrength CONST_HARD     = HARD;
-  private static final AbstractReferenceMap.ReferenceStrength CONST_SOFT     = SOFT;
-  private static final AbstractReferenceMap.ReferenceStrength CONST_WEAK     = WEAK;
+  private static final AbstractReferenceMap.ReferenceStrength CONST_HARD = HARD;
+  private static final AbstractReferenceMap.ReferenceStrength CONST_SOFT = SOFT;
+  private static final AbstractReferenceMap.ReferenceStrength CONST_WEAK = WEAK;
   
   private static final AbstractReferenceMap.ReferenceStrength DEFAULT_STRENGTH = WEAK;
   
@@ -53,13 +53,13 @@ public class SoftHashSetTest {
     Assert.assertNotEquals(0, defaultCache.toArray().length);
     Assert.assertFalse(defaultCache.isEmpty());
     Log.i("hardCache aft: " + ToStringBuilder.reflectionToString(defaultCache.toArray()));
-  
+    
     defaultCache = softCache;
     createTestData(defaultCache);
     Log.i("softCache bef: " + ToStringBuilder.reflectionToString(defaultCache.toArray()));
     System.gc();
     Log.i("softCache aft: " + ToStringBuilder.reflectionToString(defaultCache.toArray()));
-  
+    
     defaultCache = weakCache;
     createTestData(defaultCache);
     Log.i("weakCache bef: " + ToStringBuilder.reflectionToString(defaultCache.toArray()));

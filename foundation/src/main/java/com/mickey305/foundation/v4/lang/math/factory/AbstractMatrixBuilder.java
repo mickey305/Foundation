@@ -26,18 +26,18 @@ public abstract class AbstractMatrixBuilder<M extends Matrix<T>, T extends Numbe
   
   public AbstractMatrixBuilder<M, T> operator(final IOperationFactory<T> operator) {
     return this
-        .opeAdd(operator.add()  )
-        .opeSub(operator.sub()  )
+        .opeAdd(operator.add())
+        .opeSub(operator.sub())
         .opeMlt(operator.multi())
-        .opeDiv(operator.div()  )
-        .opeMax(operator.max()  )
-        .opeMin(operator.min()  )
-        .opeEQ (operator.eq()   )
-        .opeNE (operator.ne()   )
-        .opeLT (operator.lt()   )
-        .opeLE (operator.le()   )
-        .opeGT (operator.gt()   )
-        .opeGE (operator.ge()   );
+        .opeDiv(operator.div())
+        .opeMax(operator.max())
+        .opeMin(operator.min())
+        .opeEQ(operator.eq())
+        .opeNE(operator.ne())
+        .opeLT(operator.lt())
+        .opeLE(operator.le())
+        .opeGT(operator.gt())
+        .opeGE(operator.ge());
   }
   
   public AbstractMatrixBuilder<M, T> opeAdd(final AbstractNumberOperation<T, T> operator) {

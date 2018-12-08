@@ -11,36 +11,36 @@ import java.util.Arrays;
 
 public class SerialByteManagerTest {
 
-    @Before
-    public void setUp() throws Exception {
-    }
+  @Before
+  public void setUp() throws Exception {
+  }
 
-    @After
-    public void tearDown() throws Exception {
-    }
+  @After
+  public void tearDown() throws Exception {
+  }
 
-    @Test
-    public void testCase_01_01() throws Exception {
-        SerialTestBean bean = new SerialTestBean(112, "hoge");
+  @Test
+  public void testCase_01_01() throws Exception {
+    SerialTestBean bean = new SerialTestBean(112, "hoge");
 
-        SerialByteManager<SerialTestBean> manager = new SerialByteManager<>();
-        boolean status;
-        status = manager.serialize(bean);
-        byte[] data = manager.getData();
-        manager = new SerialByteManager<>();
-        bean = manager.data(data)
-                .deserialize();
+    SerialByteManager<SerialTestBean> manager = new SerialByteManager<>();
+    boolean status;
+    status = manager.serialize(bean);
+    byte[] data = manager.getData();
+    manager = new SerialByteManager<>();
+    bean = manager.data(data)
+        .deserialize();
 
-        Log.i("serialized data -> " + Arrays.toString(data));
-        Log.i("serialized data length -> " + data.length);
-        for (int i = 0; i < data.length; i++)
-            Log.i(String.format("data[%03d] -> ", i) +
-                    "original-value: " + ((char) data[i]) +
-                    ", hex-value: " + Integer.toHexString((char) data[i]));
-        Assert.assertTrue(status);
-        Assert.assertEquals(112, bean.getId());
-        Assert.assertEquals("hoge", bean.getName());
-    }
+    Log.i("serialized data -> " + Arrays.toString(data));
+    Log.i("serialized data length -> " + data.length);
+    for (int i = 0; i < data.length; i++)
+      Log.i(String.format("data[%03d] -> ", i) +
+          "original-value: " + ((char) data[i]) +
+          ", hex-value: " + Integer.toHexString((char) data[i]));
+    Assert.assertTrue(status);
+    Assert.assertEquals(112, bean.getId());
+    Assert.assertEquals("hoge", bean.getName());
+  }
 
 }
 

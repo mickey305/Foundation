@@ -5,7 +5,8 @@ import com.mickey305.foundation.v4.lang.math.operator.AbstractNumberOperation;
 import java.util.Objects;
 
 public class OperationDoubleFactory extends AbstractOperationFactory<Double> {
-  private OperationDoubleFactory() { }
+  private OperationDoubleFactory() {
+  }
   
   private static final class OperationDoubleFactoryHolder {
     private static OperationDoubleFactory Instance = new OperationDoubleFactory();

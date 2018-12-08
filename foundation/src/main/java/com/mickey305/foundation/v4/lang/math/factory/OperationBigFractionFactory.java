@@ -6,7 +6,8 @@ import org.apache.commons.math3.fraction.BigFraction;
 import java.util.Objects;
 
 public class OperationBigFractionFactory extends AbstractOperationFactory<BigFraction> {
-  private OperationBigFractionFactory() { }
+  private OperationBigFractionFactory() {
+  }
   
   private static final class OperationBigFractionFactoryHolder {
     private static OperationBigFractionFactory Instance = new OperationBigFractionFactory();
@@ -61,7 +62,7 @@ public class OperationBigFractionFactory extends AbstractOperationFactory<BigFra
     return new AbstractNumberOperation<BigFraction, BigFraction>() {
       @Override
       protected BigFraction operationDefault(BigFraction l, BigFraction r) {
-        return (l.compareTo(r) > 0)? l: r;
+        return (l.compareTo(r) > 0) ? l : r;
       }
     };
   }
@@ -71,7 +72,7 @@ public class OperationBigFractionFactory extends AbstractOperationFactory<BigFra
     return new AbstractNumberOperation<BigFraction, BigFraction>() {
       @Override
       protected BigFraction operationDefault(BigFraction l, BigFraction r) {
-        return (l.compareTo(r) < 0)? l: r;
+        return (l.compareTo(r) < 0) ? l : r;
       }
     };
   }

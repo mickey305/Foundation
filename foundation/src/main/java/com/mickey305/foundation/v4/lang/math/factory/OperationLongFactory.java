@@ -5,7 +5,8 @@ import com.mickey305.foundation.v4.lang.math.operator.AbstractNumberOperation;
 import java.util.Objects;
 
 public class OperationLongFactory extends AbstractOperationFactory<Long> {
-  private OperationLongFactory() { }
+  private OperationLongFactory() {
+  }
   
   private static final class OperationLongFactoryHolder {
     private static OperationLongFactory Instance = new OperationLongFactory();

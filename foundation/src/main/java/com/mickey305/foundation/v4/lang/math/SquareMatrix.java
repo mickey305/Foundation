@@ -39,6 +39,7 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
 
   /**
    * べき乗処理
+   *
    * @param index 指数（自然数）
    * @return 演算結果行列
    */
@@ -51,6 +52,7 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
 
   /**
    * 行列サイズ取得処理
+   *
    * @return 行列サイズ
    */
   public int getSize() {
@@ -59,13 +61,14 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
 
   /**
    * 単位行列取得メソッド
+   *
    * @return 単位行列
    */
   public SquareMatrix<E> createIdentityMatrix() {
     final SquareMatrix<E> matrix = new SquareMatrix<>(this);
-    for(int i = 0; i < this.getRowSize(); i++) {
+    for (int i = 0; i < this.getRowSize(); i++) {
       for (int j = 0; j < this.getColumnSize(); j++) {
-        matrix.putCell(i, j ,this.getInitializer().zero());
+        matrix.putCell(i, j, this.getInitializer().zero());
         if (i == j)
           matrix.putCell(i, j, this.getInitializer().one());
       }
@@ -86,38 +89,39 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
             return table;
           }
         }).build();
-  
-    if(IS_DEBUG_MODE) Log.d("bef tmpMatrix: " + Arrays.deepToString(tmpMatrix.getTable()));
+
+    if (IS_DEBUG_MODE) Log.d("bef tmpMatrix: " + Arrays.deepToString(tmpMatrix.getTable()));
     
     // invoke method
     tmpMatrix = tmpMatrix.createInverseMatrix();
-  
-    if(IS_DEBUG_MODE) Log.d("aft tmpMatrix: " + Arrays.deepToString(tmpMatrix.getTable()));
+
+    if (IS_DEBUG_MODE) Log.d("aft tmpMatrix: " + Arrays.deepToString(tmpMatrix.getTable()));
     
     final SquareMatrix<E> resultMatrix = new SquareMatrix<>(
         tmpMatrix.getSize(), this.getInitializer(), this.getOp(), this.getRop());
     for (int i = 0; i < getRowSize(); i++)
       for (int j = 0; j < getColumnSize(); j++)
         resultMatrix.putCell(i, j, this.getInitializer().convertFrom(tmpMatrix.getCell(i, j)));
-  
-    if(IS_DEBUG_MODE) Log.d("resultMatrix: " + Arrays.deepToString(resultMatrix.getTable()));
+
+    if (IS_DEBUG_MODE) Log.d("resultMatrix: " + Arrays.deepToString(resultMatrix.getTable()));
     
     return resultMatrix;
   }
 
   /**
    * 逆行列取得メソッド
+   *
    * @return 逆行列
    */
   public SquareMatrix<E> createInverseMatrix() {
-    if(IS_DEBUG_MODE) Log.d("inverse matrix creating...");
-    if(!this.isRegular())
+    if (IS_DEBUG_MODE) Log.d("inverse matrix creating...");
+    if (!this.isRegular())
       throw new UnsupportedOperationException();
 
     final Matrix<E> em = this.horizontalBind(this.createIdentityMatrix());
     for (int i = 0; i < em.getRowSize(); i++)
       for (int j = 0; j < em.getColumnSize(); j++)
-        em.putCell(i, j, this.getOp().get(Operator.ADD).apply(this.getInitializer().zero(), em.getCell(i,j)));
+        em.putCell(i, j, this.getOp().get(Operator.ADD).apply(this.getInitializer().zero(), em.getCell(i, j)));
 
     // CELL(i,i) <==> NE ZERO transformation
     for (int i = 0; i < this.getRowSize(); i++) {
@@ -175,6 +179,7 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
 
   /**
    * 正則行列判定メソッド
+   *
    * @return 判定結果
    */
   public boolean isRegular() {
@@ -183,6 +188,7 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
 
   /**
    * 行列式取得メソッド
+   *
    * @return 計算結果
    */
   public E determinant() {
@@ -191,20 +197,20 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
     for (int i = 0; i < rowIndexes.length; i++)
       rowIndexes[i] = i;
     final Permutation<Integer> rowPermutation = new Permutation<>(rowIndexes);
-  
+
     do {
       final SymmetricPermutationGroup<Integer> permutationGroup = new SymmetricPermutationGroup<>(
           new Integer[][]{rowIndexes, rowPermutation.getElements()},
           ElementInitializerFactory.intIni(),
-          Collections.<Operator, AbstractNumberOperation<Integer,Integer>>emptyMap(),
-          Collections.<RelationalOperator, AbstractNumberOperation<Integer,Boolean>>emptyMap());
+          Collections.<Operator, AbstractNumberOperation<Integer, Integer>>emptyMap(),
+          Collections.<RelationalOperator, AbstractNumberOperation<Integer, Boolean>>emptyMap());
       IOperationFactory<Integer> factory = OperationIntFactory.getInstance();
-      permutationGroup.getOp().put(Operator.ADD,   factory.add());
-      permutationGroup.getOp().put(Operator.SUB,   factory.sub());
+      permutationGroup.getOp().put(Operator.ADD, factory.add());
+      permutationGroup.getOp().put(Operator.SUB, factory.sub());
       permutationGroup.getOp().put(Operator.MULTI, factory.multi());
-      permutationGroup.getOp().put(Operator.DIV,   factory.div());
-      permutationGroup.getOp().put(Operator.MAX,   factory.max());
-      permutationGroup.getOp().put(Operator.MIN,   factory.min());
+      permutationGroup.getOp().put(Operator.DIV, factory.div());
+      permutationGroup.getOp().put(Operator.MAX, factory.max());
+      permutationGroup.getOp().put(Operator.MIN, factory.min());
       permutationGroup.getRop().put(RelationalOperator.EQ, factory.eq());
       permutationGroup.getRop().put(RelationalOperator.NE, factory.ne());
       permutationGroup.getRop().put(RelationalOperator.LT, factory.lt());
@@ -222,12 +228,13 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
 
       result = this.getOp().get(Operator.ADD).apply(multiResult, result);
     } while (rowPermutation.next());
-  
+
     return result;
   }
 
   /**
    * トレース取得メソッド
+   *
    * @return 計算結果
    */
   public E trace() {

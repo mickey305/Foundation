@@ -18,13 +18,13 @@ public class SymmetricTransPositionGroup<E extends Number> extends SymmetricCycl
     if (!this.checkTransPosition())
       throw new IllegalArgumentException();
   }
-
+  
   protected SymmetricTransPositionGroup(SymmetricTransPositionGroup<E> table) {
     super(table);
     if (!this.checkTransPosition())
       throw new IllegalArgumentException();
   }
-
+  
   protected SymmetricTransPositionGroup(List<Pair<E, E>> list, IElementInitializer<E> initializer,
                                         Map<Operator, AbstractNumberOperation<E, E>> op,
                                         Map<RelationalOperator, AbstractNumberOperation<E, Boolean>> rop) {
@@ -32,7 +32,7 @@ public class SymmetricTransPositionGroup<E extends Number> extends SymmetricCycl
     if (!this.checkTransPosition())
       throw new IllegalArgumentException();
   }
-
+  
   protected SymmetricTransPositionGroup(Pair<E, E> row, IElementInitializer<E> initializer,
                                         Map<Operator, AbstractNumberOperation<E, E>> op,
                                         Map<RelationalOperator, AbstractNumberOperation<E, Boolean>> rop) {
@@ -51,12 +51,13 @@ public class SymmetricTransPositionGroup<E extends Number> extends SymmetricCycl
     elms[1] = elm2;
     return elms;
   }
-
+  
   /**
    * 互換データチェック
+   *
    * @return 判定結果
    */
   private boolean checkTransPosition() {
-      return this.getDataSet().size() == 2;
+    return this.getDataSet().size() == 2;
   }
 }

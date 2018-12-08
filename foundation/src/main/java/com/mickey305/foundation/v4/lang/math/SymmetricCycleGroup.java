@@ -17,14 +17,14 @@ public class SymmetricCycleGroup<E extends Number> extends SymmetricPermutationG
     super(initialTable, initializer, op, rop);
     if (!this.checkCycle())
       throw new IllegalArgumentException();
-    }
-
+  }
+  
   protected SymmetricCycleGroup(SymmetricCycleGroup<E> table) {
     super(table);
     if (!this.checkCycle())
       throw new IllegalArgumentException();
   }
-
+  
   protected SymmetricCycleGroup(List<Pair<E, E>> list, IElementInitializer<E> initializer,
                                 Map<Operator, AbstractNumberOperation<E, E>> op,
                                 Map<RelationalOperator, AbstractNumberOperation<E, Boolean>> rop) {
@@ -32,9 +32,10 @@ public class SymmetricCycleGroup<E extends Number> extends SymmetricPermutationG
     if (!this.checkCycle())
       throw new IllegalArgumentException();
   }
-
+  
   /**
    * 巡回置換データチェック
+   *
    * @return 判定結果
    */
   private boolean checkCycle() {
@@ -47,8 +48,9 @@ public class SymmetricCycleGroup<E extends Number> extends SymmetricPermutationG
     } while (!btmData.equals(tpData));
     return cnt == this.getDataSet().size();
   }
-
-  @Override public SymmetricCycleGroup<E> compact() {
+  
+  @Override
+  public SymmetricCycleGroup<E> compact() {
     return new SymmetricCycleGroup<>(super.compact().getTable(), this.getInitializer(), this.getOp(), this.getRop());
   }
 }

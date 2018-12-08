@@ -13,16 +13,16 @@ public class WeakHashSet<E> extends AbstractReferenceSet<E, WeakHashMap<E, Objec
   public WeakHashSet() {
     map = new WeakHashMap<>();
   }
-
+  
   public WeakHashSet(Collection<? extends E> c) {
-    map = new WeakHashMap<>(Math.max((int) (c.size()/.75f) + 1, 16));
+    map = new WeakHashMap<>(Math.max((int) (c.size() / .75f) + 1, 16));
     addAll(c);
   }
-
+  
   public WeakHashSet(int initialCapacity, float loadFactor) {
     map = new WeakHashMap<>(initialCapacity, loadFactor);
   }
-
+  
   public WeakHashSet(int initialCapacity) {
     map = new WeakHashMap<>(initialCapacity);
   }

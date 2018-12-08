@@ -19,13 +19,13 @@ public class RTest {
   @Test
   public void knownImmutableClasses() throws Exception {
     Log.i("-- test start");
-    Log.i("status:"+R.knownImmutableClasses().contains(String.class));
-    Log.i("status:"+R.knownImmutableClasses().contains(Double.class));
-    Log.i("status:"+R.knownImmutableClasses().contains(Integer.class));
-    Log.i("status:"+R.knownImmutableClasses().contains(String.class));
-    Log.i("status:"+R.knownImmutableClasses().contains(String.class));
-    Log.i("status:"+R.knownImmutableClasses().contains(BigFraction.class));
-    Log.i("status:"+R.knownImmutableClasses().contains(Log.class));
+    Log.i("status:" + R.knownImmutableClasses().contains(String.class));
+    Log.i("status:" + R.knownImmutableClasses().contains(Double.class));
+    Log.i("status:" + R.knownImmutableClasses().contains(Integer.class));
+    Log.i("status:" + R.knownImmutableClasses().contains(String.class));
+    Log.i("status:" + R.knownImmutableClasses().contains(String.class));
+    Log.i("status:" + R.knownImmutableClasses().contains(BigFraction.class));
+    Log.i("status:" + R.knownImmutableClasses().contains(Log.class));
     Log.i("-- test finish");
   }
 }
