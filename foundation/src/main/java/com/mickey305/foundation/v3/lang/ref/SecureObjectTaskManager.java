@@ -5,7 +5,7 @@ import com.mickey305.foundation.v3.util.Log;
 import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
 
-import static com.mickey305.foundation.v3.EnvConfigConst.IS_DEBUG_MODE;
+import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;
 
 public class SecureObjectTaskManager<I, O> {
   private ISecureObjectInitializer<I> ini;

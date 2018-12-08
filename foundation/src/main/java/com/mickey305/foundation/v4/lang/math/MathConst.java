@@ -1,6 +1,6 @@
 package com.mickey305.foundation.v4.lang.math;
 
-import static com.mickey305.foundation.v3.EnvConfigConst.IS_DEBUG_MODE;
+import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;
 
 final class MathConst {
   /*

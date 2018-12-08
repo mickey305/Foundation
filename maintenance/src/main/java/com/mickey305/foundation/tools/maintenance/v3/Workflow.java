@@ -2,7 +2,7 @@ package com.mickey305.foundation.tools.maintenance.v3;
 
 import com.mickey305.foundation.tools.maintenance.v3.util.JreLibUtils;
 import com.mickey305.foundation.tools.maintenance.v3.util.ReflectionsUtil;
-import com.mickey305.foundation.v3.EnvConfigConst;
+import com.mickey305.foundation.EnvConfigConst;
 import com.mickey305.foundation.v3.util.Log;
 import com.mickey305.foundation.v3.util.SoftHashSet;
 import com.squareup.javapoet.ClassName;

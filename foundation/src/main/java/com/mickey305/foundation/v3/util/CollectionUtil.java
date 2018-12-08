@@ -13,7 +13,7 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 
-import static com.mickey305.foundation.v3.EnvConfigConst.IS_DEBUG_MODE;
+import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;
 
 public class CollectionUtil {
   
