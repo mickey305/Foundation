@@ -20,17 +20,23 @@ public class FileUtil {
     
     pool.offerFirst(new File(absolutePath));
     
+    // 検索キューにデータが存在する間、処理を繰り返す
     while (!pool.isEmpty()) {
       File item = pool.pollFirst();
       Objects.requireNonNull(item);
       
+      // ファイルの場合、返却キューに追加
       if (item.isFile()) {
         files.add(item);
       }
       
+      // ディレクトリの場合、ファイル一覧を検索キューに追加
       if (item.isDirectory()) {
-        for (File child : Objects.requireNonNull(item.listFiles())) {
-          pool.push(child);
+        final File[] items = item.listFiles();
+        Objects.requireNonNull(items);
+        
+        for (File child : items) {
+          pool.offerFirst(child);
         }
       }
     }
