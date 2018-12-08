@@ -1,4 +1,4 @@
-package com.mickey305.foundation.v3.maintenance.tools;
+package com.mickey305.foundation.tools.maintenance.v3.util;
 
 import org.reflections.Configuration;
 import org.reflections.Reflections;

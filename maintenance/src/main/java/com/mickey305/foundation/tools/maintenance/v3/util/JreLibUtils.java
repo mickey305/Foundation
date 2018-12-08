@@ -1,6 +1,6 @@
-package com.mickey305.foundation.v3.maintenance.tools;
+package com.mickey305.foundation.tools.maintenance.v3.util;
 
-import com.mickey305.foundation.v3.Jre;
+import com.mickey305.foundation.tools.maintenance.v3.Jre;
 import com.mickey305.foundation.v3.util.FileUtil;
 import com.mickey305.foundation.v3.util.Log;
 import com.mickey305.foundation.v3.util.ResFile;

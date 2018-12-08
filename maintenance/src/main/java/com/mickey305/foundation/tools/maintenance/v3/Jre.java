@@ -1,4 +1,4 @@
-package com.mickey305.foundation.v3;
+package com.mickey305.foundation.tools.maintenance.v3;
 
 public enum Jre {
   SE7(1.7),

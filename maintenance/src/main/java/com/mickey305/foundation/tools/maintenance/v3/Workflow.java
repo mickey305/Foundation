@@ -1,6 +1,7 @@
-package com.mickey305.foundation.v3;
+package com.mickey305.foundation.tools.maintenance.v3;
 
-import com.mickey305.foundation.v3.maintenance.tools.JreLibUtils;
+import com.mickey305.foundation.tools.maintenance.v3.util.JreLibUtils;
+import com.mickey305.foundation.v3.EnvConfigConst;
 import com.mickey305.foundation.v3.util.Log;
 import com.mickey305.foundation.v3.util.SoftHashSet;
 import com.squareup.javapoet.ClassName;
@@ -38,8 +39,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-
-import static com.mickey305.foundation.v3.ExceptionMessageConst.JRE_UNSUPPORTED;
+import java.util.stream.Stream;
 
 final class Workflow {
   private static final String GEN_PKG = "com.mickey305.foundation.v3.gen";
@@ -83,7 +83,7 @@ final class Workflow {
     final String getImmutableClassesMethodName = "knownImmutableClasses";
     
     if (!(JRE_NOW >= Jre.SE7.getVersion() && JRE_NOW <= Jre.SE11.getVersion())) {
-      throw new UnsupportedOperationException(JRE_UNSUPPORTED + " : version " + String.valueOf(JRE_NOW));
+      throw new UnsupportedOperationException(ExceptionMessageConst.JRE_UNSUPPORTED + " : version " + String.valueOf(JRE_NOW));
     }
     
     final Method dummyMethod = Workflow.class.getDeclaredMethod("dummy", Class.class);
@@ -163,8 +163,14 @@ final class Workflow {
    * @return
    */
   private static MethodSpec.Builder createMethod(Jre jre, String methodName, String cacheName, String cacheSizeName) {
-    final Collection<Class<?>> allClasses = JreLibUtils.commonClassesFor(jre).stream()
-        .sorted(Comparator.comparing(Class::getName)).collect(Collectors.toUnmodifiableList());
+    final Set<Class<?>> jreClasses = JreLibUtils.commonClassesFor(jre);
+    final Set<Class<?>> localClasses = createClassesOf(
+        "com.mickey305.foundation.v3.",
+        "com.mickey305.foundation.v4");
+    final Collection<Class<?>> allClasses = Stream.of(jreClasses, localClasses)
+        .flatMap(Collection::stream)
+        .sorted(Comparator.comparing(Class::getName))
+        .collect(Collectors.toUnmodifiableList());
     final ClassName softHashSet = ClassName.get(SoftHashSet.class);
     
     MethodSpec.Builder methodBuilder = MethodSpec
@@ -199,6 +205,10 @@ final class Workflow {
         .addStatement(cacheSizeName + " = " + cacheName + ".size()");
     
     return methodBuilder;
+  }
+  
+  private static Set<Class<?>> createClassesOf(String... prefixes) {
+    return null;
   }
   
   /**
