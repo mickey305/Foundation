@@ -39,6 +39,11 @@ gradle.projectsEvaluated {
     }
 }
 
+javadoc {
+    options.charSet = 'UTF-8'
+    options.encoding = 'UTF-8'
+}
+
 publish {
     userOrg = 'mickey305'
     groupId = this.getGroup()
