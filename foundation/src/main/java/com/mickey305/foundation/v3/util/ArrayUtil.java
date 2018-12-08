@@ -10,4 +10,11 @@ public class ArrayUtil {
     }
     return table;
   }
+  
+  public static <E> E[] fill(E[] array, E element) {
+    for (int i = 0; i < array.length; i++) {
+      array[i] = element;
+    }
+    return array;
+  }
 }

@@ -1,6 +1,7 @@
 package com.mickey305.foundation.v3;
 
-import com.mickey305.foundation.v3.maintenance.tools.ReflectionsUtil;
+import com.mickey305.foundation.v3.maintenance.tools.JreLibUtils;
+import com.mickey305.foundation.v3.util.Log;
 import com.mickey305.foundation.v3.util.SoftHashSet;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -30,17 +31,24 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
-import java.util.function.Function;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
+import static com.mickey305.foundation.v3.ExceptionMessageConst.JRE_UNSUPPORTED;
 
 final class Workflow {
     private static final String GEN_PKG = "com.mickey305.foundation.v3.gen";
     private static final String TARGET_MODULE = "foundation";
     private final Path targetJavaFolder;
+    private static final double JRE_NOW;
+    
+    static {
+        JRE_NOW = (Double.parseDouble(System.getProperty("java.specification.version")));
+    }
 
     private Workflow() {
         final String sp = File.separator;
@@ -67,33 +75,26 @@ final class Workflow {
     private void buildResourceClass() throws NoSuchMethodException, IOException {
         final String resourceClassName = "R";
 //        final String cacheFieldName = "cn1_" + System.currentTimeMillis();
-        final String cacheFieldName = "cache";
-        final String cacheSizeFieldName = "cacheSize";
+        final String cacheName = "cache";
+        final String cacheSizeName = "cacheSize";
         final String jreFieldName = "JRE";
-        final double jreNow = (Double.parseDouble(System.getProperty("java.specification.version")));
-        final double jre18 = jreNow;//1.8;
-        final String buildImmutableClassesMethodName = "buildImmutableClasses";
-        final String buildImmutableClassesMethodNameJre18 = buildImmutableClassesMethodName + "Jre18";
+        final String methodName = "buildImmutableClasses";
         final String getImmutableClassesMethodName = "knownImmutableClasses";
-        final Set<Class<?>> allClasses = new HashSet<>();
-        final Function<String, Set<Class<?>>> searcher = ReflectionsUtil.getInstance().classSearcher();
-        allClasses.addAll(searcher.apply("java."));
-        allClasses.addAll(searcher.apply("javax."));
-        allClasses.addAll(searcher.apply("org.omg."));
-        allClasses.addAll(searcher.apply("org.w3c.dom."));
-        allClasses.addAll(searcher.apply("org.xml.sax."));
-
+        
+        if ( !(JRE_NOW >= Jre.SE7.getVersion() && JRE_NOW <= Jre.SE11.getVersion()) ) {
+            throw new UnsupportedOperationException(JRE_UNSUPPORTED + " : version " + String.valueOf(JRE_NOW));
+        }
+    
         final Method dummyMethod = Workflow.class.getDeclaredMethod("dummy", Class.class);
         final Type[] types = dummyMethod.getGenericParameterTypes();
         final ClassName clz = ClassName.get(Class.class);
         final TypeName something = WildcardTypeName.get(((ParameterizedType) types[0]).getActualTypeArguments()[0]);
         final TypeName classElement = ParameterizedTypeName.get(clz, something);
         final ClassName set = ClassName.get(Set.class);
-        final ClassName softHashSet = ClassName.get(SoftHashSet.class);
         final TypeName setOfClass = ParameterizedTypeName.get(set, classElement);
 
         FieldSpec immutableClassesField = FieldSpec
-                .builder(setOfClass, cacheFieldName, Modifier.PRIVATE, Modifier.STATIC)
+                .builder(setOfClass, cacheName, Modifier.PRIVATE, Modifier.STATIC)
                 .initializer("null")
                 .build();
         FieldSpec jreField = FieldSpec
@@ -102,7 +103,7 @@ final class Workflow {
                     Double.class, System.class)
                 .build();
         FieldSpec cacheSizeField = FieldSpec
-                .builder(int.class, cacheSizeFieldName, Modifier.PRIVATE, Modifier.STATIC)
+                .builder(int.class, cacheSizeName, Modifier.PRIVATE, Modifier.STATIC)
                 .initializer("0")
                 .build();
         MethodSpec getImmutableClassesMethod = MethodSpec
@@ -110,35 +111,19 @@ final class Workflow {
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.SYNCHRONIZED)
                 .returns(setOfClass)
                 .beginControlFlow(
-                    "if (" + cacheFieldName + " == null || "
-                        + cacheSizeFieldName + " < 3.0 * " + cacheFieldName + ".size())")
+                    "if (" + cacheName + " == null || "
+                        + "3.0 * " + cacheName + ".size() < " + cacheSizeName + ")")
                     .addComment("data NULL-VALUE or less than 1/3 of original collection size")
-                    .addStatement(cacheFieldName + " = $T.emptySet()", Collections.class)
-                    .addStatement(
-                        "if (" + jreFieldName + " == " + jre18 + ") " +
-                        buildImmutableClassesMethodNameJre18 + "()"
-                    )
+                    .addStatement("if ($T.IS_DEBUG_MODE) $T.d(\"build start\")", EnvConfigConst.class, Log.class)
+                    .addStatement(cacheName + " = $T.emptySet()", Collections.class)
+                    .addStatement("if ("+jreFieldName+" == "+Jre.SE7.getVersion()+") "+methodName+Jre.SE7.name()+"()")
+                    .addStatement("if ("+jreFieldName+" == "+Jre.SE8.getVersion()+") "+methodName+Jre.SE8.name()+"()")
+                    .addStatement("if ("+jreFieldName+" == "+Jre.SE9.getVersion()+") "+methodName+Jre.SE10.name()+"()")
+                    .addStatement("if ("+jreFieldName+" == "+Jre.SE10.getVersion()+") "+methodName+Jre.SE10.name()+"()")
+                    .addStatement("if ("+jreFieldName+" == "+Jre.SE11.getVersion()+") "+methodName+Jre.SE10.name()+"()")
+                    .addStatement("if ($T.IS_DEBUG_MODE) $T.d(\"build finish\")", EnvConfigConst.class, Log.class)
                 .endControlFlow()
-                .addStatement("return $T.unmodifiableSet(" + cacheFieldName + ")", Collections.class)
-                .build();
-        MethodSpec.Builder buildImmutableClassesJre18MethodBuilder = MethodSpec
-                .methodBuilder(buildImmutableClassesMethodNameJre18)
-                .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
-                .returns(void.class)
-                .addStatement(cacheFieldName + " = new $T<>()", softHashSet);
-        for (Class<?> elm: allClasses) {
-            if (!elm.getName().contains("$")
-                    && java.lang.reflect.Modifier.isPublic(elm.getModifiers())
-                    && !Cloneable.class.isAssignableFrom(elm)
-                    && checkImmutableClass(elm)) {
-                try {
-                    buildImmutableClassesJre18MethodBuilder.addStatement(cacheFieldName + ".add($T.class)", elm);
-                } catch (RuntimeException ignored) {}
-            }
-        }
-        buildImmutableClassesJre18MethodBuilder
-                .addStatement(cacheSizeFieldName + " = " + cacheFieldName + ".size()");
-        MethodSpec buildImmutableClassesJre18Method = buildImmutableClassesJre18MethodBuilder
+                .addStatement("return $T.unmodifiableSet(" + cacheName + ")", Collections.class)
                 .build();
         MethodSpec privateCons = MethodSpec.constructorBuilder()
                 .addModifiers(Modifier.PRIVATE)
@@ -155,7 +140,9 @@ final class Workflow {
                 .addField(cacheSizeField)
                 .addMethod(privateCons)
                 .addMethod(getImmutableClassesMethod)
-                .addMethod(buildImmutableClassesJre18Method)
+                .addMethod(createMethod(Jre.SE10, methodName, cacheName, cacheSizeName).build())
+                .addMethod(createMethod(Jre.SE8, methodName, cacheName, cacheSizeName).build())
+                .addMethod(createMethod(Jre.SE7, methodName, cacheName, cacheSizeName).build())
                 .build();
         JavaFile javaFile = JavaFile
                 .builder(GEN_PKG, resourceClass)
@@ -165,6 +152,53 @@ final class Workflow {
 
         System.out.println("Update class -> " +
                 javaFile.packageName + "." + resourceClass.name + " of " + this.targetJavaFolder);
+    }
+    
+    /**
+     *
+     * @param jre
+     * @param methodName
+     * @param cacheName
+     * @param cacheSizeName
+     * @return
+     */
+    private static MethodSpec.Builder createMethod(Jre jre, String methodName, String cacheName, String cacheSizeName) {
+        final Set<Class<?>> allClasses = JreLibUtils.commonClassesFor(jre).stream()
+            .sorted(Comparator.comparing(Class::getName)).collect(Collectors.toSet());
+        final ClassName softHashSet = ClassName.get(SoftHashSet.class);
+        
+        MethodSpec.Builder methodBuilder = MethodSpec
+            .methodBuilder(methodName + jre.name())
+            .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
+            .returns(void.class)
+            .addStatement(cacheName + " = new $T<>()", softHashSet);
+        if (allClasses.size() > 0) {
+            methodBuilder
+                .beginControlFlow("try");
+        }
+        for (Class<?> elm: allClasses) {
+            if (!elm.getName().contains("$")
+                && java.lang.reflect.Modifier.isPublic(elm.getModifiers())
+                && !Cloneable.class.isAssignableFrom(elm)
+                && checkImmutableClass(elm)) {
+                try {
+                    methodBuilder
+                        .addStatement(cacheName + ".add(Class.forName(\"" + elm.getName() + "\"))");
+                } catch (RuntimeException e) {
+                    Log.e(e.getMessage());
+                }
+            }
+        }
+        if (allClasses.size() > 0) {
+            methodBuilder
+                .nextControlFlow("catch (ClassNotFoundException e)")
+                .addStatement("$T.e(e.getMessage())", Log.class)
+                .endControlFlow();
+        }
+        methodBuilder
+            .addStatement(cacheSizeName + " = " + cacheName + ".size()");
+        
+        return methodBuilder;
     }
 
     /**
@@ -211,6 +245,7 @@ final class Workflow {
 //            return checkImmutableClassByOracleRule(target);
             return true;
         } catch (RuntimeException | NoClassDefFoundError e) {
+            Log.e(e.getMessage());
             return false;
         }
     }
