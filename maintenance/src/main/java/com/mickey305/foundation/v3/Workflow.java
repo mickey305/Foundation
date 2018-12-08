@@ -30,6 +30,7 @@ import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -162,8 +163,8 @@ final class Workflow {
    * @return
    */
   private static MethodSpec.Builder createMethod(Jre jre, String methodName, String cacheName, String cacheSizeName) {
-    final Set<Class<?>> allClasses = JreLibUtils.commonClassesFor(jre).stream()
-        .sorted(Comparator.comparing(Class::getName)).collect(Collectors.toSet());
+    final Collection<Class<?>> allClasses = JreLibUtils.commonClassesFor(jre).stream()
+        .sorted(Comparator.comparing(Class::getName)).collect(Collectors.toUnmodifiableList());
     final ClassName softHashSet = ClassName.get(SoftHashSet.class);
     
     MethodSpec.Builder methodBuilder = MethodSpec
