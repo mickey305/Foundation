@@ -45,6 +45,10 @@ public class Log {
     i(sb.toString());
   }
   
+  /**
+   *
+   * @param msg
+   */
   public synchronized static void d(String msg) {
     final int traceTargetIndex = 2;
     StackTraceElement element = Thread.currentThread().getStackTrace()[traceTargetIndex];

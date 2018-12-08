@@ -9,6 +9,11 @@ import java.util.Objects;
 
 public class FileUtil {
   
+  /**
+   *
+   * @param absolutePath
+   * @return
+   */
   public static List<File> findAllFile(String absolutePath) {
     final List<File> files = new ArrayList<>();
     final Deque<File> pool = new ArrayDeque<>();

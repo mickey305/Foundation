@@ -11,6 +11,11 @@ public class ResFile {
   private ResFile() {
   }
   
+  /**
+   *
+   * @param path
+   * @return
+   */
   public static File get(String path) {
     final URL url = ResFile.class.getClassLoader().getResource(path);
     

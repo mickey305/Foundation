@@ -24,6 +24,11 @@ class LockImpl<T extends LockType> implements ILockable<T> {
     this.getLock(lockType).unlock();
   }
   
+  /**
+   *
+   * @param lockType
+   * @return
+   */
   private Lock getLock(T lockType) {
     if (lockType == LockType.Read) return lock.readLock();
     if (lockType == LockType.Write) return lock.writeLock();

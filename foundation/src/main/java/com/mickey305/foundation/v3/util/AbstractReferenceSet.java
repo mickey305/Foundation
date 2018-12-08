@@ -49,18 +49,34 @@ public abstract class AbstractReferenceSet<E, M extends Map<E, Object>> extends 
     return i;
   }
   
+  /**
+   *
+   * @return
+   */
   protected int offsetSize() {
     return this.allocatedSize() - this.size();
   }
   
+  /**
+   *
+   * @return
+   */
   protected boolean isFrag() {
     return this.offsetSize() != 0;
   }
   
+  /**
+   *
+   * @return
+   */
   protected int allocatedSize() {
     return map.keySet().size();
   }
   
+  /**
+   *
+   * @return
+   */
   protected boolean isAllocatedEmpty() {
     return this.allocatedSize() == 0;
   }

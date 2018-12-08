@@ -45,6 +45,7 @@ public class JreLibUtils {
     // JRE Version 1.7
     //
     if (jre == Jre.SE7) {
+      Log.d("JRE 1.7 standard library class search start");
       FileUtil.findAllFile(properties.getProperty("se7", "")).forEach(file -> convertUrl(file, urls));
       final Function<String, Set<Class<?>>> searcher = ReflectionsUtil.getInstance().classSearcher(urls);
       allClasses.addAll(searcher.apply("java."));
@@ -52,11 +53,13 @@ public class JreLibUtils {
       allClasses.addAll(searcher.apply("org.omg."));
       allClasses.addAll(searcher.apply("org.w3c.dom."));
       allClasses.addAll(searcher.apply("org.xml.sax."));
+      Log.d("JRE 1.7 standard library class search end");
     }
     //
     // JRE Version 1.8
     //
     if (jre == Jre.SE8) {
+      Log.d("JRE 1.8 standard library class search start");
       FileUtil.findAllFile(properties.getProperty("se8", "")).forEach(file -> convertUrl(file, urls));
       final Function<String, Set<Class<?>>> searcher = ReflectionsUtil.getInstance().classSearcher(urls);
       allClasses.addAll(searcher.apply("java."));
@@ -64,11 +67,16 @@ public class JreLibUtils {
       allClasses.addAll(searcher.apply("org.omg."));
       allClasses.addAll(searcher.apply("org.w3c.dom."));
       allClasses.addAll(searcher.apply("org.xml.sax."));
+      Log.d("JRE 1.8 standard library class search end");
     }
     //
     // JRE Version 9 to 11
     //
+    /////////////////////////////////////////////////
+    // todo: 処理をバージョンごとに分割可能か検討する
+    /////////////////////////////////////////////////
     if (Arrays.asList(Jre.SE9, Jre.SE10, Jre.SE11).contains(jre)) {
+      Log.d("JRE 9to11 standard library class search start");
       ModuleLayer.boot().configuration().modules().stream()
           .map(ResolvedModule::reference)
           .forEach(ref -> {
@@ -105,6 +113,7 @@ public class JreLibUtils {
               throw new UnsupportedOperationException(e);
             }
           });
+      Log.d("JRE 9to11 standard library class search end");
     }
     return allClasses;
   }

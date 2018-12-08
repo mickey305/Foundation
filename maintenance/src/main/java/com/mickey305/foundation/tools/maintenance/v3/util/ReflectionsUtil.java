@@ -25,10 +25,18 @@ public class ReflectionsUtil {
     return ReflectionsUtilHolder.INSTANCE;
   }
   
+  /*
+   *
+   *
+   */
   private SubTypesScanner createScanner() {
     return new SubTypesScanner(false);
   }
   
+  /**
+   *
+   * @return
+   */
   public Function<String, Set<Class<?>>> classSearcher() {
     return packagePrefix -> {
       final Configuration config = ConfigurationBuilder
@@ -37,6 +45,11 @@ public class ReflectionsUtil {
     };
   }
   
+  /**
+   *
+   * @param urls
+   * @return
+   */
   public Function<String, Set<Class<?>>> classSearcher(Collection<URL> urls) {
     return packagePrefix -> {
       final Configuration config = ConfigurationBuilder

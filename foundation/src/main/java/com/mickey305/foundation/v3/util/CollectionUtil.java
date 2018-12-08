@@ -13,6 +13,8 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 
+import static com.mickey305.foundation.v3.EnvConfigConst.IS_DEBUG_MODE;
+
 public class CollectionUtil {
   
   private CollectionUtil() {
@@ -135,8 +137,11 @@ public class CollectionUtil {
     Class<?> clz = firstNonnullElementOf(collection).getClass();
     if (ClassUtil.isBoxing(clz) || R.knownImmutableClasses().contains(clz))
       return new ProtectedCollection<>(collection);
+    // todo: 他のクローンライブラリで代替可能か検討する
     Cloner cloner = new Cloner();
+    if (IS_DEBUG_MODE) Log.d("bef hash:" + collection.hashCode());
     collection = cloner.deepClone(collection);
+    if (IS_DEBUG_MODE) Log.d("aft hash:" + collection.hashCode());
     return new ProtectedCollection<>(collection);
   }
   
@@ -151,8 +156,11 @@ public class CollectionUtil {
     Class<?> clz = firstNonnullElementOf(list).getClass();
     if (ClassUtil.isBoxing(clz) || R.knownImmutableClasses().contains(clz))
       return new ProtectedList<>(list);
+    // todo: 他のクローンライブラリで代替可能か検討する
     Cloner cloner = new Cloner();
+    if (IS_DEBUG_MODE) Log.d("bef hash:" + list.hashCode());
     list = cloner.deepClone(list);
+    if (IS_DEBUG_MODE) Log.d("aft hash:" + list.hashCode());
     return new ProtectedList<>(list);
   }
   
@@ -167,8 +175,11 @@ public class CollectionUtil {
     Class<?> clz = firstNonnullElementOf(set).getClass();
     if (ClassUtil.isBoxing(clz) || R.knownImmutableClasses().contains(clz))
       return new ProtectedSet<>(set);
+    // todo: 他のクローンライブラリで代替可能か検討する
     Cloner cloner = new Cloner();
+    if (IS_DEBUG_MODE) Log.d("bef hash:" + set.hashCode());
     set = cloner.deepClone(set);
+    if (IS_DEBUG_MODE) Log.d("aft hash:" + set.hashCode());
     return new ProtectedSet<>(set);
   }
   
@@ -186,8 +197,11 @@ public class CollectionUtil {
     if ((ClassUtil.isBoxing(kc) || R.knownImmutableClasses().contains(kc))
         && (ClassUtil.isBoxing(vc) || R.knownImmutableClasses().contains(vc)))
       return new ProtectedMap<>(map);
+    // todo: 他のクローンライブラリで代替可能か検討する
     Cloner cloner = new Cloner();
+    if (IS_DEBUG_MODE) Log.d("bef hash:" + map.hashCode());
     map = cloner.deepClone(map);
+    if (IS_DEBUG_MODE) Log.d("aft hash:" + map.hashCode());
     return new ProtectedMap<>(map);
   }
   

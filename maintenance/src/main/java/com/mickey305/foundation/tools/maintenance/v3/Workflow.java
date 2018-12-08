@@ -69,14 +69,23 @@ final class Workflow {
     return WorkflowHolder.INSTANCE;
   }
   
+  /**
+   *
+   */
   public void updateGenerationClasses() {
     try {
       this.buildResourceClass();
     } catch (NoSuchMethodException | IOException e) {
+      Log.e(e.getMessage());
       e.printStackTrace();
     }
   }
   
+  /**
+   *
+   * @throws NoSuchMethodException
+   * @throws IOException
+   */
   private void buildResourceClass() throws NoSuchMethodException, IOException {
     final String resourceClassName = "R";
 //        final String cacheFieldName = "cn1_" + System.currentTimeMillis();
@@ -211,10 +220,18 @@ final class Workflow {
     return methodBuilder;
   }
   
+  /**
+   *
+   * @param prefixes
+   * @return
+   */
   private static Set<Class<?>> createClassesOf(String... prefixes) {
     final Set<Class<?>> targetClasses = new HashSet<>();
     final Function<String, Set<Class<?>>> searcher = ReflectionsUtil.getInstance().classSearcher();
+    
+    Log.d("class search start. data:" + Arrays.toString(prefixes));
     Arrays.stream(prefixes).forEach(prefix -> targetClasses.addAll(searcher.apply(prefix)));
+    Log.d("class search end.");
     
     return targetClasses;
   }
