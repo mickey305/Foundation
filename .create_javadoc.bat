@@ -13,7 +13,7 @@ chcp 65001
 call datetime.bat
 set LOGNAME=%yyyy%-%mm%-%dd%_%hh%%mi%%ss%_create_javadoc.txt
 
-call func console ######## Javadoc作成処理処理を開始します...
+call func console ######## Javadoc作成処理を開始します...
 pause
 call func console [[######## make javadoc task start]] >> .log\%LOGNAME% 2>&1
 call func console logfile name: %LOGNAME%
@@ -29,7 +29,8 @@ javac -version                                >> .log\%LOGNAME% 2>&1
 @rem  gradle script
 @rem ##########################################################################
 
-set OPTION=
+@rem set OPTION=
+set OPTION=%*
 
 @rem ##########################################################################
 @rem  Javadoc作成
@@ -49,9 +50,10 @@ if not "%ERRORLEVEL%"  == "0" (
 )
 call func console 1: Javadocの作成 - 終了
 
-call func console ######## Javadoc作成処理処理が正常終了しました...
+call func console ######## Javadoc作成処理が正常終了しました...
 call func console [[######## make javadoc all task success]] >> .log\%LOGNAME% 2>&1
 
 timeout 60
 
 endlocal
+

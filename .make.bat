@@ -42,7 +42,8 @@ call func console [[auto generate java source args]] - %TMP_ARGS%      >> .log\%
 @rem ##########################################################################
 
 @rem set OPTION=--stacktrace --info --debug
-set OPTION=
+@rem set OPTION=
+set OPTION=%*
 
 @rem ##########################################################################
 @rem  実行バイナリのクリア
@@ -158,3 +159,4 @@ call func console [[######## make script all task success]] >> .log\%LOGNAME% 2>
 timeout 60
 
 endlocal
+
