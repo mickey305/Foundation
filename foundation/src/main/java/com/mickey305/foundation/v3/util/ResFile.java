@@ -1,5 +1,6 @@
 package com.mickey305.foundation.v3.util;
 
+import javax.annotation.Nonnull;
 import java.io.File;
 import java.net.URL;
 import java.util.Objects;
@@ -16,7 +17,7 @@ public class ResFile {
    * @param path
    * @return
    */
-  public static File get(String path) {
+  public static File get(@Nonnull String path) {
     final URL url = ResFile.class.getClassLoader().getResource(path);
     
     Objects.requireNonNull(url);

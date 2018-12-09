@@ -1,5 +1,6 @@
 package com.mickey305.foundation.v3.util;
 
+import javax.annotation.Nonnull;
 import java.io.File;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ public class FileUtil {
    * @param absolutePath
    * @return
    */
-  public static List<File> findAllFile(String absolutePath) {
+  public static List<File> findAllFile(@Nonnull String absolutePath) {
     final List<File> files = new ArrayList<>();
     final Deque<File> pool = new ArrayDeque<>();
     

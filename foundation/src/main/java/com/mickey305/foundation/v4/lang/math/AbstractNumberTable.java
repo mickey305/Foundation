@@ -6,6 +6,7 @@ import com.mickey305.foundation.v4.lang.math.operator.AbstractNumberOperation;
 import com.mickey305.foundation.v4.lang.math.operator.IElementInitializer;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import javax.annotation.Nonnull;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,10 +35,10 @@ public abstract class AbstractNumberTable<E extends Number> implements Serializa
     EQ, NE, LT, LE, GT, GE
   }
   
-  protected AbstractNumberTable(E[][] initialTable,
-                                IElementInitializer<E> initializer,
-                                Map<Operator, AbstractNumberOperation<E, E>> op,
-                                Map<RelationalOperator, AbstractNumberOperation<E, Boolean>> rop) {
+  protected AbstractNumberTable(@Nonnull E[][] initialTable,
+                                @Nonnull IElementInitializer<E> initializer,
+                                @Nonnull Map<Operator, AbstractNumberOperation<E, E>> op,
+                                @Nonnull Map<RelationalOperator, AbstractNumberOperation<E, Boolean>> rop) {
     if (ABS_NUM_TBL_CAPTURE_INI) {
       Log.d("construct args => ini:" + ToStringBuilder.reflectionToString(initializer)
           + ", op:" + ToStringBuilder.reflectionToString(op)

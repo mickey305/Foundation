@@ -3,10 +3,17 @@ package com.mickey305.foundation.v3.util;
 import com.mickey305.foundation.v3.ansi.code.AnsiStringBuilder;
 import com.mickey305.foundation.v3.ansi.code.Escape;
 
+import javax.annotation.Nonnull;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Objects;
 
 public class Log {
+  private static final SimpleDateFormat SDF_PATTERN1;
+  
+  static {
+    SDF_PATTERN1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+  }
   
   private Log() {
   }
@@ -18,8 +25,7 @@ public class Log {
    */
   private static String createHeader() {
     Calendar cal = Calendar.getInstance();
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-    return sdf.format(cal.getTime());
+    return SDF_PATTERN1.format(cal.getTime());
   }
   
   /**
@@ -28,7 +34,7 @@ public class Log {
    * @param element スタックトレース情報
    * @param msg     メッセージ
    */
-  public synchronized static void d(StackTraceElement element, String msg) {
+  public synchronized static void d(@Nonnull StackTraceElement element, @Nonnull String msg) {
     final int lineNumberWidth = 7;
     AnsiStringBuilder sb = new AnsiStringBuilder()
         .append(Escape.BkgYellow)
@@ -49,7 +55,7 @@ public class Log {
    *
    * @param msg
    */
-  public synchronized static void d(String msg) {
+  public synchronized static void d(@Nonnull String msg) {
     final int traceTargetIndex = 2;
     StackTraceElement element = Thread.currentThread().getStackTrace()[traceTargetIndex];
     d(element, msg);
@@ -60,7 +66,7 @@ public class Log {
    *
    * @param msg メッセージ
    */
-  public synchronized static void i(String msg) {
+  public synchronized static void i(@Nonnull String msg) {
     AnsiStringBuilder sb = new AnsiStringBuilder()
         .append(Escape.Blue)
         .append(createHeader())
@@ -75,7 +81,7 @@ public class Log {
    *
    * @param msg メッセージ
    */
-  public synchronized static void e(String msg) {
+  public synchronized static void e(@Nonnull String msg) {
     StringBuilder sb = new StringBuilder()
         .append(createHeader())
         .append("  E  ")
@@ -89,7 +95,7 @@ public class Log {
    *
    * @param line
    */
-  public synchronized static void update(String line) {
+  public synchronized static void update(@Nonnull String line) {
     line = line.replace("\n", "");
     AnsiStringBuilder sb = new AnsiStringBuilder()
         .append("\r")
@@ -100,6 +106,16 @@ public class Log {
         .append(line);
     System.out.print(sb.toString());
   }
+  
+  //
+  // object wrapper method
+  //
+  
+  public static void d(Object o)                      { Log.d(Objects.toString(o));      }
+  public static void d(StackTraceElement e, Object o) { Log.d(e, Objects.toString(o));   }
+  public static void i(Object o)                      { Log.i(Objects.toString(o));      }
+  public static void e(Object o)                      { Log.e(Objects.toString(o));      }
+  public static void update(Object o)                 { Log.update(Objects.toString(o)); }
   
   /**
    * 改行する
