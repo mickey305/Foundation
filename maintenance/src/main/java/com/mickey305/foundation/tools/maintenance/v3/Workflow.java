@@ -6,6 +6,7 @@ import com.mickey305.foundation.EnvConfigConst;
 import com.mickey305.foundation.v3.util.Log;
 import com.mickey305.foundation.v3.util.SoftHashSet;
 import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
@@ -88,7 +89,6 @@ final class Workflow {
    */
   private void buildResourceClass() throws NoSuchMethodException, IOException {
     final String resourceClassName = "R";
-//        final String cacheFieldName = "cn1_" + System.currentTimeMillis();
     final String cacheName = "cache";
     final String cacheSizeName = "cacheSize";
     final String jreFieldName = "JRE";
@@ -106,10 +106,10 @@ final class Workflow {
     final TypeName classElement = ParameterizedTypeName.get(clz, something);
     final ClassName set = ClassName.get(Set.class);
     final TypeName setOfClass = ParameterizedTypeName.get(set, classElement);
+    final ClassName softHashSet = ClassName.get(SoftHashSet.class);
     
     FieldSpec immutableClassesField = FieldSpec
-        .builder(setOfClass, cacheName, Modifier.PRIVATE, Modifier.STATIC)
-        .initializer("null")
+        .builder(setOfClass, cacheName, Modifier.PRIVATE, Modifier.STATIC, Modifier.FINAL)
         .build();
     FieldSpec jreField = FieldSpec
         .builder(double.class, jreFieldName, Modifier.PRIVATE, Modifier.STATIC, Modifier.FINAL)
@@ -122,20 +122,21 @@ final class Workflow {
         .build();
     MethodSpec getImmutableClassesMethod = MethodSpec
         .methodBuilder(getImmutableClassesMethodName)
-        .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.SYNCHRONIZED)
+        .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
         .returns(setOfClass)
-        .beginControlFlow(
-            "if (" + cacheName + " == null || "
-                + "3.0 * " + cacheName + ".size() < " + cacheSizeName + ")")
-        .addComment("data NULL-VALUE or less than 1/3 of original collection size")
+        .addStatement("assert " + cacheName + " != null")
+        .beginControlFlow("if (" + cacheSizeName + " == 0"
+            + " || " + cacheSizeName+ " > (" + cacheName + ".size() * 3.0))")
+        .addComment("data SIZE-ZERO(Initial) or less than 1/3 of original collection size")
+        .beginControlFlow("synchronized (" + cacheName + ")")
         .addStatement("if ($T.IS_DEBUG_MODE) $T.d(\"build start\")", EnvConfigConst.class, Log.class)
-        .addStatement(cacheName + " = $T.emptySet()", Collections.class)
         .addStatement("if (" + jreFieldName + " == " + Jre.SE7.getVersion() + ") " + methodName + Jre.SE7.name() + "()")
         .addStatement("if (" + jreFieldName + " == " + Jre.SE8.getVersion() + ") " + methodName + Jre.SE8.name() + "()")
         .addStatement("if (" + jreFieldName + " == " + Jre.SE9.getVersion() + ") " + methodName + Jre.SE10.name() + "()")
         .addStatement("if (" + jreFieldName + " == " + Jre.SE10.getVersion() + ") " + methodName + Jre.SE10.name() + "()")
         .addStatement("if (" + jreFieldName + " == " + Jre.SE11.getVersion() + ") " + methodName + Jre.SE10.name() + "()")
         .addStatement("if ($T.IS_DEBUG_MODE) $T.d(\"build finish\")", EnvConfigConst.class, Log.class)
+        .endControlFlow()
         .endControlFlow()
         .addStatement("return $T.unmodifiableSet(" + cacheName + ")", Collections.class)
         .build();
@@ -152,6 +153,7 @@ final class Workflow {
         .addField(jreField)
         .addField(immutableClassesField)
         .addField(cacheSizeField)
+        .addStaticBlock(CodeBlock.builder().addStatement(cacheName + " = new $T<>()", softHashSet).build())
         .addMethod(privateCons)
         .addMethod(getImmutableClassesMethod)
         .addMethod(createMethod(Jre.SE10, methodName, cacheName, cacheSizeName).build())
@@ -184,13 +186,11 @@ final class Workflow {
         .flatMap(Collection::stream)
         .sorted(Comparator.comparing(Class::getName))
         .collect(Collectors.toUnmodifiableList());
-    final ClassName softHashSet = ClassName.get(SoftHashSet.class);
     
     MethodSpec.Builder methodBuilder = MethodSpec
         .methodBuilder(methodName + jre.name())
         .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
-        .returns(void.class)
-        .addStatement(cacheName + " = new $T<>()", softHashSet);
+        .returns(void.class);
     if (allClasses.size() > 0) {
       methodBuilder
           .beginControlFlow("try");
@@ -275,8 +275,10 @@ final class Workflow {
         if (!java.lang.reflect.Modifier.isFinal(field.getModifiers()))
           return false;
       }
+      /////////////////////////////////////////
       // Todo: Oracle rule implementation
-//            return checkImmutableClassByOracleRule(target);
+      /////////////////////////////////////////
+      //// return checkImmutableClassByOracleRule(target);
       return true;
     } catch (RuntimeException | NoClassDefFoundError e) {
       Log.e(e.getMessage());
