@@ -49,17 +49,17 @@ import java.util.stream.Stream;
 final class Workflow {
   private static final String GEN_PKG = "com.mickey305.foundation.v3.gen";
   private static final String TARGET_MODULE = "foundation";
-  private final Path targetJavaFolder;
   private static final double JRE_NOW;
+  
+  private String[] args;
+  private Path targetJavaFolder;
   
   static {
     JRE_NOW = (Double.parseDouble(System.getProperty("java.specification.version")));
   }
   
   private Workflow() {
-    final String sp = File.separator;
-    targetJavaFolder = Paths.get(System.getProperty("user.dir") + sp
-        + TARGET_MODULE + sp + "src" + sp + "main" + sp + "java" + sp);
+    this.setArgs(new String[]{});
   }
   
   private static class WorkflowHolder {
@@ -68,6 +68,27 @@ final class Workflow {
   
   public static Workflow getInstance() {
     return WorkflowHolder.INSTANCE;
+  }
+  
+  public Workflow setArgs(String[] args) {
+    this.args = args;
+    return this;
+  }
+  
+  public Workflow buildPath() {
+    final String sp = File.separator;
+    if (args.length == 0) {
+      // do not have arguments
+      targetJavaFolder = Paths.get(System.getProperty("user.dir") + sp
+          + TARGET_MODULE + sp + "src" + sp + "main" + sp + "java" + sp);
+    } else {
+      // have arguments
+      String targetRootClassPath = args[0];
+      if (!targetRootClassPath.endsWith(sp)) targetRootClassPath += sp;
+      targetJavaFolder = Paths.get(targetRootClassPath);
+    }
+    
+    return this;
   }
   
   /**

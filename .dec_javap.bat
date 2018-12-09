@@ -8,9 +8,11 @@
 @rem 遅延環境変数(!i!)の有効化
 setlocal ENABLEDELAYEDEXPANSION
 
+pause
+
 set DT=%date%
 set TM=%time: =0%
-set LOGNAME=%DT:~-10,4%-%DT:~-5,2%-%DT:~-2,2%_%TM:~0,2%%TM:~3,2%%TM:~6,2%_dec_javap
+set LOGNAME=%yyyy%-%mm%-%dd%_%hh%%mi%%ss%_dec_javap
 set CLASS_ROOT=foundation\out\production\classes
 
 @rem decompile target class list
@@ -30,3 +32,6 @@ if defined it (
   set /A i+=1
   goto :BEGIN
 )
+
+endlocal
+

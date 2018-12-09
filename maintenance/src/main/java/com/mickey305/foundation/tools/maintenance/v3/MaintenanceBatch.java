@@ -6,7 +6,7 @@ public class MaintenanceBatch {
    *
    */
   public static void main(String[] args) {
-    Workflow workflow = Workflow.getInstance();
+    Workflow workflow = Workflow.getInstance().setArgs(args).buildPath();
     workflow.updateGenerationClasses();
   }
 }

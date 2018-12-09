@@ -4,10 +4,13 @@
 @rem  release command script for Windows
 @rem
 @rem ##########################################################################
+setlocal
+
+pause
 
 set DT=%date%
 set TM=%time: =0%
-set LOGNAME=%DT:~-10,4%-%DT:~-5,2%-%DT:~-2,2%_%TM:~0,2%%TM:~3,2%%TM:~6,2%_release_bintray.txt
+set LOGNAME=%yyyy%-%mm%-%dd%_%hh%%mi%%ss%_release_bintray.txt
 
 echo "logfile name: %LOGNAME%"
 
@@ -15,4 +18,7 @@ echo "logfile name: %LOGNAME%"
 @rem -------------- BINTRAY_KEY : bintray secretkey
 @rem gradlew.bat clean
 @rem gradlew.bat build
-gradlew.bat bintrayUpload "-PbintrayUser=%BINTRAY_USERNAME%" "-PbintrayKey=%BINTRAY_KEY%" -PdryRun=false > .log\%LOGNAME%
+call gradlew.bat bintrayUpload "-PbintrayUser=%BINTRAY_USERNAME%" "-PbintrayKey=%BINTRAY_KEY%" ^
+    -PdryRun=false > .log\%LOGNAME%  2>&1
+
+endlocal
