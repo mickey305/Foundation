@@ -7,7 +7,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.apache.commons.collections4.map.AbstractReferenceMap.ReferenceStrength.HARD;
 import static org.apache.commons.collections4.map.AbstractReferenceMap.ReferenceStrength.SOFT;
@@ -20,9 +21,9 @@ public class SoftHashSetTest {
   
   private static final AbstractReferenceMap.ReferenceStrength DEFAULT_STRENGTH = WEAK;
   
-  private Set<String> hardCache;
-  private Set<String> softCache;
-  private Set<String> weakCache;
+  private SoftHashSet<String> hardCache;
+  private SoftHashSet<String> softCache;
+  private SoftHashSet<String> weakCache;
   
   @Before
   public void setUp() throws Exception {
@@ -40,7 +41,7 @@ public class SoftHashSetTest {
   
   @Test
   public void testCase_01_01() throws Exception {
-    Set<String> defaultCache;
+    SoftHashSet<String> defaultCache;
     
     defaultCache = hardCache;
     createTestData(defaultCache);
@@ -74,7 +75,85 @@ public class SoftHashSetTest {
     
   }
   
-  private static void createTestData(Set<String> set) {
+  @Test
+  public void testCase_01_02() throws Exception {
+    SoftHashSet<String> defaultCache;
+    final int qty = 100;
+    final long count = 10_000_000;
+    long start, end;
+    List<Long> sizeCache = new ArrayList<>(qty);
+    List<Long> allocatedSizeCache = new ArrayList<>(qty);
+    List<Long> offsetSizeCache = new ArrayList<>(qty);
+    
+    defaultCache = weakCache;
+    createTestData(defaultCache);
+    
+    for (int j = 0; j < qty; j++) {
+      Log.i("start: call size");
+      start = System.currentTimeMillis();
+      for (long i = 0; i < count; i++) {
+        defaultCache.size();
+      }
+      end = System.currentTimeMillis();
+      Log.i("end: call size");
+      Log.i("size time: " + (end - start) + "[ms]");
+      sizeCache.add(end - start);
+  
+      Log.i("start: call allocatedSize");
+      start = System.currentTimeMillis();
+      for (long i = 0; i < count; i++) {
+        defaultCache.allocatedSize();
+      }
+      end = System.currentTimeMillis();
+      Log.i("end: call allocatedSize");
+      Log.i("allocatedSize time: " + (end - start) + "[ms]");
+      allocatedSizeCache.add(end - start);
+  
+      Log.i("start: call offsetSize");
+      start = System.currentTimeMillis();
+      for (long i = 0; i < count; i++) {
+        defaultCache.offsetSize();
+      }
+      end = System.currentTimeMillis();
+      Log.i("end: call offsetSize");
+      Log.i("offsetSize time: " + (end - start) + "[ms]");
+      offsetSizeCache.add(end - start);
+    }
+    double sum;
+    sum = 0; for (Long t : sizeCache) { sum += t; }
+    Log.d("---> size time ave          : " + (sum / qty) + "[ms]");
+    sum = 0; for (Long t : allocatedSizeCache) { sum += t; }
+    Log.d("---> allocatedSize time ave : " + (sum / qty) + "[ms]");
+    sum = 0; for (Long t : offsetSizeCache) { sum += t; }
+    Log.d("---> offsetSize time ave    : " + (sum / qty) + "[ms]");
+    
+  }
+  
+  @Test
+  public void testCase_01_03() throws Exception {
+    SoftHashSet<String> defaultCache;
+    final long count = 1000;
+  
+    defaultCache = weakCache;
+  
+    for (long i = 0; i < count; i++) {
+      createTestData(defaultCache);
+      System.gc();
+      final int size = defaultCache.size();
+      final int allocatedSize = defaultCache.allocatedSize();
+      final int offsetSize = defaultCache.offsetSize();
+      
+      Assert.assertEquals(0, size);
+  
+      if (allocatedSize == 0 && size == 0 && offsetSize == 0) continue;
+  
+      Log.i("[" + String.format("%04d", i) + "] #allocatedSize() -> " + String.format("%03d", allocatedSize)
+          + ", #size() -> " + String.format("%03d", size)
+          + ", #offsetSize() -> " + String.format("%03d", offsetSize));
+    }
+  }
+  
+  private static void createTestData(SoftHashSet<String> set) {
     set.add(new String("test01"));
     set.add(new String("test02"));
     set.add(new String("test03"));
