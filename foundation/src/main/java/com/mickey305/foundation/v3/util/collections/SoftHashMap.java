@@ -1,4 +1,4 @@
-package com.mickey305.foundation.v3.util;
+package com.mickey305.foundation.v3.util.collections;
 
 import org.apache.commons.collections4.map.AbstractReferenceMap;
 import org.apache.commons.collections4.map.ReferenceMap;
@@ -9,7 +9,7 @@ import static org.apache.commons.collections4.map.AbstractReferenceMap.Reference
 public class SoftHashMap<K, V> extends ReferenceMap<K, V> {
   protected static final AbstractReferenceMap.ReferenceStrength DEFAULT_KEY_TYPE = HARD;
   protected static final AbstractReferenceMap.ReferenceStrength DEFAULT_VALUE_TYPE = SOFT;
-  private static final long serialVersionUID = 6602325585236293883L;
+  private static final long serialVersionUID = 8020690413962254679L;
   
   public SoftHashMap() {
     super(DEFAULT_KEY_TYPE, DEFAULT_VALUE_TYPE, DEFAULT_CAPACITY, DEFAULT_LOAD_FACTOR, false);

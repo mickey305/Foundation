@@ -1,7 +1,7 @@
 package com.mickey305.foundation.v4.lang.math;
 
 import com.mickey305.foundation.v3.util.Log;
-import com.mickey305.foundation.v3.util.Permutation;
+import com.mickey305.foundation.v3.util.collections.Permutation;
 import com.mickey305.foundation.v4.lang.math.factory.AbstractMatrixBuilder;
 import com.mickey305.foundation.v4.lang.math.factory.BuilderSquareMatrix;
 import com.mickey305.foundation.v4.lang.math.factory.ElementInitializerFactory;

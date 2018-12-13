@@ -1,4 +1,4 @@
-package com.mickey305.foundation.v3.util;
+package com.mickey305.foundation.v3.util.collections;
 
 import org.apache.commons.collections4.map.AbstractReferenceMap;
 
@@ -15,7 +15,7 @@ public class SoftHashSet<E> extends AbstractReferenceSet<E, SoftHashMap<E, Objec
   private static final float DEFAULT_LOAD_FACTOR = 0.75f;
   private static final AbstractReferenceMap.ReferenceStrength DEFAULT_KEY_TYPE = SOFT;
   private static final AbstractReferenceMap.ReferenceStrength DEFAULT_VALUE_TYPE = WEAK;
-  private static final long serialVersionUID = -5802596856478904771L;
+  private static final long serialVersionUID = 7190009081632736742L;
   
   public SoftHashSet() {
     map = new SoftHashMap<>(DEFAULT_KEY_TYPE, DEFAULT_VALUE_TYPE);

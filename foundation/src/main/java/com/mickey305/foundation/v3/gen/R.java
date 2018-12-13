@@ -2,7 +2,7 @@ package com.mickey305.foundation.v3.gen;
 
 import com.mickey305.foundation.EnvConfigConst;
 import com.mickey305.foundation.v3.util.Log;
-import com.mickey305.foundation.v3.util.SoftHashSet;
+import com.mickey305.foundation.v3.util.collections.SoftHashSet;
 import java.lang.Class;
 import java.lang.Double;
 import java.lang.System;

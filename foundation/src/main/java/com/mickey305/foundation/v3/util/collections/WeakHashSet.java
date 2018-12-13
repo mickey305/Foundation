@@ -1,4 +1,4 @@
-package com.mickey305.foundation.v3.util;
+package com.mickey305.foundation.v3.util.collections;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -8,7 +8,7 @@ import java.util.WeakHashMap;
 
 public class WeakHashSet<E> extends AbstractReferenceSet<E, WeakHashMap<E, Object>>
     implements Set<E>, Serializable, Cloneable {
-  private static final long serialVersionUID = -3655331414093806702L;
+  private static final long serialVersionUID = -3707062032706104685L;
   
   public WeakHashSet() {
     map = new WeakHashMap<>();

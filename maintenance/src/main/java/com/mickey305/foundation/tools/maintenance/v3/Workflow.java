@@ -4,7 +4,7 @@ import com.mickey305.foundation.tools.maintenance.v3.util.JreLibUtils;
 import com.mickey305.foundation.tools.maintenance.v3.util.ReflectionsUtil;
 import com.mickey305.foundation.EnvConfigConst;
 import com.mickey305.foundation.v3.util.Log;
-import com.mickey305.foundation.v3.util.SoftHashSet;
+import com.mickey305.foundation.v3.util.collections.SoftHashSet;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;

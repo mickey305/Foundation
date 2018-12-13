@@ -1,4 +1,4 @@
-package com.mickey305.foundation.v3.util;
+package com.mickey305.foundation.v3.util.collections;
 
 import javax.annotation.Nonnull;
 import java.io.Serializable;
@@ -9,7 +9,7 @@ import java.util.Set;
 
 public abstract class AbstractReferenceSet<E, M extends Map<E, Object>> extends AbstractSet<E>
     implements Set<E>, Serializable, Cloneable {
-  private static final long serialVersionUID = 888121226761401105L;
+  private static final long serialVersionUID = -6946699353161557573L;
   protected transient M map;
   static final Object DUMMY_VAL;
   
