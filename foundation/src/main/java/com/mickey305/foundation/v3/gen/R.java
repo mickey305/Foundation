@@ -73,7 +73,7 @@ public final class R {
       cache.add(Class.forName("com.mickey305.foundation.v3.lang.tuple.MutableSingle"));
       cache.add(Class.forName("com.mickey305.foundation.v3.lang.tuple.Pair"));
       cache.add(Class.forName("com.mickey305.foundation.v3.util.AbstractCancelableCommand"));
-      cache.add(Class.forName("com.mickey305.foundation.v3.util.AbstractLockableCache"));
+      cache.add(Class.forName("com.mickey305.foundation.v3.util.concurrent.AbstractLockableCache"));
       cache.add(Class.forName("com.mickey305.foundation.v3.util.ArrayUtil"));
       cache.add(Class.forName("com.mickey305.foundation.v3.util.ClassCollections"));
       cache.add(Class.forName("com.mickey305.foundation.v3.util.ClassPathUtil"));
@@ -81,8 +81,8 @@ public final class R {
       cache.add(Class.forName("com.mickey305.foundation.v3.util.CollectionUtil"));
       cache.add(Class.forName("com.mickey305.foundation.v3.util.FileUtil"));
       cache.add(Class.forName("com.mickey305.foundation.v3.util.ListUtil"));
-      cache.add(Class.forName("com.mickey305.foundation.v3.util.LockManager"));
-      cache.add(Class.forName("com.mickey305.foundation.v3.util.LockManagerFactory"));
+      cache.add(Class.forName("com.mickey305.foundation.v3.util.concurrent.LockManager"));
+      cache.add(Class.forName("com.mickey305.foundation.v3.util.concurrent.LockManagerFactory"));
       cache.add(Class.forName("com.mickey305.foundation.v3.util.Log"));
       cache.add(Class.forName("com.mickey305.foundation.v3.util.ResFile"));
       cache.add(Class.forName("com.mickey305.foundation.v3.util.SetUtil"));
@@ -1139,7 +1139,7 @@ public final class R {
       cache.add(Class.forName("com.mickey305.foundation.v3.lang.tuple.MutableSingle"));
       cache.add(Class.forName("com.mickey305.foundation.v3.lang.tuple.Pair"));
       cache.add(Class.forName("com.mickey305.foundation.v3.util.AbstractCancelableCommand"));
-      cache.add(Class.forName("com.mickey305.foundation.v3.util.AbstractLockableCache"));
+      cache.add(Class.forName("com.mickey305.foundation.v3.util.concurrent.AbstractLockableCache"));
       cache.add(Class.forName("com.mickey305.foundation.v3.util.ArrayUtil"));
       cache.add(Class.forName("com.mickey305.foundation.v3.util.ClassCollections"));
       cache.add(Class.forName("com.mickey305.foundation.v3.util.ClassPathUtil"));
@@ -1147,8 +1147,8 @@ public final class R {
       cache.add(Class.forName("com.mickey305.foundation.v3.util.CollectionUtil"));
       cache.add(Class.forName("com.mickey305.foundation.v3.util.FileUtil"));
       cache.add(Class.forName("com.mickey305.foundation.v3.util.ListUtil"));
-      cache.add(Class.forName("com.mickey305.foundation.v3.util.LockManager"));
-      cache.add(Class.forName("com.mickey305.foundation.v3.util.LockManagerFactory"));
+      cache.add(Class.forName("com.mickey305.foundation.v3.util.concurrent.LockManager"));
+      cache.add(Class.forName("com.mickey305.foundation.v3.util.concurrent.LockManagerFactory"));
       cache.add(Class.forName("com.mickey305.foundation.v3.util.Log"));
       cache.add(Class.forName("com.mickey305.foundation.v3.util.ResFile"));
       cache.add(Class.forName("com.mickey305.foundation.v3.util.SetUtil"));
@@ -2012,7 +2012,7 @@ public final class R {
       cache.add(Class.forName("com.mickey305.foundation.v3.lang.tuple.MutableSingle"));
       cache.add(Class.forName("com.mickey305.foundation.v3.lang.tuple.Pair"));
       cache.add(Class.forName("com.mickey305.foundation.v3.util.AbstractCancelableCommand"));
-      cache.add(Class.forName("com.mickey305.foundation.v3.util.AbstractLockableCache"));
+      cache.add(Class.forName("com.mickey305.foundation.v3.util.concurrent.AbstractLockableCache"));
       cache.add(Class.forName("com.mickey305.foundation.v3.util.ArrayUtil"));
       cache.add(Class.forName("com.mickey305.foundation.v3.util.ClassCollections"));
       cache.add(Class.forName("com.mickey305.foundation.v3.util.ClassPathUtil"));
@@ -2020,8 +2020,8 @@ public final class R {
       cache.add(Class.forName("com.mickey305.foundation.v3.util.CollectionUtil"));
       cache.add(Class.forName("com.mickey305.foundation.v3.util.FileUtil"));
       cache.add(Class.forName("com.mickey305.foundation.v3.util.ListUtil"));
-      cache.add(Class.forName("com.mickey305.foundation.v3.util.LockManager"));
-      cache.add(Class.forName("com.mickey305.foundation.v3.util.LockManagerFactory"));
+      cache.add(Class.forName("com.mickey305.foundation.v3.util.concurrent.LockManager"));
+      cache.add(Class.forName("com.mickey305.foundation.v3.util.concurrent.LockManagerFactory"));
       cache.add(Class.forName("com.mickey305.foundation.v3.util.Log"));
       cache.add(Class.forName("com.mickey305.foundation.v3.util.ResFile"));
       cache.add(Class.forName("com.mickey305.foundation.v3.util.SetUtil"));

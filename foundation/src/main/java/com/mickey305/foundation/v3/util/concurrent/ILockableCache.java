@@ -1,4 +1,4 @@
-package com.mickey305.foundation.v3.util;
+package com.mickey305.foundation.v3.util.concurrent;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

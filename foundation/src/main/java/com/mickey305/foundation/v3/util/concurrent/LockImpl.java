@@ -1,4 +1,4 @@
-package com.mickey305.foundation.v3.util;
+package com.mickey305.foundation.v3.util.concurrent;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
