@@ -24,7 +24,7 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
                       Map<RelationalOperator, AbstractNumberOperation<E, Boolean>> rop) {
     super(size, size, initializer, op, rop);
   }
-
+  
   public SquareMatrix(E[][] initialTable, IElementInitializer<E> initializer,
                       Map<Operator, AbstractNumberOperation<E, E>> op,
                       Map<RelationalOperator, AbstractNumberOperation<E, Boolean>> rop) {
@@ -32,11 +32,11 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
     if (!super.isSquare())
       throw new UnsupportedOperationException();
   }
-
+  
   public SquareMatrix(SquareMatrix<E> matrix) {
     super(matrix);
   }
-
+  
   /**
    * べき乗処理
    *
@@ -46,10 +46,10 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
   public SquareMatrix<E> exp(int index) {
     if (index == 0)
       return this.createIdentityMatrix();
-
+    
     return new SquareMatrix<>(super.exp(index).getTable(), this.getInitializer(), this.getOp(), this.getRop());
   }
-
+  
   /**
    * 行列サイズ取得処理
    *
@@ -58,7 +58,7 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
   public int getSize() {
     return super.getRowSize();
   }
-
+  
   /**
    * 単位行列取得メソッド
    *
@@ -89,12 +89,12 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
             return table;
           }
         }).build();
-
+    
     if (IS_DEBUG_MODE) Log.d("bef tmpMatrix: " + Arrays.deepToString(tmpMatrix.getTable()));
     
     // invoke method
     tmpMatrix = tmpMatrix.createInverseMatrix();
-
+    
     if (IS_DEBUG_MODE) Log.d("aft tmpMatrix: " + Arrays.deepToString(tmpMatrix.getTable()));
     
     final SquareMatrix<E> resultMatrix = new SquareMatrix<>(
@@ -102,12 +102,12 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
     for (int i = 0; i < getRowSize(); i++)
       for (int j = 0; j < getColumnSize(); j++)
         resultMatrix.putCell(i, j, this.getInitializer().convertFrom(tmpMatrix.getCell(i, j)));
-
+    
     if (IS_DEBUG_MODE) Log.d("resultMatrix: " + Arrays.deepToString(resultMatrix.getTable()));
     
     return resultMatrix;
   }
-
+  
   /**
    * 逆行列取得メソッド
    *
@@ -117,12 +117,12 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
     if (IS_DEBUG_MODE) Log.d("inverse matrix creating...");
     if (!this.isRegular())
       throw new UnsupportedOperationException();
-
+    
     final Matrix<E> em = this.horizontalBind(this.createIdentityMatrix());
     for (int i = 0; i < em.getRowSize(); i++)
       for (int j = 0; j < em.getColumnSize(); j++)
         em.putCell(i, j, this.getOp().get(Operator.ADD).apply(this.getInitializer().zero(), em.getCell(i, j)));
-
+    
     // CELL(i,i) <==> NE ZERO transformation
     for (int i = 0; i < this.getRowSize(); i++) {
       if (this.getRop().get(RelationalOperator.EQ).apply(em.getCell(i, i), this.getInitializer().zero())) {
@@ -135,7 +135,7 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
         }
       }
     }
-
+    
     // CELL(i,j), i != j <==> EQ ZERO transformation
     for (int j = 0; j < this.getColumnSize(); j++) {
       for (int i = 0; i < this.getRowSize(); i++) {
@@ -150,7 +150,7 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
             for (int l = 0; l < this.getColumnSize(); l++)
               if (this.getRop().get(RelationalOperator.EQ).apply(horizontal[l], this.getInitializer().zero()))
                 cntZero++;
-
+            
             if (i != k && this.getRop().get(RelationalOperator.NE).apply(vertical[k], this.getInitializer().zero())) {
               if (max < cntZero) {
                 max = cntZero;
@@ -164,19 +164,19 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
         }
       }
     }
-
+    
     // CELL(i,i) <==> EQ ONE transformation
     for (int i = 0; i < this.getRowSize(); i++)
       if (this.getRop().get(RelationalOperator.NE).apply(em.getCell(i, i), this.getInitializer().one()))
         em.multiRow(this.getOp().get(Operator.DIV).apply(this.getInitializer().one(), em.getCell(i, i)), i);
-
+    
     final SquareMatrix<E> result = new SquareMatrix<>(this);
     for (int i = 0; i < result.getRowSize(); i++)
       for (int j = 0; j < result.getColumnSize(); j++)
         result.putCell(i, j, em.getCell(i, this.getColumnSize() + j));
     return result;
   }
-
+  
   /**
    * 正則行列判定メソッド
    *
@@ -185,7 +185,7 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
   public boolean isRegular() {
     return this.getRop().get(RelationalOperator.NE).apply(this.determinant(), this.getInitializer().zero());
   }
-
+  
   /**
    * 行列式取得メソッド
    *
@@ -197,7 +197,7 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
     for (int i = 0; i < rowIndexes.length; i++)
       rowIndexes[i] = i;
     final Permutation<Integer> rowPermutation = new Permutation<>(rowIndexes);
-
+    
     do {
       final SymmetricPermutationGroup<Integer> permutationGroup = new SymmetricPermutationGroup<>(
           new Integer[][]{rowIndexes, rowPermutation.getElements()},
@@ -217,7 +217,7 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
       permutationGroup.getRop().put(RelationalOperator.LE, factory.le());
       permutationGroup.getRop().put(RelationalOperator.GT, factory.gt());
       permutationGroup.getRop().put(RelationalOperator.GE, factory.ge());
-
+      
       E multiResult = this.getInitializer().one();
       final int sgn = permutationGroup.sgn();
       for (int j = 0; j < permutationGroup.getColumnSize(); j++) {
@@ -225,13 +225,13 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
         multiResult = this.getOp().get(Operator.MULTI).apply(data, multiResult);
       }
       multiResult = this.getOp().get(Operator.MULTI).apply(multiResult, this.getInitializer().convertFrom(sgn));
-
+      
       result = this.getOp().get(Operator.ADD).apply(multiResult, result);
     } while (rowPermutation.next());
-
+    
     return result;
   }
-
+  
   /**
    * トレース取得メソッド
    *
@@ -241,7 +241,7 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
     E result = this.getInitializer().zero();
     for (int i = 0; i < this.getSize(); i++)
       result = this.getOp().get(Operator.ADD).apply(this.getCell(i, i), result);
-
+    
     return result;
   }
 }

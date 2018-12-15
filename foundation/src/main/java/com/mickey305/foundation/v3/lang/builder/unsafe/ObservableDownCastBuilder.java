@@ -7,7 +7,7 @@ import java.lang.reflect.Field;
 import java.util.Map;
 
 public class ObservableDownCastBuilder {
-
+  
   /**
    * ダウンキャスト実装用のリフレクションメソッド
    *
@@ -22,7 +22,7 @@ public class ObservableDownCastBuilder {
     // ---> Input data check
     if (!srcInstance.getClass().isAssignableFrom(destClass) || srcInstance.getClass().equals(destClass))
       return null;
-
+    
     // ---> Dest-Instance creation
     D subInstance = DownCastBuilder.createInstanceChallenge(destClass);
     // ---> Dest-Instance injection of Src fields
@@ -31,7 +31,7 @@ public class ObservableDownCastBuilder {
     }
     return subInstance;
   }
-
+  
   /**
    * ダウンキャスト実装用のリフレクションメソッド
    *
@@ -47,7 +47,7 @@ public class ObservableDownCastBuilder {
     if (!srcInstance.getClass().isAssignableFrom(destInstance.getClass())
         || srcInstance.getClass().equals(destInstance.getClass()))
       return null;
-
+    
     // ---> Dest-Instance injection of Src fields
     // before injection
     if (listener != null)

@@ -14,7 +14,6 @@ import java.util.Objects;
 public class FileUtil {
   
   /**
-   *
    * @param absolutePath
    * @return
    */
@@ -49,7 +48,6 @@ public class FileUtil {
   }
   
   /**
-   *
    * @param file
    * @return
    */
@@ -58,7 +56,7 @@ public class FileUtil {
     
     try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
       String string = reader.readLine();
-      while (string != null){
+      while (string != null) {
         sb.append(string).append(System.lineSeparator());
         string = reader.readLine();
       }
@@ -66,7 +64,7 @@ public class FileUtil {
       Log.e(e.getMessage());
       throw new RuntimeException(e);
     }
-  
+    
     return sb.toString();
   }
 }

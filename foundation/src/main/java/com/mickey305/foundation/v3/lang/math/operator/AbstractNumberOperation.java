@@ -12,45 +12,45 @@ public abstract class AbstractNumberOperation<R> implements
     BinaryFunction<Number, Number, R>,
     OperationExtensions<Number, Number, R> {
   private BinaryFunction<Number, Number, R> extension;
-
+  
   public AbstractNumberOperation() {
     this(null);
   }
-
+  
   public AbstractNumberOperation(BinaryFunction<Number, Number, R> extension) {
     this.setExtension(extension);
   }
-
+  
   public BinaryFunction<Number, Number, R> getExtension() {
     return extension;
   }
-
+  
   @Override
   public void setExtension(BinaryFunction<Number, Number, R> extension) {
     this.extension = extension;
   }
-
+  
   @Override
   public R apply(Number l, Number r) {
     R result = null;
-
+    
     // extension operation invoke
     if (this.getExtension() != null)
       result = this.getExtension().apply(l, r);
-
+    
     if (result != null)
       return result;
-
+    
     // default operation invoke
     result = this.operationDefault(l, r);
-
+    
     if (result != null)
       return result;
-
+    
     // throwing exception
     throw new UnsupportedOperationException();
   }
-
+  
   /**
    * 数値変換メソッド
    * <p>
@@ -63,23 +63,23 @@ public abstract class AbstractNumberOperation<R> implements
   protected BigInteger convertToBigInteger(Number data) {
     if (data.getClass().equals(Integer.class))
       return new BigInteger(String.valueOf(data.intValue()));
-
+    
     if (data.getClass().equals(Long.class))
       return new BigInteger(String.valueOf(data.longValue()));
-
+    
     if (data.getClass().equals(Short.class))
       return new BigInteger(String.valueOf(data.shortValue()));
-
+    
     if (data.getClass().equals(Byte.class))
       return new BigInteger(String.valueOf(data.byteValue()));
-
+    
     if (data.getClass().equals(BigInteger.class))
       return (BigInteger) data;
-
+    
     // throwing exception
     throw new UnsupportedOperationException();
   }
-
+  
   /**
    * 数値変換メソッド
    * <p>
@@ -92,29 +92,29 @@ public abstract class AbstractNumberOperation<R> implements
   protected Fraction convertToFraction(Number data) {
     if (data.getClass().equals(Integer.class))
       return new Fraction(data.intValue());
-
+    
     if (data.getClass().equals(Long.class))
       return new Fraction(data.longValue());
-
+    
     if (data.getClass().equals(Float.class))
       return new Fraction(data.floatValue());
-
+    
     if (data.getClass().equals(Double.class))
       return new Fraction(data.doubleValue());
-
+    
     if (data.getClass().equals(Short.class))
       return new Fraction(data.shortValue());
-
+    
     if (data.getClass().equals(Byte.class))
       return new Fraction(data.byteValue());
-
+    
     if (data.getClass().equals(Fraction.class))
       return (Fraction) data;
-
+    
     // throwing exception
     throw new UnsupportedOperationException();
   }
-
+  
   /**
    * 数値変換メソッド
    * <p>
@@ -127,25 +127,25 @@ public abstract class AbstractNumberOperation<R> implements
   protected BigFraction convertToBigFraction(Number data) {
     if (data.getClass().equals(Integer.class))
       return new BigFraction(data.intValue());
-
+    
     if (data.getClass().equals(Long.class))
       return new BigFraction(data.longValue());
-
+    
     if (data.getClass().equals(Float.class))
       return new BigFraction(data.floatValue());
-
+    
     if (data.getClass().equals(Double.class))
       return new BigFraction(data.doubleValue());
-
+    
     if (data.getClass().equals(Short.class))
       return new BigFraction(data.shortValue());
-
+    
     if (data.getClass().equals(Byte.class))
       return new BigFraction(data.byteValue());
-
+    
     if (data.getClass().equals(BigInteger.class))
       return new BigFraction((BigInteger) data);
-
+    
     if (data.getClass().equals(BigDecimal.class)) {
       final BigDecimal decimal = (BigDecimal) data;
       final BigInteger ten = BigInteger.TEN;
@@ -155,18 +155,18 @@ public abstract class AbstractNumberOperation<R> implements
         return new BigFraction(decimal.unscaledValue().multiply(ten.pow(-1 * decimal.scale())));
       }
     }
-
+    
     if (data.getClass().equals(Fraction.class))
       return new BigFraction(
           ((Fraction) data).getNumerator(), ((Fraction) data).getDenominator());
-
+    
     if (data.getClass().equals(BigFraction.class))
       return (BigFraction) data;
-
+    
     // throwing exception
     throw new UnsupportedOperationException();
   }
-
+  
   /**
    * デフォルト演算・実装メソッド
    *

@@ -8,7 +8,7 @@ public interface InjectionEventListener {
    * @param src  キャスト元コンテキスト情報
    */
   void before(EasilyAccessibleContainer dest, EasilyContainer src);
-
+  
   /**
    * ダウンキャスト実行後イベントメソッド
    *

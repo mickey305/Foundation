@@ -4,7 +4,7 @@ import com.mickey305.foundation.v3.compat.util.BinaryFunction;
 
 @Deprecated
 public interface OperationExtensions<T, U, R> {
-
+  
   /**
    * 拡張演算処理注入メソッド
    *

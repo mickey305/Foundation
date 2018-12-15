@@ -37,20 +37,20 @@ public class JapanesePickerTest {
       final MatchResult result = matcher.toMatchResult();
       Log.i("start:" + result.start() + ",end:" + result.end() + "★" + result.group() + "★");
     }
-  
+    
     matcher = JapanesePickerFactory.createDefault().build(inputData);
     Log.d("default analyzer check");
     while (matcher.find()) {
       final MatchResult result = matcher.toMatchResult();
       Log.i("start:" + result.start() + ",end:" + result.end() + "★" + result.group() + "★");
     }
-  
+    
     matcher = JapanesePickerFactory.createDefaultXmlStyle().build(inputData);
     Log.d("default-xml-style analyzer check");
     while (matcher.find()) {
       final MatchResult result = matcher.toMatchResult();
       Log.i("start:" + result.start() + ",end:" + result.end() + "★" + result.group() + "★");
     }
-  
+    
   }
 }

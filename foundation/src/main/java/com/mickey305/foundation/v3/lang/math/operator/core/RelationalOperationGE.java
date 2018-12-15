@@ -5,17 +5,17 @@ import com.mickey305.foundation.v3.compat.util.BinaryFunction;
 @Deprecated
 public class RelationalOperationGE extends RelationalOperationEQ {
   private final RelationalOperationGT opGT;
-
+  
   public RelationalOperationGE() {
     super();
     opGT = new RelationalOperationGT();
   }
-
+  
   public RelationalOperationGE(BinaryFunction<Number, Number, Boolean> extension) {
     super(extension);
     opGT = new RelationalOperationGT();
   }
-
+  
   @Override
   protected Boolean operationDefault(Number l, Number r) {
     final Boolean status1 = super.operationDefault(l, r);

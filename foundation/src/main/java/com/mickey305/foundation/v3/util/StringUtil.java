@@ -13,7 +13,6 @@ public class StringUtil {
   }
   
   /**
-   *
    * @param path
    * @return
    */
@@ -23,7 +22,6 @@ public class StringUtil {
   }
   
   /**
-   *
    * @param value
    * @return
    */

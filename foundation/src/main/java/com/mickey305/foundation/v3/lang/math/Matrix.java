@@ -7,11 +7,11 @@ import java.util.Set;
 @Deprecated
 public class Matrix extends AbstractNumberTable {
   private static final long serialVersionUID = 4340800584382302277L;
-
+  
   protected Matrix(int row, int column) {
     super(row, column);
   }
-
+  
   protected Matrix(Number[][] initialTable) {
     this(initialTable.length, (initialTable.length != 0)
         ? initialTable[0].length
@@ -24,15 +24,15 @@ public class Matrix extends AbstractNumberTable {
     }
     AbstractNumberTable.putSameValueTable(CONTAINS_SIGNATURE, this.getSignatureTable());
   }
-
+  
   protected Matrix(Matrix matrix) {
     this(matrix.getTable());
   }
-
+  
   protected Matrix(Number scalar) {
     this(new Number[][]{{scalar}});
   }
-
+  
   /**
    * インスタンス生成メソッド
    *
@@ -43,7 +43,7 @@ public class Matrix extends AbstractNumberTable {
   public static Matrix of(int row, int column) {
     return new Matrix(row, column);
   }
-
+  
   /**
    * インスタンス生成メソッド
    *
@@ -53,7 +53,7 @@ public class Matrix extends AbstractNumberTable {
   public static Matrix of(Number[][] initialTable) {
     return new Matrix(initialTable);
   }
-
+  
   /**
    * インスタンス生成メソッド
    *
@@ -63,7 +63,7 @@ public class Matrix extends AbstractNumberTable {
   public static Matrix of(Matrix matrix) {
     return new Matrix(matrix);
   }
-
+  
   /**
    * インスタンス生成メソッド
    *
@@ -73,7 +73,7 @@ public class Matrix extends AbstractNumberTable {
   public static Matrix of(Number scalar) {
     return new Matrix(scalar);
   }
-
+  
   /**
    * 加算処理
    *
@@ -84,7 +84,7 @@ public class Matrix extends AbstractNumberTable {
   public static Matrix add(Matrix leftMatrix, Matrix rightMatrix) {
     return Matrix.simplyOperate(leftMatrix, rightMatrix, Operator.ADD);
   }
-
+  
   /**
    * 減算処理
    *
@@ -95,7 +95,7 @@ public class Matrix extends AbstractNumberTable {
   public static Matrix sub(Matrix leftMatrix, Matrix rightMatrix) {
     return Matrix.simplyOperate(leftMatrix, rightMatrix, Operator.SUB);
   }
-
+  
   /**
    * 乗算処理
    *
@@ -114,7 +114,7 @@ public class Matrix extends AbstractNumberTable {
     }
     return resultMatrix;
   }
-
+  
   /**
    * 乗算処理
    *
@@ -125,29 +125,29 @@ public class Matrix extends AbstractNumberTable {
   public static Matrix multi(Matrix leftMatrix, Matrix rightMatrix) {
     if (leftMatrix.getColumnSize() != rightMatrix.getRowSize())
       throw new UnsupportedOperationException();
-
+    
     final Matrix resultMatrix = Matrix.of(new Number[leftMatrix.getRowSize()][rightMatrix.getColumnSize()]);
     for (int i = 0; i < leftMatrix.getRowSize(); i++) {
       Number[] leftRec = leftMatrix.getRow(i);
       for (int j = 0; j < rightMatrix.getColumnSize(); j++) {
         Number[] rightRec = rightMatrix.getColumn(j);
-
+        
         assert leftRec.length == rightRec.length;
-
+        
         Number[] multiRec = new Number[leftRec.length];
         for (int k = 0; k < multiRec.length; k++)
           multiRec[k] = Operator.MULTI.f.apply(leftRec[k], rightRec[k]);
-
+        
         Number resultCell = 0;
         for (Number cell : multiRec)
           resultCell = Operator.ADD.f.apply(cell, resultCell);
-
+        
         resultMatrix.putCellForcibly(i, j, resultCell);
       }
     }
     return resultMatrix;
   }
-
+  
   /**
    * 演算処理
    *
@@ -160,7 +160,7 @@ public class Matrix extends AbstractNumberTable {
     if (leftMatrix.getRowSize() != rightMatrix.getRowSize()
         || leftMatrix.getColumnSize() != rightMatrix.getColumnSize())
       throw new UnsupportedOperationException();
-
+    
     Number resultCell;
     final Matrix resultMatrix = Matrix.of(leftMatrix);
     for (int i = 0; i < leftMatrix.getRowSize(); i++) {
@@ -171,7 +171,7 @@ public class Matrix extends AbstractNumberTable {
     }
     return resultMatrix;
   }
-
+  
   /**
    * べき乗処理
    *
@@ -182,14 +182,14 @@ public class Matrix extends AbstractNumberTable {
   public static Matrix exp(Matrix matrix, int index) {
     if (index <= 0)
       throw new UnsupportedOperationException();
-
+    
     Matrix resultMatrix = matrix;
     for (int i = 0; i < index - 1; i++)
       resultMatrix = Matrix.multi(resultMatrix, matrix);
-
+    
     return resultMatrix;
   }
-
+  
   /**
    * 水平連結
    *
@@ -200,7 +200,7 @@ public class Matrix extends AbstractNumberTable {
   public static Matrix horizontalBind(Matrix l, Matrix r) {
     if (l.getRowSize() != r.getRowSize())
       throw new UnsupportedOperationException();
-
+    
     final Matrix resultMatrix = Matrix.of(l.getRowSize(), l.getColumnSize() + r.getColumnSize());
     for (int i = 0; i < resultMatrix.getRowSize(); i++) {
       for (int j = 0; j < resultMatrix.getColumnSize(); j++) {
@@ -216,7 +216,7 @@ public class Matrix extends AbstractNumberTable {
     }
     return resultMatrix;
   }
-
+  
   /**
    * 垂直連結
    *
@@ -227,7 +227,7 @@ public class Matrix extends AbstractNumberTable {
   public static Matrix verticalBind(Matrix t, Matrix b) {
     if (t.getColumnSize() != b.getColumnSize())
       throw new UnsupportedOperationException();
-
+    
     final Matrix resultMatrix = Matrix.of(t.getRowSize() + b.getRowSize(), t.getColumnSize());
     for (int i = 0; i < resultMatrix.getRowSize(); i++) {
       Matrix targetMatrix = b;
@@ -243,7 +243,7 @@ public class Matrix extends AbstractNumberTable {
     }
     return resultMatrix;
   }
-
+  
   /**
    * 零行列取得メソッド
    *
@@ -254,10 +254,10 @@ public class Matrix extends AbstractNumberTable {
     for (int i = 0; i < this.getRowSize(); i++)
       for (int j = 0; j < this.getColumnSize(); j++)
         matrix.putCellForcibly(i, j, 0);
-
+    
     return matrix;
   }
-
+  
   /**
    * 2値行列取得メソッド
    * <p>
@@ -279,7 +279,7 @@ public class Matrix extends AbstractNumberTable {
     }
     return matrix;
   }
-
+  
   /**
    * elementary transformation method - 1 (row method - 1)
    *
@@ -292,7 +292,7 @@ public class Matrix extends AbstractNumberTable {
     this.putRowForcibly(row1, this.getRow(row2));
     this.putRowForcibly(row2, tmpRec);
   }
-
+  
   /**
    * elementary transformation method - 2 (column method - 1)
    *
@@ -305,7 +305,7 @@ public class Matrix extends AbstractNumberTable {
     this.putColumnForcibly(column1, this.getColumn(column2));
     this.putColumnForcibly(column2, tmpRec);
   }
-
+  
   /**
    * elementary transformation method - 3 (row method - 2)
    *
@@ -319,7 +319,7 @@ public class Matrix extends AbstractNumberTable {
     this.putRowForcibly(row, rowData);
     return rowData;
   }
-
+  
   /**
    * elementary transformation method - 4 (column method - 2)
    *
@@ -333,7 +333,7 @@ public class Matrix extends AbstractNumberTable {
     this.putColumnForcibly(column, columnData);
     return columnData;
   }
-
+  
   /**
    * elementary transformation method - 5 (row method - 3)
    * <p>algorithm: matrix[addRow, i] += scalar * matrix[multiRow, i], (i = 0,1,2...n)</p>
@@ -351,7 +351,7 @@ public class Matrix extends AbstractNumberTable {
     final Number[] rowData = addMatrix.getRow(0);
     this.putRowForcibly(addRow, rowData);
   }
-
+  
   /**
    * elementary transformation method - 6 (column method - 3)
    * <p>algorithm: matrix[i, addColumn] += scalar * matrix[i, multiColumn], (i = 0,1,2...n)</p>
@@ -369,33 +369,33 @@ public class Matrix extends AbstractNumberTable {
     final Number[] columnData = addMatrix.getRow(0);
     this.putColumnForcibly(addColumn, columnData);
   }
-
+  
   @Override
   protected void putRowForcibly(int row, Number[] rowData) {
     if (rowData.length != this.getColumnSize())
       throw new IllegalArgumentException();
-
+    
     int i = 0;
     for (Number cell : rowData)
       this.putCellForcibly(row, i++, cell);
   }
-
+  
   @Override
   protected void putColumnForcibly(int column, Number[] columnData) {
     if (columnData.length != this.getRowSize())
       throw new IllegalArgumentException();
-
+    
     int i = 0;
     for (Number cell : columnData)
       this.putCellForcibly(i++, column, cell);
   }
-
+  
   @Override
   public void putCellForcibly(int row, int column, Number cell) {
     this.getTable()[row][column] = cell;
     this.getSignatureTable()[row][column] = CONTAINS_SIGNATURE;
   }
-
+  
   /**
    * セル更新メソッド
    * <p>
@@ -407,7 +407,7 @@ public class Matrix extends AbstractNumberTable {
   private void putCellForcibly(Triple<Integer, Integer, Number> point) {
     this.putCellForcibly(point.getLeft(), point.getMiddle(), point.getRight());
   }
-
+  
   /**
    * セル更新メソッド
    * <p>
@@ -420,7 +420,7 @@ public class Matrix extends AbstractNumberTable {
     for (Triple<Integer, Integer, Number> point : points)
       this.putCellForcibly(point);
   }
-
+  
   @Override
   public boolean putCell(int row, int column, Number cell) {
     final Number targetCell = this.getCell(row, column);
@@ -432,7 +432,7 @@ public class Matrix extends AbstractNumberTable {
       return false;
     }
   }
-
+  
   /**
    * セル更新メソッド
    * <p>
@@ -447,7 +447,7 @@ public class Matrix extends AbstractNumberTable {
   private boolean putCell(Triple<Integer, Integer, Number> point) {
     return this.putCell(point.getLeft(), point.getMiddle(), point.getRight());
   }
-
+  
   /**
    * セル更新メソッド
    * <p>
@@ -466,7 +466,7 @@ public class Matrix extends AbstractNumberTable {
     for (Triple<Integer, Integer, Number> point : points) {
       // insert logic
       status = this.putCell(point);
-
+      
       if (!status) {
         // rollback
         for (int i = 0; i < this.getRowSize(); i++) {
@@ -478,7 +478,7 @@ public class Matrix extends AbstractNumberTable {
     }
     return true;
   }
-
+  
   /**
    * 行合計
    *
@@ -491,7 +491,7 @@ public class Matrix extends AbstractNumberTable {
       table[i][0] = ary[i];
     return Matrix.of(table);
   }
-
+  
   /**
    * 行平均
    *
@@ -504,7 +504,7 @@ public class Matrix extends AbstractNumberTable {
       table[i][0] = ary[i];
     return Matrix.of(table);
   }
-
+  
   /**
    * 列合計
    *
@@ -516,7 +516,7 @@ public class Matrix extends AbstractNumberTable {
     System.arraycopy(ary, 0, table[0], 0, this.getColumnSize());
     return Matrix.of(table);
   }
-
+  
   /**
    * 列平均
    *

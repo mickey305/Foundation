@@ -5,7 +5,6 @@ import javax.annotation.Nullable;
 
 public interface ILockableCache<T extends LockType> {
   /**
-   *
    * @param key
    * @return
    */
@@ -13,7 +12,6 @@ public interface ILockableCache<T extends LockType> {
   ILockable<T> make(@Nonnull String key);
   
   /**
-   *
    * @param key
    * @return
    */
@@ -21,14 +19,12 @@ public interface ILockableCache<T extends LockType> {
   ILockable<T> getAndRemove(@Nonnull String key);
   
   /**
-   *
    * @param key
    * @return
    */
   boolean remove(@Nonnull String key);
   
   /**
-   *
    * @param key
    * @return
    */
@@ -36,34 +32,29 @@ public interface ILockableCache<T extends LockType> {
   ILockable<T> get(@Nonnull String key);
   
   /**
-   *
    * @return
    */
   @Nonnull
   ILockable<T> makeDefault();
   
   /**
-   *
    * @return
    */
   @Nullable
   ILockable<T> getAndRemoveDefault();
   
   /**
-   *
    * @return
    */
   boolean removeDefault();
   
   /**
-   *
    * @return
    */
   @Nullable
   ILockable<T> getDefault();
   
   /**
-   *
    * @return
    */
   int size();

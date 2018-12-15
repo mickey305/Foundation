@@ -99,7 +99,7 @@ public class SoftHashSetTest {
       Log.i("end: call size");
       Log.i("size time: " + (end - start) + "[ms]");
       sizeCache.add(end - start);
-  
+      
       Log.i("start: call allocatedSize");
       start = System.currentTimeMillis();
       for (long i = 0; i < count; i++) {
@@ -109,7 +109,7 @@ public class SoftHashSetTest {
       Log.i("end: call allocatedSize");
       Log.i("allocatedSize time: " + (end - start) + "[ms]");
       allocatedSizeCache.add(end - start);
-  
+      
       Log.i("start: call offsetSize");
       start = System.currentTimeMillis();
       for (long i = 0; i < count; i++) {
@@ -121,11 +121,20 @@ public class SoftHashSetTest {
       offsetSizeCache.add(end - start);
     }
     double sum;
-    sum = 0; for (Long t : sizeCache) { sum += t; }
+    sum = 0;
+    for (Long t : sizeCache) {
+      sum += t;
+    }
     Log.d("---> size time ave          : " + (sum / qty) + "[ms]");
-    sum = 0; for (Long t : allocatedSizeCache) { sum += t; }
+    sum = 0;
+    for (Long t : allocatedSizeCache) {
+      sum += t;
+    }
     Log.d("---> allocatedSize time ave : " + (sum / qty) + "[ms]");
-    sum = 0; for (Long t : offsetSizeCache) { sum += t; }
+    sum = 0;
+    for (Long t : offsetSizeCache) {
+      sum += t;
+    }
     Log.d("---> offsetSize time ave    : " + (sum / qty) + "[ms]");
     
   }
@@ -134,9 +143,9 @@ public class SoftHashSetTest {
   public void testCase_01_03() throws Exception {
     SoftHashSet<String> defaultCache;
     final long count = 1000;
-  
+    
     defaultCache = weakCache;
-  
+    
     for (long i = 0; i < count; i++) {
       createTestData(defaultCache);
       System.gc();
@@ -145,9 +154,9 @@ public class SoftHashSetTest {
       final int offsetSize = defaultCache.offsetSize();
       
       Assert.assertEquals(0, size);
-  
+      
       if (allocatedSize == 0 && size == 0 && offsetSize == 0) continue;
-  
+      
       Log.i("[" + String.format("%04d", i) + "] #allocatedSize() -> " + String.format("%03d", allocatedSize)
           + ", #size() -> " + String.format("%03d", size)
           + ", #offsetSize() -> " + String.format("%03d", offsetSize));

@@ -16,7 +16,6 @@ public class JapanesePicker {
   }
   
   /**
-   *
    * @param stmt
    * @return
    */

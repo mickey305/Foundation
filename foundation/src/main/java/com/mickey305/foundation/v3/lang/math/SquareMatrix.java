@@ -6,21 +6,21 @@ import org.apache.commons.math3.fraction.BigFraction;
 @Deprecated
 public class SquareMatrix extends Matrix {
   private static final long serialVersionUID = 1206582462762106739L;
-
+  
   protected SquareMatrix(int size) {
     super(size, size);
   }
-
+  
   protected SquareMatrix(Number[][] initialTable) {
     super(initialTable);
     if (!super.isSquare())
       throw new UnsupportedOperationException();
   }
-
+  
   protected SquareMatrix(SquareMatrix matrix) {
     super(matrix);
   }
-
+  
   /**
    * インスタンス生成メソッド
    *
@@ -30,7 +30,7 @@ public class SquareMatrix extends Matrix {
   public static SquareMatrix of(int size) {
     return new SquareMatrix(size);
   }
-
+  
   /**
    * インスタンス生成メソッド
    *
@@ -40,7 +40,7 @@ public class SquareMatrix extends Matrix {
   public static SquareMatrix of(Number[][] initialTable) {
     return new SquareMatrix(initialTable);
   }
-
+  
   /**
    * インスタンス生成メソッド
    *
@@ -50,7 +50,7 @@ public class SquareMatrix extends Matrix {
   public static SquareMatrix of(SquareMatrix matrix) {
     return new SquareMatrix(matrix);
   }
-
+  
   /**
    * べき乗処理
    *
@@ -61,10 +61,10 @@ public class SquareMatrix extends Matrix {
   public static SquareMatrix exp(SquareMatrix matrix, int index) {
     if (index == 0)
       return matrix.createIdentityMatrix();
-
+    
     return SquareMatrix.of(Matrix.exp(matrix, index).getTable());
   }
-
+  
   /**
    * 行列サイズ取得処理
    *
@@ -73,7 +73,7 @@ public class SquareMatrix extends Matrix {
   public int getSize() {
     return super.getRowSize();
   }
-
+  
   /**
    * 単位行列取得メソッド
    *
@@ -90,7 +90,7 @@ public class SquareMatrix extends Matrix {
     }
     return matrix;
   }
-
+  
   /**
    * 逆行列取得メソッド
    *
@@ -99,7 +99,7 @@ public class SquareMatrix extends Matrix {
   public SquareMatrix createInverseMatrix() {
     if (!this.isRegular())
       throw new UnsupportedOperationException();
-
+    
     final BigFraction bigFractionZero = BigFraction.ZERO;
     final BigFraction bigFractionOne = BigFraction.ONE;
     final BigFraction bigFractionMinusOne = BigFraction.MINUS_ONE;
@@ -107,7 +107,7 @@ public class SquareMatrix extends Matrix {
     for (int i = 0; i < em.getRowSize(); i++)
       for (int j = 0; j < em.getColumnSize(); j++)
         em.putCellForcibly(i, j, Operator.ADD.f.apply(bigFractionZero, em.getCell(i, j)));
-
+    
     // CELL(i,i) <==> NE ZERO transformation
     for (int i = 0; i < this.getRowSize(); i++) {
       if (RelationalOperator.EQ.f.apply(em.getCell(i, i), bigFractionZero)) {
@@ -120,7 +120,7 @@ public class SquareMatrix extends Matrix {
         }
       }
     }
-
+    
     // CELL(i,j), i != j <==> EQ ZERO transformation
     for (int j = 0; j < this.getColumnSize(); j++) {
       for (int i = 0; i < this.getRowSize(); i++) {
@@ -135,7 +135,7 @@ public class SquareMatrix extends Matrix {
             for (int l = 0; l < this.getColumnSize(); l++)
               if (RelationalOperator.EQ.f.apply(horizontal[l], bigFractionZero))
                 cntZero++;
-
+            
             if (i != k && RelationalOperator.NE.f.apply(vertical[k], bigFractionZero)) {
               if (max < cntZero) {
                 max = cntZero;
@@ -149,19 +149,19 @@ public class SquareMatrix extends Matrix {
         }
       }
     }
-
+    
     // CELL(i,i) <==> EQ ONE transformation
     for (int i = 0; i < this.getRowSize(); i++)
       if (RelationalOperator.NE.f.apply(em.getCell(i, i), bigFractionOne))
         em.multiRow(Operator.DIV.f.apply(bigFractionOne, em.getCell(i, i)), i);
-
+    
     final SquareMatrix result = SquareMatrix.of(this);
     for (int i = 0; i < result.getRowSize(); i++)
       for (int j = 0; j < result.getColumnSize(); j++)
         result.putCellForcibly(i, j, em.getCell(i, this.getColumnSize() + j));
     return result;
   }
-
+  
   /**
    * 正則行列判定メソッド
    *
@@ -170,7 +170,7 @@ public class SquareMatrix extends Matrix {
   public boolean isRegular() {
     return RelationalOperator.NE.f.apply(this.determinant(), 0);
   }
-
+  
   /**
    * 行列式取得メソッド
    *
@@ -182,11 +182,11 @@ public class SquareMatrix extends Matrix {
     for (int i = 0; i < rowIndexes.length; i++)
       rowIndexes[i] = i;
     final Permutation<Integer> rowPermutation = new Permutation<>(rowIndexes);
-
+    
     do {
       final SymmetricPermutationGroup permutationGroup = new SymmetricPermutationGroup(
           new Integer[][]{rowIndexes, rowPermutation.getElements()});
-
+      
       Number multiResult = 1;
       final int sgn = SymmetricPermutationGroup.sgn(permutationGroup);
       for (int j = 0; j < permutationGroup.getColumnSize(); j++) {
@@ -194,13 +194,13 @@ public class SquareMatrix extends Matrix {
         multiResult = Operator.MULTI.f.apply(data, multiResult);
       }
       multiResult = Operator.MULTI.f.apply(multiResult, sgn);
-
+      
       result = Operator.ADD.f.apply(multiResult, result);
     } while (rowPermutation.next());
-
+    
     return result;
   }
-
+  
   /**
    * トレース取得メソッド
    *
@@ -210,7 +210,7 @@ public class SquareMatrix extends Matrix {
     Number result = 0;
     for (int i = 0; i < this.getSize(); i++)
       result = Operator.ADD.f.apply(this.getCell(i, i), result);
-
+    
     return result;
   }
 }

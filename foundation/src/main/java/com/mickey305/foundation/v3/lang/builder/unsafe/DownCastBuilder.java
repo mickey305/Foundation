@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 public class DownCastBuilder {
-
+  
   /**
    * インスタンスの生成を試行する
    *
@@ -67,7 +67,7 @@ public class DownCastBuilder {
     }
     return targetInstance;
   }
-
+  
   /**
    * ダウンキャスト実装用のリフレクションメソッド
    *
@@ -81,7 +81,7 @@ public class DownCastBuilder {
     // ---> Input data check
     if (!srcInstance.getClass().isAssignableFrom(destClass) || srcInstance.getClass().equals(destClass))
       return null;
-
+    
     // ---> Dest-Instance creation
     D subInstance = createInstanceChallenge(destClass);
     // ---> Dest-Instance injection of Src fields
@@ -90,7 +90,7 @@ public class DownCastBuilder {
     }
     return subInstance;
   }
-
+  
   /**
    * ダウンキャスト実装用のリフレクションメソッド
    *

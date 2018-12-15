@@ -52,7 +52,6 @@ public class Log {
   }
   
   /**
-   *
    * @param msg
    */
   public synchronized static void d(@Nonnull String msg) {
@@ -111,11 +110,25 @@ public class Log {
   // object wrapper method
   //
   
-  public static void d(Object o)                      { Log.d(Objects.toString(o));      }
-  public static void d(StackTraceElement e, Object o) { Log.d(e, Objects.toString(o));   }
-  public static void i(Object o)                      { Log.i(Objects.toString(o));      }
-  public static void e(Object o)                      { Log.e(Objects.toString(o));      }
-  public static void update(Object o)                 { Log.update(Objects.toString(o)); }
+  public static void d(Object o) {
+    Log.d(Objects.toString(o));
+  }
+  
+  public static void d(StackTraceElement e, Object o) {
+    Log.d(e, Objects.toString(o));
+  }
+  
+  public static void i(Object o) {
+    Log.i(Objects.toString(o));
+  }
+  
+  public static void e(Object o) {
+    Log.e(Objects.toString(o));
+  }
+  
+  public static void update(Object o) {
+    Log.update(Objects.toString(o));
+  }
   
   /**
    * 改行する

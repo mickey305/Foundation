@@ -29,7 +29,7 @@ abstract class AbstractNumberTable implements Serializable {
   private final int columnSize;
   private final Number[][] table;
   private final int[][] signatureTable;
-
+  
   protected enum Operator {
     ADD(0x0101, OperationLogicHolder.ADD_DEFAULT_FUNC),
     SUB(0x0102, OperationLogicHolder.SUB_DEFAULT_FUNC),
@@ -37,18 +37,18 @@ abstract class AbstractNumberTable implements Serializable {
     DIV(0x0104, OperationLogicHolder.DIV_DEFAULT_FUNC),
     MAX(0x0F01, OperationLogicHolder.MAX_DEFAULT_FUNC),
     MIN(0x0F02, OperationLogicHolder.MIN_DEFAULT_FUNC);
-
+    
     Operator(int id, AbstractNumberOperation<Number> function) {
       this.id = id;
       this.f = function;
       this.ext = function;
     }
-
+    
     public final int id;
     public final BinaryFunction<Number, Number, Number> f;
     public final OperationExtensions<Number, Number, Number> ext;
   }
-
+  
   protected enum RelationalOperator {
     EQ(0x0101, OperationLogicHolder.EQ_DEFAULT_FUNC),
     NE(0x0102, OperationLogicHolder.NE_DEFAULT_FUNC),
@@ -56,18 +56,18 @@ abstract class AbstractNumberTable implements Serializable {
     LE(0x0104, OperationLogicHolder.LE_DEFAULT_FUNC),
     GT(0x0105, OperationLogicHolder.GT_DEFAULT_FUNC),
     GE(0x0106, OperationLogicHolder.GE_DEFAULT_FUNC);
-
+    
     RelationalOperator(int id, AbstractNumberOperation<Boolean> function) {
       this.id = id;
       this.f = function;
       this.callbacks = function;
     }
-
+    
     public final int id;
     public final BinaryFunction<Number, Number, Boolean> f;
     public final OperationExtensions<Number, Number, Boolean> callbacks;
   }
-
+  
   protected AbstractNumberTable(int row, int column) {
     // argument data check
     this.checkArgument(row, column);
@@ -78,7 +78,7 @@ abstract class AbstractNumberTable implements Serializable {
     this.columnSize = column;
     AbstractNumberTable.putSameValueTable(NULL_SIGNATURE, this.signatureTable);
   }
-
+  
   protected AbstractNumberTable(Number[][] initialTable) {
     this(initialTable.length, (initialTable.length != 0)
         ? initialTable[0].length
@@ -91,15 +91,15 @@ abstract class AbstractNumberTable implements Serializable {
     }
     AbstractNumberTable.putSameValueTable(CONTAINS_SIGNATURE, this.signatureTable);
   }
-
+  
   protected AbstractNumberTable(AbstractNumberTable table) {
     this(table.getTable());
   }
-
+  
   protected AbstractNumberTable(Number scalar) {
     this(new Number[][]{{scalar}});
   }
-
+  
   /**
    * 引数チェックメソッド
    * <p>
@@ -113,7 +113,7 @@ abstract class AbstractNumberTable implements Serializable {
     if (row <= 0 || column <= 0)
       throw new IllegalArgumentException();
   }
-
+  
   /**
    * テーブル初期化メソッド
    * <p>
@@ -130,7 +130,7 @@ abstract class AbstractNumberTable implements Serializable {
         dest[i][j] = data;
     return dest;
   }
-
+  
   /**
    * elementary transformation method - 1 (row method - 1)
    *
@@ -142,7 +142,7 @@ abstract class AbstractNumberTable implements Serializable {
     this.putRowForcibly(row1, this.getRow(row2));
     this.putRowForcibly(row2, tmpRec);
   }
-
+  
   /**
    * elementary transformation method - 2 (column method - 1)
    *
@@ -154,7 +154,7 @@ abstract class AbstractNumberTable implements Serializable {
     this.putColumnForcibly(column1, this.getColumn(column2));
     this.putColumnForcibly(column2, tmpRec);
   }
-
+  
   /**
    * 行更新メソッド
    * <p>
@@ -167,12 +167,12 @@ abstract class AbstractNumberTable implements Serializable {
   protected void putRowForcibly(int row, Number[] rowData) {
     if (rowData.length != this.getRowSize())
       throw new IllegalArgumentException();
-
+    
     int i = 0;
     for (Number cell : rowData)
       this.putCellForcibly(row, i++, cell);
   }
-
+  
   /**
    * 列更新メソッド
    * <p>
@@ -185,12 +185,12 @@ abstract class AbstractNumberTable implements Serializable {
   protected void putColumnForcibly(int column, Number[] columnData) {
     if (columnData.length != this.getColumnSize())
       throw new IllegalArgumentException();
-
+    
     int i = 0;
     for (Number cell : columnData)
       this.putCellForcibly(i++, column, cell);
   }
-
+  
   /**
    * セル更新メソッド
    * <p>
@@ -205,7 +205,7 @@ abstract class AbstractNumberTable implements Serializable {
     this.table[row][column] = cell;
     this.signatureTable[row][column] = CONTAINS_SIGNATURE;
   }
-
+  
   /**
    * セル更新メソッド
    * <p>
@@ -229,7 +229,7 @@ abstract class AbstractNumberTable implements Serializable {
       return false;
     }
   }
-
+  
   /**
    * スカラー取得メソッド
    *
@@ -239,10 +239,10 @@ abstract class AbstractNumberTable implements Serializable {
   public Number getScalarOrElse(Number defaultScalar) {
     if (!this.isScalar())
       return defaultScalar;
-
+    
     return this.getCell(0, 0);
   }
-
+  
   /**
    * セル取得メソッド
    *
@@ -253,7 +253,7 @@ abstract class AbstractNumberTable implements Serializable {
   public Number getCell(int row, int column) {
     return this.getTable()[row][column];
   }
-
+  
   /**
    * セル最大値・取得メソッド
    *
@@ -270,7 +270,7 @@ abstract class AbstractNumberTable implements Serializable {
     }
     return max;
   }
-
+  
   /**
    * セル最小値・取得メソッド
    *
@@ -287,7 +287,7 @@ abstract class AbstractNumberTable implements Serializable {
     }
     return min;
   }
-
+  
   /**
    * 最大値セルカウンター
    *
@@ -296,7 +296,7 @@ abstract class AbstractNumberTable implements Serializable {
   public int countMaxCell() {
     return this.countCellOf(this.getMaxCell());
   }
-
+  
   /**
    * 最小値セルカウンター
    *
@@ -305,7 +305,7 @@ abstract class AbstractNumberTable implements Serializable {
   public int countMinCell() {
     return this.countCellOf(this.getMinCell());
   }
-
+  
   /**
    * セルカウンター
    *
@@ -320,7 +320,7 @@ abstract class AbstractNumberTable implements Serializable {
       }
     });
   }
-
+  
   /**
    * セルカウンター
    *
@@ -339,7 +339,7 @@ abstract class AbstractNumberTable implements Serializable {
     }
     return count;
   }
-
+  
   /**
    * 行データ取得メソッド
    *
@@ -349,7 +349,7 @@ abstract class AbstractNumberTable implements Serializable {
   public Number[] getRecord(int row) {
     return this.getRow(row);
   }
-
+  
   /**
    * 行データ取得メソッド
    *
@@ -359,7 +359,7 @@ abstract class AbstractNumberTable implements Serializable {
   public Number[] getRow(int row) {
     return this.getTable()[row];
   }
-
+  
   /**
    * 列データ取得メソッド
    *
@@ -372,7 +372,7 @@ abstract class AbstractNumberTable implements Serializable {
       ary[i] = this.getTable()[i][column];
     return ary;
   }
-
+  
   /**
    * 入力数値クラス取得メソッド
    *
@@ -382,7 +382,7 @@ abstract class AbstractNumberTable implements Serializable {
     final Number elm = this.getCell(0, 0);
     return elm.getClass();
   }
-
+  
   /**
    * 行合計
    *
@@ -396,7 +396,7 @@ abstract class AbstractNumberTable implements Serializable {
       sum = Operator.ADD.f.apply(cell, sum);
     return sum;
   }
-
+  
   /**
    * 行合計
    *
@@ -408,7 +408,7 @@ abstract class AbstractNumberTable implements Serializable {
       ary[i] = this.sumOfRow(i);
     return ary;
   }
-
+  
   /**
    * 行平均
    *
@@ -419,7 +419,7 @@ abstract class AbstractNumberTable implements Serializable {
     Number sum = this.sumOfRow(row);
     return Operator.DIV.f.apply(sum, this.getColumnSize());
   }
-
+  
   /**
    * 行平均
    *
@@ -431,7 +431,7 @@ abstract class AbstractNumberTable implements Serializable {
       ary[i] = this.averageOfRow(i);
     return ary;
   }
-
+  
   /**
    * 列合計
    *
@@ -445,7 +445,7 @@ abstract class AbstractNumberTable implements Serializable {
       sum = Operator.ADD.f.apply(cell, sum);
     return sum;
   }
-
+  
   /**
    * 列合計
    *
@@ -457,7 +457,7 @@ abstract class AbstractNumberTable implements Serializable {
       ary[i] = this.sumOfColumn(i);
     return ary;
   }
-
+  
   /**
    * 列平均
    *
@@ -468,7 +468,7 @@ abstract class AbstractNumberTable implements Serializable {
     Number sum = this.sumOfColumn(column);
     return Operator.DIV.f.apply(sum, this.getRowSize());
   }
-
+  
   /**
    * 列平均
    *
@@ -480,7 +480,7 @@ abstract class AbstractNumberTable implements Serializable {
       ary[i] = this.averageOfColumn(i);
     return ary;
   }
-
+  
   /**
    * 正方テーブル判定
    *
@@ -489,7 +489,7 @@ abstract class AbstractNumberTable implements Serializable {
   public boolean isSquare() {
     return this.getRowSize() == this.getColumnSize();
   }
-
+  
   /**
    * スカラー判定
    *
@@ -498,23 +498,23 @@ abstract class AbstractNumberTable implements Serializable {
   public boolean isScalar() {
     return this.getRowSize() * this.getColumnSize() == 1;
   }
-
+  
   public Number[][] getTable() {
     return table;
   }
-
+  
   protected int[][] getSignatureTable() {
     return signatureTable;
   }
-
+  
   public int getRowSize() {
     return rowSize;
   }
-
+  
   public int getColumnSize() {
     return columnSize;
   }
-
+  
   private static final class OperationLogicHolder {
     private static final AbstractNumberOperation<Number> ADD_DEFAULT_FUNC = new NumberOperationAdd();
     private static final AbstractNumberOperation<Number> SUB_DEFAULT_FUNC = new NumberOperationSub();

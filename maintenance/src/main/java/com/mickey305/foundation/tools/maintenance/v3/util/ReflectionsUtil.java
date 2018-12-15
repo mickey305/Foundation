@@ -34,7 +34,6 @@ public class ReflectionsUtil {
   }
   
   /**
-   *
    * @return
    */
   public Function<String, Set<Class<?>>> classSearcher() {
@@ -46,7 +45,6 @@ public class ReflectionsUtil {
   }
   
   /**
-   *
    * @param urls
    * @return
    */

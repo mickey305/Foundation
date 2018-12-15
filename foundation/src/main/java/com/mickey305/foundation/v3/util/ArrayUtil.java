@@ -6,7 +6,6 @@ public class ArrayUtil {
   }
   
   /**
-   *
    * @param table
    * @param element
    * @param <E>
@@ -22,7 +21,6 @@ public class ArrayUtil {
   }
   
   /**
-   *
    * @param array
    * @param element
    * @param <E>

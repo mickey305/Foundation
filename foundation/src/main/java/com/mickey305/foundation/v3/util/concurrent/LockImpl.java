@@ -25,7 +25,6 @@ class LockImpl<T extends LockType> implements ILockable<T> {
   }
   
   /**
-   *
    * @param lockType
    * @return
    */

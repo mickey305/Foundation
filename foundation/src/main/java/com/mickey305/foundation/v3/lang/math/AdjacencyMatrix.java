@@ -5,19 +5,19 @@ import java.util.Arrays;
 @Deprecated
 public class AdjacencyMatrix extends SquareMatrix {
   private static final long serialVersionUID = -8268567830873490892L;
-
+  
   protected AdjacencyMatrix(int size) {
     super(size);
   }
-
+  
   protected AdjacencyMatrix(Number[][] initialTable) {
     super(initialTable);
   }
-
+  
   protected AdjacencyMatrix(AdjacencyMatrix matrix) {
     super(matrix);
   }
-
+  
   /**
    * インスタンス生成メソッド
    *
@@ -27,7 +27,7 @@ public class AdjacencyMatrix extends SquareMatrix {
   public static AdjacencyMatrix of(int size) {
     return new AdjacencyMatrix(size);
   }
-
+  
   /**
    * インスタンス生成メソッド
    *
@@ -37,7 +37,7 @@ public class AdjacencyMatrix extends SquareMatrix {
   public static AdjacencyMatrix of(Number[][] initialTable) {
     return new AdjacencyMatrix(initialTable);
   }
-
+  
   /**
    * インスタンス生成メソッド
    *
@@ -57,7 +57,7 @@ public class AdjacencyMatrix extends SquareMatrix {
 //    public static boolean isTree(AdjacencyMatrix matrix) {
 //        return false;
 //    }
-
+  
   /**
    * 有向グラフ判定メソッド
    *
@@ -68,7 +68,7 @@ public class AdjacencyMatrix extends SquareMatrix {
     for (int i = 0; i < matrix.getSize(); i++)
       if (!Arrays.equals(matrix.getRow(i), matrix.getColumn(i)))
         return false;
-
+    
     return true;
   }
 }

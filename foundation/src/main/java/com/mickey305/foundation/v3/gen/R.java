@@ -3,6 +3,7 @@ package com.mickey305.foundation.v3.gen;
 import com.mickey305.foundation.EnvConfigConst;
 import com.mickey305.foundation.v3.util.Log;
 import com.mickey305.foundation.v3.util.collections.SoftHashSet;
+
 import java.lang.Class;
 import java.lang.Double;
 import java.lang.System;
@@ -14,19 +15,19 @@ import java.util.Set;
  */
 public final class R {
   private static final double JRE = (Double.parseDouble(System.getProperty("java.specification.version")));
-
+  
   private static final Set<Class<?>> cache;
-
+  
   private static int cacheSize = 0;
-
+  
   static {
     cache = new SoftHashSet<>();
   }
-
+  
   private R() {
     // This class is static view only class.
   }
-
+  
   public static Set<Class<?>> knownImmutableClasses() {
     assert cache != null;
     if (cacheSize == 0 || cacheSize > (cache.size() * 3.0)) {
@@ -43,7 +44,7 @@ public final class R {
     }
     return Collections.unmodifiableSet(cache);
   }
-
+  
   private static void buildImmutableClassesSE10() {
     try {
       cache.add(Class.forName("com.mickey305.foundation.v3.ansi.code.EscapeRejectValidator"));
@@ -1112,7 +1113,7 @@ public final class R {
     }
     cacheSize = cache.size();
   }
-
+  
   private static void buildImmutableClassesSE8() {
     try {
       cache.add(Class.forName("com.mickey305.foundation.v3.ansi.code.EscapeRejectValidator"));
@@ -1988,7 +1989,7 @@ public final class R {
     }
     cacheSize = cache.size();
   }
-
+  
   private static void buildImmutableClassesSE7() {
     try {
       cache.add(Class.forName("com.mickey305.foundation.v3.ansi.code.EscapeRejectValidator"));

@@ -50,7 +50,6 @@ public abstract class AbstractReferenceSet<E, M extends Map<E, Object>> extends 
   }
   
   /**
-   *
    * @return
    */
   protected int offsetSize() {
@@ -58,7 +57,6 @@ public abstract class AbstractReferenceSet<E, M extends Map<E, Object>> extends 
   }
   
   /**
-   *
    * @return
    */
   protected boolean isFrag() {
@@ -66,7 +64,6 @@ public abstract class AbstractReferenceSet<E, M extends Map<E, Object>> extends 
   }
   
   /**
-   *
    * @return
    */
   protected int allocatedSize() {
@@ -74,7 +71,6 @@ public abstract class AbstractReferenceSet<E, M extends Map<E, Object>> extends 
   }
   
   /**
-   *
    * @return
    */
   protected boolean isAllocatedEmpty() {

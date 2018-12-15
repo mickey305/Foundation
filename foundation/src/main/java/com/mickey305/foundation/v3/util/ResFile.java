@@ -13,7 +13,6 @@ public class ResFile {
   }
   
   /**
-   *
    * @param path
    * @return
    */

@@ -9,7 +9,7 @@ import java.util.Map;
 public class EasilyAccessibleContainer extends EasilyContainer {
   private Map<Class<?>, Field[]> fieldMap;
   private Object targetInstance;
-
+  
   //===----------------------------------------------------------------------------------------------------------===//
   // Constructor                                                                                                    //
   //===----------------------------------------------------------------------------------------------------------===//
@@ -20,14 +20,14 @@ public class EasilyAccessibleContainer extends EasilyContainer {
     for (Class<?> targetClass : ClassCollections.untilAdam(targetInstance.getClass()))
       this.getFieldMap().put(targetClass, targetClass.getDeclaredFields());
   }
-
+  
   //===----------------------------------------------------------------------------------------------------------===//
   // Methods                                                                                                        //
   //===----------------------------------------------------------------------------------------------------------===//
   public static EasilyAccessibleContainer of(Object targetInstance) {
     return new EasilyAccessibleContainer(targetInstance);
   }
-
+  
   /**
    * フィールド更新用パイプメソッド
    * <p>引数で与えられたクラスに更新対象のフィールドが存在しない場合、何も処理をしない</p>
@@ -51,22 +51,22 @@ public class EasilyAccessibleContainer extends EasilyContainer {
       }
     }
   }
-
+  
   //===----------------------------------------------------------------------------------------------------------===//
   // Accessor                                                                                                       //
   //===----------------------------------------------------------------------------------------------------------===//
   private Map<Class<?>, Field[]> getFieldMap() {
     return fieldMap;
   }
-
+  
   private void setFieldMap(Map<Class<?>, Field[]> fieldMap) {
     this.fieldMap = fieldMap;
   }
-
+  
   private Object getTargetInstance() {
     return targetInstance;
   }
-
+  
   private void setTargetInstance(Object targetInstance) {
     this.targetInstance = targetInstance;
   }

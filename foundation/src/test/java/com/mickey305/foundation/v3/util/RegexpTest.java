@@ -17,6 +17,7 @@ public class RegexpTest {
   
   /**
    * test target: {@link Regexp#HALF_KANA}
+   *
    * @throws Exception
    */
   @Test
@@ -31,7 +32,7 @@ public class RegexpTest {
     Assert.assertTrue(result);
     result = Regexp.pattern(Regexp.HALF_KANA, Regexp.CompileType.Plain).matcher(stmt).matches();
     Assert.assertTrue(result);
-  
+    
     stmt = "ﾃｽﾄﾃﾞｰﾀ";
     result = Regexp.pattern(Regexp.HALF_KANA, Regexp.CompileType.Exact).matcher(stmt).matches();
     Assert.assertTrue(result);
@@ -47,7 +48,7 @@ public class RegexpTest {
     Assert.assertTrue(result);
     result = Regexp.pattern(Regexp.HALF_KANA, Regexp.CompileType.Plain).matcher(stmt).matches();
     Assert.assertTrue(!result);
-  
+    
     stmt = "ﾃｽﾄあﾃﾞｰﾀ";
     result = Regexp.pattern(Regexp.HALF_KANA, Regexp.CompileType.Exact).matcher(stmt).matches();
     Assert.assertTrue(!result);
@@ -55,7 +56,7 @@ public class RegexpTest {
     Assert.assertTrue(result);
     result = Regexp.pattern(Regexp.HALF_KANA, Regexp.CompileType.Plain).matcher(stmt).matches();
     Assert.assertTrue(!result);
-  
+    
     stmt = "ﾃｽﾄ　ﾃﾞｰﾀ";
     result = Regexp.pattern(Regexp.HALF_KANA, Regexp.CompileType.Exact).matcher(stmt).matches();
     Assert.assertTrue(!result);
@@ -79,7 +80,7 @@ public class RegexpTest {
     Assert.assertTrue(result);
     result = Regexp.pattern(Regexp.HALF_KANA, Regexp.CompileType.Plain).matcher(stmt).matches();
     Assert.assertTrue(!result);
-  
+    
     stmt = " ﾃｽﾄﾃﾞｰﾀ";
     result = Regexp.pattern(Regexp.HALF_KANA, Regexp.CompileType.Exact).matcher(stmt).matches();
     Assert.assertTrue(!result);
@@ -87,7 +88,7 @@ public class RegexpTest {
     Assert.assertTrue(result);
     result = Regexp.pattern(Regexp.HALF_KANA, Regexp.CompileType.Plain).matcher(stmt).matches();
     Assert.assertTrue(!result);
-  
+    
     stmt = "ﾃｽﾄﾃﾞｰﾀ ";
     result = Regexp.pattern(Regexp.HALF_KANA, Regexp.CompileType.Exact).matcher(stmt).matches();
     Assert.assertTrue(!result);
@@ -103,7 +104,7 @@ public class RegexpTest {
     Assert.assertTrue(result);
     result = Regexp.pattern(Regexp.HALF_KANA, Regexp.CompileType.Plain).matcher(stmt).matches();
     Assert.assertTrue(!result);
-  
+    
     stmt = "ﾃｽﾄﾃﾞｰﾀ　";
     result = Regexp.pattern(Regexp.HALF_KANA, Regexp.CompileType.Exact).matcher(stmt).matches();
     Assert.assertTrue(!result);
@@ -111,7 +112,7 @@ public class RegexpTest {
     Assert.assertTrue(result);
     result = Regexp.pattern(Regexp.HALF_KANA, Regexp.CompileType.Plain).matcher(stmt).matches();
     Assert.assertTrue(!result);
-  
+    
     stmt = "テストデータ";
     result = Regexp.pattern(Regexp.HALF_KANA, Regexp.CompileType.Exact).matcher(stmt).matches();
     Assert.assertTrue(!result);
@@ -119,7 +120,7 @@ public class RegexpTest {
     Assert.assertTrue(!result);
     result = Regexp.pattern(Regexp.HALF_KANA, Regexp.CompileType.Plain).matcher(stmt).matches();
     Assert.assertTrue(!result);
-  
+    
     stmt = "";
     result = Regexp.pattern(Regexp.HALF_KANA, Regexp.CompileType.Exact).matcher(stmt).matches();
     Assert.assertTrue(!result);
@@ -143,7 +144,7 @@ public class RegexpTest {
     Assert.assertTrue(!result);
     result = Regexp.pattern(Regexp.HALF_KANA, Regexp.CompileType.Plain).matcher(stmt).matches();
     Assert.assertTrue(!result);
-  
+    
   }
   
 }

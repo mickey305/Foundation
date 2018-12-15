@@ -104,7 +104,6 @@ final class Workflow {
   }
   
   /**
-   *
    * @throws NoSuchMethodException
    * @throws IOException
    */
@@ -147,7 +146,7 @@ final class Workflow {
         .returns(setOfClass)
         .addStatement("assert " + cacheName + " != null")
         .beginControlFlow("if (" + cacheSizeName + " == 0"
-            + " || " + cacheSizeName+ " > (" + cacheName + ".size() * 3.0))")
+            + " || " + cacheSizeName + " > (" + cacheName + ".size() * 3.0))")
         .addComment("data SIZE-ZERO(Initial) or less than 1/3 of original collection size")
         .beginControlFlow("synchronized (" + cacheName + ")")
         .addStatement("if ($T.IS_DEBUG_MODE) $T.d(\"build start\")", EnvConfigConst.class, Log.class)
@@ -242,7 +241,6 @@ final class Workflow {
   }
   
   /**
-   *
    * @param prefixes
    * @return
    */

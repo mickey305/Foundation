@@ -209,7 +209,7 @@ public final class AnsiStringBuilder extends AbstractAnsiStringBuilder
 //                ? ""
 //                : Escape.Reset.code();
 //        return this.getStringBuilder().toString() + accent;
-  
+
   }
   
   public String toString(Without without) {

@@ -27,7 +27,6 @@ public class LightCsvUtil {
   }
   
   /**
-   *
    * @param csv
    */
   public static void split(@Nonnull LightCsvDto csv) {
@@ -54,14 +53,13 @@ public class LightCsvUtil {
       String col = StringUtil.trim(tmpElement);
       col = ESCAPED_ELEMENT_PATTERN.matcher(col).replaceAll("");
       col = INLINE_ESCAPED_ELEMENT_PATTERN.matcher(col).replaceAll(LightCsvDto.ESCAPE_CHAR.toString());
-    
+      
       elements.add(col);
     }
     csv.setElements(elements);
   }
   
   /**
-   *
    * @param csv
    */
   public static void join(@Nonnull LightCsvDto csv) {
