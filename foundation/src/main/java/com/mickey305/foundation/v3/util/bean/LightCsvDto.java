@@ -2,6 +2,9 @@ package com.mickey305.foundation.v3.util.bean;
 
 import java.util.List;
 
+/**
+ * CSV変換前後の情報を格納するDTO
+ */
 public class LightCsvDto {
   public static final Character DLM = ',';
   public static final Character ESCAPE_CHAR = '"';

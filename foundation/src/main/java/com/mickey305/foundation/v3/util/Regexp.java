@@ -3,12 +3,16 @@ package com.mickey305.foundation.v3.util;
 import javax.annotation.Nonnull;
 import java.util.regex.Pattern;
 
+import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;
+
 public class Regexp {
   
   /*
-   * standard regex solution
+   *-------------------------------------------------------------------------------------------------------------
+   * standard regex solution definition area
    *
    *
+   *-------------------------------------------------------------------------------------------------------------
    */
   
   /**
@@ -143,9 +147,11 @@ public class Regexp {
   
   
   /*
-   * extension regex solution
+   *-------------------------------------------------------------------------------------------------------------
+   * extension regex solution definition area
    *
    *
+   *-------------------------------------------------------------------------------------------------------------
    */
   
   /**
@@ -208,25 +214,64 @@ public class Regexp {
   }
   
   /**
-   * @param regexp
-   * @param compileType
-   * @return
+   * 入力された正規表現の情報をもとに、コンパイルタスクを実行する
+   * @param regexp 正規表現
+   * @param compileType 正規表現のパターン
+   * @return パターンオブジェクト
    */
   public static Pattern pattern(@Nonnull String regexp, @Nonnull CompileType compileType) {
+    // 初期値のマスク情報:0で正規表現をビルドする
+    /**
+     * mask info
+     * {@link Pattern#CASE_INSENSITIVE}, {@link Pattern#MULTILINE}, {@link Pattern#DOTALL},
+     * {@link Pattern#UNICODE_CASE}, {@link Pattern#CANON_EQ}, {@link Pattern#UNIX_LINES},
+     * {@link Pattern#LITERAL}, {@link Pattern#UNICODE_CHARACTER_CLASS}
+     * and {@link Pattern#COMMENTS}
+     */
+    final int flags = 0;
+    
+    // edit regexp
     regexp = wrap(regexp, compileType);
-    return Pattern.compile(regexp);
+    
+    if (IS_DEBUG_MODE) Log.d("compile target data pattern ‴" + regexp + "‴");
+    
+    // compile
+    return Pattern.compile(regexp, flags);
   }
   
   /**
-   * @param regexp
-   * @param compileType
-   * @return
+   * 入力された正規表現の情報をもとに、正規表現パターンを適用した正規表現文字列を返却する
+   * @param regexp 正規表現
+   * @param compileType 正規表現のパターン
+   * @return 正規表現（パターン適用済）
    */
   public static String wrap(@Nonnull String regexp, @Nonnull CompileType compileType) {
     if (compileType == CompileType.Exact) regexp = "^" + regexp + "$";
     if (compileType == CompileType.Partial) regexp = "^.*" + regexp + ".*$";
     if (compileType == CompileType.Plain) regexp = "" + regexp + "";
     return regexp;
+  }
+  
+  /**
+   * 入力された正規表現の情報をもとに、コンパイルタスクを実行する
+   * <p>
+   * このメソッドで適用される正規表現パターンは、{@link CompileType#Exact}です</p>
+   * @param regexp 正規表現
+   * @return パターンオブジェクト
+   */
+  public static Pattern patternDefault(@Nonnull String regexp) {
+    return pattern(regexp, CompileType.Exact);
+  }
+  
+  /**
+   * 入力された正規表現の情報をもとに、正規表現パターンを適用した正規表現文字列を返却する
+   * <p>
+   * このメソッドで適用される正規表現パターンは、{@link CompileType#Exact}です</p>
+   * @param regexp 正規表現
+   * @return 正規表現（パターン適用済）
+   */
+  public static String wrapDefault(@Nonnull String regexp) {
+    return wrap(regexp, CompileType.Exact);
   }
   
   /**

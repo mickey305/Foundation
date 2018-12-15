@@ -16,17 +16,20 @@ public class JapanesePicker {
   }
   
   /**
-   * @param stmt
-   * @return
+   * 入力された文字列の日本語抽出マッチャを生成する
+   * @param stmt 日本語抽出対象の文字列
+   * @return 日本語抽出マッチャ
    */
   public Matcher build(String stmt) {
     Matcher matcher;
     if (extensionRhsPattern == null || extensionLhsPattern == null || extensionInlinePattern == null) {
+      // 拡張正規表現が設定されていない場合
       matcher = Regexp.pattern(
           JP_SEED_BINARY_PATTERN,
           Regexp.CompileType.Plain).matcher(stmt);
       
     } else {
+      // 拡張正規表現が設定されている場合
       matcher = Regexp.pattern(
           extensionLhsPattern
               + "(" + JP_SEED_BINARY_PATTERN + "(" + extensionInlinePattern + JP_SEED_BINARY_PATTERN + ")*)+"

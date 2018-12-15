@@ -13,8 +13,9 @@ public class StringUtil {
   }
   
   /**
-   * @param path
-   * @return
+   * 入力パス情報をファイルシステム区切り文字で分解し、結果を配列で返却する
+   * @param path パス文字列
+   * @return パス情報
    */
   @Nonnull
   public static String[] separateWithPath(@Nonnull String path) {
@@ -22,8 +23,9 @@ public class StringUtil {
   }
   
   /**
-   * @param value
-   * @return
+   * 全角・半角スペースを入力文字列から除去した文字列を返却する
+   * @param value 入力文字列
+   * @return 出力文字列
    */
   public static String trim(String value) {
     if (value == null || value.length() == 0) {

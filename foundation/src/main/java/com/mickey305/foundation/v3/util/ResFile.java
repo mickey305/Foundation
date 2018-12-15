@@ -20,7 +20,8 @@ public class ResFile {
     final URL url = ResFile.class.getClassLoader().getResource(path);
     
     Objects.requireNonNull(url);
-    
+  
+    // URLからファイルオブジェクトを生成し、ファイルかどうかを確認後、読み取り専用にする
     final File resFile = new File(url.getPath());
     boolean isFile = resFile.isFile();
     boolean readOnly = resFile.setReadOnly();

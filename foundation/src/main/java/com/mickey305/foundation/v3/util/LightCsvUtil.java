@@ -27,7 +27,8 @@ public class LightCsvUtil {
   }
   
   /**
-   * @param csv
+   * CSVのDTO格納情報をもとに、パース処理を実行する
+   * @param csv CSVのDTO
    */
   public static void split(@Nonnull LightCsvDto csv) {
     // empty logic
@@ -60,7 +61,8 @@ public class LightCsvUtil {
   }
   
   /**
-   * @param csv
+   * CSVのDTO格納情報をもとに、CSV作成処理を実行する
+   * @param csv CSVのDTO
    */
   public static void join(@Nonnull LightCsvDto csv) {
     // empty logic
