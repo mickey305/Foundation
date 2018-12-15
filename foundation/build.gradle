@@ -3,6 +3,7 @@ version '0.6.0'
 
 apply plugin: 'java'
 apply plugin: 'maven'
+apply plugin: 'jacoco'
 apply plugin: 'com.novoda.bintray-release'
 
 def defaultEncoding = 'UTF-8'
@@ -21,6 +22,14 @@ javadoc {
     options.charSet = defaultEncoding
     options.encoding = defaultEncoding
     options.addBooleanOption('html5', true)
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        csv.enabled false
+        html.enabled true
+    }
 }
 
 publish {
