@@ -24,9 +24,12 @@ public class JapanesePickerTest {
     File testFile;
     Matcher matcher;
     
+    /*/
     testFile = ResFile.get("JapanesePickerTestData001.html");
-//    inputData = FileUtil.readSmallFileData(testFile);
+    inputData = FileUtil.readSmallFileData(testFile);
+    //*/
     inputData = "<テスト>林檎　アップル Apple　ｱｯﾌﾟﾙ</テスト><TEST>林檎　アップル Apple　ｱｯﾌﾟﾙ</TEST>";
+    //*/
     
     matcher = JapanesePickerFactory.createPlain().build(inputData);
     Log.d("plain analyzer check");
