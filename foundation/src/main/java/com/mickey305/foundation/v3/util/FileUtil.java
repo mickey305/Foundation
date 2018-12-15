@@ -1,7 +1,10 @@
 package com.mickey305.foundation.v3.util;
 
 import javax.annotation.Nonnull;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -43,5 +46,27 @@ public class FileUtil {
     }
     
     return files;
+  }
+  
+  /**
+   *
+   * @param file
+   * @return
+   */
+  public static String readSmallFileData(@Nonnull File file) {
+    StringBuilder sb = new StringBuilder();
+    
+    try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+      String string = reader.readLine();
+      while (string != null){
+        sb.append(string).append(System.lineSeparator());
+        string = reader.readLine();
+      }
+    } catch (IOException e) {
+      Log.e(e.getMessage());
+      throw new RuntimeException(e);
+    }
+  
+    return sb.toString();
   }
 }
