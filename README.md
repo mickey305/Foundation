@@ -27,6 +27,8 @@ The following table shows status of external CI service.
 ![Library Version](https://img.shields.io/badge/Foundation%20library-v0.6.0-green.svg?style=flat)
 ![Java Version](https://img.shields.io/badge/JDK-1.7-yellowgreen.svg?style=flat)
 [![Apache License](http://img.shields.io/badge/license-Apache2.0-blue.svg?style=flat)](LICENSE)
+[![Maintainability](https://api.codeclimate.com/v1/badges/97b4705656277130b8f3/maintainability)](https://codeclimate.com/github/mickey305/Foundation/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/97b4705656277130b8f3/test_coverage)](https://codeclimate.com/github/mickey305/Foundation/test_coverage)
 
 - [x] source compatibility `java7`
 - [x] easily usable
