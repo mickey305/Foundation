@@ -10,6 +10,12 @@ before_install:
  - chmod +x ./.travis.openjdk11-install.sh
  - chmod +x ./.travis.oraclejdk10-install.sh
  - chmod +x ./.travis.oraclejdk11-install.sh
+before_script:
+ - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+ - chmod +x ./cc-test-reporter
+ - ./cc-test-reporter before-build
+after_script:
+ - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 branches:
   only:
     - master
@@ -17,6 +23,7 @@ branches:
 env:
   global:
     - TRAVIS_ENV=true
+    - CC_TEST_REPORTER_ID=74d896271eff9cb06c082ae893e2607c644abe5671ed1650b553cb675853151a
 jdk:
   - openjdk8
   - oraclejdk8
