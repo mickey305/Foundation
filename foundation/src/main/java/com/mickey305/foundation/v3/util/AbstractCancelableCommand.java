@@ -21,9 +21,15 @@ public abstract class AbstractCancelableCommand<R> implements Executable<R>, Can
     return this.cancel();
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public abstract R execute();
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public abstract R cancel();
   

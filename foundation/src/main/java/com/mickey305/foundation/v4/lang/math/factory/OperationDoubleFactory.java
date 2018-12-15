@@ -16,9 +16,15 @@ public class OperationDoubleFactory extends AbstractOperationFactory<Double> {
     return OperationDoubleFactoryHolder.Instance;
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Double, Double> add() {
     return new AbstractNumberOperation<Double, Double>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Double operationDefault(Double l, Double r) {
         return l + r;
@@ -26,9 +32,15 @@ public class OperationDoubleFactory extends AbstractOperationFactory<Double> {
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Double, Double> sub() {
     return new AbstractNumberOperation<Double, Double>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Double operationDefault(Double l, Double r) {
         return l - r;
@@ -36,9 +48,15 @@ public class OperationDoubleFactory extends AbstractOperationFactory<Double> {
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Double, Double> multi() {
     return new AbstractNumberOperation<Double, Double>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Double operationDefault(Double l, Double r) {
         return l * r;
@@ -46,9 +64,15 @@ public class OperationDoubleFactory extends AbstractOperationFactory<Double> {
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Double, Double> div() {
     return new AbstractNumberOperation<Double, Double>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Double operationDefault(Double l, Double r) {
         return l / r;
@@ -56,9 +80,15 @@ public class OperationDoubleFactory extends AbstractOperationFactory<Double> {
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Double, Double> max() {
     return new AbstractNumberOperation<Double, Double>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Double operationDefault(Double l, Double r) {
         return Math.max(l, r);
@@ -66,9 +96,15 @@ public class OperationDoubleFactory extends AbstractOperationFactory<Double> {
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Double, Double> min() {
     return new AbstractNumberOperation<Double, Double>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Double operationDefault(Double l, Double r) {
         return Math.min(l, r);
@@ -76,9 +112,15 @@ public class OperationDoubleFactory extends AbstractOperationFactory<Double> {
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Double, Boolean> eq() {
     return new AbstractNumberOperation<Double, Boolean>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Boolean operationDefault(Double l, Double r) {
         return Objects.equals(l, r);
@@ -86,9 +128,15 @@ public class OperationDoubleFactory extends AbstractOperationFactory<Double> {
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Double, Boolean> lt() {
     return new AbstractNumberOperation<Double, Boolean>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Boolean operationDefault(Double l, Double r) {
         return l < r;
@@ -96,9 +144,15 @@ public class OperationDoubleFactory extends AbstractOperationFactory<Double> {
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Double, Boolean> gt() {
     return new AbstractNumberOperation<Double, Boolean>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Boolean operationDefault(Double l, Double r) {
         return l > r;

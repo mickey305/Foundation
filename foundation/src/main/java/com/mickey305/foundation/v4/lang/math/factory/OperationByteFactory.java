@@ -16,9 +16,15 @@ public class OperationByteFactory extends AbstractOperationFactory<Byte> {
     return OperationByteFactoryHolder.Instance;
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Byte, Byte> add() {
     return new AbstractNumberOperation<Byte, Byte>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Byte operationDefault(Byte l, Byte r) {
         return (byte) (l + r);
@@ -26,9 +32,15 @@ public class OperationByteFactory extends AbstractOperationFactory<Byte> {
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Byte, Byte> sub() {
     return new AbstractNumberOperation<Byte, Byte>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Byte operationDefault(Byte l, Byte r) {
         return (byte) (l - r);
@@ -36,9 +48,15 @@ public class OperationByteFactory extends AbstractOperationFactory<Byte> {
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Byte, Byte> multi() {
     return new AbstractNumberOperation<Byte, Byte>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Byte operationDefault(Byte l, Byte r) {
         return (byte) (l * r);
@@ -46,9 +64,15 @@ public class OperationByteFactory extends AbstractOperationFactory<Byte> {
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Byte, Byte> div() {
     return new AbstractNumberOperation<Byte, Byte>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Byte operationDefault(Byte l, Byte r) {
         return (byte) (l / r);
@@ -56,9 +80,15 @@ public class OperationByteFactory extends AbstractOperationFactory<Byte> {
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Byte, Byte> max() {
     return new AbstractNumberOperation<Byte, Byte>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Byte operationDefault(Byte l, Byte r) {
         return (byte) Math.max(l, r);
@@ -66,9 +96,15 @@ public class OperationByteFactory extends AbstractOperationFactory<Byte> {
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Byte, Byte> min() {
     return new AbstractNumberOperation<Byte, Byte>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Byte operationDefault(Byte l, Byte r) {
         return (byte) Math.min(l, r);
@@ -76,9 +112,15 @@ public class OperationByteFactory extends AbstractOperationFactory<Byte> {
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Byte, Boolean> eq() {
     return new AbstractNumberOperation<Byte, Boolean>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Boolean operationDefault(Byte l, Byte r) {
         return Objects.equals(l, r);
@@ -86,9 +128,15 @@ public class OperationByteFactory extends AbstractOperationFactory<Byte> {
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Byte, Boolean> lt() {
     return new AbstractNumberOperation<Byte, Boolean>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Boolean operationDefault(Byte l, Byte r) {
         return l < r;
@@ -96,9 +144,15 @@ public class OperationByteFactory extends AbstractOperationFactory<Byte> {
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Byte, Boolean> gt() {
     return new AbstractNumberOperation<Byte, Boolean>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Boolean operationDefault(Byte l, Byte r) {
         return l > r;

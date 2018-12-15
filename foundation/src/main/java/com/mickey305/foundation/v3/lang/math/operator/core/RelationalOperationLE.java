@@ -16,6 +16,9 @@ public class RelationalOperationLE extends RelationalOperationEQ {
     opLT = new RelationalOperationLT();
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   protected Boolean operationDefault(Number l, Number r) {
     final Boolean status1 = super.operationDefault(l, r);

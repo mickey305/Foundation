@@ -247,6 +247,8 @@ public class Matrix<E extends Number> extends AbstractNumberTable<E> {
    *
    * @param row1 swap target row number first
    * @param row2 swap target row number second
+   *
+   * {@inheritDoc}
    */
   @Override
   public void swapRow(int row1, int row2) {
@@ -260,6 +262,8 @@ public class Matrix<E extends Number> extends AbstractNumberTable<E> {
    *
    * @param column1 swap target column number first
    * @param column2 swap target column number second
+   *
+   * {@inheritDoc}
    */
   @Override
   public void swapColumn(int column1, int column2) {
@@ -342,6 +346,9 @@ public class Matrix<E extends Number> extends AbstractNumberTable<E> {
     this.putColumn(addColumn, columnData);
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   protected void putRow(int row, E[] rowData) {
     if (rowData.length != this.getColumnSize())
@@ -352,6 +359,9 @@ public class Matrix<E extends Number> extends AbstractNumberTable<E> {
       this.putCell(row, i++, cell);
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   protected void putColumn(int column, E[] columnData) {
     if (columnData.length != this.getRowSize())
@@ -362,6 +372,9 @@ public class Matrix<E extends Number> extends AbstractNumberTable<E> {
       this.putCell(i++, column, cell);
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void putCell(int row, int column, E cell) {
     this.getTable()[row][column] = cell;

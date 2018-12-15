@@ -12,6 +12,9 @@ public class RelationalOperationNE extends RelationalOperationEQ {
     super(extension);
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   protected Boolean operationDefault(Number l, Number r) {
     final Boolean status = super.operationDefault(l, r);

@@ -14,11 +14,17 @@ class LockImpl<T extends LockType> implements ILockable<T> {
     this.key = key;
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void lock(T lockType) {
     this.getLock(lockType).lock();
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void unlock(T lockType) {
     this.getLock(lockType).unlock();
@@ -36,31 +42,49 @@ class LockImpl<T extends LockType> implements ILockable<T> {
   }
   
   private static final class NonLock implements Lock {
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void lock() {
       throw new RuntimeException();
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void lockInterruptibly() {
       throw new RuntimeException();
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean tryLock() {
       throw new RuntimeException();
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean tryLock(long time, TimeUnit unit) {
       throw new RuntimeException();
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void unlock() {
       throw new RuntimeException();
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Condition newCondition() {
       throw new RuntimeException();

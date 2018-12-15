@@ -17,9 +17,15 @@ public class OperationBigFractionFactory extends AbstractOperationFactory<BigFra
     return OperationBigFractionFactoryHolder.Instance;
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<BigFraction, BigFraction> add() {
     return new AbstractNumberOperation<BigFraction, BigFraction>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected BigFraction operationDefault(BigFraction l, BigFraction r) {
         return l.add(r);
@@ -27,9 +33,15 @@ public class OperationBigFractionFactory extends AbstractOperationFactory<BigFra
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<BigFraction, BigFraction> sub() {
     return new AbstractNumberOperation<BigFraction, BigFraction>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected BigFraction operationDefault(BigFraction l, BigFraction r) {
         return l.subtract(r);
@@ -37,9 +49,15 @@ public class OperationBigFractionFactory extends AbstractOperationFactory<BigFra
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<BigFraction, BigFraction> multi() {
     return new AbstractNumberOperation<BigFraction, BigFraction>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected BigFraction operationDefault(BigFraction l, BigFraction r) {
         return l.multiply(r);
@@ -47,9 +65,15 @@ public class OperationBigFractionFactory extends AbstractOperationFactory<BigFra
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<BigFraction, BigFraction> div() {
     return new AbstractNumberOperation<BigFraction, BigFraction>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected BigFraction operationDefault(BigFraction l, BigFraction r) {
         return l.divide(r);
@@ -57,9 +81,15 @@ public class OperationBigFractionFactory extends AbstractOperationFactory<BigFra
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<BigFraction, BigFraction> max() {
     return new AbstractNumberOperation<BigFraction, BigFraction>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected BigFraction operationDefault(BigFraction l, BigFraction r) {
         return (l.compareTo(r) > 0) ? l : r;
@@ -67,9 +97,15 @@ public class OperationBigFractionFactory extends AbstractOperationFactory<BigFra
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<BigFraction, BigFraction> min() {
     return new AbstractNumberOperation<BigFraction, BigFraction>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected BigFraction operationDefault(BigFraction l, BigFraction r) {
         return (l.compareTo(r) < 0) ? l : r;
@@ -77,9 +113,15 @@ public class OperationBigFractionFactory extends AbstractOperationFactory<BigFra
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<BigFraction, Boolean> eq() {
     return new AbstractNumberOperation<BigFraction, Boolean>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Boolean operationDefault(BigFraction l, BigFraction r) {
         return Objects.equals(l, r);
@@ -87,9 +129,15 @@ public class OperationBigFractionFactory extends AbstractOperationFactory<BigFra
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<BigFraction, Boolean> lt() {
     return new AbstractNumberOperation<BigFraction, Boolean>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Boolean operationDefault(BigFraction l, BigFraction r) {
         return l.compareTo(r) < 0;
@@ -97,9 +145,15 @@ public class OperationBigFractionFactory extends AbstractOperationFactory<BigFra
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<BigFraction, Boolean> gt() {
     return new AbstractNumberOperation<BigFraction, Boolean>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Boolean operationDefault(BigFraction l, BigFraction r) {
         return l.compareTo(r) > 0;

@@ -43,6 +43,9 @@ public class SymmetricCycleGroup extends SymmetricPermutationGroup {
     return cnt == this.getDataSet().size();
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public SymmetricCycleGroup compact() {
     return new SymmetricCycleGroup(super.compact().getTable());

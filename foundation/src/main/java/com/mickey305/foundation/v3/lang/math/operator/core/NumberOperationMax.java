@@ -17,6 +17,9 @@ public class NumberOperationMax extends AbstractNumberOperation<Number> {
     super(extension);
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Number operationDefault(Number l, Number r) {
     final Class<?> targetClazz = l.getClass();

@@ -10,12 +10,18 @@ public abstract class AbstractElementInitializer<E extends Number> implements IE
     type = (Class<E>) dummy.getClass().getComponentType();
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   @SuppressWarnings("unchecked")
   public E[] array(int size) {
     return (E[]) Array.newInstance(type, size);
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   @SuppressWarnings("unchecked")
   public E[][] table(int r, int c) {

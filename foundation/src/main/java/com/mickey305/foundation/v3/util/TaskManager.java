@@ -27,6 +27,8 @@ public class TaskManager<R, C extends Executable<R> & Cancelable<R>> implements 
    * 直前のコマンドを取り消す
    *
    * @return 処理結果
+   *
+   * {@inheritDoc}
    */
   @Override
   public R undo() {
@@ -42,6 +44,8 @@ public class TaskManager<R, C extends Executable<R> & Cancelable<R>> implements 
    * 取り消した直後のコマンドを再実行する
    *
    * @return 処理結果
+   *
+   * {@inheritDoc}
    */
   @Override
   public R redo() {

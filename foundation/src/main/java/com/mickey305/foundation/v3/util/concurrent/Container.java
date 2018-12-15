@@ -40,11 +40,17 @@ public class Container implements Runnable, Killable, Destroyable {
     this.setResultManager(null);
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean isAlive() {
     return !this.isFinish();
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean isDestroyed() {
     return this.isFinish() && this.isDoneSignal();
@@ -60,6 +66,8 @@ public class Container implements Runnable, Killable, Destroyable {
    * 通知時点で実行中のコマンドを最後として、並列処理を中断（強制終了）する。また、各実行コマンド終了時に発生する判定イベント
    * （デフォルトでは未実施）にて不合格（false）となった場合も、同様に並列処理を中断（強制終了）する。なお、当並列処理は
    * 正常終了・中断（強制終了）に関わらず、終了イベント（デフォルトでは未実施）を実行する</p>
+   *
+   * {@inheritDoc}
    */
   @Override
   public synchronized void run() {
@@ -90,11 +98,17 @@ public class Container implements Runnable, Killable, Destroyable {
     this.setFinish(true);
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void destroy() {
     this.shutdown();
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void shutdown() {
     this.setDoneSignal(true);

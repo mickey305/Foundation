@@ -11,6 +11,9 @@ public class LockManager<T extends LockType> extends AbstractLockableCache<T> im
     lockCache = new ConcurrentHashMap<>();
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Nonnull
   @Override
   public ILockable<T> make(@Nonnull String key) {
@@ -25,6 +28,9 @@ public class LockManager<T extends LockType> extends AbstractLockableCache<T> im
     return lock;
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public ILockable<T> getAndRemove(@Nonnull String key) {
     ILockable<T> lock;
@@ -34,11 +40,17 @@ public class LockManager<T extends LockType> extends AbstractLockableCache<T> im
     return lock;
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public ILockable<T> get(@Nonnull String key) {
     return lockCache.get(key);
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int size() {
     return lockCache.size();

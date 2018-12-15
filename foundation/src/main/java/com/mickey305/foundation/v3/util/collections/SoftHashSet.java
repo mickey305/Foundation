@@ -57,6 +57,9 @@ public class SoftHashSet<E> extends AbstractReferenceSet<E, SoftHashMap<E, Objec
     map = new SoftHashMap<>(keyType, DEFAULT_VALUE_TYPE, initialCapacity, DEFAULT_LOAD_FACTOR);
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public SoftHashSet<E> clone() {
     SoftHashSet<E> newSet = (SoftHashSet<E>) super.clone();

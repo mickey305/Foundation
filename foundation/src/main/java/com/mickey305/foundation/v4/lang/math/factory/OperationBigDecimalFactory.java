@@ -26,9 +26,15 @@ public class OperationBigDecimalFactory extends AbstractOperationFactory<BigDeci
     return OperationBigDecimalFactoryHolder.Instance;
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<BigDecimal, BigDecimal> add() {
     return new AbstractNumberOperation<BigDecimal, BigDecimal>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected BigDecimal operationDefault(BigDecimal l, BigDecimal r) {
         return l.add(r);
@@ -36,9 +42,15 @@ public class OperationBigDecimalFactory extends AbstractOperationFactory<BigDeci
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<BigDecimal, BigDecimal> sub() {
     return new AbstractNumberOperation<BigDecimal, BigDecimal>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected BigDecimal operationDefault(BigDecimal l, BigDecimal r) {
         return l.subtract(r);
@@ -46,9 +58,15 @@ public class OperationBigDecimalFactory extends AbstractOperationFactory<BigDeci
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<BigDecimal, BigDecimal> multi() {
     return new AbstractNumberOperation<BigDecimal, BigDecimal>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected BigDecimal operationDefault(BigDecimal l, BigDecimal r) {
         return l.multiply(r);
@@ -56,10 +74,16 @@ public class OperationBigDecimalFactory extends AbstractOperationFactory<BigDeci
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<BigDecimal, BigDecimal> div() {
     final int scale = this.scale;
     return new AbstractNumberOperation<BigDecimal, BigDecimal>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected BigDecimal operationDefault(BigDecimal l, BigDecimal r) {
         return l.divide(r, scale, BigDecimal.ROUND_DOWN);
@@ -67,9 +91,15 @@ public class OperationBigDecimalFactory extends AbstractOperationFactory<BigDeci
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<BigDecimal, BigDecimal> max() {
     return new AbstractNumberOperation<BigDecimal, BigDecimal>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected BigDecimal operationDefault(BigDecimal l, BigDecimal r) {
         return l.max(r);
@@ -77,9 +107,15 @@ public class OperationBigDecimalFactory extends AbstractOperationFactory<BigDeci
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<BigDecimal, BigDecimal> min() {
     return new AbstractNumberOperation<BigDecimal, BigDecimal>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected BigDecimal operationDefault(BigDecimal l, BigDecimal r) {
         return l.min(r);
@@ -87,9 +123,15 @@ public class OperationBigDecimalFactory extends AbstractOperationFactory<BigDeci
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<BigDecimal, Boolean> eq() {
     return new AbstractNumberOperation<BigDecimal, Boolean>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Boolean operationDefault(BigDecimal l, BigDecimal r) {
         return Objects.equals(l, r);
@@ -97,9 +139,15 @@ public class OperationBigDecimalFactory extends AbstractOperationFactory<BigDeci
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<BigDecimal, Boolean> lt() {
     return new AbstractNumberOperation<BigDecimal, Boolean>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Boolean operationDefault(BigDecimal l, BigDecimal r) {
         return l.compareTo(r) < 0;
@@ -107,9 +155,15 @@ public class OperationBigDecimalFactory extends AbstractOperationFactory<BigDeci
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<BigDecimal, Boolean> gt() {
     return new AbstractNumberOperation<BigDecimal, Boolean>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Boolean operationDefault(BigDecimal l, BigDecimal r) {
         return l.compareTo(r) > 0;

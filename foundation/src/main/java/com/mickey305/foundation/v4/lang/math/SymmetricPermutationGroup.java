@@ -197,16 +197,25 @@ public class SymmetricPermutationGroup<E extends Number> extends AbstractNumberT
     return this.getRowSize() == 2 && this.getColumnSize() >= 1;
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void putRow(int row, E[] data) {
     throw new UnsupportedOperationException();
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void putColumn(int column, E[] data) {
     throw new UnsupportedOperationException();
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void putCell(int row, int column, E data) {
     throw new UnsupportedOperationException();

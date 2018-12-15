@@ -17,9 +17,15 @@ public class OperationBigIntFactory extends AbstractOperationFactory<BigInteger>
     return OperationBigIntFactoryHolder.Instance;
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<BigInteger, BigInteger> add() {
     return new AbstractNumberOperation<BigInteger, BigInteger>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected BigInteger operationDefault(BigInteger l, BigInteger r) {
         return l.add(r);
@@ -27,9 +33,15 @@ public class OperationBigIntFactory extends AbstractOperationFactory<BigInteger>
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<BigInteger, BigInteger> sub() {
     return new AbstractNumberOperation<BigInteger, BigInteger>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected BigInteger operationDefault(BigInteger l, BigInteger r) {
         return l.subtract(r);
@@ -37,9 +49,15 @@ public class OperationBigIntFactory extends AbstractOperationFactory<BigInteger>
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<BigInteger, BigInteger> multi() {
     return new AbstractNumberOperation<BigInteger, BigInteger>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected BigInteger operationDefault(BigInteger l, BigInteger r) {
         return l.multiply(r);
@@ -47,9 +65,15 @@ public class OperationBigIntFactory extends AbstractOperationFactory<BigInteger>
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<BigInteger, BigInteger> div() {
     return new AbstractNumberOperation<BigInteger, BigInteger>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected BigInteger operationDefault(BigInteger l, BigInteger r) {
         return l.divide(r);
@@ -57,9 +81,15 @@ public class OperationBigIntFactory extends AbstractOperationFactory<BigInteger>
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<BigInteger, BigInteger> max() {
     return new AbstractNumberOperation<BigInteger, BigInteger>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected BigInteger operationDefault(BigInteger l, BigInteger r) {
         return l.max(r);
@@ -67,9 +97,15 @@ public class OperationBigIntFactory extends AbstractOperationFactory<BigInteger>
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<BigInteger, BigInteger> min() {
     return new AbstractNumberOperation<BigInteger, BigInteger>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected BigInteger operationDefault(BigInteger l, BigInteger r) {
         return l.min(r);
@@ -77,9 +113,15 @@ public class OperationBigIntFactory extends AbstractOperationFactory<BigInteger>
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<BigInteger, Boolean> eq() {
     return new AbstractNumberOperation<BigInteger, Boolean>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Boolean operationDefault(BigInteger l, BigInteger r) {
         return Objects.equals(l, r);
@@ -87,9 +129,15 @@ public class OperationBigIntFactory extends AbstractOperationFactory<BigInteger>
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<BigInteger, Boolean> lt() {
     return new AbstractNumberOperation<BigInteger, Boolean>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Boolean operationDefault(BigInteger l, BigInteger r) {
         return l.compareTo(r) < 0;
@@ -97,9 +145,15 @@ public class OperationBigIntFactory extends AbstractOperationFactory<BigInteger>
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<BigInteger, Boolean> gt() {
     return new AbstractNumberOperation<BigInteger, Boolean>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Boolean operationDefault(BigInteger l, BigInteger r) {
         return l.compareTo(r) > 0;

@@ -27,6 +27,9 @@ public class WeakHashSet<E> extends AbstractReferenceSet<E, WeakHashMap<E, Objec
     map = new WeakHashMap<>(initialCapacity);
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public WeakHashSet<E> clone() {
     WeakHashSet<E> newSet = (WeakHashSet<E>) super.clone();

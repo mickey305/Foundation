@@ -6,6 +6,9 @@ public abstract class AbstractNumberOperation<E extends Number, R> implements Bi
   public AbstractNumberOperation() {
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public R apply(E l, E r) {
     final R result = this.operationDefault(l, r);

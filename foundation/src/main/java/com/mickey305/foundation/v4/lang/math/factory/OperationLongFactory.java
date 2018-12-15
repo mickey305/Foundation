@@ -16,9 +16,15 @@ public class OperationLongFactory extends AbstractOperationFactory<Long> {
     return OperationLongFactoryHolder.Instance;
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Long, Long> add() {
     return new AbstractNumberOperation<Long, Long>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Long operationDefault(Long l, Long r) {
         return l + r;
@@ -26,9 +32,15 @@ public class OperationLongFactory extends AbstractOperationFactory<Long> {
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Long, Long> sub() {
     return new AbstractNumberOperation<Long, Long>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Long operationDefault(Long l, Long r) {
         return l - r;
@@ -36,9 +48,15 @@ public class OperationLongFactory extends AbstractOperationFactory<Long> {
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Long, Long> multi() {
     return new AbstractNumberOperation<Long, Long>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Long operationDefault(Long l, Long r) {
         return l * r;
@@ -46,9 +64,15 @@ public class OperationLongFactory extends AbstractOperationFactory<Long> {
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Long, Long> div() {
     return new AbstractNumberOperation<Long, Long>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Long operationDefault(Long l, Long r) {
         return l / r;
@@ -56,9 +80,15 @@ public class OperationLongFactory extends AbstractOperationFactory<Long> {
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Long, Long> max() {
     return new AbstractNumberOperation<Long, Long>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Long operationDefault(Long l, Long r) {
         return Math.max(l, r);
@@ -66,9 +96,15 @@ public class OperationLongFactory extends AbstractOperationFactory<Long> {
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Long, Long> min() {
     return new AbstractNumberOperation<Long, Long>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Long operationDefault(Long l, Long r) {
         return Math.min(l, r);
@@ -76,9 +112,15 @@ public class OperationLongFactory extends AbstractOperationFactory<Long> {
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Long, Boolean> eq() {
     return new AbstractNumberOperation<Long, Boolean>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Boolean operationDefault(Long l, Long r) {
         return Objects.equals(l, r);
@@ -86,9 +128,15 @@ public class OperationLongFactory extends AbstractOperationFactory<Long> {
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Long, Boolean> lt() {
     return new AbstractNumberOperation<Long, Boolean>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Boolean operationDefault(Long l, Long r) {
         return l < r;
@@ -96,9 +144,15 @@ public class OperationLongFactory extends AbstractOperationFactory<Long> {
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Long, Boolean> gt() {
     return new AbstractNumberOperation<Long, Boolean>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Boolean operationDefault(Long l, Long r) {
         return l > r;

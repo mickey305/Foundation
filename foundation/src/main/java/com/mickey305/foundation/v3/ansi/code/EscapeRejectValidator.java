@@ -6,10 +6,16 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 public class EscapeRejectValidator implements ConstraintValidator<EscapeReject, Object> {
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void initialize(EscapeReject constraintAnnotation) {
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean isValid(Object value, ConstraintValidatorContext context) {
     return !containsEscapeCode(value);

@@ -17,6 +17,9 @@ public class RelationalOperationGT extends AbstractNumberOperation<Boolean> {
     super(extension);
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   protected Boolean operationDefault(Number l, Number r) {
     final Class<?> targetClazz = l.getClass();

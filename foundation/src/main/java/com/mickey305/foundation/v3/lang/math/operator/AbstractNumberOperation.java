@@ -25,11 +25,17 @@ public abstract class AbstractNumberOperation<R> implements
     return extension;
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void setExtension(BinaryFunction<Number, Number, R> extension) {
     this.extension = extension;
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public R apply(Number l, Number r) {
     R result = null;

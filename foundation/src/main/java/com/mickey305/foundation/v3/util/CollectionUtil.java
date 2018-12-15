@@ -214,67 +214,106 @@ public class CollectionUtil {
     public ProtectedCollection(Collection<? extends E> c) {
       this.setCollection(c);
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int size() {
       return this.getCollection().size();
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isEmpty() {
       return this.getCollection().isEmpty();
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean contains(Object o) {
       return this.getCollection().contains(o);
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean containsAll(Collection<?> c) {
       return this.getCollection().containsAll(c);
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Iterator<E> iterator() {
       throw new UnsupportedOperationException();
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Object[] toArray() {
       throw new UnsupportedOperationException();
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public <T> T[] toArray(T[] a) {
       throw new UnsupportedOperationException();
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean add(E e) {
       throw new UnsupportedOperationException();
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean remove(Object o) {
       throw new UnsupportedOperationException();
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean addAll(Collection<? extends E> c) {
       throw new UnsupportedOperationException();
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean removeAll(Collection<?> c) {
       throw new UnsupportedOperationException();
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean retainAll(Collection<?> c) {
       throw new UnsupportedOperationException();
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void clear() {
       throw new UnsupportedOperationException();
@@ -296,52 +335,82 @@ public class CollectionUtil {
       super(c);
       this.setList(c);
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int indexOf(Object o) {
       return this.getList().indexOf(o);
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int lastIndexOf(Object o) {
       return this.getList().lastIndexOf(o);
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean addAll(int index, Collection<? extends E> c) {
       throw new UnsupportedOperationException();
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public E get(int index) {
       throw new UnsupportedOperationException();
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public E set(int index, E element) {
       throw new UnsupportedOperationException();
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void add(int index, E element) {
       throw new UnsupportedOperationException();
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public E remove(int index) {
       throw new UnsupportedOperationException();
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ListIterator<E> listIterator() {
       throw new UnsupportedOperationException();
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ListIterator<E> listIterator(int index) {
       throw new UnsupportedOperationException();
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<E> subList(int fromIndex, int toIndex) {
       throw new UnsupportedOperationException();
@@ -368,62 +437,98 @@ public class CollectionUtil {
     private void setMap(Map<? extends K, ? extends V> map) {
       this.map = map;
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int size() {
       return this.getMap().size();
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isEmpty() {
       return this.getMap().isEmpty();
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean containsKey(Object key) {
       return this.getMap().containsKey(key);
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean containsValue(Object value) {
       return this.getMap().containsValue(value);
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public V get(Object key) {
       throw new UnsupportedOperationException();
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public V put(K key, V value) {
       throw new UnsupportedOperationException();
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public V remove(Object key) {
       throw new UnsupportedOperationException();
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void putAll(Map<? extends K, ? extends V> m) {
       throw new UnsupportedOperationException();
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void clear() {
       throw new UnsupportedOperationException();
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Set<K> keySet() {
       throw new UnsupportedOperationException();
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Collection<V> values() {
       throw new UnsupportedOperationException();
     }
-    
+  
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Set<Entry<K, V>> entrySet() {
       throw new UnsupportedOperationException();

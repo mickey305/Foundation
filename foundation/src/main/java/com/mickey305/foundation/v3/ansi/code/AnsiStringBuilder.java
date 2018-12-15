@@ -49,6 +49,9 @@ public final class AnsiStringBuilder extends AbstractAnsiStringBuilder
   //===----------------------------------------------------------------------------------------------------------===//
   // Methods                                                                                                        //
   //===----------------------------------------------------------------------------------------------------------===//
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AnsiStringBuilder append(CharSequence csq) throws IOException {
     this.setReliableCodeLength(false);
@@ -56,6 +59,9 @@ public final class AnsiStringBuilder extends AbstractAnsiStringBuilder
     return this;
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AnsiStringBuilder append(CharSequence csq, int start, int end) throws IOException {
     this.setReliableCodeLength(false);
@@ -63,6 +69,9 @@ public final class AnsiStringBuilder extends AbstractAnsiStringBuilder
     return this;
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AnsiStringBuilder append(char c) throws IOException {
     this.setReliableCodeLength(false);
@@ -70,6 +79,9 @@ public final class AnsiStringBuilder extends AbstractAnsiStringBuilder
     return this;
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AnsiStringBuilder append(Escape escape) {
     this.setReliableCodeLength(false);
@@ -157,6 +169,9 @@ public final class AnsiStringBuilder extends AbstractAnsiStringBuilder
     return this;
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int length() {
     this.updateCodeLength();
@@ -174,6 +189,9 @@ public final class AnsiStringBuilder extends AbstractAnsiStringBuilder
     return -1;
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public char charAt(int index) {
     return this.getStringBuilder().charAt(index);
@@ -183,6 +201,9 @@ public final class AnsiStringBuilder extends AbstractAnsiStringBuilder
     this.getStringBuilder().setLength(newLength);
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public CharSequence subSequence(int start, int end) {
     return this.getStringBuilder().subSequence(start, end);
@@ -192,6 +213,9 @@ public final class AnsiStringBuilder extends AbstractAnsiStringBuilder
     this.getStringBuilder().trimToSize();
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public String toString() {
     this.updateCodeLength();

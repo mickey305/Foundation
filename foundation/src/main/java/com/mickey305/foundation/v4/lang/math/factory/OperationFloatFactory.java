@@ -16,9 +16,15 @@ public class OperationFloatFactory extends AbstractOperationFactory<Float> {
     return OperationFloatFactoryHolder.Instance;
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Float, Float> add() {
     return new AbstractNumberOperation<Float, Float>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Float operationDefault(Float l, Float r) {
         return l + r;
@@ -26,9 +32,15 @@ public class OperationFloatFactory extends AbstractOperationFactory<Float> {
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Float, Float> sub() {
     return new AbstractNumberOperation<Float, Float>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Float operationDefault(Float l, Float r) {
         return l - r;
@@ -36,9 +48,15 @@ public class OperationFloatFactory extends AbstractOperationFactory<Float> {
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Float, Float> multi() {
     return new AbstractNumberOperation<Float, Float>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Float operationDefault(Float l, Float r) {
         return l * r;
@@ -46,9 +64,15 @@ public class OperationFloatFactory extends AbstractOperationFactory<Float> {
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Float, Float> div() {
     return new AbstractNumberOperation<Float, Float>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Float operationDefault(Float l, Float r) {
         return l / r;
@@ -56,9 +80,15 @@ public class OperationFloatFactory extends AbstractOperationFactory<Float> {
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Float, Float> max() {
     return new AbstractNumberOperation<Float, Float>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Float operationDefault(Float l, Float r) {
         return Math.max(l, r);
@@ -66,9 +96,15 @@ public class OperationFloatFactory extends AbstractOperationFactory<Float> {
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Float, Float> min() {
     return new AbstractNumberOperation<Float, Float>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Float operationDefault(Float l, Float r) {
         return Math.min(l, r);
@@ -76,9 +112,15 @@ public class OperationFloatFactory extends AbstractOperationFactory<Float> {
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Float, Boolean> eq() {
     return new AbstractNumberOperation<Float, Boolean>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Boolean operationDefault(Float l, Float r) {
         return Objects.equals(l, r);
@@ -86,9 +128,15 @@ public class OperationFloatFactory extends AbstractOperationFactory<Float> {
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Float, Boolean> lt() {
     return new AbstractNumberOperation<Float, Boolean>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Boolean operationDefault(Float l, Float r) {
         return l < r;
@@ -96,9 +144,15 @@ public class OperationFloatFactory extends AbstractOperationFactory<Float> {
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Float, Boolean> gt() {
     return new AbstractNumberOperation<Float, Boolean>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Boolean operationDefault(Float l, Float r) {
         return l > r;

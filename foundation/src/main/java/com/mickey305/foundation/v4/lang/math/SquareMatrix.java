@@ -80,6 +80,9 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
                                                                 final IElementInitializer<T> ini) {
     SquareMatrix<T> tmpMatrix = new BuilderSquareMatrix<T>()
         .initializer(ini).operator(opFactory).cookbook(new AbstractMatrixBuilder.CookBook<T>() {
+          /**
+           * {@inheritDoc}
+           */
           @Override
           public T[][] tableDef() {
             T[][] table = ini.table(getRowSize(), getColumnSize());

@@ -17,6 +17,9 @@ public abstract class Component<T> {
   public Component(T object) {
     this.setObject(object);
     this.setCallback(new SearchLogic<Component<T>>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       public boolean search(Component<T> component, Component<T> targetComponent) {
         // デフォルト検索ロジック

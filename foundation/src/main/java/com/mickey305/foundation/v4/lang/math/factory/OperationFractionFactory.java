@@ -17,9 +17,15 @@ public class OperationFractionFactory extends AbstractOperationFactory<Fraction>
     return OperationFractionFactoryHolder.Instance;
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Fraction, Fraction> add() {
     return new AbstractNumberOperation<Fraction, Fraction>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Fraction operationDefault(Fraction l, Fraction r) {
         return l.add(r);
@@ -27,9 +33,15 @@ public class OperationFractionFactory extends AbstractOperationFactory<Fraction>
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Fraction, Fraction> sub() {
     return new AbstractNumberOperation<Fraction, Fraction>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Fraction operationDefault(Fraction l, Fraction r) {
         return l.subtract(r);
@@ -37,9 +49,15 @@ public class OperationFractionFactory extends AbstractOperationFactory<Fraction>
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Fraction, Fraction> multi() {
     return new AbstractNumberOperation<Fraction, Fraction>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Fraction operationDefault(Fraction l, Fraction r) {
         return l.multiply(r);
@@ -47,9 +65,15 @@ public class OperationFractionFactory extends AbstractOperationFactory<Fraction>
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Fraction, Fraction> div() {
     return new AbstractNumberOperation<Fraction, Fraction>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Fraction operationDefault(Fraction l, Fraction r) {
         return l.divide(r);
@@ -57,9 +81,15 @@ public class OperationFractionFactory extends AbstractOperationFactory<Fraction>
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Fraction, Fraction> max() {
     return new AbstractNumberOperation<Fraction, Fraction>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Fraction operationDefault(Fraction l, Fraction r) {
         return (l.compareTo(r) > 0) ? l : r;
@@ -67,9 +97,15 @@ public class OperationFractionFactory extends AbstractOperationFactory<Fraction>
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Fraction, Fraction> min() {
     return new AbstractNumberOperation<Fraction, Fraction>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Fraction operationDefault(Fraction l, Fraction r) {
         return (l.compareTo(r) < 0) ? l : r;
@@ -77,9 +113,15 @@ public class OperationFractionFactory extends AbstractOperationFactory<Fraction>
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Fraction, Boolean> eq() {
     return new AbstractNumberOperation<Fraction, Boolean>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Boolean operationDefault(Fraction l, Fraction r) {
         return Objects.equals(l, r);
@@ -87,9 +129,15 @@ public class OperationFractionFactory extends AbstractOperationFactory<Fraction>
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Fraction, Boolean> lt() {
     return new AbstractNumberOperation<Fraction, Boolean>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Boolean operationDefault(Fraction l, Fraction r) {
         return l.compareTo(r) < 0;
@@ -97,9 +145,15 @@ public class OperationFractionFactory extends AbstractOperationFactory<Fraction>
     };
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public AbstractNumberOperation<Fraction, Boolean> gt() {
     return new AbstractNumberOperation<Fraction, Boolean>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       protected Boolean operationDefault(Fraction l, Fraction r) {
         return l.compareTo(r) > 0;

@@ -18,17 +18,26 @@ public abstract class AbstractReferenceSet<E, M extends Map<E, Object>> extends 
     DUMMY_VAL = new Object();
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Nonnull
   @Override
   public Iterator<E> iterator() {
     return map.keySet().iterator();
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int size() {
     return this.recountSize();
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean isEmpty() {
     return this.size() == 0;
@@ -77,26 +86,41 @@ public abstract class AbstractReferenceSet<E, M extends Map<E, Object>> extends 
     return this.allocatedSize() == 0;
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean contains(Object o) {
     return map.containsKey(o);
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean add(E e) {
     return map.put(e, DUMMY_VAL) == null;
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean remove(Object o) {
     return map.remove(o) == DUMMY_VAL;
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void clear() {
     map.clear();
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   @SuppressWarnings("unchecked")
   public AbstractReferenceSet<E, M> clone() {

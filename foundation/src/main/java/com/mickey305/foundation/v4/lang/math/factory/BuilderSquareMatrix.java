@@ -8,6 +8,9 @@ import com.mickey305.foundation.v4.lang.math.operator.IElementInitializer;
 import java.util.Map;
 
 public class BuilderSquareMatrix<T extends Number> extends AbstractMatrixBuilder<SquareMatrix<T>, T> {
+  /**
+   * {@inheritDoc}
+   */
   @Override
   protected SquareMatrix<T> createMatrix(CookBook<T> cookBook,
                                          IElementInitializer<T> ini,

@@ -189,21 +189,33 @@ public class SymmetricPermutationGroup extends AbstractNumberTable {
     return this.getRowSize() == 2 && this.getColumnSize() >= 1;
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void putRowForcibly(int row, Number[] data) {
     throw new UnsupportedOperationException();
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void putColumnForcibly(int column, Number[] data) {
     throw new UnsupportedOperationException();
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void putCellForcibly(int row, int column, Number data) {
     throw new UnsupportedOperationException();
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean putCell(int row, int column, Number data) {
     throw new UnsupportedOperationException();

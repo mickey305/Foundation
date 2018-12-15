@@ -15,17 +15,26 @@ public class MutablePair<L, R> extends Pair<L, R> {
   public static <L, R> MutablePair<L, R> of(final L left, final R right) {
     return new MutablePair<>(left, right);
   }
-
+  
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public L getLeft() {
     return this.getPair().getLeft();
   }
-
+  
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public R getRight() {
     return this.getPair().getRight();
   }
-
+  
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public R setValue(R value) {
     return this.getPair().setValue(value);
@@ -36,6 +45,8 @@ public class MutablePair<L, R> extends Pair<L, R> {
    * <p>要素を入れ替えたイミュータブルなペアオブジェクトのインスタンスを生成し、返却する</p>
    *
    * @return 入れ替え後のペアオブジェクト
+   *
+   * {@inheritDoc}
    */
   @SuppressWarnings("unchecked")
   @Override

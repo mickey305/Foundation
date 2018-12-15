@@ -285,6 +285,8 @@ public class Matrix extends AbstractNumberTable {
    *
    * @param row1 swap target row number first
    * @param row2 swap target row number second
+   *
+   * {@inheritDoc}
    */
   @Override
   public void swapRow(int row1, int row2) {
@@ -298,6 +300,8 @@ public class Matrix extends AbstractNumberTable {
    *
    * @param column1 swap target column number first
    * @param column2 swap target column number second
+   *
+   * {@inheritDoc}
    */
   @Override
   public void swapColumn(int column1, int column2) {
@@ -370,6 +374,9 @@ public class Matrix extends AbstractNumberTable {
     this.putColumnForcibly(addColumn, columnData);
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   protected void putRowForcibly(int row, Number[] rowData) {
     if (rowData.length != this.getColumnSize())
@@ -380,6 +387,9 @@ public class Matrix extends AbstractNumberTable {
       this.putCellForcibly(row, i++, cell);
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   protected void putColumnForcibly(int column, Number[] columnData) {
     if (columnData.length != this.getRowSize())
@@ -390,6 +400,9 @@ public class Matrix extends AbstractNumberTable {
       this.putCellForcibly(i++, column, cell);
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void putCellForcibly(int row, int column, Number cell) {
     this.getTable()[row][column] = cell;
@@ -421,6 +434,9 @@ public class Matrix extends AbstractNumberTable {
       this.putCellForcibly(point);
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean putCell(int row, int column, Number cell) {
     final Number targetCell = this.getCell(row, column);

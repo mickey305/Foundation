@@ -8,6 +8,9 @@ public class SerialByteManager<T> {
   
   public boolean serialize(T obj) {
     return Serializer.serialize(obj, new ByteArrayOutputStream(), new Serializer.Callback<ByteArrayOutputStream>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       public void onWritten(ByteArrayOutputStream byteArrayOutputStream) {
         setData(byteArrayOutputStream.toByteArray());

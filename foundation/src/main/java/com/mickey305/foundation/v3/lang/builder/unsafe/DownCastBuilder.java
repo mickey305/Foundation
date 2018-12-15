@@ -19,6 +19,9 @@ public class DownCastBuilder {
     T targetInstance = null;
     Constructor<?>[] constructors = targetClass.getDeclaredConstructors();
     Arrays.sort(constructors, new Comparator<Constructor<?>>() {
+      /**
+       * {@inheritDoc}
+       */
       @Override
       public int compare(Constructor<?> o1, Constructor<?> o2) {
         return o1.getParameterTypes().length - o2.getParameterTypes().length;
