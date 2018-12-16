@@ -102,7 +102,7 @@ public class Regexp {
   /**
    * 漢数字
    */
-  public static final String KANJI_NUBER = "[一二三四五六七八九十壱弐参拾百千万萬億兆〇]+";
+  public static final String KANJI_NUMBER = "[一二三四五六七八九十壱弐参拾百千万萬億兆〇]+";
   
   /**
    * 全角平仮名・漢字
