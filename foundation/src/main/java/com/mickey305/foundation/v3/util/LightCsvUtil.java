@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LightCsvUtil {
@@ -52,7 +53,22 @@ public class LightCsvUtil {
     final String[] tmpElements = ELEMENT_PATTERN.split(line, -1);
     for (String tmpElement : tmpElements) {
       String col = StringUtil.trim(tmpElement);
-      col = ESCAPED_ELEMENT_PATTERN.matcher(col).replaceAll("");
+      Matcher sideEscaped = ESCAPED_ELEMENT_PATTERN.matcher(col);
+      int sideEscapedCounter = 0;
+      while (sideEscaped.find()) {
+        sideEscapedCounter++;
+      }
+      // element data check
+      if (sideEscapedCounter == 1) {
+        throw new IllegalArgumentException("syntax error: column[" + col + "]");
+      }
+      if (sideEscapedCounter == 0
+          && (col.contains("\r\n") || col.contains("\r") || col.contains("\n")
+          || col.contains(LightCsvDto.ESCAPE_CHAR.toString()))) {
+        throw new IllegalArgumentException("column data error: column[" + col + "]");
+      }
+      // edit task
+      col = sideEscaped.replaceAll("");
       col = INLINE_ESCAPED_ELEMENT_PATTERN.matcher(col).replaceAll(LightCsvDto.ESCAPE_CHAR.toString());
       
       elements.add(col);
@@ -74,21 +90,23 @@ public class LightCsvUtil {
     final List<String> elements = csv.getElements();
     final List<String> tmpElements = new ArrayList<>(elements.size());
     for (String element : elements) {
+      // empty element task
       if (StringUtils.isEmpty(element)) {
         tmpElements.add("");
         continue;
       }
+      // not empty element task
       element = element.replace("" + LightCsvDto.ESCAPE_CHAR,
           "" + LightCsvDto.ESCAPE_CHAR + LightCsvDto.ESCAPE_CHAR);
       final char[] chars = element.toCharArray();
+      final char wrapChar = LightCsvDto.ESCAPE_CHAR;
       if (element.contains(LightCsvDto.DLM.toString())) {
-        final char wrapChar = LightCsvDto.ESCAPE_CHAR;
         tmpElements.add(wrapChar + element + wrapChar);
       } else if (element.contains(LightCsvDto.ESCAPE_CHAR.toString())) {
-        final char wrapChar = LightCsvDto.ESCAPE_CHAR;
+        tmpElements.add(wrapChar + element + wrapChar);
+      } else if (element.contains("\r\n") || element.contains("\n") || element.contains("\r")) {
         tmpElements.add(wrapChar + element + wrapChar);
       } else if (Character.isWhitespace(chars[0]) || Character.isWhitespace(chars[chars.length - 1])) {
-        final char wrapChar = LightCsvDto.ESCAPE_CHAR;
         tmpElements.add(wrapChar + element + wrapChar);
       } else {
         tmpElements.add(element);
