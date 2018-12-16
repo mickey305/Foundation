@@ -7,7 +7,9 @@ if [[ $# -ne 0 ]]; then
 fi
 
 # test
+echo "===== test info start ====="
 echo ${JAVA_HOME} ; javac -version ; java -version
+echo "===== test info end ====="
 ./gradlew check -x compileJava # --stacktrace --info
 if [[ $? -ne 0 ]]; then
   exit 1
