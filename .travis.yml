@@ -1,12 +1,16 @@
+
 language: groovy
+
 branches:
   only:
     - master
     - develop
+
 env:
   global:
     - TRAVIS_ENV=true
     - secure: "ZPk3ZNPSu2bNnuefWRvA8H/HvdcWmakCUp2oKVN5JT9KPe/N5yrNDAlFHqzvElYhCIOd7LdXfKMbWyVeLY/zM4nMJdz2iq0M56xU/bCaE3AB7CQIComlpjqWvifhhFi8NtUGI02A7XlnJKl0+CZDQfH9PiVL33VUktrtNswSYfch6zI5LauK5IrKtetACtFFr/WMXTTjUGBZl9hSBs9ouYi2MhX6oqmvDayAdm7wR0E70ib/clAtMQR+iDHMaU0ZgCdND8fDtyfc8vlcr/9DShJ80bIZprPk8UbmiJlk8l/amoE/5WLTJwR0533WLA/O/KTr6b/ummFBy7mWvitkYgz6VeDKZ5C0cRVVHkIsfClKHLiaGDxpzIpL3RaI7JhsQYcPWegvOjdvbAtKUBnWMBkYqD+GxcpG6AJfBbR2h8Gw4PwENCU3J/SX7YBkMJHfmgy/CZ+ECL2BpKNsHz9KUXNTzc5WV3u3eI5jvWHDUUwfY3Y4msyNoZY/TRbu1Ys4etA/LDoBhFjcawqZWixzgpK07w5dnF2/XGBu3mRzqnhiAqzgXrXR9vRc4lmLkOxtdm/pMLz8INY32eB/7MmkKFk7+4sRcwMbYuv6TbOoev8ibN9e/Yy2ehzwRkVbxGSkgiMN2lzLnXHAtAInXPLwx0z1Vz/FSGUdrXx11aFF9UM="
+
 before_install:
  - chmod +x ./gradlew
 # - wget https://github.com/sormuras/bach/raw/master/install-jdk.sh && chmod +x ./install-jdk.sh
@@ -18,24 +22,30 @@ before_install:
  - chmod +x ./.travis.openjdk11-install.sh
  - chmod +x ./.travis.oraclejdk10-install.sh
  - chmod +x ./.travis.oraclejdk11-install.sh
+
 before_script:
  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
  - chmod +x ./cc-test-reporter
  - ./cc-test-reporter before-build
+
 after_script:
  - ./gradlew test jacocoTestReport
  - JACOCO_SOURCE_PATH=foundation/src/main/java
    ./cc-test-reporter format-coverage ./foundation/build/reports/jacoco/test/jacocoTestReport.xml --input-type jacoco
  - ./cc-test-reporter upload-coverage -r $CC_TEST_REPORTER_ID
+
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+
 cache:
   directories:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
-jdk:
-  - openjdk8
-  - oraclejdk8
+
+#jdk:
+#  - openjdk8
+#  - oraclejdk8
+
 matrix:
   include:
     - env:    TEST_DUMMY_INFO="compile:openjdk8,   test:openjdk8"
