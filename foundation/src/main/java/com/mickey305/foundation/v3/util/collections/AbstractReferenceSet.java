@@ -28,6 +28,9 @@ public abstract class AbstractReferenceSet<E, M extends Map<E, Object>> extends 
   }
   
   /**
+   * タイミングによっては、ガベージコレクトが動作した場合に、実際の要素数より多くのサイズであるかのように
+   * ふるまう場合があるため、このサイズメソッドの情報をもとに繰り返し処理などを実行する場合は、注意する。
+   *
    * {@inheritDoc}
    */
   @Override
