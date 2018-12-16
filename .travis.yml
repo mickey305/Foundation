@@ -33,9 +33,9 @@ cache:
   directories:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
-#jdk:
-#  - openjdk8
-#  - oraclejdk8
+jdk:
+  - openjdk8
+  - oraclejdk8
 matrix:
   include:
     - env:    TEST_DUMMY_INFO="compile:openjdk8,   test:openjdk8"
