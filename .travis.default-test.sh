@@ -8,7 +8,7 @@ fi
 
 # test
 echo ${JAVA_HOME} ; javac -version ; java -version
-./gradlew check -x compileJava --stacktrace --info
+./gradlew check -x compileJava # --stacktrace --info
 if [[ $? -ne 0 ]]; then
   exit 1
 fi
