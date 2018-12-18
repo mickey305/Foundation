@@ -10,6 +10,6 @@ fi
 #export _JAVA_OPTIONS=
 #mkdir -p ${HOME}/tmp
 export JAVA_HOME=`./install-jdk.sh -F 11 -L BCL -E | tail -n 1`
-#export PATH=${JAVA_HOME}/bin:$PATH
+export PATH=${JAVA_HOME}/bin:$PATH
 
 exit 0
