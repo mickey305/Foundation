@@ -8,8 +8,8 @@ fi
 
 # install
 #export _JAVA_OPTIONS=
-mkdir -p ${HOME}/tmp
-export JAVA_HOME=`./install-jdk.sh -F 10 -L BCL -W ${HOME}/tmp -E | tail -n 1`
-export PATH=${JAVA_HOME}/bin:$PATH
+#mkdir -p ${HOME}/tmp
+export JAVA_HOME=`./install-jdk.sh -F 10 -L BCL -E | tail -n 1`
+#export PATH=${JAVA_HOME}/bin:$PATH
 
 exit 0
