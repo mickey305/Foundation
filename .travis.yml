@@ -22,9 +22,9 @@ before_install:
  - chmod +x ./.travis.openjdk11-install.sh
  - chmod +x ./.travis.oraclejdk10-install.sh
  - chmod +x ./.travis.oraclejdk11-install.sh
- - mkdir -p ~/jdk
+ - mkdir -p `pwd`/jdk
  - source ./install-jdk.sh
- - JAVA_HOME=~/jdk && ./install-jdk.sh --target $JAVA_HOME && PATH=$JAVA_HOME/bin:$PATH
+ - JAVA_HOME=`pwd`/jdk && ./install-jdk.sh --target $JAVA_HOME && PATH=$JAVA_HOME/bin:$PATH
 
 before_script:
  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
