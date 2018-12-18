@@ -206,9 +206,10 @@ public class Regexp {
   public static final String BLANK_LINE = "\\n\\s*\\r";
   
   /**
-   * 日本語抽出のバイナリ正規表現パターン
+   * 日本語抽出の正規表現パターン
    */
-  public static final String JP_SEED_BINARY_PATTERN = "[^\\x01-\\x7E]+";
+  public static final String JP_PURE_SEED_PATTERN = "[ｦ-ﾟぁ-んァ-ヶー一-龠]+";
+  public static final String JP_BINARY_SEED_PATTERN = "[^\\x01-\\x7E]+";
   
   private Regexp() {
   }

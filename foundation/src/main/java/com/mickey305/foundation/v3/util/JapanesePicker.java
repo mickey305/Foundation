@@ -2,7 +2,7 @@ package com.mickey305.foundation.v3.util;
 
 import java.util.regex.Matcher;
 
-import static com.mickey305.foundation.v3.util.Regexp.JP_SEED_BINARY_PATTERN;
+import static com.mickey305.foundation.v3.util.Regexp.JP_PURE_SEED_PATTERN;
 
 public class JapanesePicker {
   private String extensionLhsPattern;
@@ -25,14 +25,14 @@ public class JapanesePicker {
     if (extensionRhsPattern == null || extensionLhsPattern == null || extensionInlinePattern == null) {
       // 拡張正規表現が設定されていない場合
       matcher = Regexp.pattern(
-          JP_SEED_BINARY_PATTERN,
+          JP_PURE_SEED_PATTERN,
           Regexp.CompileType.Plain).matcher(stmt);
       
     } else {
       // 拡張正規表現が設定されている場合
       matcher = Regexp.pattern(
           extensionLhsPattern
-              + "(" + JP_SEED_BINARY_PATTERN + "(" + extensionInlinePattern + JP_SEED_BINARY_PATTERN + ")*)+"
+              + "(" + JP_PURE_SEED_PATTERN + "(" + extensionInlinePattern + JP_PURE_SEED_PATTERN + ")*)+"
               + extensionRhsPattern,
           Regexp.CompileType.Plain).matcher(stmt);
       
