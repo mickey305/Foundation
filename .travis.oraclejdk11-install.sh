@@ -7,7 +7,7 @@ if [[ $# -ne 0 ]]; then
 fi
 
 # install
-export _JAVA_OPTIONS=
+#export _JAVA_OPTIONS=
 mkdir -p ${HOME}/tmp
 export JAVA_HOME=`./install-jdk.sh -F 11 -L BCL -W ${HOME}/tmp -E | tail -n 1`
 export PATH=${JAVA_HOME}/bin:$PATH
