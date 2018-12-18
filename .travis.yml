@@ -20,14 +20,6 @@ before_install:
  - chmod +x ./install-jdk.sh
  - chmod +x ./.travis.default-compile.sh
  - chmod +x ./.travis.default-test.sh
-# - chmod +x ./.travis.openjdk9-install.sh
-# - chmod +x ./.travis.openjdk10-install.sh
-# - chmod +x ./.travis.openjdk11-install.sh
-# - chmod +x ./.travis.oraclejdk10-install.sh
-# - chmod +x ./.travis.oraclejdk11-install.sh
-# - mkdir -p $HOME/jdk
-# - source ./install-jdk.sh
-# - JAVA_HOME=$HOME/jdk && ./install-jdk.sh --target $JAVA_HOME && PATH=$JAVA_HOME/bin:$PATH
 
 before_script:
  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
@@ -35,7 +27,7 @@ before_script:
  - ./cc-test-reporter before-build
 
 after_script:
- - ./gradlew test jacocoTestReport
+ - ./gradlew test jacocoTestReport -x compileJava
  - JACOCO_SOURCE_PATH=foundation/src/main/java
    ./cc-test-reporter format-coverage ./foundation/build/reports/jacoco/test/jacocoTestReport.xml --input-type jacoco
  - ./cc-test-reporter upload-coverage -r $CC_TEST_REPORTER_ID
@@ -47,10 +39,6 @@ cache:
   directories:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
-
-#jdk:
-#  - openjdk8
-#  - oraclejdk8
 
 matrix:
   include:
