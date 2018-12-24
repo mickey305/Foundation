@@ -298,7 +298,8 @@ final class Workflow {
       // Todo: Oracle rule implementation
       /////////////////////////////////////////
       //// return checkImmutableClassByOracleRule(target);
-      return true;
+      final Class<?> targetParent = target.getSuperclass();
+      return targetParent == null || checkImmutableClass(targetParent);
     } catch (RuntimeException | NoClassDefFoundError e) {
       Log.e(e.getMessage());
       return false;
