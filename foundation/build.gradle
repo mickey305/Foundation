@@ -62,7 +62,6 @@ dependencies {
     compile     group: 'commons-codec'           , name: 'commons-codec'       , version: '1.11'
 
     def jreVersion = Double.parseDouble(System.getProperty("java.specification.version"))
-    println(jreVersion)
     if (jreVersion >= 9) {
         compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.2.11'
     }

@@ -80,7 +80,7 @@ public class SoftHashSetTest {
   public void testCase_01_02() throws Exception {
     SoftHashSet<String> defaultCache;
     final int qty = 100;
-    final long count = 10_000_000;
+    final long count = 1_000_000;
     long start, end;
     List<Long> sizeCache = new ArrayList<>(qty);
     List<Long> allocatedSizeCache = new ArrayList<>(qty);
