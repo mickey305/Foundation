@@ -49,7 +49,7 @@ class LockImpl<T extends LockType> implements ILockable<T> {
     public void lock() {
       throw new RuntimeException();
     }
-  
+    
     /**
      * {@inheritDoc}
      */
@@ -57,7 +57,7 @@ class LockImpl<T extends LockType> implements ILockable<T> {
     public void lockInterruptibly() {
       throw new RuntimeException();
     }
-  
+    
     /**
      * {@inheritDoc}
      */
@@ -65,7 +65,7 @@ class LockImpl<T extends LockType> implements ILockable<T> {
     public boolean tryLock() {
       throw new RuntimeException();
     }
-  
+    
     /**
      * {@inheritDoc}
      */
@@ -73,7 +73,7 @@ class LockImpl<T extends LockType> implements ILockable<T> {
     public boolean tryLock(long time, TimeUnit unit) {
       throw new RuntimeException();
     }
-  
+    
     /**
      * {@inheritDoc}
      */
@@ -81,7 +81,7 @@ class LockImpl<T extends LockType> implements ILockable<T> {
     public void unlock() {
       throw new RuntimeException();
     }
-  
+    
     /**
      * {@inheritDoc}
      */

@@ -16,18 +16,18 @@ import java.util.List;
 public class ContainerTest {
   private static final int CMD_CNT = 100;
   private List<Executable<?>> commands;
-
+  
   @Before
   public void setUp() throws Exception {
     commands = new ArrayList<>();
     for (int i = 0; i < CMD_CNT; i++)
       commands.add(new TestCommand(i));
   }
-
+  
   @After
   public void tearDown() throws Exception {
   }
-
+  
   @Test
   public void testCase_01_01() throws Exception {
     Container container = new Container(commands);
@@ -79,16 +79,16 @@ public class ContainerTest {
     th.join();
     Log.i("main: tread2 end");
   }
-
+  
   private class TestCommand implements Executable<Integer> {
     private int id;
     private long millis;
-
+    
     public TestCommand(int id) {
       this.setId(id);
       this.setMillis((long) (Math.random() * 400) + 100);
     }
-
+    
     @Override
     public Integer execute() {
       try {
@@ -101,23 +101,23 @@ public class ContainerTest {
         return 1;
       return 0;
     }
-
+    
     public int getId() {
       return id;
     }
-
+    
     public void setId(int id) {
       this.id = id;
     }
-
+    
     public long getMillis() {
       return millis;
     }
-
+    
     public void setMillis(long millis) {
       this.millis = millis;
     }
-
+    
     @Override
     public int hashCode() {
       return HashCodeBuilder.reflectionHashCode(this);

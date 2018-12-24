@@ -62,7 +62,7 @@ public class LightCsvUtilTest {
     Assert.assertEquals("piyo", elements.get(3));
     Assert.assertEquals("", elements.get(4));
     Log.i(Arrays.toString(elements.toArray()));
-  
+    
     csv.setLine("\"1213 32\" ,hoge, fuga ,piyo  ,");
     LightCsvUtil.split(csv);
     elements = csv.getElements();
@@ -82,7 +82,7 @@ public class LightCsvUtilTest {
     Assert.assertEquals("piyo", elements.get(3));
     Assert.assertEquals("", elements.get(4));
     Log.i(Arrays.toString(elements.toArray()));
-  
+    
     csv.setLine("\"12\n1332\" ,hoge, fuga ,piyo  ,");
     LightCsvUtil.split(csv);
     elements = csv.getElements();
@@ -102,7 +102,7 @@ public class LightCsvUtilTest {
     Assert.assertEquals("piyo", elements.get(3));
     Assert.assertEquals("", elements.get(4));
     Log.i(Arrays.toString(elements.toArray()));
-  
+    
     csv.setLine("\"12\r1332\" ,hoge, fuga ,piyo  ,");
     LightCsvUtil.split(csv);
     elements = csv.getElements();
@@ -122,7 +122,7 @@ public class LightCsvUtilTest {
     Assert.assertEquals("piyo", elements.get(3));
     Assert.assertEquals("", elements.get(4));
     Log.i(Arrays.toString(elements.toArray()));
-  
+    
     csv.setLine("\"12\r\n1332\" ,hoge, fuga ,piyo  ,");
     LightCsvUtil.split(csv);
     elements = csv.getElements();
@@ -162,7 +162,7 @@ public class LightCsvUtilTest {
     elements = csv.getElements();
     Assert.assertEquals(0, elements.size());
     Log.i(Arrays.toString(elements.toArray()));
-  
+    
     csv.setLine("hoge,fuga,piyo,\"12,133.2");
     try {
       LightCsvUtil.split(csv);
@@ -178,7 +178,7 @@ public class LightCsvUtilTest {
     } catch (IllegalArgumentException e) {
       Log.e(e.getMessage());
     }
-  
+    
     csv.setLine("hoge,fuga,piyo,\"12,133.\"2");
     try {
       LightCsvUtil.split(csv);
@@ -209,7 +209,7 @@ public class LightCsvUtilTest {
       Assert.fail();
     } catch (IllegalArgumentException ignored) {
     }
-  
+    
     csv.setLine("12\r\n1332 ,hoge, fuga ,piyo  ,");
     try {
       LightCsvUtil.split(csv);
@@ -217,7 +217,7 @@ public class LightCsvUtilTest {
     } catch (IllegalArgumentException e) {
       Log.e(e.getMessage());
     }
-  
+    
     csv.setLine("12\"\"1332 ,hoge, fuga ,piyo  ,");
     try {
       LightCsvUtil.split(csv);
@@ -370,7 +370,7 @@ public class LightCsvUtilTest {
     Assert.assertEquals("piyo", elements.get(3));
     Assert.assertEquals("", elements.get(4));
     Log.i(Arrays.toString(elements.toArray()));
-  
+    
   }
   
   @Test
@@ -405,7 +405,7 @@ public class LightCsvUtilTest {
     LightCsvUtil.join(csv);
     Assert.assertEquals("hoge,\"　fuga\",pi yo,\"pi\"\"yo2\",\"12,13\"\"\"\"3.2\"", csv.getLine());
     Log.i(csv.getLine());
-  
+    
     elements = new ArrayList<>();
     elements.add(" ");
     elements.add("fu　ga");
@@ -419,7 +419,7 @@ public class LightCsvUtilTest {
     LightCsvUtil.join(csv);
     Assert.assertEquals("\" \",fu　ga,pi yo,\"pi\"\"yo2\",\"12,13\"\"\"\"3.2\"", csv.getLine());
     Log.i(csv.getLine());
-  
+    
     elements = new ArrayList<>();
     elements.add("　");
     elements.add("fu　ga");
@@ -433,7 +433,7 @@ public class LightCsvUtilTest {
     LightCsvUtil.join(csv);
     Assert.assertEquals("\"　\",fu　ga,pi yo,\"pi\"\"yo2\",\"12,13\"\"\"\"3.2\"", csv.getLine());
     Log.i(csv.getLine());
-  
+    
     elements = new ArrayList<>();
     elements.add("\t");
     elements.add("fu　ga");
@@ -447,7 +447,7 @@ public class LightCsvUtilTest {
     LightCsvUtil.join(csv);
     Assert.assertEquals("\"\t\",fu　ga,pi yo,\"pi\"\"yo2\",\"12,13\"\"\"\"3.2\"", csv.getLine());
     Log.i(csv.getLine());
-  
+    
     elements = new ArrayList<>();
     elements.add(""); // non escape
     elements.add("'"); // non escape

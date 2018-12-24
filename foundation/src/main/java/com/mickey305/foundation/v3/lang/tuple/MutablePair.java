@@ -45,7 +45,7 @@ public class MutablePair<L, R> extends Pair<L, R> {
    * <p>要素を入れ替えたイミュータブルなペアオブジェクトのインスタンスを生成し、返却する</p>
    *
    * @return 入れ替え後のペアオブジェクト
-   *
+   * <p>
    * {@inheritDoc}
    */
   @SuppressWarnings("unchecked")

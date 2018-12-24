@@ -216,7 +216,8 @@ public class Regexp {
   
   /**
    * 入力された正規表現の情報をもとに、コンパイルタスクを実行する
-   * @param regexp 正規表現
+   *
+   * @param regexp      正規表現
    * @param compileType 正規表現のパターン
    * @return パターンオブジェクト
    */
@@ -242,7 +243,8 @@ public class Regexp {
   
   /**
    * 入力された正規表現の情報をもとに、正規表現パターンを適用した正規表現文字列を返却する
-   * @param regexp 正規表現
+   *
+   * @param regexp      正規表現
    * @param compileType 正規表現のパターン
    * @return 正規表現（パターン適用済）
    */
@@ -257,6 +259,7 @@ public class Regexp {
    * 入力された正規表現の情報をもとに、コンパイルタスクを実行する
    * <p>
    * このメソッドで適用される正規表現パターンは、{@link CompileType#Exact}です</p>
+   *
    * @param regexp 正規表現
    * @return パターンオブジェクト
    */
@@ -268,6 +271,7 @@ public class Regexp {
    * 入力された正規表現の情報をもとに、正規表現パターンを適用した正規表現文字列を返却する
    * <p>
    * このメソッドで適用される正規表現パターンは、{@link CompileType#Exact}です</p>
+   *
    * @param regexp 正規表現
    * @return 正規表現（パターン適用済）
    */

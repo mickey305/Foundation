@@ -14,6 +14,7 @@ public class StringUtil {
   
   /**
    * 入力パス情報をファイルシステム区切り文字で分解し、結果を配列で返却する
+   *
    * @param path パス文字列
    * @return パス情報
    */
@@ -24,6 +25,7 @@ public class StringUtil {
   
   /**
    * 空白文字・全角スペースを入力文字列の両サイドから除去した文字列を返却する
+   *
    * @param value 入力文字列
    * @return 出力文字列
    */

@@ -21,8 +21,8 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 public @interface EscapeReject {
   String message() default "validation.EscapeReject.message";
-
+  
   Class<?>[] groups() default {};
-
+  
   Class<? extends Payload>[] payload() default {};
 }

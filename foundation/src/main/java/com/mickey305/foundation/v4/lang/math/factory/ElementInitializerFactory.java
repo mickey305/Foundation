@@ -22,7 +22,7 @@ public class ElementInitializerFactory {
       public Integer zero() {
         return 0;
       }
-  
+
       /**
        * {@inheritDoc}
        */
@@ -30,7 +30,7 @@ public class ElementInitializerFactory {
       public Integer one() {
         return 1;
       }
-  
+
       /**
        * {@inheritDoc}
        */
@@ -38,7 +38,7 @@ public class ElementInitializerFactory {
       public Integer minusOne() {
         return -1;
       }
-  
+
       /**
        * {@inheritDoc}
        */
@@ -59,7 +59,7 @@ public class ElementInitializerFactory {
       public Long zero() {
         return 0L;
       }
-  
+
       /**
        * {@inheritDoc}
        */
@@ -67,7 +67,7 @@ public class ElementInitializerFactory {
       public Long one() {
         return 1L;
       }
-  
+
       /**
        * {@inheritDoc}
        */
@@ -75,7 +75,7 @@ public class ElementInitializerFactory {
       public Long minusOne() {
         return -1L;
       }
-  
+
       /**
        * {@inheritDoc}
        */
@@ -96,7 +96,7 @@ public class ElementInitializerFactory {
       public Short zero() {
         return (short) 0;
       }
-  
+
       /**
        * {@inheritDoc}
        */
@@ -104,7 +104,7 @@ public class ElementInitializerFactory {
       public Short one() {
         return (short) 1;
       }
-  
+
       /**
        * {@inheritDoc}
        */
@@ -112,7 +112,7 @@ public class ElementInitializerFactory {
       public Short minusOne() {
         return (short) -1;
       }
-  
+
       /**
        * {@inheritDoc}
        */
@@ -133,7 +133,7 @@ public class ElementInitializerFactory {
       public Byte zero() {
         return (byte) 0;
       }
-  
+
       /**
        * {@inheritDoc}
        */
@@ -141,7 +141,7 @@ public class ElementInitializerFactory {
       public Byte one() {
         return (byte) 1;
       }
-  
+
       /**
        * {@inheritDoc}
        */
@@ -149,7 +149,7 @@ public class ElementInitializerFactory {
       public Byte minusOne() {
         return (byte) -1;
       }
-  
+
       /**
        * {@inheritDoc}
        */
@@ -170,7 +170,7 @@ public class ElementInitializerFactory {
       public Float zero() {
         return 0.0f;
       }
-  
+
       /**
        * {@inheritDoc}
        */
@@ -178,7 +178,7 @@ public class ElementInitializerFactory {
       public Float one() {
         return 1.0f;
       }
-  
+
       /**
        * {@inheritDoc}
        */
@@ -186,7 +186,7 @@ public class ElementInitializerFactory {
       public Float minusOne() {
         return -1.0f;
       }
-  
+
       /**
        * {@inheritDoc}
        */
@@ -207,7 +207,7 @@ public class ElementInitializerFactory {
       public Double zero() {
         return 0.0d;
       }
-  
+
       /**
        * {@inheritDoc}
        */
@@ -215,7 +215,7 @@ public class ElementInitializerFactory {
       public Double one() {
         return 1.0d;
       }
-  
+
       /**
        * {@inheritDoc}
        */
@@ -223,7 +223,7 @@ public class ElementInitializerFactory {
       public Double minusOne() {
         return -1.0d;
       }
-  
+
       /**
        * {@inheritDoc}
        */
@@ -244,7 +244,7 @@ public class ElementInitializerFactory {
       public BigInteger zero() {
         return BigInteger.ZERO;
       }
-  
+
       /**
        * {@inheritDoc}
        */
@@ -252,7 +252,7 @@ public class ElementInitializerFactory {
       public BigInteger one() {
         return BigInteger.ONE;
       }
-  
+
       /**
        * {@inheritDoc}
        */
@@ -260,7 +260,7 @@ public class ElementInitializerFactory {
       public BigInteger minusOne() {
         return BigInteger.valueOf(-1L);
       }
-  
+
       /**
        * {@inheritDoc}
        */
@@ -294,7 +294,7 @@ public class ElementInitializerFactory {
       public BigDecimal zero() {
         return BigDecimal.ZERO;
       }
-  
+
       /**
        * {@inheritDoc}
        */
@@ -302,7 +302,7 @@ public class ElementInitializerFactory {
       public BigDecimal one() {
         return BigDecimal.ONE;
       }
-  
+
       /**
        * {@inheritDoc}
        */
@@ -310,7 +310,7 @@ public class ElementInitializerFactory {
       public BigDecimal minusOne() {
         return new BigDecimal("-1.0");
       }
-  
+
       /**
        * {@inheritDoc}
        */
@@ -344,7 +344,7 @@ public class ElementInitializerFactory {
       public Fraction zero() {
         return Fraction.ZERO;
       }
-  
+
       /**
        * {@inheritDoc}
        */
@@ -352,7 +352,7 @@ public class ElementInitializerFactory {
       public Fraction one() {
         return Fraction.ONE;
       }
-  
+
       /**
        * {@inheritDoc}
        */
@@ -360,7 +360,7 @@ public class ElementInitializerFactory {
       public Fraction minusOne() {
         return Fraction.MINUS_ONE;
       }
-  
+
       /**
        * {@inheritDoc}
        */
@@ -396,7 +396,7 @@ public class ElementInitializerFactory {
       public BigFraction zero() {
         return BigFraction.ZERO;
       }
-  
+
       /**
        * {@inheritDoc}
        */
@@ -404,7 +404,7 @@ public class ElementInitializerFactory {
       public BigFraction one() {
         return BigFraction.ONE;
       }
-  
+
       /**
        * {@inheritDoc}
        */
@@ -412,7 +412,7 @@ public class ElementInitializerFactory {
       public BigFraction minusOne() {
         return BigFraction.MINUS_ONE;
       }
-  
+
       /**
        * {@inheritDoc}
        */

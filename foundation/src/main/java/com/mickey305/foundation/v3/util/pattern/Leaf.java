@@ -24,7 +24,7 @@ public class Leaf<T> extends Component<T> {
    *
    * @param targetParent バインド対象親コンテナ
    * @return 処理結果
-   *
+   * <p>
    * {@inheritDoc}
    */
   @Override
@@ -36,7 +36,7 @@ public class Leaf<T> extends Component<T> {
    * コンテナリリースメソッド
    *
    * @return 処理結果
-   *
+   * <p>
    * {@inheritDoc}
    */
   @Override

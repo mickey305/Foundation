@@ -17,6 +17,7 @@ public class JapanesePicker {
   
   /**
    * 入力された文字列の日本語抽出マッチャを生成する
+   *
    * @param stmt 日本語抽出対象の文字列
    * @return 日本語抽出マッチャ
    */

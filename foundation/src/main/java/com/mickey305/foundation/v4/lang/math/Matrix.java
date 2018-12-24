@@ -247,8 +247,8 @@ public class Matrix<E extends Number> extends AbstractNumberTable<E> {
    *
    * @param row1 swap target row number first
    * @param row2 swap target row number second
-   *
-   * {@inheritDoc}
+   *             <p>
+   *             {@inheritDoc}
    */
   @Override
   public void swapRow(int row1, int row2) {
@@ -262,8 +262,8 @@ public class Matrix<E extends Number> extends AbstractNumberTable<E> {
    *
    * @param column1 swap target column number first
    * @param column2 swap target column number second
-   *
-   * {@inheritDoc}
+   *                <p>
+   *                {@inheritDoc}
    */
   @Override
   public void swapColumn(int column1, int column2) {

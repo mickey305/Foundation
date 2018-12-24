@@ -15,6 +15,7 @@ public class JapanesePickerFactory {
   
   /**
    * デフォルトの日本語抽出器を生成する
+   *
    * @return 日本語抽出器
    */
   public static JapanesePicker createDefault() {
@@ -28,6 +29,7 @@ public class JapanesePickerFactory {
   
   /**
    * XML用の日本語抽出器を生成する
+   *
    * @return 日本語抽出器
    */
   public static JapanesePicker createDefaultXmlStyle() {
@@ -41,6 +43,7 @@ public class JapanesePickerFactory {
   
   /**
    * JSON用の日本語抽出器を生成する
+   *
    * @return 日本語抽出器
    */
   public static JapanesePicker createDefaultJsonStyle() {
@@ -54,6 +57,7 @@ public class JapanesePickerFactory {
   
   /**
    * オリジナルの日本語抽出器を生成する
+   *
    * @return 日本語抽出器
    */
   public static JapanesePicker createPlain() {

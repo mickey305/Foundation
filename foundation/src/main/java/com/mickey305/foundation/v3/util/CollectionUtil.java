@@ -214,7 +214,7 @@ public class CollectionUtil {
     public ProtectedCollection(Collection<? extends E> c) {
       this.setCollection(c);
     }
-  
+    
     /**
      * {@inheritDoc}
      */
@@ -222,7 +222,7 @@ public class CollectionUtil {
     public int size() {
       return this.getCollection().size();
     }
-  
+    
     /**
      * {@inheritDoc}
      */
@@ -230,7 +230,7 @@ public class CollectionUtil {
     public boolean isEmpty() {
       return this.getCollection().isEmpty();
     }
-  
+    
     /**
      * {@inheritDoc}
      */
@@ -238,7 +238,7 @@ public class CollectionUtil {
     public boolean contains(Object o) {
       return this.getCollection().contains(o);
     }
-  
+    
     /**
      * {@inheritDoc}
      */
@@ -246,7 +246,7 @@ public class CollectionUtil {
     public boolean containsAll(Collection<?> c) {
       return this.getCollection().containsAll(c);
     }
-  
+    
     /**
      * {@inheritDoc}
      */
@@ -254,7 +254,7 @@ public class CollectionUtil {
     public Iterator<E> iterator() {
       throw new UnsupportedOperationException();
     }
-  
+    
     /**
      * {@inheritDoc}
      */
@@ -262,7 +262,7 @@ public class CollectionUtil {
     public Object[] toArray() {
       throw new UnsupportedOperationException();
     }
-  
+    
     /**
      * {@inheritDoc}
      */
@@ -270,7 +270,7 @@ public class CollectionUtil {
     public <T> T[] toArray(T[] a) {
       throw new UnsupportedOperationException();
     }
-  
+    
     /**
      * {@inheritDoc}
      */
@@ -278,7 +278,7 @@ public class CollectionUtil {
     public boolean add(E e) {
       throw new UnsupportedOperationException();
     }
-  
+    
     /**
      * {@inheritDoc}
      */
@@ -286,7 +286,7 @@ public class CollectionUtil {
     public boolean remove(Object o) {
       throw new UnsupportedOperationException();
     }
-  
+    
     /**
      * {@inheritDoc}
      */
@@ -294,7 +294,7 @@ public class CollectionUtil {
     public boolean addAll(Collection<? extends E> c) {
       throw new UnsupportedOperationException();
     }
-  
+    
     /**
      * {@inheritDoc}
      */
@@ -302,7 +302,7 @@ public class CollectionUtil {
     public boolean removeAll(Collection<?> c) {
       throw new UnsupportedOperationException();
     }
-  
+    
     /**
      * {@inheritDoc}
      */
@@ -310,7 +310,7 @@ public class CollectionUtil {
     public boolean retainAll(Collection<?> c) {
       throw new UnsupportedOperationException();
     }
-  
+    
     /**
      * {@inheritDoc}
      */
@@ -335,7 +335,7 @@ public class CollectionUtil {
       super(c);
       this.setList(c);
     }
-  
+    
     /**
      * {@inheritDoc}
      */
@@ -343,7 +343,7 @@ public class CollectionUtil {
     public int indexOf(Object o) {
       return this.getList().indexOf(o);
     }
-  
+    
     /**
      * {@inheritDoc}
      */
@@ -351,7 +351,7 @@ public class CollectionUtil {
     public int lastIndexOf(Object o) {
       return this.getList().lastIndexOf(o);
     }
-  
+    
     /**
      * {@inheritDoc}
      */
@@ -359,7 +359,7 @@ public class CollectionUtil {
     public boolean addAll(int index, Collection<? extends E> c) {
       throw new UnsupportedOperationException();
     }
-  
+    
     /**
      * {@inheritDoc}
      */
@@ -367,7 +367,7 @@ public class CollectionUtil {
     public E get(int index) {
       throw new UnsupportedOperationException();
     }
-  
+    
     /**
      * {@inheritDoc}
      */
@@ -375,7 +375,7 @@ public class CollectionUtil {
     public E set(int index, E element) {
       throw new UnsupportedOperationException();
     }
-  
+    
     /**
      * {@inheritDoc}
      */
@@ -383,7 +383,7 @@ public class CollectionUtil {
     public void add(int index, E element) {
       throw new UnsupportedOperationException();
     }
-  
+    
     /**
      * {@inheritDoc}
      */
@@ -391,7 +391,7 @@ public class CollectionUtil {
     public E remove(int index) {
       throw new UnsupportedOperationException();
     }
-  
+    
     /**
      * {@inheritDoc}
      */
@@ -399,7 +399,7 @@ public class CollectionUtil {
     public ListIterator<E> listIterator() {
       throw new UnsupportedOperationException();
     }
-  
+    
     /**
      * {@inheritDoc}
      */
@@ -407,7 +407,7 @@ public class CollectionUtil {
     public ListIterator<E> listIterator(int index) {
       throw new UnsupportedOperationException();
     }
-  
+    
     /**
      * {@inheritDoc}
      */
@@ -437,7 +437,7 @@ public class CollectionUtil {
     private void setMap(Map<? extends K, ? extends V> map) {
       this.map = map;
     }
-  
+    
     /**
      * {@inheritDoc}
      */
@@ -445,7 +445,7 @@ public class CollectionUtil {
     public int size() {
       return this.getMap().size();
     }
-  
+    
     /**
      * {@inheritDoc}
      */
@@ -453,7 +453,7 @@ public class CollectionUtil {
     public boolean isEmpty() {
       return this.getMap().isEmpty();
     }
-  
+    
     /**
      * {@inheritDoc}
      */
@@ -461,7 +461,7 @@ public class CollectionUtil {
     public boolean containsKey(Object key) {
       return this.getMap().containsKey(key);
     }
-  
+    
     /**
      * {@inheritDoc}
      */
@@ -469,7 +469,7 @@ public class CollectionUtil {
     public boolean containsValue(Object value) {
       return this.getMap().containsValue(value);
     }
-  
+    
     /**
      * {@inheritDoc}
      */
@@ -477,7 +477,7 @@ public class CollectionUtil {
     public V get(Object key) {
       throw new UnsupportedOperationException();
     }
-  
+    
     /**
      * {@inheritDoc}
      */
@@ -485,7 +485,7 @@ public class CollectionUtil {
     public V put(K key, V value) {
       throw new UnsupportedOperationException();
     }
-  
+    
     /**
      * {@inheritDoc}
      */
@@ -493,7 +493,7 @@ public class CollectionUtil {
     public V remove(Object key) {
       throw new UnsupportedOperationException();
     }
-  
+    
     /**
      * {@inheritDoc}
      */
@@ -501,7 +501,7 @@ public class CollectionUtil {
     public void putAll(Map<? extends K, ? extends V> m) {
       throw new UnsupportedOperationException();
     }
-  
+    
     /**
      * {@inheritDoc}
      */
@@ -509,7 +509,7 @@ public class CollectionUtil {
     public void clear() {
       throw new UnsupportedOperationException();
     }
-  
+    
     /**
      * {@inheritDoc}
      */
@@ -517,7 +517,7 @@ public class CollectionUtil {
     public Set<K> keySet() {
       throw new UnsupportedOperationException();
     }
-  
+    
     /**
      * {@inheritDoc}
      */
@@ -525,7 +525,7 @@ public class CollectionUtil {
     public Collection<V> values() {
       throw new UnsupportedOperationException();
     }
-  
+    
     /**
      * {@inheritDoc}
      */

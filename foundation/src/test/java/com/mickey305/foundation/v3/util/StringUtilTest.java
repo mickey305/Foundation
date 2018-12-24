@@ -94,7 +94,7 @@ public class StringUtilTest {
     testData.add(Pair.of("\r\nte　st\r\n", "te　st"));
     testData.add(Pair.of("te　st\r\n\r\n", "te　st"));
     testData.add(Pair.of("\r\n\r\nte　st", "te　st"));
-  
+    
     // complex data
     testData.add(Pair.of("\n 　\n \t  \r\n\r\nt\t\r\ne　　st\n\r  　", "t\t\r\ne　　st"));
     testData.add(Pair.of("\n 　\n \t  \r\n\r検証\nt\t\r\ne　　st\n\r  　", "検証\nt\t\r\ne　　st"));
@@ -115,7 +115,7 @@ public class StringUtilTest {
     testData.add(Pair.of("\n 　\n \t  \r\n\r検🚴証\nt\t\r\ne　　st\n\r  　", "検🚴証\nt\t\r\ne　　st"));
     testData.add(Pair.of("\n 　\n \t  \r\n\r検🚵証\nt\t\r\ne　　st\n\r  　", "検🚵証\nt\t\r\ne　　st"));
     testData.add(Pair.of("\n 　\n \t  \r\n\r🚶🚷\nt\t\r\ne　　st\n\r  　", "🚶🚷\nt\t\r\ne　　st"));
-  
+    
     int i = 0;
     for (Pair<String, String> data : testData) {
       final String result = StringUtil.trim(data.getLeft());
