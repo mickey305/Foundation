@@ -85,7 +85,7 @@ public abstract class AbstractCryptoManager {
       saltKey = this.createSaltKey();
     } catch (Exception e) {
       Log.e(e.getMessage());
-      throw new CryptException(e);
+      throw new CryptoException(e);
     }
     return this;
   }
@@ -142,7 +142,7 @@ public abstract class AbstractCryptoManager {
       }
     } catch (IllegalBlockSizeException | BadPaddingException e) {
       Log.e("encrypt: " + e.getMessage());
-      throw new CryptException(e);
+      throw new CryptoException(e);
     }
     
     return Base64.encodeBase64String(encrypted);
@@ -176,7 +176,7 @@ public abstract class AbstractCryptoManager {
       }
     } catch (IllegalBlockSizeException | BadPaddingException e) {
       Log.e("decrypt: " + e.getMessage());
-      throw new CryptException(e);
+      throw new CryptoException(e);
     }
     
     return new String(decrypted);
@@ -193,7 +193,7 @@ public abstract class AbstractCryptoManager {
       cipher.init(mode, secretKey);
     } catch (InvalidKeyException e) {
       Log.e(e.getMessage());
-      throw new CryptException(e);
+      throw new CryptoException(e);
     }
     return cipher;
   }
@@ -205,7 +205,7 @@ public abstract class AbstractCryptoManager {
       cipher = Cipher.getInstance(algorithm);
     } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
       Log.e(e.getMessage());
-      throw new CryptException(e);
+      throw new CryptoException(e);
     }
     return cipher;
   }
@@ -247,7 +247,7 @@ public abstract class AbstractCryptoManager {
   
   public AbstractCryptoManager saltKey(String saltKey) {
     if (this.saltKey.length() > saltKey.length()) {
-      throw new CryptException("Data shorter than the current salt-key can not be set. input=[" + saltKey + "]");
+      throw new CryptoException("Data shorter than the current salt-key can not be set. input=[" + saltKey + "]");
     }
     this.saltKey = saltKey;
     return this;
@@ -256,12 +256,12 @@ public abstract class AbstractCryptoManager {
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // inner class
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  public class CryptException extends UnsupportedOperationException {
-    public CryptException(Throwable cause) {
+  public class CryptoException extends UnsupportedOperationException {
+    public CryptoException(Throwable cause) {
       super(cause);
     }
     
-    public CryptException(String msg) {
+    public CryptoException(String msg) {
       super(msg);
     }
   }
