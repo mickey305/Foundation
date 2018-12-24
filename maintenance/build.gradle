@@ -4,8 +4,8 @@ version '0.0.1'
 apply plugin: 'java'
 apply plugin: 'application'
 
-sourceCompatibility = 10
-targetCompatibility = 10
+sourceCompatibility = JavaVersion.VERSION_1_10
+targetCompatibility = JavaVersion.VERSION_1_10
 
 mainClassName = 'com.mickey305.foundation.tools.maintenance.v3.MaintenanceBatch'
 
@@ -15,6 +15,10 @@ gradle.projectsEvaluated {
     tasks.withType(JavaCompile) {
         options.compilerArgs << "-Xlint:none"
         options.encoding = defaultEncoding
+    }
+
+    tasks.withType(Test) {
+        systemProperty "file.encoding", defaultEncoding
     }
 }
 
