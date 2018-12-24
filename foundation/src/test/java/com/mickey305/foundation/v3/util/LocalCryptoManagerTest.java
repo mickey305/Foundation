@@ -1,5 +1,7 @@
 package com.mickey305.foundation.v3.util;
 
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -46,10 +48,12 @@ public class LocalCryptoManagerTest {
       final LocalCryptoManager crypto = LocalCryptoManager.getInstance();
       final String encryptedStmt = crypto.encrypt(testStmt);
       final String decryptedStmt = crypto.decrypt(encryptedStmt);
-      
+  
       Log.i("testStmt=[" + testStmt + "]");
       Log.i("encryptedStmt=[" + encryptedStmt + "]");
       Log.i("decryptedStmt=[" + decryptedStmt + "]");
+      Log.i("base64 testStmt=[" + StringUtils.join(Base64.encodeBase64(testStmt.getBytes()), ' ') + "]");
+      Log.i("base64 decryptedStmt=[" + StringUtils.join(Base64.encodeBase64(decryptedStmt.getBytes()), ' ') + "]");
       
       Assert.assertEquals(testStmt, decryptedStmt);
     }
@@ -58,10 +62,12 @@ public class LocalCryptoManagerTest {
       final LocalCryptoManager crypto = LocalCryptoManager.getInstance();
       final String encryptedStmt = crypto.encrypt(testStmt);
       final String decryptedStmt = crypto.decrypt(encryptedStmt);
-      
+  
       Log.i("testStmt=[" + testStmt + "]");
       Log.i("encryptedStmt=[" + encryptedStmt + "]");
       Log.i("decryptedStmt=[" + decryptedStmt + "]");
+      Log.i("base64 testStmt=[" + StringUtils.join(Base64.encodeBase64(testStmt.getBytes()), ' ') + "]");
+      Log.i("base64 decryptedStmt=[" + StringUtils.join(Base64.encodeBase64(decryptedStmt.getBytes()), ' ') + "]");
       
       Assert.assertEquals(testStmt, decryptedStmt);
     }
