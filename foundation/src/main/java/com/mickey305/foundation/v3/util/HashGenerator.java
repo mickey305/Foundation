@@ -1,10 +1,10 @@
 package com.mickey305.foundation.v3.util;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.xml.bind.DatatypeConverter;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -12,7 +12,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class HashGenerator {
   private static final Charset CHARSET = StandardCharsets.UTF_8;
-  private static final String ALGORITHM = "MD5";
+  private static final String ALGORITHM = "SHA-256";
   private static final MessageDigest MESSAGE_DIGEST;
   
   static {
@@ -22,6 +22,17 @@ public class HashGenerator {
       Log.e(e.getMessage());
       throw new UnsupportedOperationException(e);
     }
+  }
+  
+  @Nonnull
+  public static byte[] hashByte(@Nullable String src, Charset charset) {
+    src = StringUtils.isEmpty(src) ? "" : src;
+    return MESSAGE_DIGEST.digest(src.getBytes(charset));
+  }
+  
+  @Nonnull
+  public static byte[] hashByte(@Nullable String src) {
+    return hashByte(src, CHARSET);
   }
   
   /**
@@ -36,13 +47,11 @@ public class HashGenerator {
    *
    * @param src     ハッシュ化対象の文字列
    * @param charset 文字コード
-   * @return ハッシュ値
+   * @return ハッシュ値(Base64 encoded)
    */
   @Nonnull
   public static String hash(@Nullable String src, Charset charset) {
-    src = StringUtils.isEmpty(src) ? "" : src;
-    final byte[] bytes = MESSAGE_DIGEST.digest(src.getBytes(charset));
-    return DatatypeConverter.printHexBinary(bytes);
+    return Base64.encodeBase64String(hashByte(src, charset));
   }
   
   /**
@@ -56,7 +65,7 @@ public class HashGenerator {
    * }</pre>
    *
    * @param src ハッシュ化対象の文字列
-   * @return ハッシュ値
+   * @return ハッシュ値(Base64 encoded)
    */
   @Nonnull
   public static String hash(@Nullable String src) {
