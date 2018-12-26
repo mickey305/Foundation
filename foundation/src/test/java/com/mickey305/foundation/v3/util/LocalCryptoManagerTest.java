@@ -63,6 +63,7 @@ public class LocalCryptoManagerTest {
       final LocalCryptoManager crypto = LocalCryptoManager.getInstance();
       final String encryptedStmt = crypto.encrypt(testStmt);
       final String decryptedStmt = crypto.decrypt(encryptedStmt);
+      crypto.dispose();
   
       Log.i("testStmt=[" + testStmt + "]");
       Log.i("encryptedStmt=[" + encryptedStmt + "]");

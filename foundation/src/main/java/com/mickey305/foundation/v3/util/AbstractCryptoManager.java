@@ -142,6 +142,13 @@ public abstract class AbstractCryptoManager {
   }
   
   /**
+   * 後処理
+   */
+  public void dispose() {
+    cipherMap.clear();
+  }
+  
+  /**
    * 入力された平文を暗号化する
    *
    * @param stmt 平文
@@ -196,6 +203,9 @@ public abstract class AbstractCryptoManager {
   private byte[] crypt(int mode, @Nonnull byte[] target) {
     // get cipher instance
     final Cipher cipher = cipherMap.get(mode);
+    if (cipher == null) {
+      throw new CryptoException("cipher object is empty");
+    }
     
     // invoke cipher
     byte[] result;
