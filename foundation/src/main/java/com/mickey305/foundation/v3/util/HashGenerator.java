@@ -1,6 +1,7 @@
 package com.mickey305.foundation.v3.util;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nonnull;
@@ -25,9 +26,15 @@ public class HashGenerator {
   }
   
   @Nonnull
+  public static byte[] hashByte(@Nullable byte[] src) {
+    src = ArrayUtils.isEmpty(src) ? new byte[0] : src;
+    return MESSAGE_DIGEST.digest(src);
+  }
+  
+  @Nonnull
   public static byte[] hashByte(@Nullable String src, Charset charset) {
     src = StringUtils.isEmpty(src) ? "" : src;
-    return MESSAGE_DIGEST.digest(src.getBytes(charset));
+    return hashByte(src.getBytes(charset));
   }
   
   @Nonnull

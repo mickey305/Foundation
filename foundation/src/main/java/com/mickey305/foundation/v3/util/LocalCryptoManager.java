@@ -13,10 +13,10 @@ public class LocalCryptoManager extends AbstractCryptoManager {
    */
   @Nonnull
   @Override
-  protected String createSaltKey() {
+  protected byte[] createSaltKey() {
     // UUIDをSaltキーとして実装
     final UUID uuid = UUID.randomUUID();
-    return uuid.toString();
+    return uuid.toString().getBytes();
   }
   
   public static LocalCryptoManager getInstance() {

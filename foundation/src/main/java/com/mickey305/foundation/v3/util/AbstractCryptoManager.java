@@ -1,6 +1,7 @@
 package com.mickey305.foundation.v3.util;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -22,6 +23,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.AlgorithmParameterSpec;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;
 
@@ -34,7 +37,12 @@ public abstract class AbstractCryptoManager {
   /**
    * share key data
    */
-  private final String shareKey;
+  private final byte[] shareKey;
+  
+  /**
+   * share key loaded data flag
+   */
+  private final boolean IsLoadedShareKey;
   
   /**
    * share key buffer
@@ -49,7 +57,12 @@ public abstract class AbstractCryptoManager {
   /**
    * salt key data
    */
-  private String saltKey;
+  private final byte[] saltKey;
+  
+  /**
+   * cipher instance cache
+   */
+  private final Map<Integer, Cipher> cipherMap;
   
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // initializer
@@ -59,27 +72,55 @@ public abstract class AbstractCryptoManager {
     info = new Info();
     iv = info.algorithm.genIV();
     shareKeyBuffer = new StringBuilder();
+    cipherMap = new HashMap<>();
     // create salt-key
-    this.generateSaltKey();
+    try {
+      saltKey = this.createSaltKey();
+    } catch (Exception e) {
+      Log.e(e.getMessage());
+      throw new CryptoException(e);
+    }
     // create share-key
-    String key = null;
+    byte[] loadedShareKey = null;
     try {
       final File shareKeyFile = ResFile.get("shareKey.dat");
       try (BufferedReader br = new BufferedReader(new FileReader(shareKeyFile))) {
-        key = br.readLine();
+        loadedShareKey = br.readLine().getBytes();
       } catch (Exception e) {
         Log.d("shareKey file reading: " + e.getMessage());
       }
     } catch (Exception e) {
       Log.d("shareKey file finding: " + e.getMessage());
     } finally {
-      shareKey = (StringUtils.isEmpty(key)) ? this.createShareKey() : key;
+      IsLoadedShareKey = !ArrayUtils.isEmpty(loadedShareKey);
+      shareKey = (!IsLoadedShareKey) ? this.createShareKey() : loadedShareKey;
     }
     // key data log out(env debug cryptMode only)
     if (IS_DEBUG_MODE) {
       Log.d("iv=" + Arrays.toString(iv));
-      Log.d("saltKey=[" + saltKey + "]");
-      Log.d("shareKey=[" + shareKey + "]");
+      Log.d("saltKey=" + Arrays.toString(saltKey));
+      Log.d("shareKey=" + Arrays.toString(shareKey));
+    }
+    // create cipher instance and cache
+    {
+      // build keyBytes
+      final byte[] keyBytes = HashGenerator.hashByte(ArrayUtils.addAll(shareKey, saltKey));
+      // create cipher instance
+      Cipher cipher = cipherMap.get(Cipher.ENCRYPT_MODE);
+      if (cipher == null) {
+        cipher = this.createCipher(Cipher.ENCRYPT_MODE, keyBytes, iv, info);
+        cipherMap.put(Cipher.ENCRYPT_MODE, cipher);
+      }
+    }
+    {
+      // build keyBytes
+      final byte[] keyBytes = HashGenerator.hashByte(ArrayUtils.addAll(shareKey, saltKey));
+      // create cipher instance
+      Cipher cipher = cipherMap.get(Cipher.DECRYPT_MODE);
+      if (cipher == null) {
+        cipher = this.createCipher(Cipher.DECRYPT_MODE, keyBytes, iv, info);
+        cipherMap.put(Cipher.DECRYPT_MODE, cipher);
+      }
     }
   }
   
@@ -88,17 +129,15 @@ public abstract class AbstractCryptoManager {
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   
   /**
-   * Saltキーを生成する
+   * セキュリティ情報を消去する
    *
    * @return instance of {@link AbstractCryptoManager}
    */
-  public AbstractCryptoManager generateSaltKey() {
-    try {
-      saltKey = this.createSaltKey();
-    } catch (Exception e) {
-      Log.e(e.getMessage());
-      throw new CryptoException(e);
-    }
+  public AbstractCryptoManager clearSecureInfo() {
+    shareKeyBuffer.delete(0, shareKeyBuffer.length());
+    Arrays.fill(shareKey, (byte) 0x00);
+    Arrays.fill(saltKey, (byte) 0x00);
+    Arrays.fill(iv, (byte) 0x00);
     return this;
   }
   
@@ -113,7 +152,12 @@ public abstract class AbstractCryptoManager {
     if (IS_DEBUG_MODE) {
       Log.d(ToStringBuilder.reflectionToString(info));
     }
-    return this.encrypt(info, saltKey, shareKey, iv, stmt);
+  
+    if (StringUtils.isEmpty(stmt)) {
+      return "";
+    }
+    final byte[] encrypted = this.encrypt(stmt.getBytes());
+    return Base64.encodeBase64String(encrypted);
   }
   
   /**
@@ -127,77 +171,48 @@ public abstract class AbstractCryptoManager {
     if (IS_DEBUG_MODE) {
       Log.d(ToStringBuilder.reflectionToString(info));
     }
-    return this.decrypt(info, saltKey, shareKey, iv, stmt);
+    
+    if (StringUtils.isEmpty(stmt)) {
+      return "";
+    }
+    final byte[] decrypted = this.decrypt(Base64.decodeBase64(stmt));
+    return new String(decrypted);
   }
   
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   /// private methods - crypto logic implementation
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   @Nonnull
-  private String encrypt(Info info, @Nonnull String salt, @Nonnull String key, byte[] iv, @Nullable String stmt) {
-    if (StringUtils.isEmpty(stmt)) {
-      return "";
-    }
-    
-    // rebuild key
-    final byte[] keyBytes = HashGenerator.hashByte(salt + key);
-    if (IS_DEBUG_MODE) {
-      Log.d("keyBytes=" + Arrays.toString(keyBytes));
-    }
-    
-    // create and initialize cipher instance
-    final Cipher cipher = this.createCipher(Cipher.ENCRYPT_MODE, keyBytes, iv, info);
-    
-    // invoke cipher encryption
-    byte[] encrypted;
-    try {
-      if (IS_DEBUG_MODE) {
-        Log.d("input=" + Arrays.toString(stmt.getBytes()));
-      }
-      encrypted = cipher.doFinal(stmt.getBytes());
-      if (IS_DEBUG_MODE) {
-        Log.d("output=" + Arrays.toString(encrypted));
-      }
-    } catch (IllegalBlockSizeException | BadPaddingException e) {
-      Log.e("encrypt: " + e.getMessage());
-      throw new CryptoException(e);
-    }
-    
-    return Base64.encodeBase64String(encrypted);
+  private byte[] encrypt(@Nonnull byte[] plain) {
+    return this.crypt(Cipher.ENCRYPT_MODE, plain);
   }
   
   @Nonnull
-  private String decrypt(Info info, @Nonnull String salt, @Nonnull String key, byte[] iv, @Nullable String stmt) {
-    if (StringUtils.isEmpty(stmt)) {
-      return "";
-    }
+  private byte[] decrypt(@Nonnull byte[] encrypted) {
+    return this.crypt(Cipher.DECRYPT_MODE, encrypted);
+  }
   
-    // rebuild key
-    final byte[] keyBytes = HashGenerator.hashByte(salt + key);
-    if (IS_DEBUG_MODE) {
-      Log.d("keyBytes=" + Arrays.toString(keyBytes));
-    }
+  @Nonnull
+  private byte[] crypt(int mode, @Nonnull byte[] target) {
+    // get cipher instance
+    final Cipher cipher = cipherMap.get(mode);
     
-    // create cipher instance
-    final Cipher cipher = this.createCipher(Cipher.DECRYPT_MODE, keyBytes, iv, info);
-    
-    // invoke cipher decryption
-    final byte[] encrypted = Base64.decodeBase64(stmt);
-    byte[] decrypted;
+    // invoke cipher
+    byte[] result;
     try {
       if (IS_DEBUG_MODE) {
-        Log.d("input=" + Arrays.toString(encrypted));
+        Log.d("input=" + Arrays.toString(target));
       }
-      decrypted = cipher.doFinal(encrypted);
+      result = cipher.doFinal(target);
       if (IS_DEBUG_MODE) {
-        Log.d("output=" + Arrays.toString(decrypted));
+        Log.d("output=" + Arrays.toString(result));
       }
     } catch (IllegalBlockSizeException | BadPaddingException e) {
-      Log.e("decrypt: " + e.getMessage());
+      Log.e(e.getMessage());
       throw new CryptoException(e);
     }
     
-    return new String(decrypted);
+    return result;
   }
   
   @Nonnull
@@ -241,12 +256,12 @@ public abstract class AbstractCryptoManager {
   }
   
   @Nonnull
-  private String createShareKey() {
+  private byte[] createShareKey() {
     shareKeyBuffer.setLength(0);
     shareKeyBuffer.append(AbstractCryptoManager.class.getName());
     shareKeyBuffer.append(System.nanoTime());
     shareKeyBuffer.append(RandomStringUtils.randomAscii(10));
-    return HashGenerator.hash(shareKeyBuffer.toString());
+    return HashGenerator.hashByte(shareKeyBuffer.toString());
   }
   
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -260,12 +275,12 @@ public abstract class AbstractCryptoManager {
   // accessor
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   @Nonnull
-  public String shareKey() {
+  public byte[] shareKey() {
     return shareKey;
   }
   
   @Nonnull
-  public String saltKey() {
+  public byte[] saltKey() {
     return saltKey;
   }
   
@@ -279,12 +294,8 @@ public abstract class AbstractCryptoManager {
     return info;
   }
   
-  public AbstractCryptoManager saltKey(String saltKey) {
-    if (this.saltKey.length() > saltKey.length()) {
-      throw new CryptoException("Data shorter than the current salt-key can not be set. input=[" + saltKey + "]");
-    }
-    this.saltKey = saltKey;
-    return this;
+  public boolean isLoadedShareKey() {
+    return IsLoadedShareKey;
   }
   
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -381,6 +392,6 @@ public abstract class AbstractCryptoManager {
    * @return Saltキー
    */
   @Nonnull
-  protected abstract String createSaltKey();
+  protected abstract byte[] createSaltKey();
   
 }

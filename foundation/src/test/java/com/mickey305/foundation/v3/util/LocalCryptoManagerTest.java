@@ -22,6 +22,7 @@ public class LocalCryptoManagerTest {
     {
       final String testStmt = "test statement";
       final LocalCryptoManager crypto = LocalCryptoManager.getInstance();
+      crypto.clearSecureInfo();
       final String encryptedStmt = crypto.encrypt(testStmt);
       final String decryptedStmt = crypto.decrypt(encryptedStmt);
       
