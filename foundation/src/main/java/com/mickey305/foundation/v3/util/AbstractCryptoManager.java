@@ -28,7 +28,7 @@ import java.util.Map;
 
 import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;
 
-public abstract class AbstractCryptoManager {
+public abstract class AbstractCryptoManager implements AutoCloseable {
   /**
    * crypto info
    */
@@ -184,6 +184,15 @@ public abstract class AbstractCryptoManager {
     }
     final byte[] decrypted = this.decrypt(Base64.decodeBase64(stmt));
     return new String(decrypted);
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void close() {
+    this.clearSecureInfo();
+    this.dispose();
   }
   
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
