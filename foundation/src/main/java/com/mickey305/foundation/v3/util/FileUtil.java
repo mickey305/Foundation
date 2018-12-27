@@ -2,9 +2,12 @@ package com.mickey305.foundation.v3.util;
 
 import javax.annotation.Nonnull;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -66,5 +69,20 @@ public class FileUtil {
     }
     
     return sb.toString();
+  }
+  
+  /**
+   * @param file
+   * @param lines
+   */
+  public static void writeSmallFileData(@Nonnull File file, @Nonnull String[] lines) {
+    try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(file)))) {
+      for (String line: lines) {
+        writer.println(line);
+      }
+    } catch (IOException e) {
+      Log.e(e.getMessage());
+      throw new RuntimeException(e);
+    }
   }
 }

@@ -1,8 +1,8 @@
 package com.mickey305.foundation.tools.maintenance.v3;
 
+import com.mickey305.foundation.EnvConfigConst;
 import com.mickey305.foundation.tools.maintenance.v3.util.JreLibUtils;
 import com.mickey305.foundation.tools.maintenance.v3.util.ReflectionsUtil;
-import com.mickey305.foundation.EnvConfigConst;
 import com.mickey305.foundation.v3.util.Log;
 import com.mickey305.foundation.v3.util.collections.SoftHashSet;
 import com.squareup.javapoet.ClassName;
@@ -46,7 +46,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-final class Workflow {
+public final class Workflow {
   private static final String GEN_PKG = "com.mickey305.foundation.v3.gen";
   private static final String TARGET_MODULE = "foundation";
   private static final double JRE_NOW;
@@ -201,7 +201,7 @@ final class Workflow {
     final Set<Class<?>> jreClasses = JreLibUtils.commonClassesFor(jre);
     final Set<Class<?>> localClasses = createClassesOf(
         "com.mickey305.foundation.v3.",
-        "com.mickey305.foundation.v4");
+        "com.mickey305.foundation.v4.");
     final Collection<Class<?>> allClasses = Stream.of(jreClasses, localClasses)
         .flatMap(Collection::stream)
         .sorted(Comparator.comparing(Class::getName))
@@ -244,7 +244,7 @@ final class Workflow {
    * @param prefixes
    * @return
    */
-  private static Set<Class<?>> createClassesOf(String... prefixes) {
+  public static Set<Class<?>> createClassesOf(String... prefixes) {
     final Set<Class<?>> targetClasses = new HashSet<>();
     final Function<String, Set<Class<?>>> searcher = ReflectionsUtil.getInstance().classSearcher();
     

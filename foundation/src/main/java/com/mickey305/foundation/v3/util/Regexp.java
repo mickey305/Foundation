@@ -211,6 +211,25 @@ public class Regexp {
   public static final String JP_PURE_SEED_PATTERN = "[ｦ-ﾟぁ-んァ-ヶー一-龠]+";
   public static final String JP_BINARY_SEED_PATTERN = "[^\\x01-\\x7E]+";
   
+  public static final class JavaGrammar {
+    
+    /**
+     * package文パターン
+     */
+    public static final String PACKAGE = "package\\s+([^;]+);";
+  
+    /**
+     * import文パターン
+     */
+    public static final String IMPORT = "import\\s+([^;]+);";
+  
+    /**
+     * import static文パターン
+     */
+    public static final String IMPORT_STATIC = "import\\s+static\\s+([^;]+);";
+    
+  }
+  
   private Regexp() {
   }
   
