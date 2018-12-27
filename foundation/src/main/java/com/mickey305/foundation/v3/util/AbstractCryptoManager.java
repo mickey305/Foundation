@@ -16,7 +16,9 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
+import java.io.InputStream;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -25,6 +27,7 @@ import java.security.spec.AlgorithmParameterSpec;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;
 
@@ -82,18 +85,27 @@ public abstract class AbstractCryptoManager implements AutoCloseable {
     }
     // create share-key
     byte[] loadedShareKey = null;
+    final File propertyFile = ResFile.get("common.properties");
+    final Properties properties = new Properties();
+    try (InputStream is = new FileInputStream(propertyFile)) {
+      properties.load(is);
+    } catch (Exception e) {
+      Log.e(e.getMessage());
+    }
     try {
-      final File shareKeyFile = ResFile.get("shareKey.dat");
-      try (BufferedReader br = new BufferedReader(new FileReader(shareKeyFile))) {
-        loadedShareKey = br.readLine().getBytes();
-      } catch (Exception e) {
-        Log.d("shareKey file reading: " + e.getMessage());
+      if (!properties.isEmpty()) {
+        final File shareKeyFile = ResFile.get(properties.getProperty("cryptoPasswordFilePath"));
+        try (BufferedReader br = new BufferedReader(new FileReader(shareKeyFile))) {
+          loadedShareKey = br.readLine().getBytes();
+        } catch (Exception e) {
+          Log.d("shareKey file reading: " + e.getMessage());
+        }
       }
     } catch (Exception e) {
       Log.d("shareKey file finding: " + e.getMessage());
     } finally {
       IsLoadedShareKey = !ArrayUtils.isEmpty(loadedShareKey);
-      shareKey = (!IsLoadedShareKey) ? this.createShareKey() : loadedShareKey;
+      shareKey = (IsLoadedShareKey) ? loadedShareKey : this.createShareKey();
     }
     // key data log out(env debug cryptMode only)
     if (IS_DEBUG_MODE) {
