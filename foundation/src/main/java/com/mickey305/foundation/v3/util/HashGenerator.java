@@ -27,15 +27,32 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class HashGenerator {
   private static final Charset CHARSET = StandardCharsets.UTF_8;
-  private static final String ALGORITHM = "SHA-256";
-  private static final MessageDigest MESSAGE_DIGEST;
+  private static final Algorithm DEFAULT_ALGORITHM = Algorithm.SHA256;
+  private static final Map<Algorithm, MessageDigest> DIGEST_CACHE;
   
   static {
+    DIGEST_CACHE = new HashMap<>();
     try {
-      MESSAGE_DIGEST = MessageDigest.getInstance(ALGORITHM);
+      {
+        // create MD5 message digest
+        MessageDigest md = MessageDigest.getInstance(Algorithm.MD5.name);
+        DIGEST_CACHE.put(Algorithm.MD5, md);
+      }
+      {
+        // create SHA-1 message digest
+        MessageDigest md = MessageDigest.getInstance(Algorithm.SHA1.name);
+        DIGEST_CACHE.put(Algorithm.SHA1, md);
+      }
+      {
+        // create SHA-256 message digest
+        MessageDigest md = MessageDigest.getInstance(Algorithm.SHA256.name);
+        DIGEST_CACHE.put(Algorithm.SHA256, md);
+      }
     } catch (NoSuchAlgorithmException e) {
       Log.e(e.getMessage());
       throw new UnsupportedOperationException(e);
@@ -44,8 +61,17 @@ public class HashGenerator {
   
   @Nonnull
   public static byte[] hashByte(@Nullable byte[] src) {
+    return hashByte(src, DEFAULT_ALGORITHM);
+  }
+  
+  @Nonnull
+  public static byte[] hashByte(@Nullable byte[] src, @Nonnull Algorithm algorithm) {
     src = ArrayUtils.isEmpty(src) ? new byte[0] : src;
-    return MESSAGE_DIGEST.digest(src);
+    final MessageDigest md = DIGEST_CACHE.get(algorithm);
+    if (md == null) {
+      throw new UnsupportedOperationException("target message digest not found");
+    }
+    return md.digest(src);
   }
   
   @Nonnull
@@ -55,8 +81,19 @@ public class HashGenerator {
   }
   
   @Nonnull
+  public static byte[] hashByte(@Nullable String src, Charset charset, @Nonnull Algorithm algorithm) {
+    src = StringUtils.isEmpty(src) ? "" : src;
+    return hashByte(src.getBytes(charset), algorithm);
+  }
+  
+  @Nonnull
   public static byte[] hashByte(@Nullable String src) {
     return hashByte(src, CHARSET);
+  }
+  
+  @Nonnull
+  public static byte[] hashByte(@Nullable String src, @Nonnull Algorithm algorithm) {
+    return hashByte(src, CHARSET, algorithm);
   }
   
   /**
@@ -85,6 +122,26 @@ public class HashGenerator {
    * <p>暗号化処理にはこのメソッドは使用せずに、あくまでハッシュ値生成目的で使用する
    * </p>
    * <pre>{@code
+   * final String hashedStmt = HashGenerator.hash(stmt, StandardCharsets.UTF_8, Algorithm.SHA256);
+   * }</pre>
+   *
+   * @param src     ハッシュ化対象の文字列
+   * @param charset 文字コード
+   * @param algorithm ハッシュ化アルゴリズム
+   * @return ハッシュ値(Base64 encoded)
+   */
+  @Nonnull
+  public static String hash(@Nullable String src, Charset charset, @Nonnull Algorithm algorithm) {
+    return Base64.encodeBase64String(hashByte(src, charset, algorithm));
+  }
+  
+  /**
+   * ハッシュ値生成メソッド
+   * <p>入力された文字列のハッシュ値を生成する
+   * </p>
+   * <p>暗号化処理にはこのメソッドは使用せずに、あくまでハッシュ値生成目的で使用する
+   * </p>
+   * <pre>{@code
    * final String hashedStmt = HashGenerator.hash(stmt);
    * }</pre>
    *
@@ -94,5 +151,36 @@ public class HashGenerator {
   @Nonnull
   public static String hash(@Nullable String src) {
     return hash(src, CHARSET);
+  }
+  
+  /**
+   * ハッシュ値生成メソッド
+   * <p>入力された文字列のハッシュ値を生成する
+   * </p>
+   * <p>暗号化処理にはこのメソッドは使用せずに、あくまでハッシュ値生成目的で使用する
+   * </p>
+   * <pre>{@code
+   * final String hashedStmt = HashGenerator.hash(stmt, Algorithm.SHA256);
+   * }</pre>
+   *
+   * @param src ハッシュ化対象の文字列
+   * @param algorithm ハッシュ化アルゴリズム
+   * @return ハッシュ値(Base64 encoded)
+   */
+  @Nonnull
+  public static String hash(@Nullable String src, @Nonnull Algorithm algorithm) {
+    return hash(src, CHARSET, algorithm);
+  }
+  
+  public enum Algorithm {
+    MD5("MD5"),
+    SHA1("SHA-1"),
+    SHA256("SHA-256");
+    
+    Algorithm(String name) {
+      this.name = name;
+    }
+    
+    private String name;
   }
 }
