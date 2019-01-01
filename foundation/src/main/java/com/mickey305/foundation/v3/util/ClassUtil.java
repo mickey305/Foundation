@@ -17,6 +17,10 @@
 
 package com.mickey305.foundation.v3.util;
 
+import java.io.IOException;
+import java.net.URLConnection;
+import java.util.Date;
+
 public class ClassUtil {
   
   private ClassUtil() {
@@ -37,5 +41,34 @@ public class ClassUtil {
         || target.equals(Long.class)
         || target.equals(Float.class)
         || target.equals(Double.class);
+  }
+  
+  /**
+   * ビルド日時取得処理
+   *
+   * @param instance 解析対象インスタンス
+   * @return ビルド日時
+   * @throws RuntimeException 実行時例外。{@link Class}リソースのオープンに失敗した場合に投げられる。
+   */
+  public static <T> Date getBuildDate(final T instance) {
+    return getBuildDate(instance.getClass());
+  }
+  
+  /**
+   * ビルド日時取得処理
+   *
+   * @param targetClass 解析対象クラス
+   * @return ビルド日時
+   * @throws RuntimeException 実行時例外。{@link Class}リソースのオープンに失敗した場合に投げられる。
+   */
+  public static Date getBuildDate(final Class<?> targetClass) {
+    try {
+      URLConnection conn = targetClass.getResource(
+          targetClass.getSimpleName() + ".class").openConnection();
+      return new Date(conn.getLastModified());
+    } catch (IOException e) {
+      Log.e(e.getMessage());
+      throw new RuntimeException(e);
+    }
   }
 }
