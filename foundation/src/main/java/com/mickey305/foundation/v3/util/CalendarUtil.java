@@ -46,10 +46,11 @@ public class CalendarUtil {
   public static Calendar toJpCal(@Nonnull Calendar cal) {
     final Calendar jpCal = Calendar.getInstance(LocaleConst.JP);
     // information setting
-    jpCal.setTime(cal.getTime());
     jpCal.setTimeZone(cal.getTimeZone());
     // override lenient flag
     jpCal.setLenient(DEFAULT_LENIENT);
+    // update time
+    jpCal.setTime(cal.getTime());
     return jpCal;
   }
   

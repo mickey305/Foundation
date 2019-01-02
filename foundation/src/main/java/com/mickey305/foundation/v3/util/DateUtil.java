@@ -23,6 +23,8 @@ import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Properties;
 import java.util.TimeZone;
@@ -85,11 +87,21 @@ public class DateUtil {
   @Nonnull
   public static java.sql.Date toSqlDate(@Nonnull java.util.Date date) {
     final Calendar cal = toCal(date);
+    if (IS_DEBUG_MODE) {
+      final DateFormat df = getCustomFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS"));
+      Log.d(df.format(cal.getTime()) + "[" + cal.getTimeZone().getDisplayName() + "]");
+    }
+  
     // time info initialization
     cal.set(Calendar.HOUR_OF_DAY, 0);
     cal.set(Calendar.MINUTE, 0);
     cal.set(Calendar.SECOND, 0);
     cal.set(Calendar.MILLISECOND, 0);
+    
+    if (IS_DEBUG_MODE) {
+      final DateFormat df = getCustomFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS"));
+      Log.d(df.format(cal.getTime()) + "[" + cal.getTimeZone().getDisplayName() + "]");
+    }
     return new java.sql.Date(cal.getTimeInMillis());
   }
   
@@ -102,10 +114,20 @@ public class DateUtil {
   @Nonnull
   public static java.sql.Time toSqlTime(@Nonnull java.util.Date date) {
     final Calendar cal = toCal(date);
+    if (IS_DEBUG_MODE) {
+      final DateFormat df = getCustomFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS"));
+      Log.d(df.format(cal.getTime()) + "[" + cal.getTimeZone().getDisplayName() + "]");
+    }
+  
     // date info initialization
     cal.set(Calendar.YEAR, BASE_YEAR);
     cal.set(Calendar.MONTH, Calendar.JANUARY);
     cal.set(Calendar.DATE, 1);
+    
+    if (IS_DEBUG_MODE) {
+      final DateFormat df = getCustomFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS"));
+      Log.d(df.format(cal.getTime()) + "[" + cal.getTimeZone().getDisplayName() + "]");
+    }
     return new java.sql.Time(cal.getTimeInMillis());
   }
   
@@ -129,11 +151,12 @@ public class DateUtil {
   @Nonnull
   public static Calendar toCal(@Nonnull java.util.Date date) {
     final Calendar cal = Calendar.getInstance();
-    cal.setTime(date);
     // set timezone
     cal.setTimeZone(DEFAULT_TIMEZONE);
     // set lenient
     cal.setLenient(DEFAULT_LENIENT);
+    // update time
+    cal.setTime(date);
     return cal;
   }
   
@@ -158,6 +181,10 @@ public class DateUtil {
   public static java.util.Date fromSqlDate(@Nonnull java.sql.Date sqlDate) {
     final java.util.Date date = new java.util.Date();
     date.setTime(sqlDate.getTime());
+    if (IS_DEBUG_MODE) {
+      final DateFormat df = getCustomFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS"));
+      Log.d(df.format(date));
+    }
     return date;
   }
   
@@ -170,6 +197,48 @@ public class DateUtil {
   public static java.util.Date fromSqlTime(@Nonnull java.sql.Time time) {
     final java.util.Date date = new java.util.Date();
     date.setTime(time.getTime());
+    if (IS_DEBUG_MODE) {
+      final DateFormat df = getCustomFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS"));
+      Log.d(df.format(date));
+    }
+    return date;
+  }
+  
+  /**
+   * 日時情報を{@link java.sql.Date}および{@link java.sql.Time}から{@link java.util.Date}へ変換する。
+   * @param sqlDate 変換対象の日時情報
+   * @param time 変換対象の日時情報
+   * @return 変換後の日時情報
+   */
+  @Nonnull
+  public static java.util.Date fromSqlDateAndTime(@Nonnull java.sql.Date sqlDate, @Nonnull java.sql.Time time) {
+    final java.util.Date date = new java.util.Date();
+    final Calendar sqlDateCal = toCal(sqlDate);
+    final Calendar sqlTimeCal = toCal(time);
+    final Calendar cal = toCal(date);
+    if (IS_DEBUG_MODE) {
+      final DateFormat df = getCustomFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS"));
+      Log.d(df.format(date));
+      Log.d(df.format(sqlDate));
+      Log.d(df.format(time));
+    }
+    
+    // date info setting of sqlDate
+    cal.set(Calendar.YEAR, sqlDateCal.get(Calendar.YEAR));
+    cal.set(Calendar.MONTH, sqlDateCal.get(Calendar.MONTH));
+    cal.set(Calendar.DATE, sqlDateCal.get(Calendar.DATE));
+    // time info setting of sqlTime
+    cal.set(Calendar.HOUR_OF_DAY, sqlTimeCal.get(Calendar.HOUR_OF_DAY));
+    cal.set(Calendar.MINUTE, sqlTimeCal.get(Calendar.MINUTE));
+    cal.set(Calendar.SECOND, sqlTimeCal.get(Calendar.SECOND));
+    cal.set(Calendar.MILLISECOND, sqlTimeCal.get(Calendar.MILLISECOND));
+    
+    date.setTime(cal.getTimeInMillis());
+    
+    if (IS_DEBUG_MODE) {
+      final DateFormat df = getCustomFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS"));
+      Log.d(df.format(date));
+    }
     return date;
   }
   
@@ -193,6 +262,10 @@ public class DateUtil {
       Log.d("lost nanos data: " + lost);
     }
     date.setTime(timestamp.getTime());
+    if (IS_DEBUG_MODE) {
+      final DateFormat df = getCustomFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS"));
+      Log.d(df.format(date));
+    }
     return date;
   }
   
@@ -208,6 +281,10 @@ public class DateUtil {
     cal.setTimeZone(DEFAULT_TIMEZONE);
     // set lenient
     cal.setLenient(DEFAULT_LENIENT);
+    if (IS_DEBUG_MODE) {
+      final DateFormat df = getCustomFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS"));
+      Log.d(df.format(cal.getTime()) + "[" + cal.getTimeZone().getDisplayName() + "]");
+    }
     // new Date object
     //   same code: return new java.util.Date(cal.getTimeInMillis());
     return cal.getTime();
@@ -222,5 +299,19 @@ public class DateUtil {
   public static DayOfWeek getDayOfWeek(@Nonnull java.util.Date date) {
     final Calendar cal = toCal(date);
     return CalendarUtil.getDayOfWeek(cal);
+  }
+  
+  /**
+   * 日付フォーマットオブジェクトの設定を変更する
+   * @param dateFormat 日付フォーマットオブジェクト
+   * @return 日付フォーマットオブジェクト
+   */
+  @Nonnull
+  public static <F extends DateFormat> F getCustomFormat(@Nonnull F dateFormat) {
+    // set timezone
+    dateFormat.setTimeZone(DEFAULT_TIMEZONE);
+    // set lenient
+    dateFormat.setLenient(DEFAULT_LENIENT);
+    return dateFormat;
   }
 }

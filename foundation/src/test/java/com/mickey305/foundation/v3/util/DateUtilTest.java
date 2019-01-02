@@ -26,7 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DateUtilTest {
-  private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+  private static final SimpleDateFormat SDF = DateUtil.getCustomFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS"));
   
   @Before
   public void setUp() throws Exception {
@@ -46,16 +46,16 @@ public class DateUtilTest {
       java.sql.Date sqlDate = new java.sql.Date(System.currentTimeMillis());
       java.util.Date date = DateUtil.fromSqlDate(sqlDate);
       java.sql.Date sqlDate2 = DateUtil.toSqlDate(date);
-      Log.i("SqlDate -> Date   : " + SDF.format(sqlDate.getTime()) + " / " + SDF.format(date.getTime()));
-      Log.i("Date -> SqlDate   : same / " + SDF.format(sqlDate2.getTime()));
+      Log.i("[" + SDF.getTimeZone().getDisplayName() + "] SqlDate -> Date    : " + SDF.format(sqlDate.getTime()) + " -> " + SDF.format(date.getTime()));
+      Log.i("[" + SDF.getTimeZone().getDisplayName() + "] Date -> SqlDate    : same -> " + SDF.format(sqlDate2.getTime()));
       Assert.assertEquals(SDF.format(sqlDate.getTime()), SDF.format(date.getTime()));
     }
     {
       java.sql.Time time = new java.sql.Time(System.currentTimeMillis());
       java.util.Date date = DateUtil.fromSqlTime(time);
       java.sql.Time time2 = DateUtil.toSqlTime(date);
-      Log.i("Time -> Date      : " + SDF.format(time.getTime()) + " / " + SDF.format(date.getTime()));
-      Log.i("Date -> Time      : same / " + SDF.format(time2.getTime()));
+      Log.i("[" + SDF.getTimeZone().getDisplayName() + "] Time -> Date       : " + SDF.format(time.getTime()) + " -> " + SDF.format(date.getTime()));
+      Log.i("[" + SDF.getTimeZone().getDisplayName() + "] Date -> Time       : same -> " + SDF.format(time2.getTime()));
       Assert.assertEquals(SDF.format(time.getTime()), SDF.format(date.getTime()));
     }
     {
@@ -63,11 +63,18 @@ public class DateUtilTest {
       timestamp.setNanos(timestamp.getNanos() + 100);
       java.util.Date date = DateUtil.fromSqlTimestamp(timestamp);
       java.sql.Timestamp timestamp2 = DateUtil.toSqlTimestamp(date);
-      Log.i("Timestamp -> Date :" + SDF.format(timestamp.getTime()) + " / " + SDF.format(date.getTime()));
-      Log.i("Timestamp nano-sec:" + timestamp.getNanos());
-      Log.i("Date -> TimeStamp : same / " + SDF.format(timestamp2.getTime()));
-      Log.i("Timestamp nano-sec:" + timestamp2.getNanos());
+      Log.i("[" + SDF.getTimeZone().getDisplayName() + "] Timestamp -> Date  : " + SDF.format(timestamp.getTime()) + " -> " + SDF.format(date.getTime()));
+      Log.i("[" + SDF.getTimeZone().getDisplayName() + "] Timestamp nano-sec : " + timestamp.getNanos());
+      Log.i("[" + SDF.getTimeZone().getDisplayName() + "] Date -> TimeStamp  : same -> " + SDF.format(timestamp2.getTime()));
+      Log.i("[" + SDF.getTimeZone().getDisplayName() + "] Timestamp nano-sec : " + timestamp2.getNanos());
       Assert.assertEquals(SDF.format(timestamp.getTime()), SDF.format(date.getTime()));
+    }
+    {
+      java.util.Date date = new Date();
+      java.sql.Date sqlDate = DateUtil.toSqlDate(date);
+      java.sql.Time sqlTime = DateUtil.toSqlTime(date);
+      java.util.Date date2 = DateUtil.fromSqlDateAndTime(sqlDate, sqlTime);
+      Assert.assertEquals(date, date2);
     }
   }
 }
