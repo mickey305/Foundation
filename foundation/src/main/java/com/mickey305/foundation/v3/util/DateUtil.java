@@ -17,6 +17,8 @@
 
 package com.mickey305.foundation.v3.util;
 
+import com.mickey305.foundation.v3.compat.util.DayOfWeek;
+
 import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.FileInputStream;
@@ -136,6 +138,18 @@ public class DateUtil {
   }
   
   /**
+   * 日時情報を{@link java.util.Date}から{@link java.util.Calendar}へ変換する。
+   * 変換する際に、タイムゾーンの情報を更新する。
+   * @param date 変換対象の日時情報
+   * @return 変換後の日時情報
+   */
+  @Nonnull
+  public static Calendar toJpCal(@Nonnull java.util.Date date) {
+    final Calendar cal = toCal(date);
+    return CalendarUtil.toJpCal(cal);
+  }
+  
+  /**
    * 日時情報を{@link java.sql.Date}から{@link java.util.Date}へ変換する。
    * @param sqlDate 変換対象の日時情報
    * @return 変換後の日時情報
@@ -197,5 +211,16 @@ public class DateUtil {
     // new Date object
     //   same code: return new java.util.Date(cal.getTimeInMillis());
     return cal.getTime();
+  }
+  
+  /**
+   * 入力された日時情報の曜日を取得する
+   * @param date 変換対象の日時情報
+   * @return 曜日
+   */
+  @Nonnull
+  public static DayOfWeek getDayOfWeek(@Nonnull java.util.Date date) {
+    final Calendar cal = toCal(date);
+    return CalendarUtil.getDayOfWeek(cal);
   }
 }
