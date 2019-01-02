@@ -6,9 +6,16 @@
 @rem ##########################################################################
 
 @rem decompile target class list
-set VAR_1=com.mickey305.foundation.v4.lang.math.AbstractNumberTable
-set VAR_2=com.mickey305.foundation.v4.lang.math.SquareMatrix
-set VAR_3=com.mickey305.foundation.v3.lang.ref.SecureObjectTaskManager
+set VAR_1=com.mickey305.foundation.v3.gen.R
+set VAR_2=com.mickey305.foundation.v3.lang.ref.SecureObjectTaskManager
+set VAR_3=com.mickey305.foundation.v3.util.AbstractCryptoManager
+set VAR_4=com.mickey305.foundation.v3.util.CollectionUtil
+set VAR_5=com.mickey305.foundation.v3.util.DateUtil
+set VAR_6=com.mickey305.foundation.v3.util.Regexp
+set VAR_7=com.mickey305.foundation.v3.util.ResFile
+set VAR_8=com.mickey305.foundation.v4.lang.math.AbstractNumberTable
+set VAR_9=com.mickey305.foundation.v4.lang.math.MathConst
+set VAR_10=com.mickey305.foundation.v4.lang.math.SquareMatrix
 
 @REM UTF-8
 chcp 65001
