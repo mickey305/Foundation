@@ -43,6 +43,11 @@ public class DateUtil {
   private static final int NANO_TO_MILLI_OFFSET_DIGIT = 1_000_000;
   
   /**
+   * date type check const
+   */
+  private static final boolean DEFAULT_LENIENT = false;
+  
+  /**
    * timezone setting override constant
    */
   private static final TimeZone DEFAULT_TIMEZONE;
@@ -125,6 +130,8 @@ public class DateUtil {
     cal.setTime(date);
     // set timezone
     cal.setTimeZone(DEFAULT_TIMEZONE);
+    // set lenient
+    cal.setLenient(DEFAULT_LENIENT);
     return cal;
   }
   
@@ -185,6 +192,8 @@ public class DateUtil {
   public static java.util.Date fromCal(@Nonnull Calendar cal) {
     // set timezone
     cal.setTimeZone(DEFAULT_TIMEZONE);
+    // set lenient
+    cal.setLenient(DEFAULT_LENIENT);
     // new Date object
     //   same code: return new java.util.Date(cal.getTimeInMillis());
     return cal.getTime();
