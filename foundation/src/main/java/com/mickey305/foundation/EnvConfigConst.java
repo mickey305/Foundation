@@ -29,4 +29,8 @@ public final class EnvConfigConst {
    * デバッグモード判別フラグ
    */
   public static final boolean IS_DEBUG_MODE = (!IS_PRODUCTION_MODE) && (IS_DEVELOP_MODE || IS_TEST_MODE);
+  
+  private EnvConfigConst() {
+    // nop
+  }
 }
