@@ -140,16 +140,12 @@ public class ByteConverter {
     if (len == 0) {
       return new byte[0];
     }
-    
-    if (separator == null) {
-      return Hex.decodeHex(hex);
-    }
   
     int heap = 0;
     final char[] tmpHex = new char[len];
     for (int i = 0, j = 0; i < len && j < len; /* nop increment statement */) {
       char c = hex[j++];
-      if (c == separator || Character.isWhitespace(c) || Character.isSpaceChar(c)) {
+      if ((separator != null && c == separator) || Character.isWhitespace(c) || Character.isSpaceChar(c)) {
         continue;
       }
       tmpHex[i++] = c;
