@@ -14,13 +14,19 @@ targetCompatibility = JavaVersion.VERSION_1_7
 
 gradle.projectsEvaluated {
     tasks.withType(JavaCompile) {
-//        options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+        //options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
         options.compilerArgs << "-Xlint:none"
         options.encoding = defaultEncoding
     }
-
     tasks.withType(Test) {
         systemProperty "file.encoding", defaultEncoding
+    }
+    // To generate an HTML report instead of XML
+    tasks.withType(com.github.spotbugs.SpotBugsTask) {
+        reports {
+            xml.enabled = false
+            html.enabled = true
+        }
     }
 }
 
@@ -38,6 +44,11 @@ jacocoTestReport {
     }
 }
 
+spotbugs {
+    toolVersion = '3.1.9'
+    ignoreFailures = true
+}
+
 publish {
     userOrg = 'mickey305'
     groupId = this.getGroup()
@@ -48,11 +59,6 @@ publish {
     licences = ['Apache-2.0']
 }
 
-spotbugs {
-    toolVersion = '3.1.9'
-    ignoreFailures = true
-}
-
 sourceSets {
     // we define `main` sourceSet here, so SpotBugs Gradle Plugin generates `spotbugsMain` task
     main {
@@ -60,18 +66,10 @@ sourceSets {
     }
 }
 
-// To generate an HTML report instead of XML
-tasks.withType(com.github.spotbugs.SpotBugsTask) {
-    reports {
-        xml.enabled = false
-        html.enabled = true
-    }
-}
-
 repositories {
     mavenCentral()
-    mavenLocal()
     jcenter()
+    //mavenLocal()
 }
 
 dependencies {
@@ -88,7 +86,7 @@ dependencies {
 
     def jreVersion = Double.parseDouble(System.getProperty("java.specification.version"))
     if (jreVersion >= 9) {
-//        compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.2.11'
+        //compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.2.11'
     }
 
     // - Maven repository hosting
