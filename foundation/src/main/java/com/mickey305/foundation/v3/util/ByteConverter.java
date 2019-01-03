@@ -49,6 +49,9 @@ public class ByteConverter {
   
   @Nonnull
   public ByteConverter setSeparator(char separator) {
+    if (Character.isLetterOrDigit(separator)) {
+      throw new IllegalArgumentException("separator character cannot use letter and digit. input: " + separator);
+    }
     this.separator = separator;
     return this;
   }
@@ -146,7 +149,7 @@ public class ByteConverter {
     final char[] tmpHex = new char[len];
     for (int i = 0, j = 0; i < len && j < len; /* nop increment statement */) {
       char c = hex[j++];
-      if (c == separator || Character.isWhitespace(c)) {
+      if (c == separator || Character.isWhitespace(c) || Character.isSpaceChar(c)) {
         continue;
       }
       tmpHex[i++] = c;
