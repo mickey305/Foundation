@@ -154,6 +154,10 @@ public class ByteConverter {
     }
     final char[] newHex = new char[heap];
     System.arraycopy(tmpHex, 0, newHex, 0, heap);
+    if (IS_DEBUG_MODE) {
+      Log.d("input " + Arrays.toString(tmpHex));
+      Log.d("output" + Arrays.toString(newHex));
+    }
     
     return Hex.decodeHex(newHex);
   }
