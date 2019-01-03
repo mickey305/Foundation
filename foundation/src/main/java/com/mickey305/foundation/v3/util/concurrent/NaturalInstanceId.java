@@ -18,12 +18,14 @@
 package com.mickey305.foundation.v3.util.concurrent;
 
 import javax.annotation.Nonnull;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NaturalInstanceId {
+public class NaturalInstanceId implements Serializable {
   private static final Map<Class<?>, ICounter> registry;
   private static final StringBuilder builder;
+  private static final long serialVersionUID = 1771420584231026579L;
   
   static {
     registry = new HashMap<>();
