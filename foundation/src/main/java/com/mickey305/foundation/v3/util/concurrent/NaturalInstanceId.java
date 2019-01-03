@@ -34,11 +34,11 @@ public class NaturalInstanceId {
    * インスタンス固有のIDを生成する
    * <p>ID生成対象のコンストラクタ内でメソッドを1回実行し、ID番号を生成する
    * </p>
-   * <p>ID体系：~[full class name for obj]~[this method invoked sequence]
+   * <p>ID体系：~[provider constant information]~[full class name for obj]~[this method invoked sequence]
    * </p>
    * <pre>{@code
    * public class SampleClass {
-   *   private static final id;
+   *   private final String id;
    *   public SampleClass() {
    *     id = NaturalInstanceId.gen(this);
    *   }
@@ -64,7 +64,9 @@ public class NaturalInstanceId {
     String result;
     synchronized (builder) {
       builder.setLength(0);
-      result = builder.append("~").append(target.getName())
+      result = builder
+          .append("~").append(NaturalInstanceId.class.getName())
+          .append("~").append(target.getName())
           .append("~").append(newId)
           .toString();
     }
