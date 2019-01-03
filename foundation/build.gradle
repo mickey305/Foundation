@@ -5,6 +5,7 @@ apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'jacoco'
 apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'com.github.spotbugs'
 
 def defaultEncoding = 'UTF-8'
 
@@ -47,6 +48,26 @@ publish {
     licences = ['Apache-2.0']
 }
 
+spotbugs {
+    toolVersion = '3.1.9'
+    ignoreFailures = true
+}
+
+sourceSets {
+    // we define `main` sourceSet here, so SpotBugs Gradle Plugin generates `spotbugsMain` task
+    main {
+        java.srcDirs = ['src/main/java']
+    }
+}
+
+// To generate an HTML report instead of XML
+tasks.withType(com.github.spotbugs.SpotBugsTask) {
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
+}
+
 repositories {
     mavenCentral()
     mavenLocal()
@@ -75,5 +96,7 @@ dependencies {
     // -- OSS repository
     //  URL: https://github.com/kostaskougios/cloning
     compile     group: 'uk.com.robust-it'        , name: 'cloning'             , version: '1.9.10'
+
+    spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.7.1'
 }
 

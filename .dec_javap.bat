@@ -9,6 +9,7 @@
 set VAR_1=com.mickey305.foundation.v3.gen.R
 set VAR_2=com.mickey305.foundation.v3.lang.ref.SecureObjectTaskManager
 set VAR_3=com.mickey305.foundation.v3.util.AbstractCryptoManager
+set VAR_11=com.mickey305.foundation.v3.util.ByteConverter
 set VAR_4=com.mickey305.foundation.v3.util.CollectionUtil
 set VAR_5=com.mickey305.foundation.v3.util.DateUtil
 set VAR_6=com.mickey305.foundation.v3.util.Regexp
