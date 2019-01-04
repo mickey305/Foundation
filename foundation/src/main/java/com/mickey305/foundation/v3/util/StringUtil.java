@@ -66,7 +66,7 @@ public class StringUtil {
   }
   
   /**
-   * 文字列列の左側から指定された文字数の文字列を取得する
+   * 文字列の左側から指定された文字数の文字列を取得する
    * @param target 文字列
    * @param size 文字数
    * @return 文字列
@@ -77,7 +77,7 @@ public class StringUtil {
   }
   
   /**
-   * 文字列列の右側から指定された文字数の文字列を取得する
+   * 文字列の右側から指定された文字数の文字列を取得する
    * @param target 文字列
    * @param size 文字数
    * @return 文字列
