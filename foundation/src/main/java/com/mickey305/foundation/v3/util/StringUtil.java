@@ -46,8 +46,9 @@ public class StringUtil {
    * @param value 入力文字列
    * @return 出力文字列
    */
-  public static String trim(String value) {
-    if (value == null || value.length() == 0) {
+  @Nonnull
+  public static String trim(@Nonnull String value) {
+    if (value.length() == 0) {
       return value;
     }
     int st = 0;
@@ -62,5 +63,50 @@ public class StringUtil {
     return ((st > 0) || (len < value.length()))
         ? value.substring(st, len)
         : value;
+  }
+  
+  /**
+   * 文字列列の左側から指定された文字数の文字列を取得する
+   * @param target 文字列
+   * @param size 文字数
+   * @return 文字列
+   */
+  @Nonnull
+  public static String left(@Nonnull String target, int size) {
+    return StringUtils.left(target, size);
+  }
+  
+  /**
+   * 文字列列の右側から指定された文字数の文字列を取得する
+   * @param target 文字列
+   * @param size 文字数
+   * @return 文字列
+   */
+  @Nonnull
+  public static String right(@Nonnull String target, int size) {
+    return StringUtils.right(target, size);
+  }
+  
+  /**
+   * 指定されたインデックス番号の位置から文字数分の文字列を取得する
+   * @param target 文字列
+   * @param startIndex インデックス番号
+   * @param size 文字数
+   * @return 文字列
+   */
+  @Nonnull
+  public static String mid(@Nonnull String target, int startIndex, int size) {
+    return StringUtils.mid(target, startIndex, size);
+  }
+  
+  /**
+   * 指定されたインデックス番号の位置から始まる文字列を取得する
+   * @param target 文字列
+   * @param startIndex インデックス番号
+   * @return 文字列
+   */
+  @Nonnull
+  public static String mid(@Nonnull String target, int startIndex) {
+    return mid(target, startIndex, target.length());
   }
 }

@@ -28,7 +28,7 @@ import java.util.Arrays;
 import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;
 
 public class ByteConverter {
-  private static final char DEFAULT_SEPARATOR = ' ';
+  private static final char DEFAULT_SEPARATOR = ' '; // half-space
   private boolean separateMode;
   private char separator;
   

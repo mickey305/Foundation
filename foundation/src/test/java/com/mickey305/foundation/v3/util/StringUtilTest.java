@@ -141,6 +141,69 @@ public class StringUtilTest {
     }
   }
   
+  @Test
+  public void testCase_03_01() throws Exception {
+    Assert.assertEquals(StringUtil.left("abc", -10), "");
+    Assert.assertEquals(StringUtil.left("", 123), "");
+    Assert.assertEquals(StringUtil.left("abc", 0), "");
+    Assert.assertEquals(StringUtil.left("abc", 2), "ab");
+    Assert.assertEquals(StringUtil.left("abc", 4), "abc");
+    try {
+      StringUtil.left(null, 0);
+      Assert.fail();
+    } catch (Exception e) {
+      Log.i(e.getMessage());
+    }
+  }
+  
+  @Test
+  public void testCase_04_01() throws Exception {
+    Assert.assertEquals(StringUtil.right("abc", -10), "");
+    Assert.assertEquals(StringUtil.right("", 123), "");
+    Assert.assertEquals(StringUtil.right("abc", 0), "");
+    Assert.assertEquals(StringUtil.right("abc", 2), "bc");
+    Assert.assertEquals(StringUtil.right("abc", 4), "abc");
+    try {
+      StringUtil.right(null, 0);
+      Assert.fail();
+    } catch (Exception e) {
+      Log.i(e.getMessage());
+    }
+  }
+  
+  @Test
+  public void testCase_05_01() throws Exception {
+    Assert.assertEquals(StringUtil.mid("abc", 123, -12), "");
+    Assert.assertEquals(StringUtil.mid("", 0, 123), "");
+    Assert.assertEquals(StringUtil.mid("abc", 0, 2), "ab");
+    Assert.assertEquals(StringUtil.mid("abc", 0, 4), "abc");
+    Assert.assertEquals(StringUtil.mid("abc", 2, 4), "c");
+    Assert.assertEquals(StringUtil.mid("abc", 4, 2), "");
+    Assert.assertEquals(StringUtil.mid("abc", -2, 2), "ab");
+    try {
+      StringUtil.mid(null, 0, 123);
+      Assert.fail();
+    } catch (Exception e) {
+      Log.i(e.getMessage());
+    }
+  }
+  
+  @Test
+  public void testCase_06_01() throws Exception {
+    Assert.assertEquals(StringUtil.mid("abc", 123), "");
+    Assert.assertEquals(StringUtil.mid("", 0), "");
+    Assert.assertEquals(StringUtil.mid("abc", 0), "abc");
+    Assert.assertEquals(StringUtil.mid("abc", 2), "c");
+    Assert.assertEquals(StringUtil.mid("abc", 4), "");
+    Assert.assertEquals(StringUtil.mid("abc", -2), "abc");
+    try {
+      StringUtil.mid(null, 0);
+      Assert.fail();
+    } catch (Exception e) {
+      Log.i(e.getMessage());
+    }
+  }
+  
   private void createData(String[] seedData) {
     testPathElements = seedData;
     testPathData1 = StringUtils.join(testPathElements, File.separator) + File.separator;
