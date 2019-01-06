@@ -17,9 +17,9 @@
 
 package com.mickey305.foundation;
 
-import com.mickey305.foundation.tools.maintenance.v3.vendor.ImportExtractor;
 import com.mickey305.foundation.tools.maintenance.v3.Workflow;
-import com.mickey305.foundation.tools.maintenance.v3.vendor.bean.Imports;
+import com.mickey305.foundation.tools.maintenance.vendor.v3.ImportExtractor;
+import com.mickey305.foundation.tools.maintenance.vendor.v3.bean.Imports;
 import com.mickey305.foundation.v3.util.FileUtil;
 import com.mickey305.foundation.v3.util.ListUtil;
 import com.mickey305.foundation.v3.util.Log;

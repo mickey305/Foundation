@@ -1,4 +1,4 @@
-package com.mickey305.foundation.tools.maintenance.v3.vendor.bean;
+package com.mickey305.foundation.tools.maintenance.vendor.v3.bean;
 
 // LICENSE HEADER
 /*

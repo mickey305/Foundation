@@ -24,7 +24,28 @@ repositories {
     mavenLocal()
 }
 
+sourceSets {
+    // original module namespace
+    vendor {
+        java {
+            srcDir "src/vendor/java"
+        }
+        resources {
+            srcDir "src/vendor/resources"
+        }
+    }
+    main {
+        compileClasspath += vendor.output
+        runtimeClasspath += vendor.output
+    }
+    test {
+        compileClasspath += vendor.output
+        runtimeClasspath += vendor.output
+    }
+}
+
 dependencies {
+    vendorCompile project(':foundation')
     compile project(':foundation')
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }

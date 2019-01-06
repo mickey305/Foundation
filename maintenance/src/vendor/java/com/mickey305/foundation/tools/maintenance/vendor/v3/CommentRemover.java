@@ -1,4 +1,4 @@
-package com.mickey305.foundation.tools.maintenance.v3.vendor;
+package com.mickey305.foundation.tools.maintenance.vendor.v3;
 
 import java.io.BufferedReader;
 import java.io.IOException;

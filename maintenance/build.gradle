@@ -34,7 +34,28 @@ repositories {
     jcenter()
 }
 
+sourceSets {
+    // original module namespace
+    vendor {
+        java {
+            srcDir "src/vendor/java"
+        }
+        resources {
+            srcDir "src/vendor/resources"
+        }
+    }
+    main {
+        compileClasspath += vendor.output
+        runtimeClasspath += vendor.output
+    }
+    test {
+        compileClasspath += vendor.output
+        runtimeClasspath += vendor.output
+    }
+}
+
 dependencies {
+    vendorCompile project(':foundation')
     compile project(':foundation')
 
     // - Maven repository hosting

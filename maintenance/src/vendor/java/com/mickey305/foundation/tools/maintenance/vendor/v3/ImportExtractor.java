@@ -1,7 +1,7 @@
-package com.mickey305.foundation.tools.maintenance.v3.vendor;
+package com.mickey305.foundation.tools.maintenance.vendor.v3;
 
-import com.mickey305.foundation.tools.maintenance.v3.vendor.bean.Import;
-import com.mickey305.foundation.tools.maintenance.v3.vendor.bean.Imports;
+import com.mickey305.foundation.tools.maintenance.vendor.v3.bean.Import;
+import com.mickey305.foundation.tools.maintenance.vendor.v3.bean.Imports;
 import com.mickey305.foundation.v3.util.Regexp;
 
 import javax.annotation.Nullable;
