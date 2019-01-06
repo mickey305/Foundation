@@ -34,14 +34,6 @@ sourceSets {
             srcDir "src/vendor/resources"
         }
     }
-    main {
-        compileClasspath += vendor.output
-        runtimeClasspath += vendor.output
-    }
-    test {
-        compileClasspath += vendor.output
-        runtimeClasspath += vendor.output
-    }
 }
 
 dependencies {
