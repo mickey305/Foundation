@@ -41,9 +41,37 @@ public class InstanceHasOneTransactionTemplateTest {
   }
   
   @Test
+  public void check_01_01() throws Exception {
+    final int createCycle = 20;
+    final SampleListener sample = new ThreadUnsafeSample();
+    for (int i = 0; i < createCycle; i++) {
+      final int finalI = i;
+      {
+        final Runnable task = new Runnable() {
+          @Override
+          public void run() {
+            sample.methodW(finalI);
+          }
+        };
+        threads.add(new Thread(task));
+      }
+      {
+        final Runnable task = new Runnable() {
+          @Override
+          public void run() {
+            sample.methodR(finalI);
+          }
+        };
+        threads.add(new Thread(task));
+      }
+    }
+    this.invoke(threads);
+  }
+  
+  @Test
   public void testCase_01_01() throws Exception {
     final int createCycle = 20;
-    final SampleTransaction sample = new SampleTransaction();
+    final SampleListener sample = new ThreadSafeSampleDecorator(new ThreadUnsafeSample());
     for (int i = 0; i < createCycle; i++) {
       final int finalI = i;
       {
@@ -78,19 +106,19 @@ public class InstanceHasOneTransactionTemplateTest {
     }
   }
   
-  private static class SampleTransaction implements SampleListener {
+  private static class ThreadSafeSampleDecorator implements SampleListener {
     private final Transactional template;
     private final SampleListener threadUnsafeObj;
     
-    public SampleTransaction() {
+    public ThreadSafeSampleDecorator(SampleListener listener) {
       template = new InstanceHasOneTransactionTemplate() {
         @Nonnull
         @Override
         protected String createTransactionId() {
-          return NaturalInstanceId.gen(SampleTransaction.class);
+          return NaturalInstanceId.gen(ThreadSafeSampleDecorator.class);
         }
       };
-      threadUnsafeObj = new ThreadUnsafeSampleTransaction();
+      threadUnsafeObj = listener;
     }
     
     public void methodR(final int count) {
@@ -116,7 +144,7 @@ public class InstanceHasOneTransactionTemplateTest {
     }
   }
   
-  private static class ThreadUnsafeSampleTransaction implements SampleListener {
+  private static class ThreadUnsafeSample implements SampleListener {
     public void methodR(final int id) {
       try {
         Log.i("[" + String.format("%03d",id) + "] method [R] start.");
