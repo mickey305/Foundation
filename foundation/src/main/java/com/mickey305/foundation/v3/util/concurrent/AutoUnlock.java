@@ -21,6 +21,24 @@ import com.mickey305.foundation.v3.util.Log;
 
 import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;
 
+/**
+ * auto unlock class on the try-with-resources grammar
+ * <pre>{@code
+ * // create lock object
+ * ILockable<LockType> lockObject = ...
+ * ...
+ * // read lock
+ * try(AutoUnlock ignored = new AutoUnlock.ReadLock(lockObject)) {
+ *   // locked block of read-lock
+ * }
+ * ...
+ * // write lock
+ * try(AutoUnlock ignored = new AutoUnlock.WriteLock(lockObject)) {
+ *   // locked block of write-lock
+ * }
+ * ...
+ * }</pre>
+ */
 public abstract class AutoUnlock implements AutoCloseable {
   private final LockType type;
   private final ILockable<LockType> lockable;
@@ -45,6 +63,9 @@ public abstract class AutoUnlock implements AutoCloseable {
     }
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void close() throws Exception {
     // lock end
