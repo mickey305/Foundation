@@ -18,6 +18,7 @@
 package com.mickey305.foundation.v3.util;
 
 import com.mickey305.foundation.v3.gen.R;
+import com.mickey305.foundation.v3.util.collections.NonNullElementList;
 import com.rits.cloning.Cloner;
 
 import javax.annotation.Nonnull;
@@ -141,6 +142,16 @@ public class CollectionUtil {
     if (target == null)
       throw new NullPointerException("all elements is null");
     return target;
+  }
+  
+  /**
+   *
+   * @param list
+   * @param <E>
+   * @return
+   */
+  public static <E> List<E> nonnullElementList(List<E> list) {
+    return new NonNullElementList<>(list);
   }
   
   /**

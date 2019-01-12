@@ -22,7 +22,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class CollectionUtilTest {
@@ -68,5 +70,21 @@ public class CollectionUtilTest {
     if (time > 500)
       Log.e("[" + TAG + "#testCase_02_02] > overhead-time too long warning message."
           + " please tuning this testcase-target-algorithm.");
+  }
+  
+  @Test
+  public void testCase_03_01() throws Exception {
+    List<String> nonnullList = CollectionUtil.nonnullElementList(new ArrayList<String>());
+    try {
+      nonnullList.add("test1");
+      nonnullList.add("test3");
+    } catch (Exception ignore) { /* exception ignore */ }
+    try {
+      nonnullList.add(null);
+      Assert.fail();
+    } catch (Exception ignore) { /* exception ignore */ }
+    try {
+      nonnullList.add("test3");
+    } catch (Exception ignore) { /* exception ignore */ }
   }
 }

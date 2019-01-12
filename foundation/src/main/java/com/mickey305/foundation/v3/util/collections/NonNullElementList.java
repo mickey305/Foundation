@@ -36,7 +36,7 @@ public class NonNullElementList<E> implements List<E>, Cloneable, Serializable {
   /**
    * constructor data input sample.
    * <pre>{@code
-   * List<String> list = new NonNullElementList<>
+   * List<String> list = new NonNullElementList<>(new ArrayList<String>());
    * }</pre>
    * @param list
    */
