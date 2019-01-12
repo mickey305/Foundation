@@ -21,8 +21,16 @@ import com.mickey305.foundation.v3.util.Assert;
 
 import javax.annotation.Nonnull;
 
-public abstract class AbstractLockableCache<T extends LockType> implements ILockableCache<T> {
-  private static final String TAG = AbstractLockableCache.class.getName();
+public abstract class AbstractLockableCache<T extends LockType> extends AbstractIdImplObject<AbstractLockableCache.Dummy>
+    implements ILockableCache<T> {
+  
+  private AbstractLockableCache(@Nonnull Class<Dummy> target) {
+    super(target);
+  }
+  
+  public AbstractLockableCache() {
+    this(Dummy.class);
+  }
   
   /**
    * {@inheritDoc}
@@ -44,7 +52,7 @@ public abstract class AbstractLockableCache<T extends LockType> implements ILock
   @Nonnull
   @Override
   public ILockable<T> makeDefault() {
-    ILockable<T> lockable = this.make(TAG);
+    ILockable<T> lockable = this.make(this.instanceId());
     Assert.requireNonNull(lockable);
     return lockable;
   }
@@ -54,7 +62,7 @@ public abstract class AbstractLockableCache<T extends LockType> implements ILock
    */
   @Override
   public ILockable<T> getAndRemoveDefault() {
-    return this.getAndRemove(TAG);
+    return this.getAndRemove(this.instanceId());
   }
   
   /**
@@ -62,7 +70,7 @@ public abstract class AbstractLockableCache<T extends LockType> implements ILock
    */
   @Override
   public boolean removeDefault() {
-    return this.remove(TAG);
+    return this.remove(this.instanceId());
   }
   
   /**
@@ -70,6 +78,8 @@ public abstract class AbstractLockableCache<T extends LockType> implements ILock
    */
   @Override
   public ILockable<T> getDefault() {
-    return this.get(TAG);
+    return this.get(this.instanceId());
   }
+  
+  static final class Dummy{ /* default instance id marking class */ }
 }

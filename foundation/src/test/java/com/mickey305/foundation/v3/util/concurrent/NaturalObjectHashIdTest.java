@@ -25,7 +25,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NaturalInstanceIdTest {
+public class NaturalObjectHashIdTest {
   
   @Before
   public void setUp() throws Exception {
@@ -44,7 +44,7 @@ public class NaturalInstanceIdTest {
       @Override
       public void run() {
         for (int i = 0; i < 10; i++) {
-          final String id = new SampleA().id;
+          final String id = new SampleA().getId();
         }
         try {
           Thread.sleep(10);
@@ -59,7 +59,7 @@ public class NaturalInstanceIdTest {
       @Override
       public void run() {
         for (int i = 0; i < 10; i++) {
-          final String id = new SampleA().id;
+          final String id = new SampleA().getId();
         }
       }
     };
@@ -69,7 +69,7 @@ public class NaturalInstanceIdTest {
       @Override
       public void run() {
         for (int i = 0; i < 20; i++) {
-          new SampleB();
+          new SampleB().getId();
         }
       }
     };
@@ -79,7 +79,7 @@ public class NaturalInstanceIdTest {
       @Override
       public void run() {
         for (int i = 0; i < 10; i++) {
-          final String id = new SampleA().id;
+          final String id = new SampleA().getId();
         }
       }
     };
@@ -93,19 +93,30 @@ public class NaturalInstanceIdTest {
   }
   
   private static class SampleA {
-    public final String id;
+    public String getId() {
+      String id;
+      id = NaturalObjectHashId.gen(this);
+      Log.i("id: " + id);
+      return id;
+    }
     
-    public SampleA() {
-      id = NaturalInstanceId.gen(SampleA.class);
-      Log.i("instance id: " + id);
+    @Override
+    public int hashCode() {
+      return super.hashCode();
     }
   }
   
   private static class SampleB {
-    public SampleB() {
+    public String getId() {
       String id;
-      id = NaturalInstanceId.gen(SampleB.class);
-      Log.i("instance id: " + id);
+      id = NaturalObjectHashId.gen(this);
+      Log.i("id: " + id);
+      return id;
+    }
+    
+    @Override
+    public int hashCode() {
+      return super.hashCode();
     }
   }
 }
