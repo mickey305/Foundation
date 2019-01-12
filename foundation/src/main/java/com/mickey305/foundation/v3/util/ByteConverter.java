@@ -24,6 +24,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;
 
@@ -67,8 +68,11 @@ public class ByteConverter {
    */
   @Nonnull
   public byte[] fromHexChars(@Nonnull final char[] hex) {
+    Assert.requireNonNull(hex);
     try {
-      return decodeHexChars(hex, (isSeparateMode()) ? pickSeparator() : null);
+      final byte[] result = decodeHexChars(hex, (isSeparateMode()) ? pickSeparator() : null);
+      Assert.requireNonNull(result);
+      return result;
     } catch (DecoderException e) {
       Log.e(e.getMessage());
       throw new RuntimeException(e);
@@ -83,7 +87,10 @@ public class ByteConverter {
    */
   @Nonnull
   public char[] toHexChars(@Nonnull final byte[] bytes, final int lineBlockMax) {
-    return encodeHexChars(bytes, lineBlockMax, (isSeparateMode()) ? pickSeparator() : null);
+    Assert.requireNonNull(bytes);
+    final char[] result = encodeHexChars(bytes, lineBlockMax, (isSeparateMode()) ? pickSeparator() : null);
+    Assert.requireNonNull(result);
+    return result;
   }
   
   /**
@@ -93,7 +100,10 @@ public class ByteConverter {
    */
   @Nonnull
   public char[] toHexChars(@Nonnull final byte[] bytes) {
-    return toHexChars(bytes, -1);
+    Assert.requireNonNull(bytes);
+    final char[] result = toHexChars(bytes, -1);
+    Assert.requireNonNull(result);
+    return result;
   }
   
   /**
@@ -103,8 +113,11 @@ public class ByteConverter {
    */
   @Nonnull
   public byte[] fromHexStr(@Nonnull final String hex) {
+    Assert.requireNonNull(hex);
     try {
-      return decodeHexChars(hex.toCharArray(), (isSeparateMode()) ? pickSeparator() : null);
+      final byte[] result = decodeHexChars(hex.toCharArray(), (isSeparateMode()) ? pickSeparator() : null);
+      Assert.requireNonNull(result);
+      return result;
     } catch (DecoderException e) {
       Log.e(e.getMessage());
       throw new RuntimeException(e);
@@ -119,7 +132,10 @@ public class ByteConverter {
    */
   @Nonnull
   public String toHexStr(@Nonnull final byte[] bytes, final int lineBlockMax) {
-    return new String(encodeHexChars(bytes, lineBlockMax, (isSeparateMode()) ? pickSeparator() : null));
+    Assert.requireNonNull(bytes);
+    final String result = new String(encodeHexChars(bytes, lineBlockMax, (isSeparateMode()) ? pickSeparator() : null));
+    Assert.requireNonNull(result);
+    return result;
   }
   
   /**
@@ -129,12 +145,17 @@ public class ByteConverter {
    */
   @Nonnull
   public String toHexStr(@Nonnull final byte[] bytes) {
-    return toHexStr(bytes, -1);
+    Assert.requireNonNull(bytes);
+    final String result = toHexStr(bytes, -1);
+    Assert.requireNonNull(result);
+    return result;
   }
   
   @Nonnull
   private static byte[] decodeHexChars(
       @Nonnull final char[] hex, @Nullable final Character separator) throws DecoderException {
+    Assert.requireNonNull(hex);
+    
     final int len = hex.length;
     
     if (len == 0) {
@@ -158,17 +179,21 @@ public class ByteConverter {
       Log.d("output" + Arrays.toString(newHex));
     }
     
-    return Hex.decodeHex(newHex);
+    final byte[] result = Hex.decodeHex(newHex);
+    Assert.requireNonNull(result);
+    return result;
   }
   
   @Nonnull
   private static char[] encodeHexChars(
       @Nonnull final byte[] bytes, final int lineBlockMax, @Nullable final Character separator) {
+    Assert.requireNonNull(bytes);
     if (bytes.length == 0) {
       return new char[0];
     }
     
     final char[] tmpChars = Hex.encodeHex(bytes);
+    Assert.requireNonNull(tmpChars);
     
     if (separator == null) {
       return tmpChars;
@@ -196,6 +221,7 @@ public class ByteConverter {
         Log.d("created data" + Arrays.toString(chars));
       }
     }
+    Assert.requireNonNull(chars);
     return chars;
   }
 }

@@ -18,6 +18,7 @@
 package com.mickey305.foundation.v3.util;
 
 import javax.annotation.Nonnull;
+import java.util.Objects;
 import java.util.UUID;
 
 public class LocalCryptoManager extends AbstractCryptoManager {
@@ -33,7 +34,9 @@ public class LocalCryptoManager extends AbstractCryptoManager {
   protected byte[] createSaltKey() {
     // UUIDをSaltキーとして実装
     final UUID uuid = UUID.randomUUID();
-    return uuid.toString().getBytes();
+    final byte[] result = uuid.toString().getBytes();
+    Assert.requireNonNull(result);
+    return result;
   }
   
   public static LocalCryptoManager getInstance() {

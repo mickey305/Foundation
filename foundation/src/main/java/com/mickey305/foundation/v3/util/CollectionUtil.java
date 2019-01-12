@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;
@@ -149,6 +150,7 @@ public class CollectionUtil {
    * @return
    */
   public static <E> Collection<E> protectedCollection(@Nonnull Collection<? extends E> collection) {
+    Assert.requireNonNull(collection);
     if (collection.isEmpty())
       return new ProtectedCollection<>(collection);
     Class<?> clz = firstNonnullElementOf(collection).getClass();
@@ -168,6 +170,7 @@ public class CollectionUtil {
    * @return
    */
   public static <E> List<E> protectedList(@Nonnull List<? extends E> list) {
+    Assert.requireNonNull(list);
     if (list.isEmpty())
       return new ProtectedList<>(list);
     Class<?> clz = firstNonnullElementOf(list).getClass();
@@ -187,6 +190,7 @@ public class CollectionUtil {
    * @return
    */
   public static <E> Set<E> protectedSet(@Nonnull Set<? extends E> set) {
+    Assert.requireNonNull(set);
     if (set.isEmpty())
       return new ProtectedSet<>(set);
     Class<?> clz = firstNonnullElementOf(set).getClass();
@@ -207,6 +211,7 @@ public class CollectionUtil {
    * @return
    */
   public static <K, V> Map<K, V> protectedMap(@Nonnull Map<? extends K, ? extends V> map) {
+    Assert.requireNonNull(map);
     if (map.isEmpty())
       return new ProtectedMap<>(map);
     Class<?> kc = firstNonnullElementOf(map.keySet()).getClass();

@@ -29,6 +29,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class HashGenerator {
   private static final Charset CHARSET = StandardCharsets.UTF_8;
@@ -61,39 +62,54 @@ public class HashGenerator {
   
   @Nonnull
   public static byte[] hashByte(@Nullable byte[] src) {
-    return hashByte(src, DEFAULT_ALGORITHM);
+    final byte[] result = hashByte(src, DEFAULT_ALGORITHM);
+    Assert.requireNonNull(result);
+    return result;
   }
   
   @Nonnull
   public static byte[] hashByte(@Nullable byte[] src, @Nonnull Algorithm algorithm) {
+    Assert.requireNonNull(algorithm);
     src = ArrayUtils.isEmpty(src) ? new byte[0] : src;
     final MessageDigest md = DIGEST_CACHE.get(algorithm);
     if (md == null) {
       throw new UnsupportedOperationException("target message digest not found");
     }
-    return md.digest(src);
+    final byte[] result = md.digest(src);
+    Assert.requireNonNull(result);
+    return result;
   }
   
   @Nonnull
   public static byte[] hashByte(@Nullable String src, Charset charset) {
     src = StringUtils.isEmpty(src) ? "" : src;
-    return hashByte(src.getBytes(charset));
+    final byte[] result = hashByte(src.getBytes(charset));
+    Assert.requireNonNull(result);
+    return result;
   }
   
   @Nonnull
   public static byte[] hashByte(@Nullable String src, Charset charset, @Nonnull Algorithm algorithm) {
+    Assert.requireNonNull(algorithm);
     src = StringUtils.isEmpty(src) ? "" : src;
-    return hashByte(src.getBytes(charset), algorithm);
+    final byte[] result = hashByte(src.getBytes(charset), algorithm);
+    Assert.requireNonNull(result);
+    return result;
   }
   
   @Nonnull
   public static byte[] hashByte(@Nullable String src) {
-    return hashByte(src, CHARSET);
+    final byte[] result = hashByte(src, CHARSET);
+    Assert.requireNonNull(result);
+    return result;
   }
   
   @Nonnull
   public static byte[] hashByte(@Nullable String src, @Nonnull Algorithm algorithm) {
-    return hashByte(src, CHARSET, algorithm);
+    Assert.requireNonNull(algorithm);
+    final byte[] result = hashByte(src, CHARSET, algorithm);
+    Assert.requireNonNull(result);
+    return result;
   }
   
   /**
@@ -112,7 +128,9 @@ public class HashGenerator {
    */
   @Nonnull
   public static String hash(@Nullable String src, Charset charset) {
-    return Base64.encodeBase64String(hashByte(src, charset));
+    final String result = Base64.encodeBase64String(hashByte(src, charset));
+    Assert.requireNonNull(result);
+    return result;
   }
   
   /**
@@ -132,7 +150,10 @@ public class HashGenerator {
    */
   @Nonnull
   public static String hash(@Nullable String src, Charset charset, @Nonnull Algorithm algorithm) {
-    return Base64.encodeBase64String(hashByte(src, charset, algorithm));
+    Assert.requireNonNull(algorithm);
+    final String result = Base64.encodeBase64String(hashByte(src, charset, algorithm));
+    Assert.requireNonNull(result);
+    return result;
   }
   
   /**
@@ -150,7 +171,9 @@ public class HashGenerator {
    */
   @Nonnull
   public static String hash(@Nullable String src) {
-    return hash(src, CHARSET);
+    final String result = hash(src, CHARSET);
+    Assert.requireNonNull(result);
+    return result;
   }
   
   /**
@@ -169,7 +192,10 @@ public class HashGenerator {
    */
   @Nonnull
   public static String hash(@Nullable String src, @Nonnull Algorithm algorithm) {
-    return hash(src, CHARSET, algorithm);
+    Assert.requireNonNull(algorithm);
+    final String result = hash(src, CHARSET, algorithm);
+    Assert.requireNonNull(result);
+    return result;
   }
   
   public enum Algorithm {

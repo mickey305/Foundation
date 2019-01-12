@@ -17,7 +17,9 @@
 
 package com.mickey305.foundation.v3.util;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -62,6 +64,14 @@ public class ByteUtilTest {
     
     resultData = ByteUtil.left(testData, testData.length +1);
     Log.i(Arrays.toString(resultData));
+  
+    // not null check
+    try {
+      ByteUtil.left(null, testData.length + 1);
+      Assert.fail();
+    } catch (Exception e) {
+      Log.i(ToStringBuilder.reflectionToString(e));
+    }
   }
   
   @Test
@@ -93,6 +103,14 @@ public class ByteUtilTest {
     
     resultData = ByteUtil.right(testData, testData.length +1);
     Log.i(Arrays.toString(resultData));
+    
+    // not null check
+    try {
+      ByteUtil.right(null, testData.length +1);
+      Assert.fail();
+    } catch (Exception e) {
+      Log.i(ToStringBuilder.reflectionToString(e));
+    }
   }
   
   @Test
@@ -121,6 +139,14 @@ public class ByteUtilTest {
     
     resultData = ByteUtil.mid(testData, testData.length +1);
     Log.i(Arrays.toString(resultData));
+  
+    // not null check
+    try {
+      ByteUtil.mid(null, testData.length +1);
+      Assert.fail();
+    } catch (Exception e) {
+      Log.i(ToStringBuilder.reflectionToString(e));
+    }
   }
   
   @Test
@@ -149,6 +175,14 @@ public class ByteUtilTest {
     
     resultData = ByteUtil.mid(testData, testData.length +1, -1);
     Log.i(Arrays.toString(resultData));
+  
+    // not null check
+    try {
+      ByteUtil.mid(null, testData.length +1, -1);
+      Assert.fail();
+    } catch (Exception e) {
+      Log.i(ToStringBuilder.reflectionToString(e));
+    }
   }
   
   @Test

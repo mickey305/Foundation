@@ -32,8 +32,8 @@ public class ClassPathUtil {
   
   static {
     PATH_SEPARATOR = System.getProperty("path.separator");
-    Objects.requireNonNull(PATH_SEPARATOR);
+    Assert.requireNonNull(PATH_SEPARATOR);
     PATHS = System.getProperty("java.class.path").split(PATH_SEPARATOR);
-    Objects.requireNonNull(PATHS);
+    Assert.requireNonNull(PATHS);
   }
 }

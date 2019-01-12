@@ -17,6 +17,8 @@
 
 package com.mickey305.foundation.v3.util.concurrent;
 
+import com.mickey305.foundation.v3.util.Assert;
+
 import javax.annotation.Nonnull;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -53,6 +55,7 @@ public class NaturalInstanceId implements Serializable {
   // todo: IDの体系を外部から差し換えられるようにする
   @Nonnull
   public static <T> String gen(@Nonnull T obj) {
+    Assert.requireNonNull(obj);
     final Class<?> target = obj.getClass();
     ICounter cachedCounter;
     synchronized (registry) {
@@ -72,6 +75,7 @@ public class NaturalInstanceId implements Serializable {
           .append("~").append(newId)
           .toString();
     }
+    Assert.requireNonNull(result);
     return result;
   }
 }

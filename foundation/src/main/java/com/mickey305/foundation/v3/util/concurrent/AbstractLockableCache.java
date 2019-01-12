@@ -17,6 +17,8 @@
 
 package com.mickey305.foundation.v3.util.concurrent;
 
+import com.mickey305.foundation.v3.util.Assert;
+
 import javax.annotation.Nonnull;
 
 public abstract class AbstractLockableCache<T extends LockType> implements ILockableCache<T> {
@@ -27,6 +29,7 @@ public abstract class AbstractLockableCache<T extends LockType> implements ILock
    */
   @Override
   public boolean remove(@Nonnull String key) {
+    Assert.requireNonNull(key);
     return this.getAndRemove(key) != null;
   }
   
@@ -41,7 +44,9 @@ public abstract class AbstractLockableCache<T extends LockType> implements ILock
   @Nonnull
   @Override
   public ILockable<T> makeDefault() {
-    return this.make(TAG);
+    ILockable<T> lockable = this.make(TAG);
+    Assert.requireNonNull(lockable);
+    return lockable;
   }
   
   /**

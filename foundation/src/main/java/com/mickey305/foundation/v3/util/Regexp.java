@@ -18,6 +18,7 @@
 package com.mickey305.foundation.v3.util;
 
 import javax.annotation.Nonnull;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;
@@ -258,6 +259,8 @@ public class Regexp {
    * @return パターンオブジェクト
    */
   public static Pattern pattern(@Nonnull String regexp, @Nonnull CompileType compileType) {
+    Assert.requireNonNull(regexp);
+    Assert.requireNonNull(compileType);
     // 初期値のマスク情報:0で正規表現をビルドする
     /**
      * mask info
@@ -285,6 +288,8 @@ public class Regexp {
    * @return 正規表現（パターン適用済）
    */
   public static String wrap(@Nonnull String regexp, @Nonnull CompileType compileType) {
+    Assert.requireNonNull(regexp);
+    Assert.requireNonNull(compileType);
     if (compileType == CompileType.Exact) regexp = "^" + regexp + "$";
     if (compileType == CompileType.Partial) regexp = "^.*" + regexp + ".*$";
     if (compileType == CompileType.Plain) regexp = "" + regexp + "";
@@ -300,6 +305,7 @@ public class Regexp {
    * @return パターンオブジェクト
    */
   public static Pattern patternDefault(@Nonnull String regexp) {
+    Assert.requireNonNull(regexp);
     return pattern(regexp, CompileType.Exact);
   }
   
@@ -312,6 +318,7 @@ public class Regexp {
    * @return 正規表現（パターン適用済）
    */
   public static String wrapDefault(@Nonnull String regexp) {
+    Assert.requireNonNull(regexp);
     return wrap(regexp, CompileType.Exact);
   }
   

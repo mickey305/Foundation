@@ -22,6 +22,7 @@ import com.mickey305.foundation.v3.util.constant.LocaleConst;
 
 import javax.annotation.Nonnull;
 import java.util.Calendar;
+import java.util.Objects;
 
 /**
  * {@link java.util.Calendar} convert utility class.
@@ -44,6 +45,7 @@ public class CalendarUtil {
    */
   @Nonnull
   public static Calendar toJpCal(@Nonnull Calendar cal) {
+    Assert.requireNonNull(cal);
     final Calendar jpCal = Calendar.getInstance(LocaleConst.JP);
     // information setting
     jpCal.setTimeZone(cal.getTimeZone());
@@ -51,6 +53,7 @@ public class CalendarUtil {
     jpCal.setLenient(DEFAULT_LENIENT);
     // update time
     jpCal.setTime(cal.getTime());
+    Assert.requireNonNull(jpCal);
     return jpCal;
   }
   
@@ -61,6 +64,7 @@ public class CalendarUtil {
    */
   @Nonnull
   public static DayOfWeek getDayOfWeek(@Nonnull Calendar cal) {
+    Assert.requireNonNull(cal);
     switch (cal.get(Calendar.DAY_OF_WEEK)) {
       case Calendar.SUNDAY: return DayOfWeek.Sunday;
       case Calendar.MONDAY: return DayOfWeek.Monday;

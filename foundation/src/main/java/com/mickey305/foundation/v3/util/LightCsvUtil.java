@@ -23,6 +23,7 @@ import org.apache.commons.lang3.StringUtils;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -50,6 +51,7 @@ public class LightCsvUtil {
    * @param csv CSVのDTO
    */
   public static void split(@Nonnull LightCsvDto csv) {
+    Assert.requireNonNull(csv);
     // empty logic
     if (StringUtils.isEmpty(csv.getLine())) {
       csv.setElements(new ArrayList<String>());
@@ -100,6 +102,7 @@ public class LightCsvUtil {
    * @param csv CSVのDTO
    */
   public static void join(@Nonnull LightCsvDto csv) {
+    Assert.requireNonNull(csv);
     // empty logic
     if (csv.getElements() == null || csv.getElements().isEmpty()) {
       csv.setLine("");

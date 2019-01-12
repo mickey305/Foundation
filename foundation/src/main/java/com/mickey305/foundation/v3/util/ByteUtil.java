@@ -20,6 +20,7 @@ package com.mickey305.foundation.v3.util;
 import org.apache.commons.lang3.ArrayUtils;
 
 import javax.annotation.Nonnull;
+import java.util.Objects;
 
 public class ByteUtil {
   private static final byte[] EMPTY_BYTES = new byte[0];
@@ -36,6 +37,7 @@ public class ByteUtil {
    */
   @Nonnull
   public static byte[] left(@Nonnull final byte[] target, final int size) {
+    Assert.requireNonNull(target);
     final int fixedPickupSize = (size < 0)
         ? 0
         : (size > target.length) ? target.length : size;
@@ -47,6 +49,7 @@ public class ByteUtil {
     }
     final byte[] result = new byte[fixedPickupSize];
     System.arraycopy(target, 0, result, 0, fixedPickupSize);
+    Assert.requireNonNull(result);
     return result;
   }
   
@@ -58,6 +61,7 @@ public class ByteUtil {
    */
   @Nonnull
   public static byte[] right(@Nonnull final byte[] target, final int size) {
+    Assert.requireNonNull(target);
     final int fixedPickupSize = (size < 0)
         ? 0
         : (size > target.length) ? target.length : size;
@@ -69,6 +73,7 @@ public class ByteUtil {
     }
     final byte[] result = new byte[fixedPickupSize];
     System.arraycopy(target, target.length - fixedPickupSize, result, 0, fixedPickupSize);
+    Assert.requireNonNull(result);
     return result;
   }
   
@@ -81,6 +86,7 @@ public class ByteUtil {
    */
   @Nonnull
   public static byte[] mid(@Nonnull final byte[] target, final int startIndex, final int size) {
+    Assert.requireNonNull(target);
     if (startIndex > target.length -1) {
       return EMPTY_BYTES;
     }
@@ -89,7 +95,9 @@ public class ByteUtil {
         : (startIndex > target.length -1) ? target.length -1 : startIndex;
     final byte[] tmpLeftCutBytes = new byte[target.length - fixedStartIndex];
     System.arraycopy(target, fixedStartIndex, tmpLeftCutBytes, 0, tmpLeftCutBytes.length);
-    return left(tmpLeftCutBytes, size);
+    final byte[] result = left(tmpLeftCutBytes, size);
+    Assert.requireNonNull(result);
+    return result;
   }
   
   /**
@@ -100,6 +108,9 @@ public class ByteUtil {
    */
   @Nonnull
   public static byte[] mid(@Nonnull final byte[] target, final int startIndex) {
-    return mid(target, startIndex, target.length);
+    Assert.requireNonNull(target);
+    final byte[] result = mid(target, startIndex, target.length);
+    Assert.requireNonNull(result);
+    return result;
   }
 }

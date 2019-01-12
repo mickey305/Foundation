@@ -26,6 +26,7 @@ import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.TimeZone;
 
@@ -86,6 +87,7 @@ public class DateUtil {
    */
   @Nonnull
   public static java.sql.Date toSqlDate(@Nonnull java.util.Date date) {
+    Assert.requireNonNull(date);
     final Calendar cal = toCal(date);
     if (IS_DEBUG_MODE) {
       final DateFormat df = getCustomFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS"));
@@ -102,7 +104,9 @@ public class DateUtil {
       final DateFormat df = getCustomFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS"));
       Log.d(df.format(cal.getTime()) + "[" + cal.getTimeZone().getDisplayName() + "]");
     }
-    return new java.sql.Date(cal.getTimeInMillis());
+    java.sql.Date result = new java.sql.Date(cal.getTimeInMillis());
+    Assert.requireNonNull(result);
+    return result;
   }
   
   /**
@@ -113,6 +117,7 @@ public class DateUtil {
    */
   @Nonnull
   public static java.sql.Time toSqlTime(@Nonnull java.util.Date date) {
+    Assert.requireNonNull(date);
     final Calendar cal = toCal(date);
     if (IS_DEBUG_MODE) {
       final DateFormat df = getCustomFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS"));
@@ -128,7 +133,9 @@ public class DateUtil {
       final DateFormat df = getCustomFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS"));
       Log.d(df.format(cal.getTime()) + "[" + cal.getTimeZone().getDisplayName() + "]");
     }
-    return new java.sql.Time(cal.getTimeInMillis());
+    java.sql.Time result = new java.sql.Time(cal.getTimeInMillis());
+    Assert.requireNonNull(result);
+    return result;
   }
   
   /**
@@ -138,8 +145,11 @@ public class DateUtil {
    */
   @Nonnull
   public static java.sql.Timestamp toSqlTimestamp(@Nonnull java.util.Date date) {
+    Assert.requireNonNull(date);
     final Calendar cal = toCal(date);
-    return new java.sql.Timestamp(cal.getTimeInMillis());
+    java.sql.Timestamp result = new java.sql.Timestamp(cal.getTimeInMillis());
+    Assert.requireNonNull(result);
+    return result;
   }
   
   /**
@@ -150,6 +160,7 @@ public class DateUtil {
    */
   @Nonnull
   public static Calendar toCal(@Nonnull java.util.Date date) {
+    Assert.requireNonNull(date);
     final Calendar cal = Calendar.getInstance();
     // set timezone
     cal.setTimeZone(DEFAULT_TIMEZONE);
@@ -157,6 +168,7 @@ public class DateUtil {
     cal.setLenient(DEFAULT_LENIENT);
     // update time
     cal.setTime(date);
+    Assert.requireNonNull(cal);
     return cal;
   }
   
@@ -168,8 +180,11 @@ public class DateUtil {
    */
   @Nonnull
   public static Calendar toJpCal(@Nonnull java.util.Date date) {
+    Assert.requireNonNull(date);
     final Calendar cal = toCal(date);
-    return CalendarUtil.toJpCal(cal);
+    final Calendar result = CalendarUtil.toJpCal(cal);
+    Assert.requireNonNull(result);
+    return result;
   }
   
   /**
@@ -179,12 +194,14 @@ public class DateUtil {
    */
   @Nonnull
   public static java.util.Date fromSqlDate(@Nonnull java.sql.Date sqlDate) {
+    Assert.requireNonNull(sqlDate);
     final java.util.Date date = new java.util.Date();
     date.setTime(sqlDate.getTime());
     if (IS_DEBUG_MODE) {
       final DateFormat df = getCustomFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS"));
       Log.d(df.format(date));
     }
+    Assert.requireNonNull(date);
     return date;
   }
   
@@ -195,12 +212,14 @@ public class DateUtil {
    */
   @Nonnull
   public static java.util.Date fromSqlTime(@Nonnull java.sql.Time time) {
+    Assert.requireNonNull(time);
     final java.util.Date date = new java.util.Date();
     date.setTime(time.getTime());
     if (IS_DEBUG_MODE) {
       final DateFormat df = getCustomFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS"));
       Log.d(df.format(date));
     }
+    Assert.requireNonNull(date);
     return date;
   }
   
@@ -212,6 +231,8 @@ public class DateUtil {
    */
   @Nonnull
   public static java.util.Date fromSqlDateAndTime(@Nonnull java.sql.Date sqlDate, @Nonnull java.sql.Time time) {
+    Assert.requireNonNull(sqlDate);
+    Assert.requireNonNull(time);
     final java.util.Date date = new java.util.Date();
     final Calendar sqlDateCal = toCal(sqlDate);
     final Calendar sqlTimeCal = toCal(time);
@@ -239,6 +260,7 @@ public class DateUtil {
       final DateFormat df = getCustomFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS"));
       Log.d(df.format(date));
     }
+    Assert.requireNonNull(date);
     return date;
   }
   
@@ -252,6 +274,7 @@ public class DateUtil {
    */
   @Nonnull
   public static java.util.Date fromSqlTimestamp(@Nonnull java.sql.Timestamp timestamp) {
+    Assert.requireNonNull(timestamp);
     final java.util.Date date = new java.util.Date();
     // cast: nano-sec of timestamp -> milli-sec of date
     if (IS_DEBUG_MODE) {
@@ -266,6 +289,7 @@ public class DateUtil {
       final DateFormat df = getCustomFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS"));
       Log.d(df.format(date));
     }
+    Assert.requireNonNull(date);
     return date;
   }
   
@@ -277,6 +301,7 @@ public class DateUtil {
    */
   @Nonnull
   public static java.util.Date fromCal(@Nonnull Calendar cal) {
+    Assert.requireNonNull(cal);
     // set timezone
     cal.setTimeZone(DEFAULT_TIMEZONE);
     // set lenient
@@ -287,7 +312,9 @@ public class DateUtil {
     }
     // new Date object
     //   same code: return new java.util.Date(cal.getTimeInMillis());
-    return cal.getTime();
+    java.util.Date result = cal.getTime();
+    Assert.requireNonNull(result);
+    return result;
   }
   
   /**
@@ -297,8 +324,11 @@ public class DateUtil {
    */
   @Nonnull
   public static DayOfWeek getDayOfWeek(@Nonnull java.util.Date date) {
+    Assert.requireNonNull(date);
     final Calendar cal = toCal(date);
-    return CalendarUtil.getDayOfWeek(cal);
+    DayOfWeek result = CalendarUtil.getDayOfWeek(cal);
+    Assert.requireNonNull(result);
+    return result;
   }
   
   /**
@@ -308,6 +338,7 @@ public class DateUtil {
    */
   @Nonnull
   public static <F extends DateFormat> F getCustomFormat(@Nonnull F dateFormat) {
+    Assert.requireNonNull(dateFormat);
     // set timezone
     dateFormat.setTimeZone(DEFAULT_TIMEZONE);
     // set lenient

@@ -38,6 +38,8 @@ public class FileUtil {
    * @return
    */
   public static List<File> findAllFile(@Nonnull String absolutePath) {
+    Assert.requireNonNull(absolutePath);
+    
     final List<File> files = new ArrayList<>();
     final Deque<File> pool = new ArrayDeque<>();
     
@@ -46,7 +48,7 @@ public class FileUtil {
     // 検索キューにデータが存在する間、処理を繰り返す
     while (!pool.isEmpty()) {
       File item = pool.pollFirst();
-      Objects.requireNonNull(item);
+      Assert.requireNonNull(item);
       
       // ファイルの場合、返却キューに追加
       if (item.isFile()) {
@@ -56,7 +58,7 @@ public class FileUtil {
       // ディレクトリの場合、ファイル一覧を検索キューに追加
       if (item.isDirectory()) {
         final File[] items = item.listFiles();
-        Objects.requireNonNull(items);
+        Assert.requireNonNull(items);
         
         for (File child : items) {
           pool.offerFirst(child);
@@ -72,6 +74,8 @@ public class FileUtil {
    * @return
    */
   public static String readSmallFileData(@Nonnull File file) {
+    Assert.requireNonNull(file);
+    
     StringBuilder sb = new StringBuilder();
     
     try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
@@ -93,6 +97,9 @@ public class FileUtil {
    * @param lines
    */
   public static void writeSmallFileData(@Nonnull File file, @Nonnull String[] lines) {
+    Assert.requireNonNull(file);
+    Assert.requireNonNull(lines);
+    
     try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(file)))) {
       for (String line: lines) {
         writer.println(line);

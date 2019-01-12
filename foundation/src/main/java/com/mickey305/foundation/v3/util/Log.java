@@ -52,6 +52,8 @@ public class Log {
    * @param msg     メッセージ
    */
   public synchronized static void d(@Nonnull StackTraceElement element, @Nonnull String msg) {
+    Objects.requireNonNull(element);
+    Objects.requireNonNull(msg);
     final int lineNumberWidth = 7;
     AnsiStringBuilder sb = new AnsiStringBuilder()
         .append(Escape.BkgYellow)
@@ -72,6 +74,7 @@ public class Log {
    * @param msg
    */
   public synchronized static void d(@Nonnull String msg) {
+    Objects.requireNonNull(msg);
     final int traceTargetIndex = 2;
     StackTraceElement element = Thread.currentThread().getStackTrace()[traceTargetIndex];
     d(element, msg);
@@ -83,6 +86,7 @@ public class Log {
    * @param msg メッセージ
    */
   public synchronized static void i(@Nonnull String msg) {
+    Objects.requireNonNull(msg);
     AnsiStringBuilder sb = new AnsiStringBuilder()
         .append(Escape.Blue)
         .append(createHeader())
@@ -98,6 +102,7 @@ public class Log {
    * @param msg メッセージ
    */
   public synchronized static void e(@Nonnull String msg) {
+    Objects.requireNonNull(msg);
     StringBuilder sb = new StringBuilder()
         .append(createHeader())
         .append("  E  ")
@@ -112,6 +117,7 @@ public class Log {
    * @param line
    */
   public synchronized static void update(@Nonnull String line) {
+    Objects.requireNonNull(line);
     line = line.replace("\n", "");
     AnsiStringBuilder sb = new AnsiStringBuilder()
         .append("\r")

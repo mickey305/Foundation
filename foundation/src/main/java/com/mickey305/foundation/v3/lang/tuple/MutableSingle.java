@@ -17,6 +17,8 @@
 
 package com.mickey305.foundation.v3.lang.tuple;
 
+import com.mickey305.foundation.v3.util.Assert;
+
 import javax.annotation.Nonnull;
 
 public class MutableSingle<T> extends Single<T> {
@@ -38,6 +40,7 @@ public class MutableSingle<T> extends Single<T> {
   }
 
   public void set(@Nonnull T object) {
+    Assert.requireNonNull(object);
     super.setObject(object);
   }
 }

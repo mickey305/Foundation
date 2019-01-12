@@ -17,6 +17,8 @@
 
 package com.mickey305.foundation.v3.util.concurrent;
 
+import com.mickey305.foundation.v3.util.Assert;
+
 import javax.annotation.Nonnull;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -34,6 +36,7 @@ public class LockManager<T extends LockType> extends AbstractLockableCache<T> im
   @Nonnull
   @Override
   public ILockable<T> make(@Nonnull String key) {
+    Assert.requireNonNull(key);
     ILockable<T> lock;
     synchronized (lockCache) {
       lock = lockCache.get(key);
@@ -42,6 +45,7 @@ public class LockManager<T extends LockType> extends AbstractLockableCache<T> im
         lockCache.put(key, lock); // return always null
       }
     }
+    Assert.requireNonNull(lock);
     return lock;
   }
   
@@ -50,6 +54,7 @@ public class LockManager<T extends LockType> extends AbstractLockableCache<T> im
    */
   @Override
   public ILockable<T> getAndRemove(@Nonnull String key) {
+    Assert.requireNonNull(key);
     ILockable<T> lock;
     synchronized (lockCache) {
       lock = lockCache.remove(key);
@@ -62,6 +67,7 @@ public class LockManager<T extends LockType> extends AbstractLockableCache<T> im
    */
   @Override
   public ILockable<T> get(@Nonnull String key) {
+    Assert.requireNonNull(key);
     return lockCache.get(key);
   }
   

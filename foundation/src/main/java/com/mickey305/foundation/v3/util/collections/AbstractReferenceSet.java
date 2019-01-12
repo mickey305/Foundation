@@ -17,6 +17,8 @@
 
 package com.mickey305.foundation.v3.util.collections;
 
+import com.mickey305.foundation.v3.util.Assert;
+
 import javax.annotation.Nonnull;
 import java.io.Serializable;
 import java.util.AbstractSet;
@@ -41,7 +43,9 @@ public abstract class AbstractReferenceSet<E, M extends Map<E, Object>> extends 
   @Nonnull
   @Override
   public Iterator<E> iterator() {
-    return map.keySet().iterator();
+    Iterator<E> iterator = map.keySet().iterator();
+    Assert.requireNonNull(iterator);
+    return iterator;
   }
   
   /**

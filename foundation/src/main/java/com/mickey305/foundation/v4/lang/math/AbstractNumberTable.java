@@ -18,6 +18,7 @@
 package com.mickey305.foundation.v4.lang.math;
 
 import com.mickey305.foundation.v3.compat.util.Function;
+import com.mickey305.foundation.v3.util.Assert;
 import com.mickey305.foundation.v3.util.Log;
 import com.mickey305.foundation.v4.lang.math.operator.AbstractNumberOperation;
 import com.mickey305.foundation.v4.lang.math.operator.IElementInitializer;
@@ -56,6 +57,10 @@ public abstract class AbstractNumberTable<E extends Number> implements Serializa
                                 @Nonnull IElementInitializer<E> initializer,
                                 @Nonnull Map<Operator, AbstractNumberOperation<E, E>> op,
                                 @Nonnull Map<RelationalOperator, AbstractNumberOperation<E, Boolean>> rop) {
+    Assert.requireNonNull(initialTable);
+    Assert.requireNonNull(initializer);
+    Assert.requireNonNull(op);
+    Assert.requireNonNull(rop);
     if (ABS_NUM_TBL_CAPTURE_INI) {
       Log.d("construct args => ini:" + ToStringBuilder.reflectionToString(initializer)
           + ", op:" + ToStringBuilder.reflectionToString(op)

@@ -44,6 +44,7 @@ import java.security.spec.AlgorithmParameterSpec;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 
 import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;
@@ -193,7 +194,9 @@ public abstract class AbstractCryptoManager implements AutoCloseable {
       return "";
     }
     final byte[] encrypted = this.encrypt(stmt.getBytes());
-    return Base64.encodeBase64String(encrypted);
+    final String encodedStr = Base64.encodeBase64String(encrypted);
+    Assert.requireNonNull(encodedStr);
+    return encodedStr;
   }
   
   /**
@@ -212,7 +215,9 @@ public abstract class AbstractCryptoManager implements AutoCloseable {
       return "";
     }
     final byte[] decrypted = this.decrypt(Base64.decodeBase64(stmt));
-    return new String(decrypted);
+    final String decryptedStr = new String(decrypted);
+    Assert.requireNonNull(decryptedStr);
+    return decryptedStr;
   }
   
   /**
@@ -229,16 +234,23 @@ public abstract class AbstractCryptoManager implements AutoCloseable {
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   @Nonnull
   private byte[] encrypt(@Nonnull byte[] plain) {
-    return this.crypt(Cipher.ENCRYPT_MODE, plain);
+    Assert.requireNonNull(plain);
+    final byte[] encrypts = this.crypt(Cipher.ENCRYPT_MODE, plain);
+    Assert.requireNonNull(encrypts);
+    return encrypts;
   }
   
   @Nonnull
   private byte[] decrypt(@Nonnull byte[] encrypted) {
-    return this.crypt(Cipher.DECRYPT_MODE, encrypted);
+    Assert.requireNonNull(encrypted);
+    final byte[] decrypts = this.crypt(Cipher.DECRYPT_MODE, encrypted);
+    Assert.requireNonNull(decrypts);
+    return decrypts;
   }
   
   @Nonnull
   private byte[] crypt(int mode, @Nonnull byte[] target) {
+    Assert.requireNonNull(target);
     // get cipher instance
     final Cipher cipher = cipherMap.get(mode);
     if (cipher == null) {
@@ -259,7 +271,7 @@ public abstract class AbstractCryptoManager implements AutoCloseable {
       Log.e(e.getMessage());
       throw new CryptoException(e);
     }
-    
+    Assert.requireNonNull(result);
     return result;
   }
   
@@ -281,6 +293,7 @@ public abstract class AbstractCryptoManager implements AutoCloseable {
       Log.e(e.getMessage());
       throw new CryptoException(e);
     }
+    Assert.requireNonNull(cipher);
     return cipher;
   }
   
@@ -293,6 +306,7 @@ public abstract class AbstractCryptoManager implements AutoCloseable {
       Log.e(e.getMessage());
       throw new CryptoException(e);
     }
+    Assert.requireNonNull(cipher);
     return cipher;
   }
   
@@ -300,6 +314,7 @@ public abstract class AbstractCryptoManager implements AutoCloseable {
   private SecretKeySpec createSecretKey(byte[] key, String algorithm) {
     final SecretKeySpec keySpec = new SecretKeySpec(key, 0, key.length, algorithm);
     Arrays.fill(key, (byte) 0x00); // key data removing
+    Assert.requireNonNull(keySpec);
     return keySpec;
   }
   
@@ -309,7 +324,9 @@ public abstract class AbstractCryptoManager implements AutoCloseable {
     shareKeyBuffer.append(AbstractCryptoManager.class.getName());
     shareKeyBuffer.append(System.nanoTime());
     shareKeyBuffer.append(RandomStringUtils.randomAscii(10));
-    return HashGenerator.hashByte(shareKeyBuffer.toString());
+    final byte[] hash = HashGenerator.hashByte(shareKeyBuffer.toString());
+    Assert.requireNonNull(hash);
+    return hash;
   }
   
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -324,11 +341,13 @@ public abstract class AbstractCryptoManager implements AutoCloseable {
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   @Nonnull
   public byte[] shareKey() {
+    Assert.requireNonNull(shareKey);
     return shareKey;
   }
   
   @Nonnull
   public byte[] saltKey() {
+    Assert.requireNonNull(saltKey);
     return saltKey;
   }
   
@@ -339,6 +358,7 @@ public abstract class AbstractCryptoManager implements AutoCloseable {
   
   @Nonnull
   public Info getInformation() {
+    Assert.requireNonNull(info);
     return info;
   }
   

@@ -1,7 +1,8 @@
-[HEADER MODULE:foundation, BUILD-DATETIME:2019-01-06 22:05:59.428]
+[HEADER MODULE:foundation, BUILD-DATETIME:2019-01-12 10:40:40.432]
 com.mickey305.foundation.v3.gen.R
 com.mickey305.foundation.v3.lang.ref.SecureObjectTaskManager
 com.mickey305.foundation.v3.util.AbstractCryptoManager
+com.mickey305.foundation.v3.util.Assert
 com.mickey305.foundation.v3.util.ByteConverter
 com.mickey305.foundation.v3.util.CollectionUtil
 com.mickey305.foundation.v3.util.DateUtil

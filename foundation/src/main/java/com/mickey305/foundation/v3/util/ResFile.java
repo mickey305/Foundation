@@ -34,9 +34,10 @@ public class ResFile {
    * @return
    */
   public static File get(@Nonnull String path) {
+    Assert.requireNonNull(path);
     final URL url = ResFile.class.getClassLoader().getResource(path);
     
-    Objects.requireNonNull(url);
+    Assert.requireNonNull(url);
     
     // URLからファイルオブジェクトを生成し、ファイルかどうかを確認後、読み取り専用にする
     final File resFile = new File(url.getPath());

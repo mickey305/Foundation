@@ -17,6 +17,8 @@
 
 package com.mickey305.foundation.v3.lang.reflect;
 
+import com.mickey305.foundation.v3.util.Assert;
+
 import javax.annotation.Nonnull;
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -53,6 +55,7 @@ public class FieldCounter implements Serializable {
    * @return 該当フィールド数
    */
   public int countByPrefix(String prefix, @Nonnull ModifierCallback callback) {
+    Assert.requireNonNull(callback);
     int fieldCount = 0;
     for (Field field : getTarget().getDeclaredFields()) {
       if (!callback.onModifierIf(field.getModifiers()))
@@ -71,6 +74,7 @@ public class FieldCounter implements Serializable {
    * @return 該当フィールド数
    */
   public int countBySuffix(String suffix, @Nonnull ModifierCallback callback) {
+    Assert.requireNonNull(callback);
     int fieldCount = 0;
     for (Field field : getTarget().getDeclaredFields()) {
       if (!callback.onModifierIf(field.getModifiers()))
@@ -89,6 +93,7 @@ public class FieldCounter implements Serializable {
    * @return 該当フィールド数
    */
   public int countContains(String contains, @Nonnull ModifierCallback callback) {
+    Assert.requireNonNull(callback);
     int fieldCount = 0;
     for (Field field : getTarget().getDeclaredFields()) {
       if (!callback.onModifierIf(field.getModifiers()))

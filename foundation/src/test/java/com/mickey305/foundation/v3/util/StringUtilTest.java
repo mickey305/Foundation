@@ -140,6 +140,13 @@ public class StringUtilTest {
       Assert.assertEquals("stopped data[" + i + "]", data.getRight(), result);
       i++;
     }
+    
+    try {
+      StringUtil.trim(null);
+      Assert.fail();
+    } catch (Exception e) {
+      Log.i(ToStringBuilder.reflectionToString(e));
+    }
   }
   
   @Test
@@ -151,7 +158,7 @@ public class StringUtilTest {
     Assert.assertEquals(StringUtil.left("abc", 4), "abc");
     try {
       StringUtil.left(null, 0);
-      //Assert.fail();
+      Assert.fail();
     } catch (Exception e) {
       Log.i(ToStringBuilder.reflectionToString(e));
     }
@@ -166,7 +173,7 @@ public class StringUtilTest {
     Assert.assertEquals(StringUtil.right("abc", 4), "abc");
     try {
       StringUtil.right(null, 0);
-      //Assert.fail();
+      Assert.fail();
     } catch (Exception e) {
       Log.i(ToStringBuilder.reflectionToString(e));
     }
@@ -183,7 +190,7 @@ public class StringUtilTest {
     Assert.assertEquals(StringUtil.mid("abc", -2, 2), "ab");
     try {
       StringUtil.mid(null, 0, 123);
-      //Assert.fail();
+      Assert.fail();
     } catch (Exception e) {
       Log.i(ToStringBuilder.reflectionToString(e));
     }
@@ -199,7 +206,7 @@ public class StringUtilTest {
     Assert.assertEquals(StringUtil.mid("abc", -2), "abc");
     try {
       StringUtil.mid(null, 0);
-      //Assert.fail();
+      Assert.fail();
     } catch (Exception e) {
       Log.i(ToStringBuilder.reflectionToString(e));
     }

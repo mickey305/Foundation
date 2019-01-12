@@ -21,6 +21,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nonnull;
 import java.io.File;
+import java.util.Objects;
 
 public class StringUtil {
   private static final char HALF_WIDTH_SPACE = ' ';
@@ -37,7 +38,10 @@ public class StringUtil {
    */
   @Nonnull
   public static String[] separateWithPath(@Nonnull String path) {
-    return StringUtils.split(path, File.separatorChar);
+    Assert.requireNonNull(path);
+    final String[] result = StringUtils.split(path, File.separatorChar);
+    Assert.requireNonNull(result);
+    return result;
   }
   
   /**
@@ -48,6 +52,7 @@ public class StringUtil {
    */
   @Nonnull
   public static String trim(@Nonnull String value) {
+    Assert.requireNonNull(value);
     if (value.length() == 0) {
       return value;
     }
@@ -60,9 +65,11 @@ public class StringUtil {
     while ((st < len) && ((val[len - 1] <= HALF_WIDTH_SPACE) || (val[len - 1] == FULL_WIDTH_SPACE))) {
       len--;
     }
-    return ((st > 0) || (len < value.length()))
+    final String result = ((st > 0) || (len < value.length()))
         ? value.substring(st, len)
         : value;
+    Assert.requireNonNull(result);
+    return result;
   }
   
   /**
@@ -73,7 +80,10 @@ public class StringUtil {
    */
   @Nonnull
   public static String left(@Nonnull String target, int size) {
-    return StringUtils.left(target, size);
+    Assert.requireNonNull(target);
+    final String result = StringUtils.left(target, size);
+    Assert.requireNonNull(result);
+    return result;
   }
   
   /**
@@ -84,7 +94,10 @@ public class StringUtil {
    */
   @Nonnull
   public static String right(@Nonnull String target, int size) {
-    return StringUtils.right(target, size);
+    Assert.requireNonNull(target);
+    final String result = StringUtils.right(target, size);
+    Assert.requireNonNull(result);
+    return result;
   }
   
   /**
@@ -96,7 +109,10 @@ public class StringUtil {
    */
   @Nonnull
   public static String mid(@Nonnull String target, int startIndex, int size) {
-    return StringUtils.mid(target, startIndex, size);
+    Assert.requireNonNull(target);
+    final String result = StringUtils.mid(target, startIndex, size);
+    Assert.requireNonNull(result);
+    return result;
   }
   
   /**
@@ -107,6 +123,9 @@ public class StringUtil {
    */
   @Nonnull
   public static String mid(@Nonnull String target, int startIndex) {
-    return mid(target, startIndex, target.length());
+    Assert.requireNonNull(target);
+    final String result = mid(target, startIndex, target.length());
+    Assert.requireNonNull(result);
+    return result;
   }
 }
