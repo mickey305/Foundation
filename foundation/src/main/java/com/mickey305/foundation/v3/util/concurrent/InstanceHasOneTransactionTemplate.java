@@ -17,6 +17,7 @@
 
 package com.mickey305.foundation.v3.util.concurrent;
 
+import com.mickey305.foundation.v3.lang.annotation.marker.Template;
 import com.mickey305.foundation.v3.util.Assert;
 import com.mickey305.foundation.v3.util.Log;
 
@@ -25,13 +26,44 @@ import javax.annotation.Nullable;
 
 import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;
 
+@Template
 public abstract class InstanceHasOneTransactionTemplate implements Transactional {
   private final ILockableCache<LockType> cache;
   private final String id;
   
+  /**
+   * インスタンス：トランザクション＝１：１のテンプレートオブジェクトを生成する
+   * <p>
+   * {@link #createTransactionId()}; This method needs to be called only once in the constructor.</p>
+   * <p>Implement the logic to create an instance-specific ID in the constructor block, as in the following example:</p>
+   * <pre>{@code
+   * public class SampleObject implements SampleListener {
+   *   // member
+   *   private final Transactional template;
+   *   private final SampleListener listener;
+   *
+   *   // constructor implementation sample
+   *   public SampleObject(SampleListener listener) {
+   *     ...
+   *     template = new InstanceHasOneTransactionTemplate() {
+   *       @Nonnull
+   *       @Override
+   *       protected String createTransactionId() {
+   *         return NaturalInstanceId.gen(SampleObject.class);
+   *       }
+   *     };
+   *     ...
+   *     this.listener = listener;
+   *   }
+   *
+   *   ...
+   * }}</pre>
+   */
   public InstanceHasOneTransactionTemplate() {
     cache = LockManagerFactory.getInstance().get();
     id = this.createTransactionId();
+    Assert.requireNonNull(cache);
+    Assert.requireNonNull(id);
   }
   
   /**
