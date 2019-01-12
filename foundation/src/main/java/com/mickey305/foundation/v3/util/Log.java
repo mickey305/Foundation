@@ -19,6 +19,7 @@ package com.mickey305.foundation.v3.util;
 
 import com.mickey305.foundation.v3.ansi.code.AnsiStringBuilder;
 import com.mickey305.foundation.v3.ansi.code.Escape;
+import com.mickey305.foundation.v3.lang.StackFinder;
 
 import javax.annotation.Nonnull;
 import java.text.SimpleDateFormat;
@@ -75,8 +76,9 @@ public class Log {
    */
   public synchronized static void d(@Nonnull String msg) {
     Objects.requireNonNull(msg);
-    final int traceTargetIndex = 2;
-    StackTraceElement element = Thread.currentThread().getStackTrace()[traceTargetIndex];
+    StackFinder.Position pos = StackFinder.Position.thisMethodCaller();
+    StackTraceElement element = StackFinder.tryGet(pos);
+    assert element != null;
     d(element, msg);
   }
   
@@ -134,7 +136,11 @@ public class Log {
   //
   
   public static void d(Object o) {
-    Log.d(Objects.toString(o));
+    final String str = Objects.toString(o);
+    StackFinder.Position pos = StackFinder.Position.thisMethodCaller();
+    StackTraceElement element = StackFinder.tryGet(pos);
+    assert element != null;
+    d(element, str);
   }
   
   public static void d(StackTraceElement e, Object o) {
