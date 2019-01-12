@@ -29,7 +29,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class HashGenerator {
   private static final Charset CHARSET = StandardCharsets.UTF_8;

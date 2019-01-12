@@ -18,7 +18,6 @@
 package com.mickey305.foundation.v3.util;
 
 import javax.annotation.Nonnull;
-import java.util.Objects;
 import java.util.regex.Pattern;
 
 import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;

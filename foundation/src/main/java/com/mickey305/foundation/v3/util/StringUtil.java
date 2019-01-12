@@ -21,7 +21,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nonnull;
 import java.io.File;
-import java.util.Objects;
 
 public class StringUtil {
   private static final char HALF_WIDTH_SPACE = ' ';
