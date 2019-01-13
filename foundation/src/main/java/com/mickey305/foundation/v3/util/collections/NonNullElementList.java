@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * Decorator list class of element null check implements.
+ * Proxy list class of element null check implements.
  * @param <E> element type
  */
 public class NonNullElementList<E> implements List<E>, Cloneable, Serializable {
