@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018. K.Misaki
+ * Copyright (c) 2019. K.Misaki
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,15 @@
 
 package com.mickey305.foundation.v3.compat.util;
 
-// JDK1.8 以降は標準APIを参照
-public interface Function<T, R> {
-  R apply(T t);
+import java.util.Map;
+
+// JDK1.8 以降は標準API(java.util.Map)を参照
+public interface FunctionalMap<K, V> extends Map<K, V> {
+  /**
+   *
+   * @param key
+   * @param function
+   * @return
+   */
+  V computeIfAbsent(K key, Function<? super K, ? extends V> function);
 }
