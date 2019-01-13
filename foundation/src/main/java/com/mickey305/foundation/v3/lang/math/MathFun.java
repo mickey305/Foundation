@@ -103,6 +103,10 @@ public final class MathFun {
         return value;
       }
     });
+    //
+    // todo: Java8での実装(with FoundationLambda: SE8)
+    // return cache.computeIfAbsent(n, key -> fib(key - 1, cache).add(fib(key - 2, cache)));
+    //
     //*/
   }
   
