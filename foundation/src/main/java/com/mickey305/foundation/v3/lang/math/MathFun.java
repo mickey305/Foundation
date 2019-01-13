@@ -52,7 +52,7 @@ public final class MathFun {
     // nop
   }
   
-  // history of lash access key-data
+  // history of last access key-data
   private static final AtomicLong PREV_KEY = new AtomicLong(0);
   
   /**
