@@ -103,7 +103,7 @@ public final class Math {
   
   public static long incrementExact(long a) {
     if (a == Long.MAX_VALUE) {
-      throw new ArithmeticException("long overflow. input[" + a + "], operator[++], result[" + (a + 1) + "]");
+      throw new ArithmeticException("long overflow. input[" + a + "], operator[++], result[" + (a + 1L) + "]");
     }
     
     return a + 1L;
@@ -119,7 +119,7 @@ public final class Math {
   
   public static long decrementExact(long a) {
     if (a == Long.MIN_VALUE) {
-      throw new ArithmeticException("long overflow. input[" + a + "], operator[--], result[" + (a - 1) + "]");
+      throw new ArithmeticException("long overflow. input[" + a + "], operator[--], result[" + (a - 1L) + "]");
     }
     
     return a - 1L;
