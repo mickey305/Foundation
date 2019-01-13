@@ -150,7 +150,7 @@ public final class MathFun {
       return value;
     }
     
-    public static long fib(int n, Map<Integer, Long> cache) {
+    private static long fib(int n, Map<Integer, Long> cache) {
       if (cache.containsKey(n)) return cache.get(n);
       // check overflow
       long value = com.mickey305.foundation.v3.compat.lang.Math.addExact(
