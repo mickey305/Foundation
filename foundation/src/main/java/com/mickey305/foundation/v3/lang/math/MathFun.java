@@ -120,7 +120,7 @@ public final class MathFun {
       // nop
     }
     
-    // history of lash access key-data
+    // history of last access key-data
     private static final AtomicInteger _PREV_KEY = new AtomicInteger(0);
     
     /**
