@@ -55,9 +55,9 @@ public class MathFun {
       @Override
       public BigInteger apply(BigInteger i) {
         return (i.compareTo(TWO) < 0)
-            ? /* i < 2 */ (i.compareTo(ONE) < 0)
-            ? /* and i < 1 */ ZERO
-            : /* and i >= 1 */ ONE
+            ? /* i <  2 */ (i.compareTo(ONE) < 0)
+            ? /*   and i <  1 */ ZERO
+            : /*   and i >= 1 */ ONE
             : /* i >= 2 */ fib(i.subtract(ONE), cache).add(fib(i.subtract(TWO), cache));
       }
     });
