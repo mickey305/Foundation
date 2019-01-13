@@ -17,25 +17,43 @@
 
 package com.mickey305.foundation.v3.lang.math;
 
-import com.mickey305.foundation.v3.compat.util.Function;
 import com.mickey305.foundation.v3.compat.util.FunctionalMap;
 import com.mickey305.foundation.v3.compat.util.FunctionalMapAdapter;
-import com.mickey305.foundation.v3.util.Assert;
 
 import javax.annotation.Nonnull;
 import java.math.BigInteger;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
-public class MathFun {
-  private static final FunctionalMap<BigInteger, BigInteger> FIB_CACHE
-      = new FunctionalMapAdapter<>(new ConcurrentHashMap<BigInteger, BigInteger>());
+import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;
+
+/**
+ * Math util function provided class
+ * - thread unsafe
+ */
+public final class MathFun {
+  private static final int INTERVAL_BUFFER_SIZE = 1_000;
+  private static final int CACHE_SIZE = INTERVAL_BUFFER_SIZE * 2; // effect vale: 2
+  private static final FunctionalMap<Long, BigInteger> FIB_CACHE
+      = new FunctionalMapAdapter<>(new LinkedHashMap<Long, BigInteger>(CACHE_SIZE) {
+    private static final long serialVersionUID = 1535240143834849493L;
+    @Override
+    protected boolean removeEldestEntry(Map.Entry<Long, BigInteger> eldest)  {
+      return size() > CACHE_SIZE;
+    }
+  });
   private static final BigInteger ZERO = BigInteger.ZERO;
   private static final BigInteger ONE = BigInteger.ONE;
-  private static final BigInteger TWO = BigInteger.valueOf(2L);
   
   private MathFun() {
     // nop
   }
+  
+  // history of lash access key-data
+  private static final AtomicLong PREV_KEY = new AtomicLong(0);
   
   /**
    * フィボナッチ数計算処理
@@ -43,23 +61,103 @@ public class MathFun {
    * @return 指定された項数（ｎ）番目のフィボナッチ数
    */
   public static BigInteger fib(final long n) {
-    final BigInteger ini = BigInteger.valueOf(n);
-    Assert.requireNonNull(FIB_CACHE);
-    Assert.requireNonNull(ini);
-    return fib(ini, FIB_CACHE);
+    // create data (n: 0, 1)
+    FIB_CACHE.put(0L, ZERO);
+    FIB_CACHE.put(1L, ONE);
+    // stack control
+    //*/
+    if (Math.abs(n - PREV_KEY.get()) > INTERVAL_BUFFER_SIZE) {
+      final int heap = INTERVAL_BUFFER_SIZE;
+      long index = heap;
+      do {
+        fib(index, FIB_CACHE);
+        index += heap;
+      } while (index < n);
+    }
+    PREV_KEY.set(n);
+    //*/
+    // calc logic
+    final BigInteger value = fib(n, FIB_CACHE);
+    if (IS_DEBUG_MODE) {
+      //Log.d("KeySet" + Arrays.toString(FIB_CACHE.keySet().toArray()));
+    }
+    return value;
   }
   
-  private static BigInteger fib(@Nonnull final BigInteger n,
-                                @Nonnull final FunctionalMap<BigInteger, BigInteger> cache) {
-    return cache.computeIfAbsent(n, new Function<BigInteger, BigInteger>() {
+  private static BigInteger fib(@Nonnull final Long n,
+                                @Nonnull final FunctionalMap<Long, BigInteger> cache) {
+    //*/ invoke logic
+    if (cache.containsKey(n)) return cache.get(n);
+    final BigInteger value = fib(n - 1, cache).add(fib(n - 2, cache));
+    cache.put(n, value);
+    return value;
+    /*/
+    return cache.computeIfAbsent(n, new Function<Long, BigInteger>() {
       @Override
-      public BigInteger apply(BigInteger i) {
-        return (i.compareTo(TWO) < 0)
-            ? /* i <  2 */ (i.compareTo(ONE) < 0)
-            ? /*   and i <  1 */ ZERO
-            : /*   and i >= 1 */ ONE
-            : /* i >= 2 */ fib(i.subtract(ONE), cache).add(fib(i.subtract(TWO), cache));
+      public BigInteger apply(Long key) {
+        final BigInteger value = fib(key - 1, cache).add(fib(key - 2, cache));
+        if (IS_DEBUG_MODE && key % 100_000 == 0) {
+          //Log.i("element[" + i + "]"); // light log
+          Log.d("element[" + key + "]=" + value);
+        }
+        return value;
       }
     });
+    //*/
+  }
+  
+  /**
+   * Math util class of primitive functions
+   */
+  public static class Primitive {
+    private static final Map<Integer, Long> _FIB_CACHE = new HashMap<>();
+  
+    private Primitive() {
+      // nop
+    }
+    
+    // history of lash access key-data
+    private static final AtomicInteger _PREV_KEY = new AtomicInteger(0);
+    
+    /**
+     * フィボナッチ数計算処理
+     * @param n 項数
+     * @return 指定された項数（ｎ）番目のフィボナッチ数
+     */
+    public static long fib(final int n) {
+      // create data (n: 0, 1)
+      _FIB_CACHE.put(0, 0L);
+      _FIB_CACHE.put(1, 1L);
+      // stack control
+      // スタックオーバーフローが発生する前に、演算結果がオーバーフローするため、
+      // 下記のチェックは不要。（※JVMの環境・設定に依存する）
+      /*/
+      if (Math.abs(n - _PREV_KEY.get()) > INTERVAL_BUFFER_SIZE) {
+        final int heap = INTERVAL_BUFFER_SIZE;
+        int index = heap;
+        do {
+          fib(index, _FIB_CACHE);
+          index += heap;
+        } while (index < n);
+      }
+      _PREV_KEY.set(n);
+      //*/
+      // calc logic
+      final long value = fib(n, _FIB_CACHE);
+      if (IS_DEBUG_MODE) {
+        //Log.d("KeySet" + Arrays.toString(FIB_CACHE.keySet().toArray()));
+      }
+      return value;
+    }
+    
+    public static long fib(int n, Map<Integer, Long> cache) {
+      if (cache.containsKey(n)) return cache.get(n);
+      // check overflow
+      long value = com.mickey305.foundation.v3.compat.lang.Math.addExact(
+          fib(n - 2, cache),
+          fib(n - 1, cache));
+      cache.put(n, value);
+      return value;
+    }
   }
 }
