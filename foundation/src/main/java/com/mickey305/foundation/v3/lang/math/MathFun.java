@@ -68,7 +68,9 @@ public final class MathFun {
     //*/
     if (Math.abs(n - PREV_KEY.get()) > INTERVAL_BUFFER_SIZE) {
       final int heap = INTERVAL_BUFFER_SIZE;
-      long index = heap;
+      long index = (n > PREV_KEY.get())
+          ? PREV_KEY.get() + heap
+          : heap;
       do {
         fib(index, FIB_CACHE);
         index += heap;
@@ -95,12 +97,7 @@ public final class MathFun {
     return cache.computeIfAbsent(n, new Function<Long, BigInteger>() {
       @Override
       public BigInteger apply(Long key) {
-        final BigInteger value = fib(key - 1, cache).add(fib(key - 2, cache));
-        if (IS_DEBUG_MODE && key % 100_000 == 0) {
-          //Log.i("element[" + i + "]"); // light log
-          Log.d("element[" + key + "]=" + value);
-        }
-        return value;
+        return fib(key - 1, cache).add(fib(key - 2, cache));
       }
     });
     //
@@ -138,7 +135,9 @@ public final class MathFun {
       /*/
       if (Math.abs(n - _PREV_KEY.get()) > INTERVAL_BUFFER_SIZE) {
         final int heap = INTERVAL_BUFFER_SIZE;
-        int index = heap;
+        int index = (n > _PREV_KEY.get())
+            ? _PREV_KEY.get() + heap
+            : heap;
         do {
           fib(index, _FIB_CACHE);
           index += heap;

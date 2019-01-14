@@ -48,7 +48,7 @@ public class FunctionalMapAdapter<K, V> implements FunctionalMap<K, V> {
     return result;
   }
   
-  // adapter of java.util.Map
+  // proxy of java.util.Map
   
   @Override
   public int size() {
