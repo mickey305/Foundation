@@ -54,7 +54,7 @@ public abstract class AbstractLinkedHashSet<E, M extends LinkedHashMap<E, Object
    */
   @Override
   public int size() {
-    return this.map.size();
+    return map.keySet().size();
   }
   
   /**

@@ -25,7 +25,7 @@ public class LinkedHashSetFactory {
   }
   
   /**
-   * 
+   *
    * @param type
    * @param capacity
    * @param <K>
