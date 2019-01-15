@@ -24,6 +24,14 @@ public class LinkedHashMapFactory {
     // nop
   }
   
+  /**
+   *
+   * @param type
+   * @param capacity
+   * @param <K>
+   * @param <V>
+   * @return
+   */
   public static <K, V> LinkedHashMap<K, V> newCache(CacheType type, int capacity) {
     if (type == CacheType.FIFO) return FIFOMap.of(capacity);
     if (type == CacheType.LRU) return LRUMap.of(capacity);

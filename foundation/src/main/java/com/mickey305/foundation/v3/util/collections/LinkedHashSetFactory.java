@@ -24,6 +24,13 @@ public class LinkedHashSetFactory {
     // nop
   }
   
+  /**
+   * 
+   * @param type
+   * @param capacity
+   * @param <K>
+   * @return
+   */
   public static <K> LinkedHashSet<K> newCache(CacheType type, int capacity) {
     if (type == CacheType.FIFO) return FIFOSet.of(capacity);
     if (type == CacheType.LRU) return LRUSet.of(capacity);
