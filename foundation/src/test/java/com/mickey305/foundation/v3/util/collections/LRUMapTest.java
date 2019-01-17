@@ -41,17 +41,44 @@ public class LRUMapTest {
     cache.put("test1", "value1");
     cache.put("test2", "value2");
     cache.put("test3", "value3");
-    
-    for(Map.Entry<String, String> entry : cache.entrySet()) {
-      Log.i("elm[" + entry.getKey() + "]=" + entry.getValue());
-    }
-    
-    cache.get("test1");
+    cache.forEach((key, value) -> Log.i("elm[" + key + "]=" + value));
+  
     cache.get("test3");
+    cache.get("test1");
     cache.put("test4", "value4");
-    
-    for(Map.Entry<String, String> entry : cache.entrySet()) {
-      Log.i("elm[" + entry.getKey() + "]=" + entry.getValue());
+    cache.forEach((key, value) -> Log.i("elm[" + key + "]=" + value));
+  
+    int i = 0;
+    for (Map.Entry<String, String> entry : cache.entrySet()) {
+      if (i == 0) {
+        entry.getKey();
+      }
+      i++;
     }
+    //cache.replace("test1", "value1-new1");
+    cache.forEach((key, value) -> Log.i("elm[" + key + "]=" + value));
+    
+    cache.put("test5", "value5");
+    cache.forEach((key, value) -> Log.i("elm[" + key + "]=" + value));
+  
+//    {
+//      int j = 0;
+//      Iterator<String> it = cache.keySet().iterator();
+//      while (it.hasNext() || j == 0) {
+//        String str = it.next();
+//        j++;
+//      }
+//      cache.forEach((key, value) -> Log.i("elm[" + key + "]=" + value));
+//    }
+//
+//    {
+//      int j2 = 0;
+//      Iterator<String> it2 = cache.values().iterator();
+//      while (it2.hasNext() || j2 == 0) {
+//        String str = it2.next();
+//        j2++;
+//      }
+//      cache.forEach((key, value) -> Log.i("elm[" + key + "]=" + value));
+//    }
   }
 }

@@ -17,7 +17,6 @@
 
 package com.mickey305.foundation.v3.util.collections;
 
-import com.mickey305.foundation.v3.util.Log;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,16 +41,16 @@ public class LRUSetTest {
     cache.add("test2");
     cache.add("test3");
     
-    for(String key : cache) {
-      Log.i("elm[" + key + "]");
-    }
+//    for(String key : cache) {
+//      Log.i("elm[" + key + "]");
+//    }
   
     cache.contains("test1");
     cache.contains("test3");
     cache.add("test4");
   
-    for(String key : cache) {
-      Log.i("elm[" + key + "]");
-    }
+//    for(String key : cache) {
+//      Log.i("elm[" + key + "]");
+//    }
   }
 }

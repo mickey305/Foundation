@@ -32,6 +32,11 @@ gradle.projectsEvaluated {
     }
 }
 
+compileTestJava {
+    sourceCompatibility = JavaVersion.VERSION_1_10
+    targetCompatibility = JavaVersion.VERSION_1_10
+}
+
 javadoc {
     options.charSet = defaultEncoding
     options.encoding = defaultEncoding

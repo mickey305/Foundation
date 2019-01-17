@@ -17,15 +17,19 @@
 
 package com.mickey305.foundation.v3.util.collections;
 
+import com.mickey305.foundation.v3.util.Log;
+
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;
+
 public class LRUSet<E> extends AbstractLinkedHashSet<E, LinkedHashMap<E, Object>>
-    implements Set<E>, Cloneable, Serializable {
-  private static final long serialVersionUID = -3618275991864828938L;
+    implements Set<E>, ILRU<E, Object>, Cloneable, Serializable {
+  private static final long serialVersionUID = -6822425441737891595L;
   
   public static <E> LinkedHashSet<E> of(int capacity) {
     return new LRUSet<>(capacity);
@@ -49,5 +53,17 @@ public class LRUSet<E> extends AbstractLinkedHashSet<E, LinkedHashMap<E, Object>
       );
     }
     return newSet;
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Object referenceData(E key, Object dummy) {
+    if (IS_DEBUG_MODE) {
+      Log.d("element references method called. key=" + key);
+    }
+    map.remove(key);
+    return map.put(key, DUMMY_VAL);
   }
 }
