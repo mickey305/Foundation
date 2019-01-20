@@ -17,6 +17,7 @@
 
 package com.mickey305.foundation.v3.lang.math;
 
+import com.mickey305.foundation.v3.util.Assert;
 import org.apache.commons.lang3.tuple.Triple;
 
 import java.util.Set;
@@ -149,7 +150,8 @@ public class Matrix extends AbstractNumberTable {
       for (int j = 0; j < rightMatrix.getColumnSize(); j++) {
         Number[] rightRec = rightMatrix.getColumn(j);
         
-        assert leftRec.length == rightRec.length;
+        //assert leftRec.length == rightRec.length;
+        Assert.requireEquals(leftRec.length, rightRec.length);
         
         Number[] multiRec = new Number[leftRec.length];
         for (int k = 0; k < multiRec.length; k++)

@@ -17,6 +17,8 @@
 
 package com.mickey305.foundation.v3.util.pattern;
 
+import com.mickey305.foundation.v3.util.Assert;
+
 class CompositeBindAlgorithm {
   
   private CompositeBindAlgorithm() {
@@ -37,7 +39,8 @@ class CompositeBindAlgorithm {
         return false;
     }
     if (parent.getChildren().add(child)) {
-      assert child.getParent() == null;
+      //assert child.getParent() == null;
+      Assert.requireNull(child.getParent());
       child.setParent(parent);
       return true;
     }

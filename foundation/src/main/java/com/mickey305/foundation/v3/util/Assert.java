@@ -33,10 +33,9 @@ public class Assert<E> {
     result = new ArrayList<>();
   }
   
-  public Assert nonNull(E object) {
+  public Assert nonNull(final E object) {
     try {
       final E nonNullObject = Assert.requireNonNull(object);
-      assert nonNullObject != null;
       result.add(nonNullObject);
     } catch (Exception e) {
       Log.e(e.getMessage());
@@ -50,28 +49,141 @@ public class Assert<E> {
   }
   
   /**
+   * true assertion
+   * @param status target boolean
+   * @throws RuntimeException if {@code status} is false
+   */
+  public static void requireTrue(final boolean status) {
+    if (IS_DEBUG_MODE && !status) {
+      StackFinder.Position pos = StackFinder.Position.thisMethodCaller();
+      StackTraceElement element = StackFinder.tryGet(pos);
+      Log.d("input data is false. called method info: " + Objects.toString(element));
+    }
+    if (!status) {
+      throw new RuntimeException("input data is false");
+    }
+  }
+  
+  /**
+   * false assertion
+   * @param status target boolean
+   * @throws RuntimeException if {@code status} is true
+   */
+  public static void requireFalse(final boolean status) {
+    if (IS_DEBUG_MODE && status) {
+      StackFinder.Position pos = StackFinder.Position.thisMethodCaller();
+      StackTraceElement element = StackFinder.tryGet(pos);
+      Log.d("input data is true. called method info: " + Objects.toString(element));
+    }
+    if (status) {
+      throw new RuntimeException("input data is true");
+    }
+  }
+  
+  /**
    * wrapper method of {@link Objects#requireNonNull(Object)}.
-   * Checks that the specified object reference is not {@code null}. This
-   * method is designed primarily for doing parameter validation in methods
-   * and constructors, as demonstrated below:
-   * <blockquote><pre>
-   * public Foo(Bar bar) {
-   *     this.bar = Assert.requireNonNull(bar);
-   * }
-   * </pre></blockquote>
-   *
    * @param object the object reference to check for nullity
    * @param <T> the type of the reference
    * @return {@code obj} if not {@code null}
    * @throws NullPointerException if {@code obj} is {@code null}
    */
-  public static <T> T requireNonNull(T object) {
+  public static <T> T requireNonNull(final T object) {
     if (IS_DEBUG_MODE && object == null) {
       StackFinder.Position pos = StackFinder.Position.thisMethodCaller();
       StackTraceElement element = StackFinder.tryGet(pos);
-      assert element != null;
-      Log.d("input data is null-value. called method info: " + element.toString());
+      Log.d("input data is null-value. called method info: " + Objects.toString(element));
     }
     return Objects.requireNonNull(object);
+  }
+  
+  /**
+   * is-null assertion
+   * @param object check target object
+   * @param <T> the type of the reference
+   * @return {@code obj} if {@code null}
+   * @throws IllegalArgumentException if {@code obj} is not {@code null}
+   */
+  public static <T> T requireNull(final T object) {
+    if (IS_DEBUG_MODE && object != null) {
+      StackFinder.Position pos = StackFinder.Position.thisMethodCaller();
+      StackTraceElement element = StackFinder.tryGet(pos);
+      Log.d("input data is non-null-value. called method info: " + Objects.toString(element));
+    }
+    if (object != null) {
+      throw new IllegalArgumentException("data is non-null. object: " + object.toString());
+    }
+    return null;
+  }
+  
+  /**
+   * equals assertion
+   * @param a an object
+   * @param b an object to be compared with {@code a} for equality
+   * @throws RuntimeException if {@code a} and {@code b} is different
+   */
+  public static void requireEquals(final Object a, final Object b) {
+    final boolean result = Objects.equals(a, b);
+    if (IS_DEBUG_MODE && !result) {
+      StackFinder.Position pos = StackFinder.Position.thisMethodCaller();
+      StackTraceElement element = StackFinder.tryGet(pos);
+      Log.d("input data is diff. called method info: " + Objects.toString(element));
+    }
+    if (!result) {
+      throw new RuntimeException("input data is different: data1=" + Objects.toString(a) + ", data2=" + Objects.toString(b));
+    }
+  }
+  
+  /**
+   * not equals assertion
+   * @param a an object
+   * @param b an object to be compared with {@code a} for differently
+   * @throws RuntimeException if {@code a} and {@code b} is equal
+   */
+  public static void requireNotEquals(final Object a, final Object b) {
+    final boolean result = Objects.equals(a, b);
+    if (IS_DEBUG_MODE && result) {
+      StackFinder.Position pos = StackFinder.Position.thisMethodCaller();
+      StackTraceElement element = StackFinder.tryGet(pos);
+      Log.d("input data is same. called method info: " + Objects.toString(element));
+    }
+    if (result) {
+      throw new RuntimeException("input data is same: data1=" + Objects.toString(a) + ", data2=" + Objects.toString(b));
+    }
+  }
+  
+  /**
+   * deep-equals assertion
+   * @param a an object
+   * @param b an object to be compared with {@code a} for equality
+   * @throws RuntimeException if {@code a} and {@code b} is different
+   */
+  public static void requireDeepEquals(final Object a, final Object b) {
+    final boolean result = Objects.deepEquals(a, b);
+    if (IS_DEBUG_MODE && !result) {
+      StackFinder.Position pos = StackFinder.Position.thisMethodCaller();
+      StackTraceElement element = StackFinder.tryGet(pos);
+      Log.d("input data is diff. called method info: " + Objects.toString(element));
+    }
+    if (!result) {
+      throw new RuntimeException("input data is different: data1=" + Objects.toString(a) + ", data2=" + Objects.toString(b));
+    }
+  }
+  
+  /**
+   * not deep-equals assertion
+   * @param a an object
+   * @param b an object to be compared with {@code a} for differently
+   * @throws RuntimeException if {@code a} and {@code b} is equal
+   */
+  public static void requireNotDeepEquals(final Object a, final Object b) {
+    final boolean result = Objects.deepEquals(a, b);
+    if (IS_DEBUG_MODE && result) {
+      StackFinder.Position pos = StackFinder.Position.thisMethodCaller();
+      StackTraceElement element = StackFinder.tryGet(pos);
+      Log.d("input data is same. called method info: " + Objects.toString(element));
+    }
+    if (result) {
+      throw new RuntimeException("input data is same: data1=" + Objects.toString(a) + ", data2=" + Objects.toString(b));
+    }
   }
 }

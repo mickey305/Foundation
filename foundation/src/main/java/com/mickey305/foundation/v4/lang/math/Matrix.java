@@ -17,6 +17,7 @@
 
 package com.mickey305.foundation.v4.lang.math;
 
+import com.mickey305.foundation.v3.util.Assert;
 import com.mickey305.foundation.v4.lang.math.operator.AbstractNumberOperation;
 import com.mickey305.foundation.v4.lang.math.operator.IElementInitializer;
 import org.apache.commons.lang3.tuple.Triple;
@@ -108,7 +109,8 @@ public class Matrix<E extends Number> extends AbstractNumberTable<E> {
       for (int j = 0; j < rightMatrix.getColumnSize(); j++) {
         E[] rightRec = rightMatrix.getColumn(j);
         
-        assert leftRec.length == rightRec.length;
+        //assert leftRec.length == rightRec.length;
+        Assert.requireEquals(leftRec.length, rightRec.length);
         
         E[] multiRec = this.getInitializer().array(leftRec.length);
         for (int k = 0; k < multiRec.length; k++)
