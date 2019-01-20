@@ -24,5 +24,5 @@ public interface ILRU<K, V> {
    * @param value
    * @return
    */
-  V referenceData(K key, V value);
+  V refreshData(K key, V value);
 }

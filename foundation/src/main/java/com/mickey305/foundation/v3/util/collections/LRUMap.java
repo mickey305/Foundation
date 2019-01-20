@@ -27,6 +27,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;
@@ -39,7 +40,7 @@ import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;
  * @param <V> 値クラス型
  */
 public class LRUMap<K, V> extends LinkedHashMap<K, V> implements ILRU<K, V> {
-  private static final long serialVersionUID = 3510662679827609155L;
+  private static final long serialVersionUID = -2245964722847245328L;
   private final int capacity;
   private final CollectionsHolder holder;
   
@@ -102,7 +103,7 @@ public class LRUMap<K, V> extends LinkedHashMap<K, V> implements ILRU<K, V> {
   public V get(Object key) {
     final V value = super.get(key);
     if (value != null) {
-      referenceData((K) key, value);
+      refreshData((K) key, value);
     }
     return value;
   }
@@ -153,7 +154,7 @@ public class LRUMap<K, V> extends LinkedHashMap<K, V> implements ILRU<K, V> {
       final V v = e.getValue();
       if ((k == key || (key != null && key.equals(k)))
           && (v == oldValue || (oldValue != null && oldValue.equals(v)))) {
-        referenceData(key, newValue);
+        refreshData(key, newValue);
         return true;
       }
     }
@@ -168,7 +169,7 @@ public class LRUMap<K, V> extends LinkedHashMap<K, V> implements ILRU<K, V> {
    */
   public V replace(K key, V value) {
     if (this.containsKey(key)) {
-      return referenceData(key, value);
+      return refreshData(key, value);
     }
     return null;
   }
@@ -186,12 +187,16 @@ public class LRUMap<K, V> extends LinkedHashMap<K, V> implements ILRU<K, V> {
    * {@inheritDoc}
    */
   @Override
-  public V referenceData(K key, V value) {
+  public V refreshData(K key, V value) {
     if (IS_DEBUG_MODE) {
-      Log.d("element references method called. key=" + key);
+      Log.d("element references method called. key=" + Objects.toString(key));
     }
-    remove(key);
-    return put(key, value);
+    final V v = remove(key);
+    put(key, value);
+    if (IS_DEBUG_MODE && !Objects.equals(value, v)) {
+      Log.d("value changed. from " + Objects.toString(v) + " to " + Objects.toString(value));
+    }
+    return v;
   }
   
   //===----------------------------------------------------------------------------------------------------------===//
@@ -242,7 +247,7 @@ public class LRUMap<K, V> extends LinkedHashMap<K, V> implements ILRU<K, V> {
     public K getKey() {
       final K k = entry.getKey();
       final V v = entry.getValue();
-      LRUMap.this.referenceData(k, v);
+      LRUMap.this.refreshData(k, v);
       return k;
     }
   
@@ -253,7 +258,7 @@ public class LRUMap<K, V> extends LinkedHashMap<K, V> implements ILRU<K, V> {
     public V getValue() {
       final K k = entry.getKey();
       final V v = entry.getValue();
-      LRUMap.this.referenceData(k, v);
+      LRUMap.this.refreshData(k, v);
       return v;
     }
   
@@ -264,7 +269,7 @@ public class LRUMap<K, V> extends LinkedHashMap<K, V> implements ILRU<K, V> {
     public V setValue(V value) {
       final K k = entry.getKey();
       final V v = entry.getValue();
-      LRUMap.this.referenceData(k, v);
+      LRUMap.this.refreshData(k, v);
       return entry.setValue(value);
     }
   }
