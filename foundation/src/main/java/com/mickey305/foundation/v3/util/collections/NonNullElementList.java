@@ -34,7 +34,9 @@ public class NonNullElementList<E> implements List<E>, Cloneable, Serializable {
   private final List<E> list;
   
   /**
-   * constructor data input sample.
+   * constructor
+   * <p>data input sample below.
+   * </p>
    * <pre>{@code
    * List<String> list = new NonNullElementList<>(new ArrayList<String>());
    * }</pre>
