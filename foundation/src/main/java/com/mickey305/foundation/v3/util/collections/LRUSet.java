@@ -21,7 +21,6 @@ import com.mickey305.foundation.v3.util.Log;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -29,10 +28,10 @@ import java.util.Set;
 import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;
 
 public class LRUSet<E> extends AbstractLinkedHashSet<E, LinkedHashMap<E, Object>>
-    implements Set<E>, ILRU<E, Object>, Cloneable, Serializable {
-  private static final long serialVersionUID = 7961430944319132150L;
+    implements Set<E>, ILRU<E, Object>, ILRUSet<E>, Cloneable, Serializable {
+  private static final long serialVersionUID = -4931640105653234539L;
   
-  public static <E> LinkedHashSet<E> of(int capacity) {
+  public static <E> LRUSet<E> of(int capacity) {
     return new LRUSet<>(capacity);
   }
   
@@ -66,5 +65,13 @@ public class LRUSet<E> extends AbstractLinkedHashSet<E, LinkedHashMap<E, Object>
     }
     map.remove(key);
     return map.put(key, DUMMY_VAL);
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void refreshData(E key) {
+    this.refreshData(key, null);
   }
 }

@@ -37,7 +37,7 @@ public class LRUMapTest {
   
   @Test
   public void testCase_01_01() throws Exception {
-    Map<String, String> cache = LRUMap.of(3);
+    ILRUMap<String, String> cache = LRUMap.of(3);
     
     cache.put("test1", "value1");
     cache.put("test2", "value2");

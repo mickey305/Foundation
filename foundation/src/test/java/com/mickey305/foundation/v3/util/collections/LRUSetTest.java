@@ -23,7 +23,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Iterator;
-import java.util.Set;
 
 public class LRUSetTest {
   
@@ -37,15 +36,15 @@ public class LRUSetTest {
   
   @Test
   public void testCase_01_01() throws Exception {
-    Set<String> cache = LRUSet.of(3);
+    ILRUSet<String> cache = LRUSet.of(3);
     
     cache.add("test1");
     cache.add("test2");
     cache.add("test3");
     cache.forEach(key -> Log.i("elm[" + key + "]"));
   
-    cache.contains("test1");
-    cache.contains("test3");
+    cache.refreshData("test1");
+    cache.refreshData("test3");
     cache.add("test4");
     cache.forEach(key -> Log.i("elm[" + key + "]"));
   

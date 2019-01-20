@@ -39,12 +39,12 @@ import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;
  * @param <K> キークラス型（ユニークキー）
  * @param <V> 値クラス型
  */
-public class LRUMap<K, V> extends LinkedHashMap<K, V> implements ILRU<K, V> {
-  private static final long serialVersionUID = -2245964722847245328L;
+public class LRUMap<K, V> extends LinkedHashMap<K, V> implements ILRU<K, V>, ILRUMap<K, V> {
+  private static final long serialVersionUID = 1709758731307230132L;
   private final int capacity;
   private final CollectionsHolder holder;
   
-  public static <K, V> LinkedHashMap<K, V> of(int capacity) {
+  public static <K, V> LRUMap<K, V> of(int capacity) {
     return new LRUMap<>(capacity);
   }
   
@@ -197,6 +197,14 @@ public class LRUMap<K, V> extends LinkedHashMap<K, V> implements ILRU<K, V> {
       Log.d("value changed. from " + Objects.toString(v) + " to " + Objects.toString(value));
     }
     return v;
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void refreshData(K key) {
+    this.refreshData(key, this.get(key));
   }
   
   //===----------------------------------------------------------------------------------------------------------===//
