@@ -46,8 +46,6 @@ public abstract class InstanceHasOneTransactionTemplate implements Transactional
    *   public SampleObject(SampleListener listener) {
    *     ...
    *     template = new InstanceHasOneTransactionTemplate() {
-   *       @Nonnull
-   *       @Override
    *       protected String createTransactionId() {
    *         return NaturalInstanceId.gen(SampleObject.class);
    *       }

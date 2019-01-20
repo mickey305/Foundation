@@ -1,5 +1,6 @@
-[HEADER MODULE:foundation, BUILD-DATETIME:2019-01-13 07:15:54.625]
+[HEADER MODULE:foundation, BUILD-DATETIME:2019-01-20 18:20:58.013]
 com.mickey305.foundation.v3.gen.R
+com.mickey305.foundation.v3.lang.math.MathFun
 com.mickey305.foundation.v3.lang.ref.SecureObjectTaskManager
 com.mickey305.foundation.v3.util.AbstractCryptoManager
 com.mickey305.foundation.v3.util.Assert
@@ -8,6 +9,8 @@ com.mickey305.foundation.v3.util.CollectionUtil
 com.mickey305.foundation.v3.util.DateUtil
 com.mickey305.foundation.v3.util.Regexp
 com.mickey305.foundation.v3.util.ResFile
+com.mickey305.foundation.v3.util.collections.LRUMap
+com.mickey305.foundation.v3.util.collections.LRUSet
 com.mickey305.foundation.v3.util.concurrent.AutoUnlock
 com.mickey305.foundation.v3.util.concurrent.InstanceHasOneTransactionTemplate
 com.mickey305.foundation.v3.util.concurrent.NaturalInstanceId
