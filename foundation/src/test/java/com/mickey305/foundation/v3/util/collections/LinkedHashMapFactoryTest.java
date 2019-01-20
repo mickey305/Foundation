@@ -56,6 +56,10 @@ public class LinkedHashMapFactoryTest {
     createTestData(cache2, 9, 10);
     cache1.forEach((key, value) -> Log.i("elm1[" + key + "]=" + value));
     cache2.forEach((key, value) -> Log.i("elm2[" + key + "]=" + value));
+    cache1.get("test-key5");
+    cache2.get("test-key5");
+    cache1.forEach((key, value) -> Log.i("elm1[" + key + "]=" + value));
+    cache2.forEach((key, value) -> Log.i("elm2[" + key + "]=" + value));
     Assert.assertEquals(10, cache1.size());
     Assert.assertEquals(10, cache2.size());
     
