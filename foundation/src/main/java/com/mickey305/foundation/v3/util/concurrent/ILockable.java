@@ -19,12 +19,18 @@ package com.mickey305.foundation.v3.util.concurrent;
 
 public interface ILockable<L extends LockType> {
   /**
-   * @param locktype
+   * ロック開始処理
+   * <p>入力されたロック方法で並列処理時のロック処理のエントリポイントとして実行する
+   * </p>
+   * @param lockType ロック方法
    */
-  void lock(L locktype);
+  void lock(L lockType);
   
   /**
-   * @param locktype
+   * ロック解除処理
+   * <p>入力されたロック方法でロックされている処理の解除を実行する
+   * </p>
+   * @param lockType ロック方法
    */
-  void unlock(L locktype);
+  void unlock(L lockType);
 }

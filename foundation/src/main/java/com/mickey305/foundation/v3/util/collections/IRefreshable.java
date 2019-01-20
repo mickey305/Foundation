@@ -19,8 +19,13 @@ package com.mickey305.foundation.v3.util.collections;
 
 public interface IRefreshable<K> {
   /**
-   *
-   * @param key
+   * 要素リフレッシュ処理
+   * <p>キー情報をもとに、LRUデータ構造などでの要素アクセス処理を実装する
+   * </p>
+   * <p>このメソッドでアクセスされたキー情報およびキーに紐づく情報は、LRUキャッシュ上で削除対象の優先度が下がります
+   * （LRUキャッシュ上から、キー情報およびキーに紐づく情報が削除されにくくなります）
+   * </p>
+   * @param key 対象要素のキー
    */
   void refreshData(K key);
 }

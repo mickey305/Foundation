@@ -19,6 +19,10 @@ package com.mickey305.foundation.v3.util.collections;
 
 import java.util.Set;
 
+/**
+ * LRUキャッシュ用キーセットインターフェース
+ * @param <K> キークラス型（ユニークキー）
+ */
 public interface ILRUSet<K> extends Set<K>, IRefreshable<K> {
   // nop
 }

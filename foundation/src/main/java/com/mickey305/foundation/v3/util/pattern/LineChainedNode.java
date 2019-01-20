@@ -25,14 +25,14 @@ import javax.annotation.Nullable;
  */
 public interface LineChainedNode<T extends LineChainedNode> {
   /**
-   *
-   * @return
+   * 親オブジェクト取得メソッド
+   * @return 親オブジェクト
    */
   @Nullable T parent();
   
   /**
-   *
-   * @return
+   * 子オブジェクト取得メソッド
+   * @return 子オブジェクト
    */
   @Nullable T child();
 }

@@ -19,6 +19,11 @@ package com.mickey305.foundation.v3.util.collections;
 
 import java.util.Map;
 
+/**
+ * LRUキャッシュ用マップインターフェース
+ * @param <K> キークラス型（ユニークキー）
+ * @param <V> 値クラス型
+ */
 public interface ILRUMap<K, V> extends Map<K, V>, IRefreshable<K> {
   // nop
 }

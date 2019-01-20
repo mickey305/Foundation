@@ -22,6 +22,7 @@ import javax.annotation.Nullable;
 
 public interface Transactional {
   /**
+   * ロックコールバック処理実行メソッド
    * lock interface
    * @param type lock type object
    * @param callback transactional callback
@@ -32,6 +33,8 @@ public interface Transactional {
   
   interface Callback<T> {
     /**
+     * ロックコールバック処理
+     * <p>入力されたキーに紐づくロックオブジェクトを使用し、ロックしている間に必要な処理を実装する</p>
      * transaction method
      * @param id transaction-id
      * @return result

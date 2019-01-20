@@ -22,17 +22,17 @@ import javax.annotation.Nullable;
 
 public interface IDumpable {
   /**
-   *
-   * @param targetObject
-   * @param callback
-   * @param <T>
+   * オブジェクトダンプ実行コールバック
+   * @param targetObject 対象のオブジェクト
+   * @param callback コールバック
+   * @param <T> 対象のオブジェクト型
    */
   <T> void dump(@Nullable T targetObject, @Nullable Callback callback);
   
   interface Callback {
     /**
-     *
-     * @param lineResult
+     * ダンプ処理実装メソッド
+     * @param lineResult 一行分のダンプ対象文字列ビルダ
      */
     void impl(@Nonnull StringBuilder lineResult);
   }

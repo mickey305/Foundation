@@ -21,14 +21,14 @@ import javax.annotation.Nonnull;
 
 public interface IdSupplier {
   /**
-   *
-   * @return
+   * 各インスタンスで一意となるID番号を生成する
+   * @return ID番号
    */
   @Nonnull String instanceId();
   
   /**
-   *
-   * @return
+   * 各インスタンスに実装されているハッシュコード{@link Object#hashCode()}で一意となるID番号を生成する
+   * @return ID番号
    */
   @Nonnull String hashId();
 }
