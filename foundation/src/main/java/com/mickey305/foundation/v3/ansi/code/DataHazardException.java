@@ -18,6 +18,8 @@
 package com.mickey305.foundation.v3.ansi.code;
 
 public class DataHazardException extends RuntimeException {
+  private static final long serialVersionUID = -3671746657749618512L;
+  
   public DataHazardException(String message) {
     super(message);
   }

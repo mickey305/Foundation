@@ -51,7 +51,7 @@ public class Assert<E> {
   /**
    * true assertion
    * @param status target boolean
-   * @throws RuntimeException if {@code status} is false
+   * @throws AssertionException if {@code status} is false
    */
   public static void requireTrue(final boolean status) {
     if (IS_DEBUG_MODE && !status) {
@@ -60,14 +60,14 @@ public class Assert<E> {
       Log.d("input data is false. called method info: " + Objects.toString(element));
     }
     if (!status) {
-      throw new RuntimeException("input data is false");
+      throw new AssertionException("input data is false");
     }
   }
   
   /**
    * false assertion
    * @param status target boolean
-   * @throws RuntimeException if {@code status} is true
+   * @throws AssertionException if {@code status} is true
    */
   public static void requireFalse(final boolean status) {
     if (IS_DEBUG_MODE && status) {
@@ -76,7 +76,7 @@ public class Assert<E> {
       Log.d("input data is true. called method info: " + Objects.toString(element));
     }
     if (status) {
-      throw new RuntimeException("input data is true");
+      throw new AssertionException("input data is true");
     }
   }
   
@@ -85,7 +85,7 @@ public class Assert<E> {
    * @param object the object reference to check for nullity
    * @param <T> the type of the reference
    * @return {@code obj} if not {@code null}
-   * @throws NullPointerException if {@code obj} is {@code null}
+   * @throws AssertionException if {@code obj} is {@code null}
    */
   public static <T> T requireNonNull(final T object) {
     if (IS_DEBUG_MODE && object == null) {
@@ -93,7 +93,11 @@ public class Assert<E> {
       StackTraceElement element = StackFinder.tryGet(pos);
       Log.d("input data is null-value. called method info: " + Objects.toString(element));
     }
-    return Objects.requireNonNull(object);
+    try {
+      return Objects.requireNonNull(object);
+    } catch (NullPointerException e) {
+      throw new AssertionException("data is null", e);
+    }
   }
   
   /**
@@ -101,7 +105,7 @@ public class Assert<E> {
    * @param object check target object
    * @param <T> the type of the reference
    * @return {@code obj} if {@code null}
-   * @throws IllegalArgumentException if {@code obj} is not {@code null}
+   * @throws AssertionException if {@code obj} is not {@code null}
    */
   public static <T> T requireNull(final T object) {
     if (IS_DEBUG_MODE && object != null) {
@@ -110,7 +114,7 @@ public class Assert<E> {
       Log.d("input data is non-null-value. called method info: " + Objects.toString(element));
     }
     if (object != null) {
-      throw new IllegalArgumentException("data is non-null. object: " + object.toString());
+      throw new AssertionException("data is non-null. object: " + object.toString());
     }
     return null;
   }
@@ -119,7 +123,7 @@ public class Assert<E> {
    * equals assertion
    * @param a an object
    * @param b an object to be compared with {@code a} for equality
-   * @throws RuntimeException if {@code a} and {@code b} is different
+   * @throws AssertionException if {@code a} and {@code b} is different
    */
   public static void requireEquals(final Object a, final Object b) {
     final boolean result = Objects.equals(a, b);
@@ -129,7 +133,7 @@ public class Assert<E> {
       Log.d("input data is diff. called method info: " + Objects.toString(element));
     }
     if (!result) {
-      throw new RuntimeException("input data is different: data1=" + Objects.toString(a) + ", data2=" + Objects.toString(b));
+      throw new AssertionException("input data is different: data1=" + Objects.toString(a) + ", data2=" + Objects.toString(b));
     }
   }
   
@@ -137,7 +141,7 @@ public class Assert<E> {
    * not equals assertion
    * @param a an object
    * @param b an object to be compared with {@code a} for differently
-   * @throws RuntimeException if {@code a} and {@code b} is equal
+   * @throws AssertionException if {@code a} and {@code b} is equal
    */
   public static void requireNotEquals(final Object a, final Object b) {
     final boolean result = Objects.equals(a, b);
@@ -147,7 +151,7 @@ public class Assert<E> {
       Log.d("input data is same. called method info: " + Objects.toString(element));
     }
     if (result) {
-      throw new RuntimeException("input data is same: data1=" + Objects.toString(a) + ", data2=" + Objects.toString(b));
+      throw new AssertionException("input data is same: data1=" + Objects.toString(a) + ", data2=" + Objects.toString(b));
     }
   }
   
@@ -155,7 +159,7 @@ public class Assert<E> {
    * deep-equals assertion
    * @param a an object
    * @param b an object to be compared with {@code a} for equality
-   * @throws RuntimeException if {@code a} and {@code b} is different
+   * @throws AssertionException if {@code a} and {@code b} is different
    */
   public static void requireDeepEquals(final Object a, final Object b) {
     final boolean result = Objects.deepEquals(a, b);
@@ -165,7 +169,7 @@ public class Assert<E> {
       Log.d("input data is diff. called method info: " + Objects.toString(element));
     }
     if (!result) {
-      throw new RuntimeException("input data is different: data1=" + Objects.toString(a) + ", data2=" + Objects.toString(b));
+      throw new AssertionException("input data is different: data1=" + Objects.toString(a) + ", data2=" + Objects.toString(b));
     }
   }
   
@@ -173,7 +177,7 @@ public class Assert<E> {
    * not deep-equals assertion
    * @param a an object
    * @param b an object to be compared with {@code a} for differently
-   * @throws RuntimeException if {@code a} and {@code b} is equal
+   * @throws AssertionException if {@code a} and {@code b} is equal
    */
   public static void requireNotDeepEquals(final Object a, final Object b) {
     final boolean result = Objects.deepEquals(a, b);
@@ -183,7 +187,23 @@ public class Assert<E> {
       Log.d("input data is same. called method info: " + Objects.toString(element));
     }
     if (result) {
-      throw new RuntimeException("input data is same: data1=" + Objects.toString(a) + ", data2=" + Objects.toString(b));
+      throw new AssertionException("input data is same: data1=" + Objects.toString(a) + ", data2=" + Objects.toString(b));
+    }
+  }
+  
+  public static class AssertionException extends RuntimeException {
+    private static final long serialVersionUID = 6466366065807358619L;
+  
+    public AssertionException(String msg) {
+      super(msg);
+    }
+    
+    public AssertionException(Throwable t) {
+      super(t);
+    }
+    
+    public AssertionException(String msg, Throwable t) {
+      super(msg, t);
     }
   }
 }
