@@ -17,12 +17,26 @@
 
 package com.mickey305.foundation.v3.util.collections;
 
+import java.util.Collection;
+
 public interface IQueue<E> extends ILinearList<E> {
   /**
    *
    * @param element
    */
   void enqueue(E element);
+  
+  /**
+   *
+   * @param c
+   */
+  void enqueueAll(Collection<E> c);
+  
+  /**
+   *
+   * @param c
+   */
+  void enqueueAll(E[] c);
   
   /**
    *

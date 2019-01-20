@@ -19,6 +19,7 @@ package com.mickey305.foundation.v3.util.collections;
 
 import com.mickey305.foundation.v3.util.Assert;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Deque;
 import java.util.Iterator;
@@ -106,6 +107,86 @@ public abstract class AbstractLinearListAdapter<E> implements ILinearList<E> {
     collection.clear();
     collection.addAll(deque);
     return collection;
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Object[] toArray() {
+    return deque.toArray();
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public E[] toArray(E[] ary) {
+    return deque.toArray(ary);
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public boolean contains(E o) {
+    return deque.contains(o);
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public boolean remove(E o) {
+    return deque.remove(o);
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public boolean containsAll(Collection<E> c) {
+    return deque.containsAll(c);
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public boolean removeAll(Collection<E> c) {
+    return deque.removeAll(c);
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public boolean retainAll(Collection<E> c) {
+    return deque.retainAll(c);
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public boolean containsAll(E[] c) {
+    return deque.containsAll(Arrays.asList(c));
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public boolean removeAll(E[] c) {
+    return deque.removeAll(Arrays.asList(c));
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public boolean retainAll(E[] c) {
+    return deque.retainAll(Arrays.asList(c));
   }
   
   protected Deque<E> getDeque() {

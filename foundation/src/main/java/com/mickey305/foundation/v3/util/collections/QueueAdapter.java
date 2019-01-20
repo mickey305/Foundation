@@ -18,10 +18,12 @@
 package com.mickey305.foundation.v3.util.collections;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Deque;
 
 public class QueueAdapter<E> extends AbstractLinearListAdapter<E> implements IQueue<E>, ILinearList<E>, Serializable {
-  private static final long serialVersionUID = 2559356407108800578L;
+  private static final long serialVersionUID = 6316234948652384696L;
   
   public QueueAdapter(Deque<E> deque) {
     super(deque);
@@ -41,6 +43,18 @@ public class QueueAdapter<E> extends AbstractLinearListAdapter<E> implements IQu
   @Override
   public void enqueue(E element) {
     getDeque().offerLast(element);
+  }
+  
+  @Override
+  public void enqueueAll(Collection<E> c) {
+    for (E e : c) {
+      this.enqueue(e);
+    }
+  }
+  
+  @Override
+  public void enqueueAll(E[] c) {
+    this.enqueueAll(Arrays.asList(c));
   }
   
   /**

@@ -18,10 +18,12 @@
 package com.mickey305.foundation.v3.util.collections;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Deque;
 
 public class StackAdapter<E> extends AbstractLinearListAdapter<E> implements IStack<E>, ILinearList<E>, Serializable {
-  private static final long serialVersionUID = 3187013924056233438L;
+  private static final long serialVersionUID = -8406324575960631491L;
   
   public StackAdapter(Deque<E> deque) {
     super(deque);
@@ -41,6 +43,18 @@ public class StackAdapter<E> extends AbstractLinearListAdapter<E> implements ISt
   @Override
   public void push(E element) {
     getDeque().offerFirst(element);
+  }
+  
+  @Override
+  public void pushAll(Collection<E> c) {
+    for (E e : c) {
+      this.push(e);
+    }
+  }
+  
+  @Override
+  public void pushAll(E[] c) {
+    this.pushAll(Arrays.asList(c));
   }
   
   /**

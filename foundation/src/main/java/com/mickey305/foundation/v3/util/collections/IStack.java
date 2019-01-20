@@ -17,12 +17,26 @@
 
 package com.mickey305.foundation.v3.util.collections;
 
+import java.util.Collection;
+
 public interface IStack<E> extends ILinearList<E> {
   /**
    *
    * @param element
    */
   void push(E element);
+  
+  /**
+   *
+   * @param c
+   */
+  void pushAll(Collection<E> c);
+  
+  /**
+   *
+   * @param c
+   */
+  void pushAll(E[] c);
   
   /**
    *

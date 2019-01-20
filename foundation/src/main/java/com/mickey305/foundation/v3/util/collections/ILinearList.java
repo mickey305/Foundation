@@ -79,7 +79,76 @@ public interface ILinearList<E> {
    *
    * @return
    */
+  Object[] toArray();
+  
+  /**
+   *
+   * @param ary
+   * @return
+   */
+  E[] toArray(E[] ary);
+  
+  /**
+   *
+   * @return
+   */
   Iterator<E> iterator();
+  
+  /**
+   *
+   * @param o
+   * @return
+   */
+  boolean contains(E o);
+  
+  /**
+   *
+   * @param o
+   * @return
+   */
+  boolean remove(E o);
+  
+  /**
+   *
+   * @param c
+   * @return
+   */
+  boolean containsAll(Collection<E> c);
+  
+  /**
+   *
+   * @param c
+   * @return
+   */
+  boolean removeAll(Collection<E> c);
+  
+  /**
+   *
+   * @param c
+   * @return
+   */
+  boolean retainAll(Collection<E> c);
+  
+  /**
+   *
+   * @param c
+   * @return
+   */
+  boolean containsAll(E[] c);
+  
+  /**
+   *
+   * @param c
+   * @return
+   */
+  boolean removeAll(E[] c);
+  
+  /**
+   *
+   * @param c
+   * @return
+   */
+  boolean retainAll(E[] c);
   
   /**
    *
