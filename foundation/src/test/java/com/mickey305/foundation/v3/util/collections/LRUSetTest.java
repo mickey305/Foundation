@@ -17,10 +17,12 @@
 
 package com.mickey305.foundation.v3.util.collections;
 
+import com.mickey305.foundation.v3.util.Log;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Iterator;
 import java.util.Set;
 
 public class LRUSetTest {
@@ -40,17 +42,19 @@ public class LRUSetTest {
     cache.add("test1");
     cache.add("test2");
     cache.add("test3");
-    
-//    for(String key : cache) {
-//      Log.i("elm[" + key + "]");
-//    }
+    cache.forEach(key -> Log.i("elm[" + key + "]"));
   
     cache.contains("test1");
     cache.contains("test3");
     cache.add("test4");
+    cache.forEach(key -> Log.i("elm[" + key + "]"));
   
-//    for(String key : cache) {
-//      Log.i("elm[" + key + "]");
-//    }
+    int i = 0;
+    Iterator<String> it = cache.iterator();
+    while (it.hasNext() && i == 0) {
+      String str = it.next();
+      i++;
+    }
+    cache.forEach(key -> Log.i("elm[" + key + "]"));
   }
 }
