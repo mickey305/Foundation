@@ -23,7 +23,7 @@ import java.util.Collection;
 import java.util.Deque;
 
 public class QueueAdapter<E> extends AbstractLinearListAdapter<E> implements IQueue<E>, ILinearList<E>, Serializable {
-  private static final long serialVersionUID = 6316234948652384696L;
+  private static final long serialVersionUID = -2344235729001825340L;
   
   public QueueAdapter(Deque<E> deque) {
     super(deque);
@@ -35,6 +35,22 @@ public class QueueAdapter<E> extends AbstractLinearListAdapter<E> implements IQu
   @Override
   public E peek() {
     return getDeque().peekFirst();
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public E remove() {
+    return this.dequeue();
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void add(E o) {
+    this.enqueue(o);
   }
   
   /**

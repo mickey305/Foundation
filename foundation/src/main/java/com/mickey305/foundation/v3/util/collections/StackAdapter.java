@@ -23,7 +23,7 @@ import java.util.Collection;
 import java.util.Deque;
 
 public class StackAdapter<E> extends AbstractLinearListAdapter<E> implements IStack<E>, ILinearList<E>, Serializable {
-  private static final long serialVersionUID = -8406324575960631491L;
+  private static final long serialVersionUID = -2989681339836642468L;
   
   public StackAdapter(Deque<E> deque) {
     super(deque);
@@ -35,6 +35,22 @@ public class StackAdapter<E> extends AbstractLinearListAdapter<E> implements ISt
   @Override
   public E peek() {
     return getDeque().peekFirst();
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public E remove() {
+    return this.pop();
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void add(E o) {
+    this.push(o);
   }
   
   /**

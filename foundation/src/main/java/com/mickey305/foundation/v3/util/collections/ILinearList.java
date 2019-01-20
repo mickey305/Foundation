@@ -155,4 +155,16 @@ public interface ILinearList<E> {
    * @return
    */
   E peek();
+  
+  /**
+   *
+   * @return
+   */
+  E remove();
+  
+  /**
+   *
+   * @param o
+   */
+  void add(E o);
 }
