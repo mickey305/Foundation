@@ -19,7 +19,7 @@ package com.mickey305.foundation.v3.util.collections;
 
 import java.util.LinkedHashSet;
 
-public class LinkedHashSetFactory {
+class LinkedHashSetFactory {
   private LinkedHashSetFactory() {
     // nop
   }

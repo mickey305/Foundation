@@ -19,7 +19,7 @@ package com.mickey305.foundation.v3.util.collections;
 
 import java.util.LinkedHashMap;
 
-public class LinkedHashMapFactory {
+class LinkedHashMapFactory {
   private LinkedHashMapFactory() {
     // nop
   }
