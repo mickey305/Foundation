@@ -68,6 +68,14 @@ public abstract class AbstractLinearListAdapter<E> implements ILinearList<E> {
    * {@inheritDoc}
    */
   @Override
+  public Deque<E> toDeque(Deque<E> deque) {
+    return (Deque<E>) this.toCollection(deque);
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
   public List<E> toList(List<E> list) {
     return (List<E>) this.toCollection(list);
   }

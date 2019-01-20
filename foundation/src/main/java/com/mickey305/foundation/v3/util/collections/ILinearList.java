@@ -49,6 +49,13 @@ public interface ILinearList<E> {
   
   /**
    *
+   * @param deque
+   * @return
+   */
+  Deque<E> toDeque(Deque<E> deque);
+  
+  /**
+   *
    * @param list
    * @return
    */
