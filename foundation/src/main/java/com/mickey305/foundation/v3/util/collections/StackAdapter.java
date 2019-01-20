@@ -45,6 +45,9 @@ public class StackAdapter<E> extends AbstractLinearListAdapter<E> implements ISt
     getDeque().offerFirst(element);
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void pushAll(Collection<E> c) {
     for (E e : c) {
@@ -52,6 +55,9 @@ public class StackAdapter<E> extends AbstractLinearListAdapter<E> implements ISt
     }
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void pushAll(E[] c) {
     this.pushAll(Arrays.asList(c));

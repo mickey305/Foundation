@@ -45,6 +45,9 @@ public class QueueAdapter<E> extends AbstractLinearListAdapter<E> implements IQu
     getDeque().offerLast(element);
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void enqueueAll(Collection<E> c) {
     for (E e : c) {
@@ -52,6 +55,9 @@ public class QueueAdapter<E> extends AbstractLinearListAdapter<E> implements IQu
     }
   }
   
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void enqueueAll(E[] c) {
     this.enqueueAll(Arrays.asList(c));
