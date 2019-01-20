@@ -20,6 +20,7 @@ package com.mickey305.foundation.v3.util.collections;
 import com.mickey305.foundation.v3.util.Log;
 
 import javax.annotation.Nonnull;
+import java.util.AbstractCollection;
 import java.util.AbstractSet;
 import java.util.Collection;
 import java.util.Iterator;
@@ -38,23 +39,33 @@ import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;
  * @param <V> 値クラス型
  */
 public class LRUMap<K, V> extends LinkedHashMap<K, V> implements ILRU<K, V> {
-  private static final long serialVersionUID = 9146802335105090386L;
+  private static final long serialVersionUID = 3510662679827609155L;
   private final int capacity;
-  private AbstractSet<Map.Entry<K,V>> entries;
+  private final CollectionsHolder holder;
   
   public static <K, V> LinkedHashMap<K, V> of(int capacity) {
     return new LRUMap<>(capacity);
   }
   
+  //===----------------------------------------------------------------------------------------------------------===//
+  // Constructor                                                                                                    //
+  //===----------------------------------------------------------------------------------------------------------===//
+  
   protected LRUMap(int capacity) {
     super(capacity);
     this.capacity = capacity;
-    this.entries = new LinkedEntrySet();
+    this.holder = new CollectionsHolder();
+    this.holder.entries = new LinkedEntrySet();
+    this.holder.keys = new LinkedKeySet();
+    this.holder.values = new LinkedValues();
   }
   
-  protected LRUMap<K, V> setEntries(AbstractSet<Map.Entry<K, V>> entries) {
-    this.entries = entries;
-    return this;
+  //===----------------------------------------------------------------------------------------------------------===//
+  // Methods                                                                                                        //
+  //===----------------------------------------------------------------------------------------------------------===//
+  
+  protected CollectionsHolder getHolder() {
+    return holder;
   }
   
   /**
@@ -68,21 +79,19 @@ public class LRUMap<K, V> extends LinkedHashMap<K, V> implements ILRU<K, V> {
   /**
    * {@inheritDoc}
    */
-  // todo: implement
   @Nonnull
   @Override
   public Set<K> keySet() {
-    throw new UnsupportedOperationException("non implements");
+    return holder.keys;
   }
   
   /**
    * {@inheritDoc}
    */
-  // todo: implement
   @Nonnull
   @Override
   public Collection<V> values() {
-    throw new UnsupportedOperationException("non implements");
+    return holder.values;
   }
   
   /**
@@ -170,7 +179,7 @@ public class LRUMap<K, V> extends LinkedHashMap<K, V> implements ILRU<K, V> {
   @Nonnull
   @Override
   public Set<Map.Entry<K,V>> entrySet() {
-    return entries;
+    return holder.entries;
   }
   
   /**
@@ -183,6 +192,40 @@ public class LRUMap<K, V> extends LinkedHashMap<K, V> implements ILRU<K, V> {
     }
     remove(key);
     return put(key, value);
+  }
+  
+  //===----------------------------------------------------------------------------------------------------------===//
+  // Innerclass                                                                                                     //
+  //===----------------------------------------------------------------------------------------------------------===//
+  
+  protected final class CollectionsHolder {
+    private AbstractSet<Map.Entry<K,V>> entries;
+    private AbstractSet<K> keys;
+    private AbstractCollection<V> values;
+  
+    public AbstractSet<Map.Entry<K, V>> getEntries() {
+      return entries;
+    }
+  
+    public void setEntries(AbstractSet<Map.Entry<K, V>> entries) {
+      this.entries = entries;
+    }
+  
+    public AbstractSet<K> getKeys() {
+      return keys;
+    }
+  
+    public void setKeys(AbstractSet<K> keys) {
+      this.keys = keys;
+    }
+  
+    public AbstractCollection<V> getValues() {
+      return values;
+    }
+  
+    public void setValues(AbstractCollection<V> values) {
+      this.values = values;
+    }
   }
   
   private final class EntryProxy implements Map.Entry<K,V> {
@@ -313,6 +356,156 @@ public class LRUMap<K, V> extends LinkedHashMap<K, V> implements ILRU<K, V> {
       return it.next();
     }
   
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void remove() {
+      it.remove();
+    }
+  }
+  
+  protected class LinkedKeySet extends AbstractSet<K> {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final int size() {
+      return LRUMap.this.size();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final void clear() {
+      LRUMap.this.clear();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public final Iterator<K> iterator() {
+      final Set<Map.Entry<K,V>> set = new LinkedHashSet<>();
+      for (Map.Entry<K,V> e : LRUMap.super.entrySet()) {
+        set.add(new EntryProxy(e));
+      }
+      return new LinkedKeyIteratorProxy(set.iterator());
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final boolean contains(Object o) {
+      return LRUMap.this.containsKey(o);
+      
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final boolean remove(Object key) {
+      return LRUMap.this.remove(key) != null;
+    }
+  }
+  
+  private final class LinkedKeyIteratorProxy implements Iterator<K> {
+    private final Iterator<Map.Entry<K,V>> it;
+    
+    LinkedKeyIteratorProxy(Iterator<Map.Entry<K,V>> it) {
+      this.it = it;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean hasNext() {
+      return it.hasNext();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final K next() {
+      return it.next().getKey();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void remove() {
+      it.remove();
+    }
+  }
+  
+  protected class LinkedValues extends AbstractCollection<V> {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final int size() {
+      return LRUMap.this.size();
+    }
+  
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final void clear() {
+      LRUMap.this.clear();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Iterator<V> iterator() {
+      final Set<Map.Entry<K,V>> set = new LinkedHashSet<>();
+      for (Map.Entry<K,V> e : LRUMap.super.entrySet()) {
+        set.add(new EntryProxy(e));
+      }
+      return new LinkedValueIteratorProxy(set.iterator());
+    }
+  
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final boolean contains(Object o) {
+      return LRUMap.this.containsValue(o);
+    }
+  }
+  
+  private final class LinkedValueIteratorProxy implements Iterator<V> {
+    private final Iterator<Map.Entry<K,V>> it;
+  
+    LinkedValueIteratorProxy(Iterator<Map.Entry<K,V>> it) {
+      this.it = it;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean hasNext() {
+      return it.hasNext();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final V next() {
+      return it.next().getValue();
+    }
+    
     /**
      * {@inheritDoc}
      */

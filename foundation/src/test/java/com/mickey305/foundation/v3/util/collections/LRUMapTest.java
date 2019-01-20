@@ -22,6 +22,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Iterator;
 import java.util.Map;
 
 public class LRUMapTest {
@@ -61,24 +62,24 @@ public class LRUMapTest {
     cache.put("test5", "value5");
     cache.forEach((key, value) -> Log.i("elm[" + key + "]=" + value));
   
-//    {
-//      int j = 0;
-//      Iterator<String> it = cache.keySet().iterator();
-//      while (it.hasNext() || j == 0) {
-//        String str = it.next();
-//        j++;
-//      }
-//      cache.forEach((key, value) -> Log.i("elm[" + key + "]=" + value));
-//    }
-//
-//    {
-//      int j2 = 0;
-//      Iterator<String> it2 = cache.values().iterator();
-//      while (it2.hasNext() || j2 == 0) {
-//        String str = it2.next();
-//        j2++;
-//      }
-//      cache.forEach((key, value) -> Log.i("elm[" + key + "]=" + value));
-//    }
+    {
+      int j = 0;
+      Iterator<String> it = cache.keySet().iterator();
+      while (it.hasNext() && j == 0) {
+        String str = it.next();
+        j++;
+      }
+      cache.forEach((key, value) -> Log.i("elm[" + key + "]=" + value));
+    }
+  
+    {
+      int j = 0;
+      Iterator<String> it = cache.values().iterator();
+      while (it.hasNext() && j == 0) {
+        String str = it.next();
+        j++;
+      }
+      cache.forEach((key, value) -> Log.i("elm[" + key + "]=" + value));
+    }
   }
 }
