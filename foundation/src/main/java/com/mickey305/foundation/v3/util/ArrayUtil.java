@@ -332,6 +332,8 @@ public class ArrayUtil {
    * @param destIndex
    * @param targetSize
    * @param <E>
+   * @exception IndexOutOfBoundsException  if copying would cause access of data outside array bounds.
+   * @exception NullPointerException if either {@code src} or {@code dest} is {@code null}.
    */
   public static <E> void typeSafeCopy(E[] src, int srcIndex, E[] dest, int destIndex, int targetSize) {
     System.arraycopy(src, srcIndex, dest, destIndex, targetSize);
@@ -344,6 +346,8 @@ public class ArrayUtil {
    * @param dest
    * @param destIndex
    * @param targetSize
+   * @exception IndexOutOfBoundsException  if copying would cause access of data outside array bounds.
+   * @exception NullPointerException if either {@code src} or {@code dest} is {@code null}.
    */
   public static void typeSafeCopy(int[] src, int srcIndex, int[] dest, int destIndex, int targetSize) {
     System.arraycopy(src, srcIndex, dest, destIndex, targetSize);
@@ -356,6 +360,8 @@ public class ArrayUtil {
    * @param dest
    * @param destIndex
    * @param targetSize
+   * @exception IndexOutOfBoundsException  if copying would cause access of data outside array bounds.
+   * @exception NullPointerException if either {@code src} or {@code dest} is {@code null}.
    */
   public static void typeSafeCopy(long[] src, int srcIndex, long[] dest, int destIndex, int targetSize) {
     System.arraycopy(src, srcIndex, dest, destIndex, targetSize);
@@ -368,6 +374,8 @@ public class ArrayUtil {
    * @param dest
    * @param destIndex
    * @param targetSize
+   * @exception IndexOutOfBoundsException  if copying would cause access of data outside array bounds.
+   * @exception NullPointerException if either {@code src} or {@code dest} is {@code null}.
    */
   public static void typeSafeCopy(short[] src, int srcIndex, short[] dest, int destIndex, int targetSize) {
     System.arraycopy(src, srcIndex, dest, destIndex, targetSize);
@@ -380,6 +388,8 @@ public class ArrayUtil {
    * @param dest
    * @param destIndex
    * @param targetSize
+   * @exception IndexOutOfBoundsException  if copying would cause access of data outside array bounds.
+   * @exception NullPointerException if either {@code src} or {@code dest} is {@code null}.
    */
   public static void typeSafeCopy(byte[] src, int srcIndex, byte[] dest, int destIndex, int targetSize) {
     System.arraycopy(src, srcIndex, dest, destIndex, targetSize);
@@ -392,6 +402,8 @@ public class ArrayUtil {
    * @param dest
    * @param destIndex
    * @param targetSize
+   * @exception IndexOutOfBoundsException  if copying would cause access of data outside array bounds.
+   * @exception NullPointerException if either {@code src} or {@code dest} is {@code null}.
    */
   public static void typeSafeCopy(char[] src, int srcIndex, char[] dest, int destIndex, int targetSize) {
     System.arraycopy(src, srcIndex, dest, destIndex, targetSize);
@@ -404,6 +416,8 @@ public class ArrayUtil {
    * @param dest
    * @param destIndex
    * @param targetSize
+   * @exception IndexOutOfBoundsException  if copying would cause access of data outside array bounds.
+   * @exception NullPointerException if either {@code src} or {@code dest} is {@code null}.
    */
   public static void typeSafeCopy(float[] src, int srcIndex, float[] dest, int destIndex, int targetSize) {
     System.arraycopy(src, srcIndex, dest, destIndex, targetSize);
@@ -416,6 +430,8 @@ public class ArrayUtil {
    * @param dest
    * @param destIndex
    * @param targetSize
+   * @exception IndexOutOfBoundsException  if copying would cause access of data outside array bounds.
+   * @exception NullPointerException if either {@code src} or {@code dest} is {@code null}.
    */
   public static void typeSafeCopy(double[] src, int srcIndex, double[] dest, int destIndex, int targetSize) {
     System.arraycopy(src, srcIndex, dest, destIndex, targetSize);
@@ -428,6 +444,8 @@ public class ArrayUtil {
    * @param dest
    * @param destIndex
    * @param targetSize
+   * @exception IndexOutOfBoundsException  if copying would cause access of data outside array bounds.
+   * @exception NullPointerException if either {@code src} or {@code dest} is {@code null}.
    */
   public static void typeSafeCopy(boolean[] src, int srcIndex, boolean[] dest, int destIndex, int targetSize) {
     System.arraycopy(src, srcIndex, dest, destIndex, targetSize);
