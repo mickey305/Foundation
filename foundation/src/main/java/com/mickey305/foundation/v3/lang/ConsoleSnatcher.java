@@ -19,10 +19,14 @@ package com.mickey305.foundation.v3.lang;
 
 import com.mickey305.foundation.v3.compat.stream.Consumer;
 import com.mickey305.foundation.v3.compat.stream.Supplier;
+import com.mickey305.foundation.v3.util.Assert;
+import com.mickey305.foundation.v3.util.Log;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+
+import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;
 
 /**
  * Console output-data snatcher
@@ -67,20 +71,15 @@ import java.io.PrintStream;
  * }}</pre>
  */
 public final class ConsoleSnatcher implements AutoCloseable {
-  private final ByteArrayOutputStream snatchedOut;
-  private final Target target;
+  private final TmpStreamHolder tmp;
+  private final Target targetSystem;
   private PrintStream nativeOut;
-  private boolean stealFlag;
-  
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void close() {
-    this.release();
-  }
+  private boolean stealFlag, closingOrEmpty;
   
   public enum Target {
+    /**
+     * 標準出力ラッパー
+     */
     StdOut(new Consumer<PrintStream>() {
       @Override
       public void accept(PrintStream out) {
@@ -92,6 +91,10 @@ public final class ConsoleSnatcher implements AutoCloseable {
         return System.out;
       }
     }),
+  
+    /**
+     * 標準エラーラッパー
+     */
     StdErr(new Consumer<PrintStream>() {
       @Override
       public void accept(PrintStream err) {
@@ -112,34 +115,54 @@ public final class ConsoleSnatcher implements AutoCloseable {
     }
     
     private final ConsoleSnatcher Instance;
+  
+    /**
+     * システムコンソールストリーム設定I/F
+     * <p>引数で入力したストリームをシステムに設定する</p>
+     */
     private final Consumer<PrintStream> setStreamFunc;
+  
+    /**
+     * システムコンソールストリーム取得I/F
+     * <p>システムに現在設定されているストリームオブジェクトを取得する</p>
+     */
     private final Supplier<PrintStream> getStreamFunc;
   }
   
-  private ConsoleSnatcher(final Target target) {
-    snatchedOut = new ByteArrayOutputStream();
+  private ConsoleSnatcher(final Target targetSystem) {
+    Assert.requireNonNull(targetSystem);
+    tmp = new TmpStreamHolder();
     nativeOut = null;
     stealFlag = false;
-    this.target = target;
+    closingOrEmpty = true;
+    this.targetSystem = targetSystem;
   }
   
-  public static ConsoleSnatcher getInstance(final Target target) {
-    return target.Instance;
+  /**
+   * インスタンス取得メソッド
+   * @param target キャプチャターゲット. {@link Target#StdOut} or {@link Target#StdErr}
+   * @return {@link ConsoleSnatcher}インスタンス
+   */
+  public synchronized static ConsoleSnatcher getInstance(Target target) {
+    final ConsoleSnatcher instance = target.Instance;
+    if (instance.closingOrEmpty) {
+      instance.tmp.create(new ByteArrayOutputStream());
+      instance.closingOrEmpty = false;
+    }
+    return instance;
   }
   
   /**
    * 出力先をコンソールからこのクラスへ出力するように変更する.
    */
-  public void snatch() {
-    // 2回以上の変更禁止
-    if (!stealFlag) {
-      // 現在の出力先の保存
-      nativeOut = this.target.getStreamFunc.get();
+  public synchronized void snatch() {
+    if (!stealFlag && !closingOrEmpty) {
+      // 現在の出力先の保存 nativeOut(default stream) <- system out/err stream
+      nativeOut = targetSystem.getStreamFunc.get();
       
-      // 出力先変更
-      this.target.setStreamFunc.accept(new PrintStream(new BufferedOutputStream(snatchedOut)));
+      // 出力先変更 system out/err stream <- snatched stream(tmp stream)
+      targetSystem.setStreamFunc.accept(tmp.getSnatchedPrintStream());
       
-      // 変更済みフラグ設定
       stealFlag = true;
     }
   }
@@ -147,8 +170,8 @@ public final class ConsoleSnatcher implements AutoCloseable {
   /**
    * 出力のクリア.
    */
-  public void clearOutput() {
-    snatchedOut.reset();
+  public synchronized void clearOutput() {
+    tmp.getSnatchedOut().reset();
   }
   
   /**
@@ -156,27 +179,92 @@ public final class ConsoleSnatcher implements AutoCloseable {
    *
    * @return 出力情報
    */
-  public String getOutput() {
-    this.target.getStreamFunc.get().flush();
-    return snatchedOut.toString();
+  public synchronized String getOutput() {
+    targetSystem.getStreamFunc.get().flush();
+    return tmp.getSnatchedOut().toString();
   }
   
-  public PrintStream getNativeOutputStream() {
+  public synchronized PrintStream getNativeOutputStream() {
     return nativeOut;
   }
   
   /**
    * 出力先を元に戻す.
    */
-  public void release() {
-    // 出力先が変更されている場合のみ実施
+  public synchronized void release() {
     if (stealFlag) {
-      this.clearOutput();
+      clearOutput();
       
-      // 出力先を元に戻す
-      this.target.setStreamFunc.accept(nativeOut);
+      // 出力先を元に戻す system out/err stream <- nativeOut(default stream)
+      targetSystem.setStreamFunc.accept(nativeOut);
       
       stealFlag = false;
+    }
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public synchronized void close() {
+    // ストリームのリセット
+    this.release();
+    
+    // 一時リソースの開放
+    try {
+      tmp.close();
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    } finally {
+      closingOrEmpty = true;
+    }
+  }
+  
+  /**
+   * 一時リソース格納用クラス
+   */
+  private class TmpStreamHolder implements AutoCloseable {
+    private ByteArrayOutputStream snatchedOut;
+    private PrintStream snatchedPrintStream;
+    
+    TmpStreamHolder() {
+      // nop
+    }
+  
+    TmpStreamHolder create(ByteArrayOutputStream tmpStream) {
+      if (snatchedPrintStream != null) {
+        // clear
+        snatchedPrintStream.close();
+        if (IS_DEBUG_MODE) {
+          Log.d("tmp stream closed.");
+        }
+      }
+      // create
+      this.snatchedOut = tmpStream;
+      this.snatchedPrintStream = new PrintStream(new BufferedOutputStream(tmpStream));
+      if (IS_DEBUG_MODE) {
+        Log.d("tmp stream created.");
+      }
+      return this;
+    }
+  
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void close() {
+      snatchedPrintStream.close();
+      if (IS_DEBUG_MODE) {
+        Log.d("tmp stream closed.");
+      }
+    }
+  
+    ByteArrayOutputStream getSnatchedOut() {
+      return snatchedOut;
+    }
+  
+    PrintStream getSnatchedPrintStream() {
+      return snatchedPrintStream;
     }
   }
 }

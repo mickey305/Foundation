@@ -7,6 +7,7 @@
 
 @rem decompile target class list
 set VAR_1=com.mickey305.foundation.v3.gen.R
+set VAR_20=com.mickey305.foundation.v3.lang.ConsoleSnatcher
 set VAR_2=com.mickey305.foundation.v3.lang.math.MathFun
 set VAR_3=com.mickey305.foundation.v3.lang.ref.SecureObjectTaskManager
 set VAR_4=com.mickey305.foundation.v3.util.AbstractCryptoManager

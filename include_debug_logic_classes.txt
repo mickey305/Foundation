@@ -1,5 +1,6 @@
-[HEADER MODULE:foundation, BUILD-DATETIME:2019-01-21 00:08:05.343]
+[HEADER MODULE:foundation, BUILD-DATETIME:2019-01-25 17:18:54.665]
 com.mickey305.foundation.v3.gen.R
+com.mickey305.foundation.v3.lang.ConsoleSnatcher
 com.mickey305.foundation.v3.lang.math.MathFun
 com.mickey305.foundation.v3.lang.ref.SecureObjectTaskManager
 com.mickey305.foundation.v3.util.AbstractCryptoManager
