@@ -17,6 +17,8 @@
 
 package com.mickey305.foundation.v3.util.collections;
 
+import com.mickey305.foundation.v3.util.ArrayUtil;
+
 import java.io.Serializable;
 
 public final class Permutation<T extends Serializable> {
@@ -81,9 +83,7 @@ public final class Permutation<T extends Serializable> {
    * @param <T>  入れ替え対象配列型
    */
   private static <T extends Serializable> void swap(int i1, int i2, T[] dest) {
-    final T element = dest[i1];
-    dest[i1] = dest[i2];
-    dest[i2] = element;
+    ArrayUtil.swap(dest, i1, i2);
   }
 }
 

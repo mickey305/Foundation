@@ -17,6 +17,8 @@
 
 package com.mickey305.foundation.v3.util;
 
+import javax.annotation.Nullable;
+
 public class ArrayUtil {
   
   private ArrayUtil() {
@@ -48,5 +50,167 @@ public class ArrayUtil {
       array[i] = element;
     }
     return array;
+  }
+  
+  /**
+   *
+   * @param array
+   * @param index
+   * @param <E>
+   * @return
+   */
+  @Nullable
+  public static <E> E get(E[] array, int index) {
+    return (index >= 0 && index < array.length) ? array[index] : null;
+  }
+  
+  /**
+   *
+   * @param target
+   * @param idx1
+   * @param idx2
+   * @param <E>
+   */
+  public static <E> void swap(E[] target, int idx1, int idx2) {
+    Assert.requireNonNull(get(target, idx1));
+    Assert.requireNonNull(get(target, idx2));
+    swapImpl(target, idx1, idx2);
+  }
+  
+  /**
+   *
+   * @param target
+   * @param idx1
+   * @param idx2
+   * @param <E>
+   * @return
+   */
+  public static <E> boolean trySwap(E[] target, int idx1, int idx2) {
+    final E elm1 = get(target, idx1);
+    final E elm2 = get(target, idx2);
+    if (elm1 == null || elm2 == null) {
+      return false;
+    }
+    swapImpl(target, idx1, idx2);
+    return true;
+  }
+  
+  /**
+   * type safe and data check impl copy method.
+   * wrapper of {@link System#arraycopy(Object, int, Object, int, int)}
+   * @param copyLength 5th argument for {@link System#arraycopy}
+   * @param src 1st argument for {@link System#arraycopy}
+   * @param srcIndex 2nd argument for {@link System#arraycopy}
+   * @param dest 3rd argument for {@link System#arraycopy}
+   * @param destIndex 4th argument for {@link System#arraycopy}
+   * @param <E> element type of target array({@code src} and {@code dest})
+   * @return copy task result.
+   */
+  public static <E> boolean copy(int copyLength, E[] src, int srcIndex, E[] dest, int destIndex) {
+    // failure pattern
+    if (src == null || dest == null) { return false; }
+    if (srcIndex  < 0 || srcIndex  >= src.length) { return false; } // src.length == 0 => always false
+    if (destIndex < 0 || destIndex >= dest.length) { return false; } // dest.length == 0 => always false
+    if (copyLength < 0) { return false; }
+    final int targetSize = Math.min(src.length - srcIndex, copyLength);
+    if (targetSize > dest.length - destIndex) { return false; }
+    // non operation pattern
+    if (copyLength == 0) { return true; }
+    // copy
+    System.arraycopy(src, srcIndex, dest, destIndex, targetSize);
+    return true;
+  }
+  
+  /**
+   *
+   * @param copyLength
+   * @param src
+   * @param dest
+   * @param destIndex
+   * @param <E>
+   * @return
+   */
+  public static <E> boolean copy(int copyLength, E[] src, E[] dest, int destIndex) {
+    return copy(copyLength, src, 0, dest, destIndex);
+  }
+  
+  /**
+   *
+   * @param copyLength
+   * @param src
+   * @param srcIndex
+   * @param dest
+   * @param <E>
+   * @return
+   */
+  public static <E> boolean copy(int copyLength, E[] src, int srcIndex, E[] dest) {
+    return copy(copyLength, src, srcIndex, dest, 0);
+  }
+  
+  /**
+   *
+   * @param copyLength
+   * @param src
+   * @param dest
+   * @param <E>
+   * @return
+   */
+  public static <E> boolean copy(int copyLength, E[] src, E[] dest) {
+    return copy(copyLength, src, 0, dest, 0);
+  }
+  
+  /**
+   *
+   * @param src
+   * @param srcIndex
+   * @param dest
+   * @param destIndex
+   * @param <E>
+   * @return
+   */
+  public static <E> boolean copy(E[] src, int srcIndex, E[] dest, int destIndex) {
+    if (src == null) { return false; }
+    return copy(src.length - srcIndex, src, srcIndex, dest, destIndex);
+  }
+  
+  /**
+   *
+   * @param src
+   * @param dest
+   * @param destIndex
+   * @param <E>
+   * @return
+   */
+  public static <E> boolean copy(E[] src, E[] dest, int destIndex) {
+    return copy(src, 0, dest, destIndex);
+  }
+  
+  /**
+   *
+   * @param src
+   * @param srcIndex
+   * @param dest
+   * @param <E>
+   * @return
+   */
+  public static <E> boolean copy(E[] src, int srcIndex, E[] dest) {
+    return copy(src, srcIndex, dest, 0);
+  }
+  
+  /**
+   *
+   * @param src
+   * @param dest
+   * @param <E>
+   * @return
+   */
+  public static <E> boolean copy(E[] src, E[] dest) {
+    return copy(src, 0, dest, 0);
+  }
+  
+  private static <E> void swapImpl(E[] ary, int idx1, int idx2) {
+    final E wk = ary[idx1];
+    ary[idx1] = ary[idx2];
+    ary[idx2] = wk;
   }
 }
