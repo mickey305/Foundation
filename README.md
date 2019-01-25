@@ -7,7 +7,7 @@
 
 # Overview
 
-`Foundation` is part of infrastructure component for Java. You can easily extend the basic functions. This makes it easier to implement event driven processing, design patterns and more which are not provided by the standard API.
+`Foundation` is part of infrastructure component and personal-library for Java. You can easily extend the basic functions. This makes it easier to implement event driven processing, design patterns and more which are not provided by the standard API.
 
 The following table shows status of external CI service.
 
