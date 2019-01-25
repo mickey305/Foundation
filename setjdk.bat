@@ -25,6 +25,8 @@
 ::   <JDK Version>  use this version of JDK
 ::
 :: 2018/10/21 Ver. 0.4.1 by TAKAHASHI,Toru  fix calling setjdk_misc
+::
+:: URL: https://gist.github.com/torutk/27f55630516286dd1478bbd8b032bc8a
 :: ==========================================================
 
 if "%1"=="/?" goto option_error
