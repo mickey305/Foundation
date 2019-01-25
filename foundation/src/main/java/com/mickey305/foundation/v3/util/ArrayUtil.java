@@ -325,13 +325,14 @@ public class ArrayUtil {
   }
   
   /**
-   *
-   * @param src
-   * @param srcIndex
-   * @param dest
-   * @param destIndex
-   * @param targetSize
-   * @param <E>
+   * type safe copy method.
+   * wrapper of {@link System#arraycopy(Object, int, Object, int, int)}
+   * @param src 1st argument for {@link System#arraycopy}
+   * @param srcIndex 2nd argument for {@link System#arraycopy}
+   * @param dest 3rd argument for {@link System#arraycopy}
+   * @param destIndex 4th argument for {@link System#arraycopy}
+   * @param targetSize 5th argument for {@link System#arraycopy}
+   * @param <E> element type of target array({@code src} and {@code dest})
    * @exception IndexOutOfBoundsException  if copying would cause access of data outside array bounds.
    * @exception NullPointerException if either {@code src} or {@code dest} is {@code null}.
    */
@@ -340,12 +341,13 @@ public class ArrayUtil {
   }
   
   /**
-   *
-   * @param src
-   * @param srcIndex
-   * @param dest
-   * @param destIndex
-   * @param targetSize
+   * type safe copy method.
+   * wrapper of {@link System#arraycopy(Object, int, Object, int, int)}
+   * @param src 1st argument for {@link System#arraycopy}
+   * @param srcIndex 2nd argument for {@link System#arraycopy}
+   * @param dest 3rd argument for {@link System#arraycopy}
+   * @param destIndex 4th argument for {@link System#arraycopy}
+   * @param targetSize 5th argument for {@link System#arraycopy}
    * @exception IndexOutOfBoundsException  if copying would cause access of data outside array bounds.
    * @exception NullPointerException if either {@code src} or {@code dest} is {@code null}.
    */
@@ -354,12 +356,13 @@ public class ArrayUtil {
   }
   
   /**
-   *
-   * @param src
-   * @param srcIndex
-   * @param dest
-   * @param destIndex
-   * @param targetSize
+   * type safe copy method.
+   * wrapper of {@link System#arraycopy(Object, int, Object, int, int)}
+   * @param src 1st argument for {@link System#arraycopy}
+   * @param srcIndex 2nd argument for {@link System#arraycopy}
+   * @param dest 3rd argument for {@link System#arraycopy}
+   * @param destIndex 4th argument for {@link System#arraycopy}
+   * @param targetSize 5th argument for {@link System#arraycopy}
    * @exception IndexOutOfBoundsException  if copying would cause access of data outside array bounds.
    * @exception NullPointerException if either {@code src} or {@code dest} is {@code null}.
    */
@@ -368,12 +371,13 @@ public class ArrayUtil {
   }
   
   /**
-   *
-   * @param src
-   * @param srcIndex
-   * @param dest
-   * @param destIndex
-   * @param targetSize
+   * type safe copy method.
+   * wrapper of {@link System#arraycopy(Object, int, Object, int, int)}
+   * @param src 1st argument for {@link System#arraycopy}
+   * @param srcIndex 2nd argument for {@link System#arraycopy}
+   * @param dest 3rd argument for {@link System#arraycopy}
+   * @param destIndex 4th argument for {@link System#arraycopy}
+   * @param targetSize 5th argument for {@link System#arraycopy}
    * @exception IndexOutOfBoundsException  if copying would cause access of data outside array bounds.
    * @exception NullPointerException if either {@code src} or {@code dest} is {@code null}.
    */
@@ -382,12 +386,13 @@ public class ArrayUtil {
   }
   
   /**
-   *
-   * @param src
-   * @param srcIndex
-   * @param dest
-   * @param destIndex
-   * @param targetSize
+   * type safe copy method.
+   * wrapper of {@link System#arraycopy(Object, int, Object, int, int)}
+   * @param src 1st argument for {@link System#arraycopy}
+   * @param srcIndex 2nd argument for {@link System#arraycopy}
+   * @param dest 3rd argument for {@link System#arraycopy}
+   * @param destIndex 4th argument for {@link System#arraycopy}
+   * @param targetSize 5th argument for {@link System#arraycopy}
    * @exception IndexOutOfBoundsException  if copying would cause access of data outside array bounds.
    * @exception NullPointerException if either {@code src} or {@code dest} is {@code null}.
    */
@@ -396,12 +401,13 @@ public class ArrayUtil {
   }
   
   /**
-   *
-   * @param src
-   * @param srcIndex
-   * @param dest
-   * @param destIndex
-   * @param targetSize
+   * type safe copy method.
+   * wrapper of {@link System#arraycopy(Object, int, Object, int, int)}
+   * @param src 1st argument for {@link System#arraycopy}
+   * @param srcIndex 2nd argument for {@link System#arraycopy}
+   * @param dest 3rd argument for {@link System#arraycopy}
+   * @param destIndex 4th argument for {@link System#arraycopy}
+   * @param targetSize 5th argument for {@link System#arraycopy}
    * @exception IndexOutOfBoundsException  if copying would cause access of data outside array bounds.
    * @exception NullPointerException if either {@code src} or {@code dest} is {@code null}.
    */
@@ -410,12 +416,13 @@ public class ArrayUtil {
   }
   
   /**
-   *
-   * @param src
-   * @param srcIndex
-   * @param dest
-   * @param destIndex
-   * @param targetSize
+   * type safe copy method.
+   * wrapper of {@link System#arraycopy(Object, int, Object, int, int)}
+   * @param src 1st argument for {@link System#arraycopy}
+   * @param srcIndex 2nd argument for {@link System#arraycopy}
+   * @param dest 3rd argument for {@link System#arraycopy}
+   * @param destIndex 4th argument for {@link System#arraycopy}
+   * @param targetSize 5th argument for {@link System#arraycopy}
    * @exception IndexOutOfBoundsException  if copying would cause access of data outside array bounds.
    * @exception NullPointerException if either {@code src} or {@code dest} is {@code null}.
    */
@@ -424,12 +431,13 @@ public class ArrayUtil {
   }
   
   /**
-   *
-   * @param src
-   * @param srcIndex
-   * @param dest
-   * @param destIndex
-   * @param targetSize
+   * type safe copy method.
+   * wrapper of {@link System#arraycopy(Object, int, Object, int, int)}
+   * @param src 1st argument for {@link System#arraycopy}
+   * @param srcIndex 2nd argument for {@link System#arraycopy}
+   * @param dest 3rd argument for {@link System#arraycopy}
+   * @param destIndex 4th argument for {@link System#arraycopy}
+   * @param targetSize 5th argument for {@link System#arraycopy}
    * @exception IndexOutOfBoundsException  if copying would cause access of data outside array bounds.
    * @exception NullPointerException if either {@code src} or {@code dest} is {@code null}.
    */
@@ -438,12 +446,13 @@ public class ArrayUtil {
   }
   
   /**
-   *
-   * @param src
-   * @param srcIndex
-   * @param dest
-   * @param destIndex
-   * @param targetSize
+   * type safe copy method.
+   * wrapper of {@link System#arraycopy(Object, int, Object, int, int)}
+   * @param src 1st argument for {@link System#arraycopy}
+   * @param srcIndex 2nd argument for {@link System#arraycopy}
+   * @param dest 3rd argument for {@link System#arraycopy}
+   * @param destIndex 4th argument for {@link System#arraycopy}
+   * @param targetSize 5th argument for {@link System#arraycopy}
    * @exception IndexOutOfBoundsException  if copying would cause access of data outside array bounds.
    * @exception NullPointerException if either {@code src} or {@code dest} is {@code null}.
    */
