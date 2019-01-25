@@ -18,6 +18,7 @@
 package com.mickey305.foundation.v3.util;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
 
 public class ArrayUtil {
   
@@ -30,11 +31,131 @@ public class ArrayUtil {
    * @param <E>
    * @return
    */
+  @Nullable
   public static <E> E[][] fill(E[][] table, E element) {
+    if (table == null) { return null; }
     for (final E[] rec : table) {
-      for (int j = 0; j < rec.length; j++) {
-        rec[j] = element;
-      }
+      fill(rec, element);
+    }
+    return table;
+  }
+  
+  /**
+   *
+   * @param table
+   * @param element
+   * @return
+   */
+  @Nullable
+  public static int[][] fill(int[][] table, int element) {
+    if (table == null) { return null; }
+    for (final int[] rec : table) {
+      fill(rec, element);
+    }
+    return table;
+  }
+  
+  /**
+   *
+   * @param table
+   * @param element
+   * @return
+   */
+  @Nullable
+  public static long[][] fill(long[][] table, long element) {
+    if (table == null) { return null; }
+    for (final long[] rec : table) {
+      fill(rec, element);
+    }
+    return table;
+  }
+  
+  /**
+   *
+   * @param table
+   * @param element
+   * @return
+   */
+  @Nullable
+  public static short[][] fill(short[][] table, short element) {
+    if (table == null) { return null; }
+    for (final short[] rec : table) {
+      fill(rec, element);
+    }
+    return table;
+  }
+  
+  /**
+   *
+   * @param table
+   * @param element
+   * @return
+   */
+  @Nullable
+  public static byte[][] fill(byte[][] table, byte element) {
+    if (table == null) { return null; }
+    for (final byte[] rec : table) {
+      fill(rec, element);
+    }
+    return table;
+  }
+  
+  /**
+   *
+   * @param table
+   * @param element
+   * @return
+   */
+  @Nullable
+  public static char[][] fill(char[][] table, char element) {
+    if (table == null) { return null; }
+    for (final char[] rec : table) {
+      fill(rec, element);
+    }
+    return table;
+  }
+  
+  /**
+   *
+   * @param table
+   * @param element
+   * @return
+   */
+  @Nullable
+  public static float[][] fill(float[][] table, float element) {
+    if (table == null) { return null; }
+    for (final float[] rec : table) {
+      fill(rec, element);
+    }
+    return table;
+  }
+  
+  /**
+   *
+   * @param table
+   * @param element
+   * @return
+   */
+  @Nullable
+  public static double[][] fill(double[][] table, double element) {
+    if (table == null) { return null; }
+    for (final double[] rec : table) {
+      fill(rec, element);
+    }
+    return table;
+  }
+  
+  /**
+   *
+   * @param table
+   * @param element
+   * @return
+   */
+  @Nullable
+  public static boolean[][] fill(boolean[][] table, boolean element) {
+    if (table == null) { return null; }
+    for (final boolean[] rec : table) {
+      fill(rec, element);
     }
     return table;
   }
@@ -45,10 +166,116 @@ public class ArrayUtil {
    * @param <E>
    * @return
    */
+  @Nullable
   public static <E> E[] fill(E[] array, E element) {
+    if (array == null) { return null; }
     for (int i = 0; i < array.length; i++) {
       array[i] = element;
     }
+    return array;
+  }
+  
+  /**
+   *
+   * @param array
+   * @param element
+   * @return
+   */
+  @Nullable
+  public static int[] fill(int[] array, int element) {
+    if (array == null) { return null; }
+    Arrays.fill(array, element);
+    return array;
+  }
+  
+  /**
+   *
+   * @param array
+   * @param element
+   * @return
+   */
+  @Nullable
+  public static long[] fill(long[] array, long element) {
+    if (array == null) { return null; }
+    Arrays.fill(array, element);
+    return array;
+  }
+  
+  /**
+   *
+   * @param array
+   * @param element
+   * @return
+   */
+  @Nullable
+  public static short[] fill(short[] array, short element) {
+    if (array == null) { return null; }
+    Arrays.fill(array, element);
+    return array;
+  }
+  
+  /**
+   *
+   * @param array
+   * @param element
+   * @return
+   */
+  @Nullable
+  public static byte[] fill(byte[] array, byte element) {
+    if (array == null) { return null; }
+    Arrays.fill(array, element);
+    return array;
+  }
+  
+  /**
+   *
+   * @param array
+   * @param element
+   * @return
+   */
+  @Nullable
+  public static char[] fill(char[] array, char element) {
+    if (array == null) { return null; }
+    Arrays.fill(array, element);
+    return array;
+  }
+  
+  /**
+   *
+   * @param array
+   * @param element
+   * @return
+   */
+  @Nullable
+  public static float[] fill(float[] array, float element) {
+    if (array == null) { return null; }
+    Arrays.fill(array, element);
+    return array;
+  }
+  
+  /**
+   *
+   * @param array
+   * @param element
+   * @return
+   */
+  @Nullable
+  public static double[] fill(double[] array, double element) {
+    if (array == null) { return null; }
+    Arrays.fill(array, element);
+    return array;
+  }
+  
+  /**
+   *
+   * @param array
+   * @param element
+   * @return
+   */
+  @Nullable
+  public static boolean[] fill(boolean[] array, boolean element) {
+    if (array == null) { return null; }
+    Arrays.fill(array, element);
     return array;
   }
   

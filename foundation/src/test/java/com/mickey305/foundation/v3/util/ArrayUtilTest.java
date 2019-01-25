@@ -19,6 +19,13 @@ public class ArrayUtilTest {
   
   @Test
   public void testCase_01_01() {
+    char[][] tbl = new char[3][3];
+    ArrayUtil.fill(tbl, '2');
+    Log.i(Arrays.deepToString(tbl));
+  }
+  
+  @Test
+  public void testCase_02_01() {
     char[] ary1 = "test1".toCharArray();
     char[] ary2 = new char[ary1.length];
     boolean rt;
