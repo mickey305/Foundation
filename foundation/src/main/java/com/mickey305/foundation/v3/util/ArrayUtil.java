@@ -514,13 +514,14 @@ public class ArrayUtil {
   }
   
   /**
-   *
-   * @param copyLength
-   * @param src
-   * @param srcIndex
-   * @param dest
-   * @param destIndex
-   * @return
+   * type safe and data check impl copy method.
+   * wrapper of {@link System#arraycopy(Object, int, Object, int, int)}
+   * @param copyLength 5th argument for {@link System#arraycopy}
+   * @param src 1st argument for {@link System#arraycopy}
+   * @param srcIndex 2nd argument for {@link System#arraycopy}
+   * @param dest 3rd argument for {@link System#arraycopy}
+   * @param destIndex 4th argument for {@link System#arraycopy}
+   * @return copy task result.
    */
   public static boolean copy(int copyLength, int[] src, int srcIndex, int[] dest, int destIndex) {
     // failure pattern
@@ -538,13 +539,14 @@ public class ArrayUtil {
   }
   
   /**
-   *
-   * @param copyLength
-   * @param src
-   * @param srcIndex
-   * @param dest
-   * @param destIndex
-   * @return
+   * type safe and data check impl copy method.
+   * wrapper of {@link System#arraycopy(Object, int, Object, int, int)}
+   * @param copyLength 5th argument for {@link System#arraycopy}
+   * @param src 1st argument for {@link System#arraycopy}
+   * @param srcIndex 2nd argument for {@link System#arraycopy}
+   * @param dest 3rd argument for {@link System#arraycopy}
+   * @param destIndex 4th argument for {@link System#arraycopy}
+   * @return copy task result.
    */
   public static boolean copy(int copyLength, long[] src, int srcIndex, long[] dest, int destIndex) {
     // failure pattern
@@ -562,13 +564,14 @@ public class ArrayUtil {
   }
   
   /**
-   *
-   * @param copyLength
-   * @param src
-   * @param srcIndex
-   * @param dest
-   * @param destIndex
-   * @return
+   * type safe and data check impl copy method.
+   * wrapper of {@link System#arraycopy(Object, int, Object, int, int)}
+   * @param copyLength 5th argument for {@link System#arraycopy}
+   * @param src 1st argument for {@link System#arraycopy}
+   * @param srcIndex 2nd argument for {@link System#arraycopy}
+   * @param dest 3rd argument for {@link System#arraycopy}
+   * @param destIndex 4th argument for {@link System#arraycopy}
+   * @return copy task result.
    */
   public static boolean copy(int copyLength, short[] src, int srcIndex, short[] dest, int destIndex) {
     // failure pattern
@@ -586,13 +589,14 @@ public class ArrayUtil {
   }
   
   /**
-   *
-   * @param copyLength
-   * @param src
-   * @param srcIndex
-   * @param dest
-   * @param destIndex
-   * @return
+   * type safe and data check impl copy method.
+   * wrapper of {@link System#arraycopy(Object, int, Object, int, int)}
+   * @param copyLength 5th argument for {@link System#arraycopy}
+   * @param src 1st argument for {@link System#arraycopy}
+   * @param srcIndex 2nd argument for {@link System#arraycopy}
+   * @param dest 3rd argument for {@link System#arraycopy}
+   * @param destIndex 4th argument for {@link System#arraycopy}
+   * @return copy task result.
    */
   public static boolean copy(int copyLength, byte[] src, int srcIndex, byte[] dest, int destIndex) {
     // failure pattern
@@ -610,13 +614,14 @@ public class ArrayUtil {
   }
   
   /**
-   *
-   * @param copyLength
-   * @param src
-   * @param srcIndex
-   * @param dest
-   * @param destIndex
-   * @return
+   * type safe and data check impl copy method.
+   * wrapper of {@link System#arraycopy(Object, int, Object, int, int)}
+   * @param copyLength 5th argument for {@link System#arraycopy}
+   * @param src 1st argument for {@link System#arraycopy}
+   * @param srcIndex 2nd argument for {@link System#arraycopy}
+   * @param dest 3rd argument for {@link System#arraycopy}
+   * @param destIndex 4th argument for {@link System#arraycopy}
+   * @return copy task result.
    */
   public static boolean copy(int copyLength, char[] src, int srcIndex, char[] dest, int destIndex) {
     // failure pattern
@@ -634,13 +639,14 @@ public class ArrayUtil {
   }
   
   /**
-   *
-   * @param copyLength
-   * @param src
-   * @param srcIndex
-   * @param dest
-   * @param destIndex
-   * @return
+   * type safe and data check impl copy method.
+   * wrapper of {@link System#arraycopy(Object, int, Object, int, int)}
+   * @param copyLength 5th argument for {@link System#arraycopy}
+   * @param src 1st argument for {@link System#arraycopy}
+   * @param srcIndex 2nd argument for {@link System#arraycopy}
+   * @param dest 3rd argument for {@link System#arraycopy}
+   * @param destIndex 4th argument for {@link System#arraycopy}
+   * @return copy task result.
    */
   public static boolean copy(int copyLength, float[] src, int srcIndex, float[] dest, int destIndex) {
     // failure pattern
@@ -658,13 +664,14 @@ public class ArrayUtil {
   }
   
   /**
-   *
-   * @param copyLength
-   * @param src
-   * @param srcIndex
-   * @param dest
-   * @param destIndex
-   * @return
+   * type safe and data check impl copy method.
+   * wrapper of {@link System#arraycopy(Object, int, Object, int, int)}
+   * @param copyLength 5th argument for {@link System#arraycopy}
+   * @param src 1st argument for {@link System#arraycopy}
+   * @param srcIndex 2nd argument for {@link System#arraycopy}
+   * @param dest 3rd argument for {@link System#arraycopy}
+   * @param destIndex 4th argument for {@link System#arraycopy}
+   * @return copy task result.
    */
   public static boolean copy(int copyLength, double[] src, int srcIndex, double[] dest, int destIndex) {
     // failure pattern
@@ -682,13 +689,14 @@ public class ArrayUtil {
   }
   
   /**
-   *
-   * @param copyLength
-   * @param src
-   * @param srcIndex
-   * @param dest
-   * @param destIndex
-   * @return
+   * type safe and data check impl copy method.
+   * wrapper of {@link System#arraycopy(Object, int, Object, int, int)}
+   * @param copyLength 5th argument for {@link System#arraycopy}
+   * @param src 1st argument for {@link System#arraycopy}
+   * @param srcIndex 2nd argument for {@link System#arraycopy}
+   * @param dest 3rd argument for {@link System#arraycopy}
+   * @param destIndex 4th argument for {@link System#arraycopy}
+   * @return copy task result.
    */
   public static boolean copy(int copyLength, boolean[] src, int srcIndex, boolean[] dest, int destIndex) {
     // failure pattern
