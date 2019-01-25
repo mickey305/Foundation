@@ -19,13 +19,8 @@ public class ArrayUtilTest {
   
   @Test
   public void testCase_01_01() {
-    char[] seed = "test1".toCharArray();
-    Character[] ary1 = new Character[seed.length];
-    Character[] ary2 = new Character[ary1.length];
-    int i = 0;
-    for (Character c : seed) {
-      ary1[i++] = c;
-    }
+    char[] ary1 = "test1".toCharArray();
+    char[] ary2 = new char[ary1.length];
     boolean rt;
     rt = ArrayUtil.copy(10, ary1, 0, ary2, 0);
     //rt = ArrayUtil.copy(ary1, 0, ary2, 1);
