@@ -211,13 +211,8 @@ public final class ConsoleSnatcher implements AutoCloseable {
     this.release();
     
     // 一時リソースの開放
-    try {
-      tmp.close();
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    } finally {
-      closingOrEmpty = true;
-    }
+    tmp.close();
+    closingOrEmpty = true;
   }
   
   /**
