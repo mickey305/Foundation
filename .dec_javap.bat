@@ -11,6 +11,7 @@ set VAR_20=com.mickey305.foundation.v3.lang.ConsoleSnatcher
 set VAR_2=com.mickey305.foundation.v3.lang.math.MathFun
 set VAR_3=com.mickey305.foundation.v3.lang.ref.SecureObjectTaskManager
 set VAR_4=com.mickey305.foundation.v3.util.AbstractCryptoManager
+set VAR_21=com.mickey305.foundation.v3.util.ArrayUtil
 set VAR_5=com.mickey305.foundation.v3.util.Assert
 set VAR_6=com.mickey305.foundation.v3.util.ByteConverter
 set VAR_7=com.mickey305.foundation.v3.util.CollectionUtil

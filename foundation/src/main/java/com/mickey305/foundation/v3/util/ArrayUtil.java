@@ -20,6 +20,8 @@ package com.mickey305.foundation.v3.util;
 import javax.annotation.Nullable;
 import java.util.Arrays;
 
+import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;
+
 public class ArrayUtil {
   
   private ArrayUtil() {
@@ -326,11 +328,12 @@ public class ArrayUtil {
    * @param idx1
    * @param idx2
    * @param <E>
+   * @return
    */
-  public static <E> void swap(E[] target, int idx1, int idx2) {
+  public static <E> E[] swap(E[] target, int idx1, int idx2) {
     idx1 = getResolvedIndex(target, idx1);
     idx2 = getResolvedIndex(target, idx2);
-    swapImpl(target, idx1, idx2);
+    return unsafeSwap(target, idx1, idx2);
   }
   
   /**
@@ -347,8 +350,195 @@ public class ArrayUtil {
     if (idx1 < 0 || idx2 < 0) {
       return false;
     }
-    swapImpl(target, idx1, idx2);
+    unsafeSwap(target, idx1, idx2);
     return true;
+  }
+  
+  /**
+   * clone method.
+   * wrapper of {@link Arrays#copyOf(Object[], int)}
+   * @param src clone target array
+   * @param <E> src/dest array element type
+   * @return dest array
+   */
+  @Nullable
+  public static <E> E[] cloneOf(E[] src) {
+    if (src == null) { return null; }
+    final E[] dest = Arrays.copyOf(src, src.length);
+    if (IS_DEBUG_MODE) {
+      Log.d("array cloned");
+      Assert.requireTrue(src != dest);
+      Assert.requireEquals(src, dest);
+    }
+    return dest;
+  }
+  
+  /**
+   * clone method.
+   * wrapper of {@link Arrays#copyOf(Object[], int, Class)}
+   * @param src clone target array
+   * @param newType dest array type object
+   * @param <E> src array element type
+   * @param <F> dest array element type
+   * @return dest array
+   * @throws ArrayStoreException if an element copied from {@code src} is not of a runtime type that can be stored
+   *         in an array of class {@code newType}
+   */
+  @Nullable
+  public static <E, F> F[] cloneOf(E[] src, Class<? extends F[]> newType) {
+    if (src == null) { return null; }
+    if (newType == null) { return null; }
+    final F[] dest = Arrays.copyOf(src, src.length, newType);
+    if (IS_DEBUG_MODE) {
+      Log.d("array cloned");
+      Assert.requireTrue(src != dest);
+      Assert.requireEquals(src, dest);
+    }
+    return dest;
+  }
+  
+  /**
+   * clone method.
+   * wrapper of {@link Arrays#copyOf(int[], int)}
+   * @param src clone target array
+   * @return dest array
+   */
+  @Nullable
+  public static int[] cloneOf(int[] src) {
+    if (src == null) { return null; }
+    final int[] dest = Arrays.copyOf(src, src.length);
+    if (IS_DEBUG_MODE) {
+      Log.d("array cloned");
+      Assert.requireTrue(src != dest);
+      Assert.requireEquals(src, dest);
+    }
+    return dest;
+  }
+  
+  /**
+   * clone method.
+   * wrapper of {@link Arrays#copyOf(long[], int)}
+   * @param src clone target array
+   * @return dest array
+   */
+  @Nullable
+  public static long[] cloneOf(long[] src) {
+    if (src == null) { return null; }
+    final long[] dest = Arrays.copyOf(src, src.length);
+    if (IS_DEBUG_MODE) {
+      Log.d("array cloned");
+      Assert.requireTrue(src != dest);
+      Assert.requireEquals(src, dest);
+    }
+    return dest;
+  }
+  
+  /**
+   * clone method.
+   * wrapper of {@link Arrays#copyOf(short[], int)}
+   * @param src clone target array
+   * @return dest array
+   */
+  @Nullable
+  public static short[] cloneOf(short[] src) {
+    if (src == null) { return null; }
+    final short[] dest = Arrays.copyOf(src, src.length);
+    if (IS_DEBUG_MODE) {
+      Log.d("array cloned");
+      Assert.requireTrue(src != dest);
+      Assert.requireEquals(src, dest);
+    }
+    return dest;
+  }
+  
+  /**
+   * clone method.
+   * wrapper of {@link Arrays#copyOf(byte[], int)}
+   * @param src clone target array
+   * @return dest array
+   */
+  @Nullable
+  public static byte[] cloneOf(byte[] src) {
+    if (src == null) { return null; }
+    final byte[] dest = Arrays.copyOf(src, src.length);
+    if (IS_DEBUG_MODE) {
+      Log.d("array cloned");
+      Assert.requireTrue(src != dest);
+      Assert.requireEquals(src, dest);
+    }
+    return dest;
+  }
+  
+  /**
+   * clone method.
+   * wrapper of {@link Arrays#copyOf(char[], int)}
+   * @param src clone target array
+   * @return dest array
+   */
+  @Nullable
+  public static char[] cloneOf(char[] src) {
+    if (src == null) { return null; }
+    final char[] dest = Arrays.copyOf(src, src.length);
+    if (IS_DEBUG_MODE) {
+      Log.d("array cloned");
+      Assert.requireTrue(src != dest);
+      Assert.requireEquals(src, dest);
+    }
+    return dest;
+  }
+  
+  /**
+   * clone method.
+   * wrapper of {@link Arrays#copyOf(float[], int)}
+   * @param src clone target array
+   * @return dest array
+   */
+  @Nullable
+  public static float[] cloneOf(float[] src) {
+    if (src == null) { return null; }
+    final float[] dest = Arrays.copyOf(src, src.length);
+    if (IS_DEBUG_MODE) {
+      Log.d("array cloned");
+      Assert.requireTrue(src != dest);
+      Assert.requireEquals(src, dest);
+    }
+    return dest;
+  }
+  
+  /**
+   * clone method.
+   * wrapper of {@link Arrays#copyOf(double[], int)}
+   * @param src clone target array
+   * @return dest array
+   */
+  @Nullable
+  public static double[] cloneOf(double[] src) {
+    if (src == null) { return null; }
+    final double[] dest = Arrays.copyOf(src, src.length);
+    if (IS_DEBUG_MODE) {
+      Log.d("array cloned");
+      Assert.requireTrue(src != dest);
+      Assert.requireEquals(src, dest);
+    }
+    return dest;
+  }
+  
+  /**
+   * clone method.
+   * wrapper of {@link Arrays#copyOf(boolean[], int)}
+   * @param src clone target array
+   * @return dest array
+   */
+  @Nullable
+  public static boolean[] cloneOf(boolean[] src) {
+    if (src == null) { return null; }
+    final boolean[] dest = Arrays.copyOf(src, src.length);
+    if (IS_DEBUG_MODE) {
+      Log.d("array cloned");
+      Assert.requireTrue(src != dest);
+      Assert.requireEquals(src, dest);
+    }
+    return dest;
   }
   
   /**
@@ -1440,9 +1630,10 @@ public class ArrayUtil {
     return copy(src, 0, dest, 0);
   }
   
-  private static <E> void swapImpl(E[] ary, int idx1, int idx2) {
+  private static <E> E[] unsafeSwap(E[] ary, int idx1, int idx2) {
     final E wk = ary[idx1];
     ary[idx1] = ary[idx2];
     ary[idx2] = wk;
+    return ary;
   }
 }
