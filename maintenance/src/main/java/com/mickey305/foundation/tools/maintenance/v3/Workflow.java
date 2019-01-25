@@ -247,8 +247,8 @@ public final class Workflow {
     }
     if (allClasses.size() > 0) {
       methodBuilder
-          .nextControlFlow("catch (ClassNotFoundException e)")
-          .addStatement("$T.e(e.getMessage())", Log.class)
+          .nextControlFlow("catch (Throwable th)")
+          .addStatement("$T.e(th.getMessage())", Log.class)
           .endControlFlow();
     }
     methodBuilder

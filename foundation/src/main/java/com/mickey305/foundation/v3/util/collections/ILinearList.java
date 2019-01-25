@@ -167,4 +167,16 @@ public interface ILinearList<E> {
    * @param o
    */
   void add(E o);
+  
+  /**
+   *
+   * @param c
+   */
+  void addAll(Collection<E> c);
+  
+  /**
+   *
+   * @param c
+   */
+  void addAll(E[] c);
 }

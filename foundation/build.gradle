@@ -107,3 +107,9 @@ dependencies {
     spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.7.1'
 }
 
+task collectDependenciesJar {
+    project.copy {
+        from project.configurations.compile
+        into "${project.buildDir}/dependencies/compile" as Object
+    }
+}

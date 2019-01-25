@@ -68,3 +68,10 @@ dependencies {
     //  URL: https://github.com/square/javapoet
     compile     group: 'com.squareup'            , name: 'javapoet'           , version: '1.11.1'
 }
+
+task collectDependenciesJar {
+    project.copy {
+        from project.configurations.compile
+        into "${project.buildDir}/dependencies/compile" as Object
+    }
+}
