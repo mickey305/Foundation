@@ -61,7 +61,9 @@ public class ArrayUtil {
    */
   @Nullable
   public static <E> E get(E[] array, int index) {
-    return (index >= 0 && index < array.length) ? array[index] : null;
+    return (array != null && index >= 0 && index < array.length)
+        ? array[index]
+        : null;
   }
   
   /**
