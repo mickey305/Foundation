@@ -17,12 +17,13 @@
 
 package com.mickey305.foundation.v3.util;
 
+import com.mickey305.foundation.v3.util.constant.EmptyArrayConst;
 import org.apache.commons.lang3.ArrayUtils;
 
 import javax.annotation.Nonnull;
 
 public class ByteUtil {
-  private static final byte[] EMPTY_BYTES = new byte[0];
+  private static final byte[] EMPTY = EmptyArrayConst.Primitive.Byte;
   
   private ByteUtil() {
     // nop
@@ -41,7 +42,7 @@ public class ByteUtil {
         ? 0
         : (size > target.length) ? target.length : size;
     if (ArrayUtils.isEmpty(target) || fixedPickupSize <= 0) {
-      return EMPTY_BYTES;
+      return EMPTY;
     }
     if (fixedPickupSize >= target.length) {
       return target;
@@ -65,7 +66,7 @@ public class ByteUtil {
         ? 0
         : (size > target.length) ? target.length : size;
     if (ArrayUtils.isEmpty(target) || fixedPickupSize <= 0) {
-      return EMPTY_BYTES;
+      return EMPTY;
     }
     if (fixedPickupSize >= target.length) {
       return target;
@@ -87,7 +88,7 @@ public class ByteUtil {
   public static byte[] mid(@Nonnull final byte[] target, final int startIndex, final int size) {
     Assert.requireNonNull(target);
     if (startIndex > target.length -1) {
-      return EMPTY_BYTES;
+      return EMPTY;
     }
     final int fixedStartIndex = (startIndex < 0)
         ? 0
