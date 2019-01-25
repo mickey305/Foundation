@@ -5,7 +5,7 @@ chcp 65001
 
 setlocal
 
-call jshell -J-Dfile.encoding=utf8 ".\src\main\jsh\sample.jsh" --class-path "..\foundation\build\libs\foundation-0.6.25-beta.jar"
+call jshell -J-Dfile.encoding=utf8 ".\src\main\jsh\sample.jsh" --class-path "..\foundation\build\libs\foundation-0.6.30-beta.jar"
 
 @REM pause
 

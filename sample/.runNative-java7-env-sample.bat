@@ -23,7 +23,7 @@ if not "%ERRORLEVEL%"  == "0" (
 call javac -J-Dfile.encoding=UTF-8 -encoding UTF-8 -Xlint:none ^
       -sourcepath ".\src\main\java" ^
       -d ".\build\javac-out" ^
-      -cp "..\foundation\build\dependencies\compile\*;.\src\main\resources\*;.\src\main\java\*;..\foundation\build\jar-out\foundation-build20190122100940.jar" ^
+      -cp "..\foundation\build\dependencies\compile\*;.\src\main\resources\*;.\src\main\java\*;..\foundation\build\jar-out\foundation-build20190125234308.jar" ^
       ".\src\main\java\Main4Se7.java"
 if not "%ERRORLEVEL%"  == "0" (
     echo 1: [E] compile failed status="%ERRORLEVEL%"
@@ -36,7 +36,7 @@ if not "%ERRORLEVEL%"  == "0" (
 :: 2. run
 echo java run!
 echo #######################################################################################################
-call java -classpath ".\build\javac-out;..\foundation\build\dependencies\compile\*;..\foundation\build\jar-out\foundation-build20190122100940.jar" ^
+call java -classpath ".\build\javac-out;..\foundation\build\dependencies\compile\*;..\foundation\build\jar-out\foundation-build20190125234308.jar" ^
      "Main4Se7"
 echo #######################################################################################################
 if not "%ERRORLEVEL%"  == "0" (
