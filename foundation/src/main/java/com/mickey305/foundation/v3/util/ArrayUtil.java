@@ -23,6 +23,7 @@ import java.util.Arrays;
 public class ArrayUtil {
   
   private ArrayUtil() {
+    // nop
   }
   
   /**
@@ -287,10 +288,36 @@ public class ArrayUtil {
    * @return
    */
   @Nullable
-  public static <E> E get(E[] array, int index) {
+  public static <E> E getElement(E[] array, int index) {
+    index = getIndex(array, index);
+    return (index >= 0) ? array[index] : null;
+  }
+  
+  /**
+   * index value
+   * @param array target array
+   * @param index target index
+   * @param <E> array element type
+   * @return calculated index. return {@link Integer#MIN_VALUE} if target index out of bounds
+   *         or target array is {@code null}.
+   */
+  public static <E> int getIndex(E[] array, int index) {
     return (array != null && index >= 0 && index < array.length)
-        ? array[index]
-        : null;
+        ? index
+        : Integer.MIN_VALUE;
+  }
+  
+  /**
+   * index value
+   * @param array target array
+   * @param index target index
+   * @param <E> array element type
+   * @return resolved index. return {@link Integer#MIN_VALUE} if target index out of bounds
+   */
+  public static <E> int getResolvedIndex(E[] array, int index) {
+    index = getIndex(array, index);
+    Assert.requireTrue(index >= 0);
+    return index;
   }
   
   /**
@@ -301,8 +328,8 @@ public class ArrayUtil {
    * @param <E>
    */
   public static <E> void swap(E[] target, int idx1, int idx2) {
-    Assert.requireNonNull(get(target, idx1));
-    Assert.requireNonNull(get(target, idx2));
+    idx1 = getResolvedIndex(target, idx1);
+    idx2 = getResolvedIndex(target, idx2);
     swapImpl(target, idx1, idx2);
   }
   
@@ -315,9 +342,9 @@ public class ArrayUtil {
    * @return
    */
   public static <E> boolean trySwap(E[] target, int idx1, int idx2) {
-    final E elm1 = get(target, idx1);
-    final E elm2 = get(target, idx2);
-    if (elm1 == null || elm2 == null) {
+    idx1 = getIndex(target, idx1);
+    idx2 = getIndex(target, idx2);
+    if (idx1 < 0 || idx2 < 0) {
       return false;
     }
     swapImpl(target, idx1, idx2);
