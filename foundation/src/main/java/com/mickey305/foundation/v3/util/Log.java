@@ -28,9 +28,19 @@ import java.util.Objects;
 
 public class Log {
   private static final SimpleDateFormat SDF_PATTERN1;
+  private static final AnsiStringBuilder[] STD_BUILDERS;
+  private static final int IDX_INFO = 0;
+  private static final int IDX_DEBUG = 1;
+  private static final int IDX_UPDATE = 2;
+  private static final StringBuilder ERR_BUILDER;
   
   static {
     SDF_PATTERN1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+    STD_BUILDERS = new AnsiStringBuilder[3];
+    STD_BUILDERS[IDX_INFO] = new AnsiStringBuilder();
+    STD_BUILDERS[IDX_DEBUG] = new AnsiStringBuilder();
+    STD_BUILDERS[IDX_UPDATE] = new AnsiStringBuilder();
+    ERR_BUILDER = new StringBuilder();
   }
   
   private Log() {
@@ -56,7 +66,9 @@ public class Log {
     Objects.requireNonNull(element);
     Objects.requireNonNull(msg);
     final int lineNumberWidth = 7;
-    AnsiStringBuilder sb = new AnsiStringBuilder()
+    AnsiStringBuilder sb = STD_BUILDERS[IDX_DEBUG];
+    sb.setLength(0);
+    sb
         .append(Escape.BkgYellow)
         .append(Escape.Black)
         .append("[")
@@ -89,7 +101,9 @@ public class Log {
    */
   public synchronized static void i(@Nonnull String msg) {
     Objects.requireNonNull(msg);
-    AnsiStringBuilder sb = new AnsiStringBuilder()
+    AnsiStringBuilder sb = STD_BUILDERS[IDX_INFO];
+    sb.setLength(0);
+    sb
         .append(Escape.Blue)
         .append(createHeader())
         .append(" I/D ")
@@ -105,7 +119,9 @@ public class Log {
    */
   public synchronized static void e(@Nonnull String msg) {
     Objects.requireNonNull(msg);
-    StringBuilder sb = new StringBuilder()
+    StringBuilder sb = ERR_BUILDER;
+    sb.setLength(0);
+    sb
         .append(createHeader())
         .append("  E  ")
         .append(msg);
@@ -121,7 +137,9 @@ public class Log {
   public synchronized static void update(@Nonnull String line) {
     Objects.requireNonNull(line);
     line = line.replace("\n", "");
-    AnsiStringBuilder sb = new AnsiStringBuilder()
+    AnsiStringBuilder sb = STD_BUILDERS[IDX_UPDATE];
+    sb.setLength(0);
+    sb
         .append("\r")
         .append(Escape.Green)
         .append(createHeader())
