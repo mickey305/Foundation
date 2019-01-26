@@ -22,9 +22,12 @@ import com.mickey305.foundation.v3.compat.stream.Supplier;
 import com.mickey305.foundation.v3.util.Assert;
 import com.mickey305.foundation.v3.util.Log;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;
 
@@ -71,10 +74,15 @@ import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;
  * }}</pre>
  */
 public final class ConsoleSnatcher implements AutoCloseable {
-  private final TmpStreamHolder tmp;
-  private final Target targetSystem;
-  private PrintStream nativeOut;
-  private boolean stealFlag, closingOrEmpty;
+  // nonnull
+  @Nonnull private final TmpStreamHolder tmp;
+  @Nonnull private final Target targetSystem;
+  @Nonnull private final AtomicBoolean autoClear;
+  private boolean stealFlag;
+  private boolean closingOrEmpty;
+  
+  // nullable
+  @Nullable private PrintStream nativeOut;
   
   public enum Target {
     /**
@@ -107,34 +115,35 @@ public final class ConsoleSnatcher implements AutoCloseable {
       }
     });
     
-    Target(final Consumer<PrintStream> setStreamFunc,
-           final Supplier<PrintStream> getStreamFunc) {
+    Target(@Nonnull final Consumer<PrintStream> setStreamFunc,
+           @Nonnull final Supplier<PrintStream> getStreamFunc) {
       this.Instance = new ConsoleSnatcher(this);
       this.setStreamFunc = setStreamFunc;
       this.getStreamFunc = getStreamFunc;
     }
-    
-    private final ConsoleSnatcher Instance;
+  
+    @Nonnull private final ConsoleSnatcher Instance;
   
     /**
      * システムコンソールストリーム設定I/F
      * <p>引数で入力したストリームをシステムに設定する</p>
      */
-    private final Consumer<PrintStream> setStreamFunc;
+    @Nonnull private final Consumer<PrintStream> setStreamFunc;
   
     /**
      * システムコンソールストリーム取得I/F
      * <p>システムに現在設定されているストリームオブジェクトを取得する</p>
      */
-    private final Supplier<PrintStream> getStreamFunc;
+    @Nonnull private final Supplier<PrintStream> getStreamFunc;
   }
   
-  private ConsoleSnatcher(final Target targetSystem) {
+  private ConsoleSnatcher(@Nonnull final Target targetSystem) {
     Assert.requireNonNull(targetSystem);
     tmp = new TmpStreamHolder();
     nativeOut = null;
     stealFlag = false;
     closingOrEmpty = true;
+    autoClear = new AtomicBoolean(true);
     this.targetSystem = targetSystem;
   }
   
@@ -150,6 +159,25 @@ public final class ConsoleSnatcher implements AutoCloseable {
       instance.closingOrEmpty = false;
     }
     return instance;
+  }
+  
+  /**
+   * 一時ストリームの自動消去を設定するメソッド
+   * <p>デフォルトは、自動消去ON</p>
+   * @param status フラグ. 自動消去ON：{@code true}、自動消去OFF：{@code false}を設定する
+   * @return {@link ConsoleSnatcher}インスタンス
+   */
+  public ConsoleSnatcher setAutoClearMode(boolean status) {
+    autoClear.set(status);
+    return this;
+  }
+  
+  /**
+   * 一時ストリームの自動消去モード判定メソッド
+   * @return フラグ. 自動消去ON：{@code true}、自動消去OFF：{@code false}を返却する
+   */
+  public boolean isAutoClearMode() {
+    return autoClear.get();
   }
   
   /**
@@ -171,7 +199,9 @@ public final class ConsoleSnatcher implements AutoCloseable {
    * 出力のクリア.
    */
   public synchronized void clearOutput() {
-    tmp.getSnatchedOut().reset();
+    if (tmp.getSnatchedOut() != null) {
+      tmp.getSnatchedOut().reset();
+    }
   }
   
   /**
@@ -180,8 +210,11 @@ public final class ConsoleSnatcher implements AutoCloseable {
    * @return 出力情報
    */
   public synchronized String getOutput() {
-    targetSystem.getStreamFunc.get().flush();
-    return tmp.getSnatchedOut().toString();
+    if (tmp.getSnatchedOut() != null) {
+      targetSystem.getStreamFunc.get().flush();
+      return tmp.getSnatchedOut().toString();
+    }
+    return "";
   }
   
   public synchronized PrintStream getNativeOutputStream() {
@@ -193,7 +226,10 @@ public final class ConsoleSnatcher implements AutoCloseable {
    */
   public synchronized void release() {
     if (stealFlag) {
-      clearOutput();
+      if (autoClear.get()) {
+        // 自動クリアがONの場合、一時ストリームの内容を消去する
+        clearOutput();
+      }
       
       // 出力先を元に戻す system out/err stream <- nativeOut(default stream)
       targetSystem.setStreamFunc.accept(nativeOut);
@@ -219,8 +255,8 @@ public final class ConsoleSnatcher implements AutoCloseable {
    * 一時リソース格納用クラス
    */
   private class TmpStreamHolder implements AutoCloseable {
-    private ByteArrayOutputStream snatchedOut;
-    private PrintStream snatchedPrintStream;
+    @Nullable private ByteArrayOutputStream snatchedOut;
+    @Nullable private PrintStream snatchedPrintStream;
     
     TmpStreamHolder() {
       // nop
@@ -248,16 +284,20 @@ public final class ConsoleSnatcher implements AutoCloseable {
      */
     @Override
     public void close() {
-      snatchedPrintStream.close();
-      if (IS_DEBUG_MODE) {
-        Log.d("tmp stream closed.");
+      if (snatchedPrintStream != null) {
+        snatchedPrintStream.close();
+        if (IS_DEBUG_MODE) {
+          Log.d("tmp stream closed.");
+        }
       }
     }
   
+    @Nullable
     ByteArrayOutputStream getSnatchedOut() {
       return snatchedOut;
     }
   
+    @Nullable
     PrintStream getSnatchedPrintStream() {
       return snatchedPrintStream;
     }
