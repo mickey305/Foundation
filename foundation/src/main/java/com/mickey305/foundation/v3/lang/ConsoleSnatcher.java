@@ -148,7 +148,7 @@ public final class ConsoleSnatcher implements AutoCloseable {
   }
   
   /**
-   * インスタンス取得メソッド
+   * Singletonインスタンス取得メソッド
    * @param target キャプチャターゲット. {@link Target#StdOut} or {@link Target#StdErr}
    * @return {@link ConsoleSnatcher}インスタンス
    */
