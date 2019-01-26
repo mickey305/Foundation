@@ -44,7 +44,7 @@ public class ConsoleSnatcherTest {
     
     System.out.println("test01");
     System.out.println("test02");
-    try (ConsoleSnatcher snatcher = ConsoleSnatcher.getInstance(StdOut)) {
+    try (ConsoleSnatcher snatcher = ConsoleSnatcher.of(StdOut)) {
       snatcher.snatch();
       System.out.println("test11");
       System.out.println("test12");
@@ -70,14 +70,14 @@ public class ConsoleSnatcherTest {
     
     System.out.println("test01");
     System.out.println("test02");
-    ConsoleSnatcher snatcher = ConsoleSnatcher.getInstance(StdOut);
+    ConsoleSnatcher snatcher = ConsoleSnatcher.of(StdOut);
     snatcher.snatch();
     System.out.println("test11");
     System.out.println("test12");
     System.out.println("test13");
     Assert.assertEquals(builder1.toString(), snatcher.getOutput());
     snatcher.release();
-    snatcher = ConsoleSnatcher.getInstance(StdOut);
+    snatcher = ConsoleSnatcher.of(StdOut);
     snatcher.snatch();
     System.out.println("test21");
     System.out.println("test22");

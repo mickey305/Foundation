@@ -41,7 +41,7 @@ import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;
  * public interface ConsoleSnatchable<R> {
  *   default Bindable<R> snatchConsoleErr(final Function<Supplier<String>,R>function){
  *     Bindable<R> bindable = consumer -> consumer.accept(null);
- *     try(ConsoleSnatcher consoleSnatcher = ConsoleSnatcher.getInstance(StdErr)){
+ *     try(ConsoleSnatcher consoleSnatcher = ConsoleSnatcher.of(StdErr)){
  *       // system console log snatch
  *       consoleSnatcher.snatch();
  *       final Supplier<String> errInfo = consoleSnatcher::getOutput;
@@ -152,7 +152,7 @@ public final class ConsoleSnatcher implements AutoCloseable {
    * @param target キャプチャターゲット. {@link Target#StdOut} or {@link Target#StdErr}
    * @return {@link ConsoleSnatcher}インスタンス
    */
-  public synchronized static ConsoleSnatcher getInstance(Target target) {
+  public synchronized static ConsoleSnatcher of(Target target) {
     final ConsoleSnatcher instance = target.Instance;
     if (instance.closingOrEmpty) {
       instance.tmp.create(new ByteArrayOutputStream());
