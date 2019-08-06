@@ -207,10 +207,10 @@ public class MatrixTest {
 //        matrix02 = matrix02.exp(2);
 //        matrix02 = matrix01.multi(matrix01.exp(3));
 //        Log.i("matrix02:" + Arrays.deepToString(matrix02.getTable()));
-    matrix03 = matrix01.createInverseMatrix(
-        OperationBigFractionFactory.getInstance(),
-        ElementInitializerFactory.bigFractionIni());
-    Log.i("matrix03:" + Arrays.deepToString(matrix03.getTable()));
+//    matrix03 = matrix01.createInverseMatrix(
+//        OperationBigFractionFactory.getInstance(),
+//        ElementInitializerFactory.bigFractionIni());
+//    Log.i("matrix03:" + Arrays.deepToString(matrix03.getTable()));
 
 //        Log.i("matrix11:" + Arrays.deepToString(matrix11.getTable()));
 //        matrix12 = matrix12.exp(2);

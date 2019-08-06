@@ -93,6 +93,7 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
     return matrix;
   }
   
+  @Deprecated
   public <T extends Number> SquareMatrix<E> createInverseMatrix(final IOperationFactory<T> opFactory,
                                                                 final IElementInitializer<T> ini) {
     SquareMatrix<T> tmpMatrix = new BuilderSquareMatrix<T>()
@@ -109,22 +110,22 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
             return table;
           }
         }).build();
-    
+
     if (IS_DEBUG_MODE) Log.d("bef tmpMatrix: " + Arrays.deepToString(tmpMatrix.getTable()));
-    
+
     // invoke method
     tmpMatrix = tmpMatrix.createInverseMatrix();
-    
+
     if (IS_DEBUG_MODE) Log.d("aft tmpMatrix: " + Arrays.deepToString(tmpMatrix.getTable()));
-    
+
     final SquareMatrix<E> resultMatrix = new SquareMatrix<>(
         tmpMatrix.getSize(), this.getInitializer(), this.getOp(), this.getRop());
     for (int i = 0; i < getRowSize(); i++)
       for (int j = 0; j < getColumnSize(); j++)
         resultMatrix.putCell(i, j, this.getInitializer().convertFrom(tmpMatrix.getCell(i, j)));
-    
+
     if (IS_DEBUG_MODE) Log.d("resultMatrix: " + Arrays.deepToString(resultMatrix.getTable()));
-    
+
     return resultMatrix;
   }
   
@@ -139,9 +140,6 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
       throw new UnsupportedOperationException();
     
     final Matrix<E> em = this.horizontalBind(this.createIdentityMatrix());
-    for (int i = 0; i < em.getRowSize(); i++)
-      for (int j = 0; j < em.getColumnSize(); j++)
-        em.putCell(i, j, this.getOp().get(Operator.ADD).apply(this.getInitializer().zero(), em.getCell(i, j)));
     
     // CELL(i,i) <==> NE ZERO transformation
     for (int i = 0; i < this.getRowSize(); i++) {
