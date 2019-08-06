@@ -42,7 +42,7 @@ cache:
 
 matrix:
   include:
-    - env:    TEST_DUMMY_INFO="compile:openjdk8,   test:openjdk8"
+    - env:    TEST_DUMMY_INFO="compile:openjdk8, test:openjdk8"
       script: jdk_switcher use openjdk8
               && ./.travis.default-compile.sh
               && jdk_switcher use openjdk8
@@ -54,7 +54,7 @@ matrix:
               && jdk_switcher use openjdk8
               && ./.travis.default-test.sh
 
-    - env:    TEST_DUMMY_INFO="compile:openjdk8,   test:openjdk9"
+    - env:    TEST_DUMMY_INFO="compile:openjdk8, test:openjdk9"
       script: jdk_switcher use openjdk8
               && ./.travis.default-compile.sh
               && export JAVA_HOME=`./install-jdk.sh -F 9 -E | tail -n 1`
@@ -68,7 +68,7 @@ matrix:
               && export PATH=${JAVA_HOME}/bin:$PATH
               && ./.travis.default-test.sh
 
-    - env:    TEST_DUMMY_INFO="compile:openjdk8,   test:openjdk10"
+    - env:    TEST_DUMMY_INFO="compile:openjdk8, test:openjdk10"
       script: jdk_switcher use openjdk8
               && ./.travis.default-compile.sh
               && export JAVA_HOME=`./install-jdk.sh -F 10 -E | tail -n 1`
@@ -82,21 +82,21 @@ matrix:
               && export PATH=${JAVA_HOME}/bin:$PATH
               && ./.travis.default-test.sh
 
-    - env:    TEST_DUMMY_INFO="compile:openjdk8,   test:openjdk11"
+    - env:    TEST_DUMMY_INFO="compile:openjdk8, test:openjdk11"
       script: jdk_switcher use openjdk8
               && ./.travis.default-compile.sh
-              && export JAVA_HOME=`./install-jdk.sh -F 11 -E | tail -n 1`
+              && export JAVA_HOME=`./install-jdk.sh -F 11 | tail -n 1`
               && export PATH=${JAVA_HOME}/bin:$PATH
               && ./.travis.default-test.sh
 
     - env:    TEST_DUMMY_INFO="compile:oraclejdk8, test:openjdk11"
       script: jdk_switcher use oraclejdk8
               && ./.travis.default-compile.sh
-              && export JAVA_HOME=`./install-jdk.sh -F 11 -E | tail -n 1`
+              && export JAVA_HOME=`./install-jdk.sh -F 11 | tail -n 1`
               && export PATH=${JAVA_HOME}/bin:$PATH
               && ./.travis.default-test.sh
 
-    - env:    TEST_DUMMY_INFO="compile:openjdk8,   test:oraclejdk8"
+    - env:    TEST_DUMMY_INFO="compile:openjdk8, test:oraclejdk8"
       script: jdk_switcher use openjdk8
               && ./.travis.default-compile.sh
               && jdk_switcher use oraclejdk8
@@ -108,17 +108,75 @@ matrix:
               && jdk_switcher use oraclejdk8
               && ./.travis.default-test.sh
 
-    - env:    TEST_DUMMY_INFO="compile:openjdk8,   test:oraclejdk11"
+#    - env:    TEST_DUMMY_INFO="compile:openjdk8, test:oraclejdk11"
+#      script: jdk_switcher use openjdk8
+#              && ./.travis.default-compile.sh
+#              && export JAVA_HOME=`./install-jdk.sh -F 11 -L BCL -E | tail -n 1`
+#              && export PATH=${JAVA_HOME}/bin:$PATH
+#              && ./.travis.default-test.sh
+#
+#    - env:    TEST_DUMMY_INFO="compile:oraclejdk8, test:oraclejdk11"
+#      script: jdk_switcher use oraclejdk8
+#              && ./.travis.default-compile.sh
+#              && export JAVA_HOME=`./install-jdk.sh -F 11 -L BCL -E | tail -n 1`
+#              && export PATH=${JAVA_HOME}/bin:$PATH
+#              && ./.travis.default-test.sh
+
+    - env:    TEST_DUMMY_INFO="compile:openjdk8, test:oraclejdk12"
       script: jdk_switcher use openjdk8
               && ./.travis.default-compile.sh
-              && export JAVA_HOME=`./install-jdk.sh -F 11 -L BCL -E | tail -n 1`
+              && export JAVA_HOME=`./install-jdk.sh -F 12 | tail -n 1`
               && export PATH=${JAVA_HOME}/bin:$PATH
               && ./.travis.default-test.sh
 
-    - env:    TEST_DUMMY_INFO="compile:oraclejdk8, test:oraclejdk11"
+    - env:    TEST_DUMMY_INFO="compile:oraclejdk8, test:oraclejdk12"
       script: jdk_switcher use oraclejdk8
               && ./.travis.default-compile.sh
-              && export JAVA_HOME=`./install-jdk.sh -F 11 -L BCL -E | tail -n 1`
+              && export JAVA_HOME=`./install-jdk.sh -F 12 | tail -n 1`
+              && export PATH=${JAVA_HOME}/bin:$PATH
+              && ./.travis.default-test.sh
+
+    - env:    TEST_DUMMY_INFO="compile:openjdk8, test:oraclejdk13"
+      script: jdk_switcher use openjdk8
+              && ./.travis.default-compile.sh
+              && export JAVA_HOME=`./install-jdk.sh -F 13 | tail -n 1`
+              && export PATH=${JAVA_HOME}/bin:$PATH
+              && ./.travis.default-test.sh
+
+    - env:    TEST_DUMMY_INFO="compile:oraclejdk8, test:oraclejdk13"
+      script: jdk_switcher use oraclejdk8
+              && ./.travis.default-compile.sh
+              && export JAVA_HOME=`./install-jdk.sh -F 13 | tail -n 1`
+              && export PATH=${JAVA_HOME}/bin:$PATH
+              && ./.travis.default-test.sh
+
+    - env:    TEST_DUMMY_INFO="compile:openjdk8, test:oraclejdk14"
+      script: jdk_switcher use openjdk8
+              && ./.travis.default-compile.sh
+              && export JAVA_HOME=`./install-jdk.sh -F 14 | tail -n 1`
+              && export PATH=${JAVA_HOME}/bin:$PATH
+              && ./.travis.default-test.sh
+
+    - env:    TEST_DUMMY_INFO="compile:oraclejdk8, test:oraclejdk14"
+      script: jdk_switcher use oraclejdk8
+              && ./.travis.default-compile.sh
+              && export JAVA_HOME=`./install-jdk.sh -F 14 | tail -n 1`
+              && export PATH=${JAVA_HOME}/bin:$PATH
+              && ./.travis.default-test.sh
+
+    - env:    TEST_DUMMY_INFO="compile:openjdk8, test:oraclejdk-ea"
+      os:     osx
+      script: jdk_switcher use openjdk8
+              && ./.travis.default-compile.sh
+              && export JAVA_HOME=`./install-jdk.sh -V -F ea | tail -n 1`
+              && export PATH=${JAVA_HOME}/bin:$PATH
+              && ./.travis.default-test.sh
+
+    - env:    TEST_DUMMY_INFO="compile:oraclejdk8, test:oraclejdk-ea"
+      os:     osx
+      script: jdk_switcher use oraclejdk8
+              && ./.travis.default-compile.sh
+              && export JAVA_HOME=`./install-jdk.sh -V -F ea | tail -n 1`
               && export PATH=${JAVA_HOME}/bin:$PATH
               && ./.travis.default-test.sh
 
