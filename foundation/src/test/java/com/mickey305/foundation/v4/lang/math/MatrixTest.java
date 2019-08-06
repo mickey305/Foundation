@@ -21,9 +21,9 @@ import com.mickey305.foundation.v3.util.Log;
 import com.mickey305.foundation.v4.lang.math.factory.AbstractMatrixBuilder;
 import com.mickey305.foundation.v4.lang.math.factory.BuilderSquareMatrix;
 import com.mickey305.foundation.v4.lang.math.factory.ElementInitializerFactory;
+import com.mickey305.foundation.v4.lang.math.context.MatrixContextBigFraction;
+import com.mickey305.foundation.v4.lang.math.context.MatrixContextDouble;
 import com.mickey305.foundation.v4.lang.math.factory.OperationBigDecimalFactory;
-import com.mickey305.foundation.v4.lang.math.factory.OperationBigFractionFactory;
-import com.mickey305.foundation.v4.lang.math.factory.OperationDoubleFactory;
 import org.apache.commons.math3.fraction.BigFraction;
 import org.junit.After;
 import org.junit.Before;
@@ -145,8 +145,7 @@ public class MatrixTest {
 //        IElementInitializer<Integer> initializer = ElementInitializerFactory.intIni();
 //        Log.i(Arrays.deepToString(initializer.table(3, 4)));
     SquareMatrix<Double> matrix21 = new BuilderSquareMatrix<Double>()
-        .operator(OperationDoubleFactory.getInstance())
-        .initializer(ElementInitializerFactory.doubleIni())
+        .context(new MatrixContextDouble())
         .cookbook(new AbstractMatrixBuilder.CookBook<Double>() {
           @Override
           public Double[][] tableDef() {
@@ -179,8 +178,7 @@ public class MatrixTest {
         .build();
     Matrix<BigDecimal> matrix02, matrix03;
     SquareMatrix<BigFraction> matrix11 = new BuilderSquareMatrix<BigFraction>()
-        .operator(OperationBigFractionFactory.getInstance())
-        .initializer(ElementInitializerFactory.bigFractionIni())
+        .context(new MatrixContextBigFraction())
         .cookbook(new AbstractMatrixBuilder.CookBook<BigFraction>() {
           @Override
           public BigFraction[][] tableDef() {
