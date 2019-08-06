@@ -83,12 +83,17 @@ matrix:
       script: ./.travis.default-compile.sh
               && ./.travis.default-test.sh
 
-    - env: TEST_DUMMY_INFO="compile:default, test:jdk-ea"
+    - env: TEST_DUMMY_INFO="compile:default, test:default"
       os: osx
       script: ./.travis.default-compile.sh
-              && export JAVA_HOME=`./install-jdk.sh -V -F ea -E | tail -n 1`
-              && export PATH=${JAVA_HOME}/bin:$PATH
               && ./.travis.default-test.sh
+
+#    - env: TEST_DUMMY_INFO="compile:default, test:jdk-ea"
+#      os: osx
+#      script: ./.travis.default-compile.sh
+#              && export JAVA_HOME=`./install-jdk.sh -V -F ea -E | tail -n 1`
+#              && export PATH=${JAVA_HOME}/bin:$PATH
+#              && ./.travis.default-test.sh
 
 #  OpenJDK install
     - stage: jdk.java.net - Archived OpenJDK General-Availability Releases
