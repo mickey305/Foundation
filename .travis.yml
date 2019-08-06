@@ -160,7 +160,7 @@ matrix:
 
 #  OracleJDK install, OS mac
     - stage: ☕ jdk.java.net - JDK builds, from Oracle: OS -  mac
-    - env:    TEST_DUMMY_INFO="compile:openjdk8, test:oraclejdk-ea"
+      env:    TEST_DUMMY_INFO="compile:openjdk8, test:oraclejdk-ea"
       os:     osx
       script: jdk_switcher use openjdk8
               && ./.travis.default-compile.sh
