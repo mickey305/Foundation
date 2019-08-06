@@ -159,7 +159,7 @@ matrix:
               && ./.travis.default-test.sh
 
 #  OracleJDK install, OS mac
-    - stage: ☕ jdk.java.net - JDK builds, from Oracle: OS - 🍎 mac
+    - stage: ☕ jdk.java.net - JDK builds, from Oracle: OS -  mac
     - env:    TEST_DUMMY_INFO="compile:openjdk8, test:oraclejdk-ea"
       os:     osx
       script: jdk_switcher use openjdk8
