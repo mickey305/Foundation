@@ -24,14 +24,14 @@ before_script:
   - test "$TRAVIS_OS_NAME" = "linux"
     && curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
     && chmod +x ./cc-test-reporter
-    && ./cc-test-reporter before-build
+    && ./cc-test-reporter before-build ; echo "result=$?"
 
 after_script:
   - test "$TRAVIS_OS_NAME" = "linux"
     && ./gradlew test jacocoTestReport -x compileJava
     && JACOCO_SOURCE_PATH=foundation/src/main/java
        ./cc-test-reporter format-coverage ./foundation/build/reports/jacoco/test/jacocoTestReport.xml --input-type jacoco
-    && ./cc-test-reporter upload-coverage -r $CC_TEST_REPORTER_ID
+    && ./cc-test-reporter upload-coverage -r $CC_TEST_REPORTER_ID ; echo "result=$?"
 
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -43,8 +43,8 @@ cache:
 
 matrix:
   include:
-#  OpenJDK default
-    - stage: OpenJDK General-Availability Releases
+#  JDK default
+    - stage: JDK General-Availability Releases
       env: TEST_DUMMY_INFO="compile:openjdk8, test:openjdk8"
       script: jdk_switcher use openjdk8
               && ./.travis.default-compile.sh
@@ -55,6 +55,36 @@ matrix:
       script: jdk_switcher use oraclejdk8
               && ./.travis.default-compile.sh
               && jdk_switcher use openjdk8
+              && ./.travis.default-test.sh
+
+    - env: TEST_DUMMY_INFO="compile:openjdk8, test:oraclejdk8"
+      script: jdk_switcher use openjdk8
+              && ./.travis.default-compile.sh
+              && jdk_switcher use oraclejdk8
+              && ./.travis.default-test.sh
+
+    - env: TEST_DUMMY_INFO="compile:oraclejdk8, test:oraclejdk8"
+      script: jdk_switcher use oraclejdk8
+              && ./.travis.default-compile.sh
+              && jdk_switcher use oraclejdk8
+              && ./.travis.default-test.sh
+
+#  Oracle binary JDK install, OS mac
+    - stage: ☕ jdk.java.net - JDK builds, from Oracle. OS -  mac
+      env: TEST_DUMMY_INFO="compile:openjdk8, test:jdk-ea"
+      os: osx
+      script: jdk_switcher use openjdk8
+              && ./.travis.default-compile.sh
+              && export JAVA_HOME=`./install-jdk.sh -V -F ea -E | tail -n 1`
+              && export PATH=${JAVA_HOME}/bin:$PATH
+              && ./.travis.default-test.sh
+
+    - env: TEST_DUMMY_INFO="compile:oraclejdk8, test:jdk-ea"
+      os: osx
+      script: jdk_switcher use oraclejdk8
+              && ./.travis.default-compile.sh
+              && export JAVA_HOME=`./install-jdk.sh -V -F ea -E | tail -n 1`
+              && export PATH=${JAVA_HOME}/bin:$PATH
               && ./.travis.default-test.sh
 
 #  OpenJDK install
@@ -101,78 +131,46 @@ matrix:
               && export PATH=${JAVA_HOME}/bin:$PATH
               && ./.travis.default-test.sh
 
-#  OracleJDK default
-    - stage: ☕ JDK builds, from Oracle
-      env: TEST_DUMMY_INFO="compile:openjdk8, test:oraclejdk8"
-      script: jdk_switcher use openjdk8
-              && ./.travis.default-compile.sh
-              && jdk_switcher use oraclejdk8
-              && ./.travis.default-test.sh
-
-    - env: TEST_DUMMY_INFO="compile:oraclejdk8, test:oraclejdk8"
-      script: jdk_switcher use oraclejdk8
-              && ./.travis.default-compile.sh
-              && jdk_switcher use oraclejdk8
-              && ./.travis.default-test.sh
-
-#  OracleJDK install
+#  Oracle binary JDK install
     - stage: ☕ jdk.java.net - JDK builds, from Oracle
-      env: TEST_DUMMY_INFO="compile:openjdk8, test:oraclejdk12"
+      env: TEST_DUMMY_INFO="compile:openjdk8, test:jdk12"
       script: jdk_switcher use openjdk8
               && ./.travis.default-compile.sh
               && export JAVA_HOME=`./install-jdk.sh -F 12 -E | tail -n 1`
               && export PATH=${JAVA_HOME}/bin:$PATH
               && ./.travis.default-test.sh
 
-    - env: TEST_DUMMY_INFO="compile:oraclejdk8, test:oraclejdk12"
+    - env: TEST_DUMMY_INFO="compile:oraclejdk8, test:jdk12"
       script: jdk_switcher use oraclejdk8
               && ./.travis.default-compile.sh
               && export JAVA_HOME=`./install-jdk.sh -F 12 -E | tail -n 1`
               && export PATH=${JAVA_HOME}/bin:$PATH
               && ./.travis.default-test.sh
 
-    - env: TEST_DUMMY_INFO="compile:openjdk8, test:oraclejdk13"
+    - env: TEST_DUMMY_INFO="compile:openjdk8, test:jdk13"
       script: jdk_switcher use openjdk8
               && ./.travis.default-compile.sh
               && export JAVA_HOME=`./install-jdk.sh -F 13 -E | tail -n 1`
               && export PATH=${JAVA_HOME}/bin:$PATH
               && ./.travis.default-test.sh
 
-    - env: TEST_DUMMY_INFO="compile:oraclejdk8, test:oraclejdk13"
+    - env: TEST_DUMMY_INFO="compile:oraclejdk8, test:jdk13"
       script: jdk_switcher use oraclejdk8
               && ./.travis.default-compile.sh
               && export JAVA_HOME=`./install-jdk.sh -F 13 -E | tail -n 1`
               && export PATH=${JAVA_HOME}/bin:$PATH
               && ./.travis.default-test.sh
 
-    - env: TEST_DUMMY_INFO="compile:openjdk8, test:oraclejdk14"
+    - env: TEST_DUMMY_INFO="compile:openjdk8, test:jdk14"
       script: jdk_switcher use openjdk8
               && ./.travis.default-compile.sh
               && export JAVA_HOME=`./install-jdk.sh -F 14 -E | tail -n 1`
               && export PATH=${JAVA_HOME}/bin:$PATH
               && ./.travis.default-test.sh
 
-    - env: TEST_DUMMY_INFO="compile:oraclejdk8, test:oraclejdk14"
+    - env: TEST_DUMMY_INFO="compile:oraclejdk8, test:jdk14"
       script: jdk_switcher use oraclejdk8
               && ./.travis.default-compile.sh
               && export JAVA_HOME=`./install-jdk.sh -F 14 -E | tail -n 1`
-              && export PATH=${JAVA_HOME}/bin:$PATH
-              && ./.travis.default-test.sh
-
-#  OracleJDK install, OS mac
-    - stage: ☕ jdk.java.net - JDK builds, from Oracle. OS -  mac
-      env: TEST_DUMMY_INFO="compile:openjdk8, test:oraclejdk-ea"
-      os: osx
-      script: jdk_switcher use openjdk8
-              && ./.travis.default-compile.sh
-              && export JAVA_HOME=`./install-jdk.sh -V -F ea -E | tail -n 1`
-              && export PATH=${JAVA_HOME}/bin:$PATH
-              && ./.travis.default-test.sh
-
-    - env: TEST_DUMMY_INFO="compile:oraclejdk8, test:oraclejdk-ea"
-      os: osx
-      script: jdk_switcher use oraclejdk8
-              && ./.travis.default-compile.sh
-              && export JAVA_HOME=`./install-jdk.sh -V -F ea -E | tail -n 1`
               && export PATH=${JAVA_HOME}/bin:$PATH
               && ./.travis.default-test.sh
