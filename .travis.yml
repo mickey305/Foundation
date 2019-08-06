@@ -22,15 +22,17 @@ before_install:
  - chmod +x ./.travis.default-test.sh
 
 before_script:
- - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
- - chmod +x ./cc-test-reporter
- - ./cc-test-reporter before-build
+ - test "$TRAVIS_OS_NAME" -eq "linux"
+   && curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+   && chmod +x ./cc-test-reporter
+   && ./cc-test-reporter before-build
 
 after_script:
- - ./gradlew test jacocoTestReport -x compileJava
- - JACOCO_SOURCE_PATH=foundation/src/main/java
-   ./cc-test-reporter format-coverage ./foundation/build/reports/jacoco/test/jacocoTestReport.xml --input-type jacoco
- - ./cc-test-reporter upload-coverage -r $CC_TEST_REPORTER_ID
+ - test "$TRAVIS_OS_NAME" -eq "linux"
+   && ./gradlew test jacocoTestReport -x compileJava
+   && JACOCO_SOURCE_PATH=foundation/src/main/java
+      ./cc-test-reporter format-coverage ./foundation/build/reports/jacoco/test/jacocoTestReport.xml --input-type jacoco
+   && ./cc-test-reporter upload-coverage -r $CC_TEST_REPORTER_ID
 
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
