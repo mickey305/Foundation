@@ -42,12 +42,17 @@ The following table shows status of external CI service.
 # Contents
 - [Usage](#usage)
 - [Requirements](#requirements)
+- [References](#references)
 - [History](#history)
 
 # <a name="usage"> Usage
 
 # <a name="requirements"> Requirements
 - JDK `>= 1.7`
+
+# <a name="references"> References
+- [Windows JDK環境切替バッチファイル](http://www.torutk.com/projects/swe/wiki/Windows_JDK%E7%92%B0%E5%A2%83%E5%88%87%E6%9B%BF%E3%83%90%E3%83%83%E3%83%81%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
+- [install-jdk.sh on GitHub](https://github.com/sormuras/bach)
 
 # <a name="history"> History
  * version 0.6.0 deploy - 2018-12-08
