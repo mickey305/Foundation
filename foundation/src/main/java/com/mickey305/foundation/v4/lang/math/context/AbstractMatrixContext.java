@@ -17,14 +17,14 @@
 
 package com.mickey305.foundation.v4.lang.math.context;
 
-import com.mickey305.foundation.v4.lang.math.factory.IOperationFactory;
+import com.mickey305.foundation.v4.lang.math.operator.IOperationFactory;
 import com.mickey305.foundation.v4.lang.math.operator.IElementInitializer;
 
-public class MatrixContext<T extends Number> {
+public abstract class AbstractMatrixContext<T extends Number> {
   private final IOperationFactory<T> operationFactory;
   private final IElementInitializer<T> elementInitializer;
   
-  public MatrixContext(
+  public AbstractMatrixContext(
       IOperationFactory<T> operationFactory,
       IElementInitializer<T> elementInitializer) {
     this.operationFactory = operationFactory;

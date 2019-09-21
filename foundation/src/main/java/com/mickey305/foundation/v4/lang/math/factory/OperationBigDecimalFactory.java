@@ -18,6 +18,7 @@
 package com.mickey305.foundation.v4.lang.math.factory;
 
 import com.mickey305.foundation.v4.lang.math.operator.AbstractNumberOperation;
+import com.mickey305.foundation.v4.lang.math.operator.AbstractOperationFactory;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -31,7 +32,7 @@ public class OperationBigDecimalFactory extends AbstractOperationFactory<BigDeci
     return this;
   }
   
-  private OperationBigDecimalFactory() {
+  public OperationBigDecimalFactory() {
     this.scale = DEFAULT_SCALE;
   }
   

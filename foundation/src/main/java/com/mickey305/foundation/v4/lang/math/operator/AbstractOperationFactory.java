@@ -15,9 +15,7 @@
  *
  */
 
-package com.mickey305.foundation.v4.lang.math.factory;
-
-import com.mickey305.foundation.v4.lang.math.operator.AbstractNumberOperation;
+package com.mickey305.foundation.v4.lang.math.operator;
 
 public abstract class AbstractOperationFactory<E extends Number> implements IOperationFactory<E> {
   /**

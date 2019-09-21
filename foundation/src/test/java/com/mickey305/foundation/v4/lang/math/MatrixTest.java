@@ -18,8 +18,8 @@
 package com.mickey305.foundation.v4.lang.math;
 
 import com.mickey305.foundation.v3.util.Log;
-import com.mickey305.foundation.v4.lang.math.factory.AbstractMatrixBuilder;
-import com.mickey305.foundation.v4.lang.math.factory.BuilderSquareMatrix;
+import com.mickey305.foundation.v4.lang.math.builder.AbstractMatrixBuilder;
+import com.mickey305.foundation.v4.lang.math.builder.BuilderSquareMatrix;
 import com.mickey305.foundation.v4.lang.math.factory.ElementInitializerFactory;
 import com.mickey305.foundation.v4.lang.math.context.MatrixContextBigFraction;
 import com.mickey305.foundation.v4.lang.math.context.MatrixContextDouble;
@@ -160,7 +160,7 @@ public class MatrixTest {
     SquareMatrix<Double> matrix22, matrix23;
     SquareMatrix<BigDecimal> matrix01 = new BuilderSquareMatrix<BigDecimal>()
         .operator(OperationBigDecimalFactory.getInstance().scale(3))
-        .initializer(ElementInitializerFactory.bigDcmlIni())
+        .initializer(ElementInitializerFactory.<BigDecimal>getFactory())
         .cookbook(new AbstractMatrixBuilder.CookBook<BigDecimal>() {
           @Override
           public BigDecimal[][] tableDef() {

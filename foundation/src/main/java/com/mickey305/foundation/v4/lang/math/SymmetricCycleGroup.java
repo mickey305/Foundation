@@ -62,7 +62,7 @@ public class SymmetricCycleGroup<E extends Number> extends SymmetricPermutationG
     do {
       btmData = this.getPairOf(btmData);
       cnt++;
-    } while (!btmData.equals(tpData));
+    } while (this.getRop(RelationalOperator.NE).apply(btmData, tpData));
     return cnt == this.getDataSet().size();
   }
   

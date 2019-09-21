@@ -15,13 +15,14 @@
  *
  */
 
-package com.mickey305.foundation.v4.lang.math.factory;
+package com.mickey305.foundation.v4.lang.math.builder;
 
 import com.mickey305.foundation.v4.lang.math.AbstractNumberTable;
 import com.mickey305.foundation.v4.lang.math.Matrix;
-import com.mickey305.foundation.v4.lang.math.context.MatrixContext;
+import com.mickey305.foundation.v4.lang.math.context.AbstractMatrixContext;
 import com.mickey305.foundation.v4.lang.math.operator.AbstractNumberOperation;
 import com.mickey305.foundation.v4.lang.math.operator.IElementInitializer;
+import com.mickey305.foundation.v4.lang.math.operator.IOperationFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,7 +38,7 @@ public abstract class AbstractMatrixBuilder<M extends Matrix<T>, T extends Numbe
     ROperators = new HashMap<>();
   }
   
-  public AbstractMatrixBuilder<M, T> context(MatrixContext<T> context) {
+  public AbstractMatrixBuilder<M, T> context(AbstractMatrixContext<T> context) {
     return this
         .initializer(context.getElementInitializer())
         .operator(context.getOperationFactory());

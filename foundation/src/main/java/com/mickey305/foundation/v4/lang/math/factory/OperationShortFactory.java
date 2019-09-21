@@ -18,11 +18,12 @@
 package com.mickey305.foundation.v4.lang.math.factory;
 
 import com.mickey305.foundation.v4.lang.math.operator.AbstractNumberOperation;
+import com.mickey305.foundation.v4.lang.math.operator.AbstractOperationFactory;
 
 import java.util.Objects;
 
 public class OperationShortFactory extends AbstractOperationFactory<Short> {
-  private OperationShortFactory() {
+  public OperationShortFactory() {
   }
   
   private static final class OperationShortFactoryHolder {

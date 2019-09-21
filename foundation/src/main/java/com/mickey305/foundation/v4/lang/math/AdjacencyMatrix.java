@@ -20,7 +20,6 @@ package com.mickey305.foundation.v4.lang.math;
 import com.mickey305.foundation.v4.lang.math.operator.AbstractNumberOperation;
 import com.mickey305.foundation.v4.lang.math.operator.IElementInitializer;
 
-import java.util.Arrays;
 import java.util.Map;
 
 public class AdjacencyMatrix<E extends Number> extends SquareMatrix<E> {
@@ -57,9 +56,14 @@ public class AdjacencyMatrix<E extends Number> extends SquareMatrix<E> {
    * @return 判定結果
    */
   public boolean isDirectedGraph() {
-    for (int i = 0; i < this.getSize(); i++)
-      if (!Arrays.equals(this.getRow(i), this.getColumn(i)))
-        return false;
+    for (int i = 0; i < this.getSize(); i++) {
+      E[] rec = this.getRow(i);
+      E[] col = this.getColumn(i);
+      for (int j = 0; j < this.getSize(); j++) {
+        if (this.getRop(RelationalOperator.NE).apply(rec[j], col[j]))
+          return false;
+      }
+    }
     
     return true;
   }

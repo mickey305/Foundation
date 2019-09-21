@@ -110,7 +110,7 @@ public final class R {
       cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.SymmetricCycleGroup"));
       cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.SymmetricPermutationGroup"));
       cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.SymmetricTransPositionGroup"));
-      cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.context.MatrixContext"));
+      cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.context.AbstractMatrixContext"));
       cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.context.MatrixContextBigDecimal"));
       cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.context.MatrixContextBigFraction"));
       cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.context.MatrixContextBigInt"));
@@ -121,7 +121,7 @@ public final class R {
       cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.context.MatrixContextInt"));
       cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.context.MatrixContextLong"));
       cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.context.MatrixContextShort"));
-      cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.factory.AbstractOperationFactory"));
+      cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.operator.AbstractOperationFactory"));
       cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.factory.ElementInitializerFactory"));
       cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.factory.OperationBigFractionFactory"));
       cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.factory.OperationBigIntFactory"));
@@ -672,7 +672,7 @@ public final class R {
       cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.SymmetricCycleGroup"));
       cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.SymmetricPermutationGroup"));
       cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.SymmetricTransPositionGroup"));
-      cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.context.MatrixContext"));
+      cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.context.AbstractMatrixContext"));
       cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.context.MatrixContextBigDecimal"));
       cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.context.MatrixContextBigFraction"));
       cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.context.MatrixContextBigInt"));
@@ -683,7 +683,7 @@ public final class R {
       cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.context.MatrixContextInt"));
       cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.context.MatrixContextLong"));
       cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.context.MatrixContextShort"));
-      cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.factory.AbstractOperationFactory"));
+      cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.operator.AbstractOperationFactory"));
       cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.factory.ElementInitializerFactory"));
       cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.factory.OperationBigFractionFactory"));
       cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.factory.OperationBigIntFactory"));
@@ -1206,7 +1206,7 @@ public final class R {
       cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.SymmetricCycleGroup"));
       cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.SymmetricPermutationGroup"));
       cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.SymmetricTransPositionGroup"));
-      cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.context.MatrixContext"));
+      cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.context.AbstractMatrixContext"));
       cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.context.MatrixContextBigDecimal"));
       cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.context.MatrixContextBigFraction"));
       cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.context.MatrixContextBigInt"));
@@ -1217,7 +1217,7 @@ public final class R {
       cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.context.MatrixContextInt"));
       cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.context.MatrixContextLong"));
       cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.context.MatrixContextShort"));
-      cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.factory.AbstractOperationFactory"));
+      cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.operator.AbstractOperationFactory"));
       cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.factory.ElementInitializerFactory"));
       cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.factory.OperationBigFractionFactory"));
       cache.add(Class.forName("com.mickey305.foundation.v4.lang.math.factory.OperationBigIntFactory"));

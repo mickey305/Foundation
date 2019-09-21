@@ -18,12 +18,13 @@
 package com.mickey305.foundation.v4.lang.math.factory;
 
 import com.mickey305.foundation.v4.lang.math.operator.AbstractNumberOperation;
+import com.mickey305.foundation.v4.lang.math.operator.AbstractOperationFactory;
 
 import java.math.BigInteger;
 import java.util.Objects;
 
 public class OperationBigIntFactory extends AbstractOperationFactory<BigInteger> {
-  private OperationBigIntFactory() {
+  public OperationBigIntFactory() {
   }
   
   private static final class OperationBigIntFactoryHolder {

@@ -18,14 +18,14 @@
 package com.mickey305.foundation.v4.lang.math.context;
 
 import com.mickey305.foundation.v4.lang.math.factory.ElementInitializerFactory;
-import com.mickey305.foundation.v4.lang.math.factory.OperationBigIntFactory;
+import com.mickey305.foundation.v4.lang.math.factory.OperationFactory;
 
 import java.math.BigInteger;
 
-public class MatrixContextBigInt extends MatrixContext<BigInteger> {
+public class MatrixContextBigInt extends AbstractMatrixContext<BigInteger> {
   public MatrixContextBigInt() {
     super(
-        OperationBigIntFactory.getInstance(),
-        ElementInitializerFactory.bigIntIni());
+        OperationFactory.<BigInteger>getFactory(),
+        ElementInitializerFactory.<BigInteger>getFactory());
   }
 }

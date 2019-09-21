@@ -18,13 +18,13 @@
 package com.mickey305.foundation.v4.lang.math.context;
 
 import com.mickey305.foundation.v4.lang.math.factory.ElementInitializerFactory;
-import com.mickey305.foundation.v4.lang.math.factory.OperationBigFractionFactory;
+import com.mickey305.foundation.v4.lang.math.factory.OperationFactory;
 import org.apache.commons.math3.fraction.BigFraction;
 
-public class MatrixContextBigFraction extends MatrixContext<BigFraction> {
+public class MatrixContextBigFraction extends AbstractMatrixContext<BigFraction> {
   public MatrixContextBigFraction() {
     super(
-        OperationBigFractionFactory.getInstance(),
-        ElementInitializerFactory.bigFractionIni());
+        OperationFactory.<BigFraction>getFactory(),
+        ElementInitializerFactory.<BigFraction>getFactory());
   }
 }

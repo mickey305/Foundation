@@ -18,12 +18,12 @@
 package com.mickey305.foundation.v4.lang.math.context;
 
 import com.mickey305.foundation.v4.lang.math.factory.ElementInitializerFactory;
-import com.mickey305.foundation.v4.lang.math.factory.OperationIntFactory;
+import com.mickey305.foundation.v4.lang.math.factory.OperationFactory;
 
-public class MatrixContextInt extends MatrixContext<Integer> {
+public class MatrixContextInt extends AbstractMatrixContext<Integer> {
   public MatrixContextInt() {
     super(
-        OperationIntFactory.getInstance(),
-        ElementInitializerFactory.intIni());
+        OperationFactory.<Integer>getFactory(),
+        ElementInitializerFactory.<Integer>getFactory());
   }
 }

@@ -18,12 +18,12 @@
 package com.mickey305.foundation.v4.lang.math.context;
 
 import com.mickey305.foundation.v4.lang.math.factory.ElementInitializerFactory;
-import com.mickey305.foundation.v4.lang.math.factory.OperationDoubleFactory;
+import com.mickey305.foundation.v4.lang.math.factory.OperationFactory;
 
-public class MatrixContextDouble extends MatrixContext<Double> {
+public class MatrixContextDouble extends AbstractMatrixContext<Double> {
   public MatrixContextDouble() {
     super(
-        OperationDoubleFactory.getInstance(),
-        ElementInitializerFactory.doubleIni());
+        OperationFactory.<Double>getFactory(),
+        ElementInitializerFactory.<Double>getFactory());
   }
 }

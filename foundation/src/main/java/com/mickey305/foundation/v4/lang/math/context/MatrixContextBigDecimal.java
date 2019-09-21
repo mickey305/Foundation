@@ -18,14 +18,14 @@
 package com.mickey305.foundation.v4.lang.math.context;
 
 import com.mickey305.foundation.v4.lang.math.factory.ElementInitializerFactory;
-import com.mickey305.foundation.v4.lang.math.factory.OperationBigDecimalFactory;
+import com.mickey305.foundation.v4.lang.math.factory.OperationFactory;
 
 import java.math.BigDecimal;
 
-public class MatrixContextBigDecimal extends MatrixContext<BigDecimal> {
+public class MatrixContextBigDecimal extends AbstractMatrixContext<BigDecimal> {
   public MatrixContextBigDecimal() {
     super(
-        OperationBigDecimalFactory.getInstance(),
-        ElementInitializerFactory.bigDcmlIni());
+        OperationFactory.<BigDecimal>getFactory(),
+        ElementInitializerFactory.<BigDecimal>getFactory());
   }
 }

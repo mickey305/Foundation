@@ -19,11 +19,11 @@ package com.mickey305.foundation.v4.lang.math;
 
 import com.mickey305.foundation.v3.util.Log;
 import com.mickey305.foundation.v3.util.collections.Permutation;
-import com.mickey305.foundation.v4.lang.math.factory.AbstractMatrixBuilder;
-import com.mickey305.foundation.v4.lang.math.factory.BuilderSquareMatrix;
+import com.mickey305.foundation.v4.lang.math.builder.AbstractMatrixBuilder;
+import com.mickey305.foundation.v4.lang.math.builder.BuilderSquareMatrix;
 import com.mickey305.foundation.v4.lang.math.factory.ElementInitializerFactory;
-import com.mickey305.foundation.v4.lang.math.factory.IOperationFactory;
-import com.mickey305.foundation.v4.lang.math.factory.OperationIntFactory;
+import com.mickey305.foundation.v4.lang.math.factory.OperationFactory;
+import com.mickey305.foundation.v4.lang.math.operator.IOperationFactory;
 import com.mickey305.foundation.v4.lang.math.operator.AbstractNumberOperation;
 import com.mickey305.foundation.v4.lang.math.operator.IElementInitializer;
 
@@ -33,8 +33,8 @@ import java.util.Map;
 
 import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;
 
-public class SquareMatrix<E extends Number> extends Matrix<E> {
-  private static final long serialVersionUID = -7067498579176397105L;
+public class SquareMatrix<E extends Number> extends Matrix<E> implements ICalculationPhaseInverseMatrix<E> {
+  private static final long serialVersionUID = 6483478985678717273L;
   
   public SquareMatrix(int size, IElementInitializer<E> initializer,
                       Map<Operator, AbstractNumberOperation<E, E>> op,
@@ -141,52 +141,10 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
     
     final Matrix<E> extMatrix = this.horizontalBind(this.createIdentityMatrix());
     
-    // CELL(i,i) <==> NE ZERO transformation
-    for (int i = 0; i < this.getRowSize(); i++) {
-      if (this.getRop().get(RelationalOperator.EQ).apply(extMatrix.getCell(i, i), this.getInitializer().zero())) {
-        final E[] vertical = extMatrix.getColumn(i);
-        for (int j = 0; j < vertical.length; j++) {
-          if (j != i && this.getRop().get(RelationalOperator.NE).apply(vertical[j], this.getInitializer().zero())) {
-            extMatrix.multiAndAddRow(this.getInitializer().one(), j, i);
-            break;
-          }
-        }
-      }
-    }
-    
-    // CELL(i,j), i != j <==> EQ ZERO transformation
-    for (int j = 0; j < this.getColumnSize(); j++) {
-      for (int i = 0; i < this.getRowSize(); i++) {
-        final E targetCell = extMatrix.getCell(i, j);
-        final E[] vertical = extMatrix.getColumn(j);
-        if (j != i && this.getRop().get(RelationalOperator.NE).apply(vertical[j], this.getInitializer().zero())) {
-          int kk = 0;
-          int max = Integer.MIN_VALUE;
-          for (int k = 0; k < vertical.length; k++) {
-            int cntZero = 0;
-            final E[] horizontal = extMatrix.getRow(k);
-            for (int l = 0; l < this.getColumnSize(); l++)
-              if (this.getRop().get(RelationalOperator.EQ).apply(horizontal[l], this.getInitializer().zero()))
-                cntZero++;
-            
-            if (i != k && this.getRop().get(RelationalOperator.NE).apply(vertical[k], this.getInitializer().zero())) {
-              if (max < cntZero) {
-                max = cntZero;
-                kk = k;
-              }
-            }
-          }
-          E scalar = this.getOp().get(Operator.DIV).apply(targetCell, vertical[kk]);
-          scalar = this.getOp().get(Operator.MULTI).apply(scalar, this.getInitializer().minusOne());
-          extMatrix.multiAndAddRow(scalar, kk, i);
-        }
-      }
-    }
-    
-    // CELL(i,i) <==> EQ ONE transformation
-    for (int i = 0; i < this.getRowSize(); i++)
-      if (this.getRop().get(RelationalOperator.NE).apply(extMatrix.getCell(i, i), this.getInitializer().one()))
-        extMatrix.multiRow(this.getOp().get(Operator.DIV).apply(this.getInitializer().one(), extMatrix.getCell(i, i)), i);
+    // calc impl
+    this.calcInverseMatrixPhase1(extMatrix);
+    this.calcInverseMatrixPhase2(extMatrix);
+    this.calcInverseMatrixPhase3(extMatrix);
     
     final SquareMatrix<E> result = new SquareMatrix<>(this);
     for (int i = 0; i < result.getRowSize(); i++)
@@ -201,7 +159,7 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
    * @return 判定結果
    */
   public boolean isRegular() {
-    return this.getRop().get(RelationalOperator.NE).apply(this.determinant(), this.getInitializer().zero());
+    return this.getRop(RelationalOperator.NE).apply(this.determinant(), this.getInitializer().zero());
   }
   
   /**
@@ -215,14 +173,15 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
     for (int i = 0; i < rowIndexes.length; i++)
       rowIndexes[i] = i;
     final Permutation<Integer> rowPermutation = new Permutation<>(rowIndexes);
-    
+  
+    IOperationFactory<Integer> factory = OperationFactory.getFactory();
+    IElementInitializer<Integer> initializer = ElementInitializerFactory.getFactory();
     do {
       final SymmetricPermutationGroup<Integer> permutationGroup = new SymmetricPermutationGroup<>(
           new Integer[][]{rowIndexes, rowPermutation.getElements()},
-          ElementInitializerFactory.intIni(),
+          initializer,
           Collections.<Operator, AbstractNumberOperation<Integer, Integer>>emptyMap(),
           Collections.<RelationalOperator, AbstractNumberOperation<Integer, Boolean>>emptyMap());
-      IOperationFactory<Integer> factory = OperationIntFactory.getInstance();
       permutationGroup.getOp().put(Operator.ADD, factory.add());
       permutationGroup.getOp().put(Operator.SUB, factory.sub());
       permutationGroup.getOp().put(Operator.MULTI, factory.multi());
@@ -240,11 +199,11 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
       final int sgn = permutationGroup.sgn();
       for (int j = 0; j < permutationGroup.getColumnSize(); j++) {
         final E data = this.getCell(j, permutationGroup.getPairOf(j));
-        multiResult = this.getOp().get(Operator.MULTI).apply(data, multiResult);
+        multiResult = this.getOp(Operator.MULTI).apply(data, multiResult);
       }
-      multiResult = this.getOp().get(Operator.MULTI).apply(multiResult, this.getInitializer().convertFrom(sgn));
+      multiResult = this.getOp(Operator.MULTI).apply(multiResult, this.getInitializer().convertFrom(sgn));
       
-      result = this.getOp().get(Operator.ADD).apply(multiResult, result);
+      result = this.getOp(Operator.ADD).apply(multiResult, result);
     } while (rowPermutation.next());
     
     return result;
@@ -258,8 +217,84 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
   public E trace() {
     E result = this.getInitializer().zero();
     for (int i = 0; i < this.getSize(); i++)
-      result = this.getOp().get(Operator.ADD).apply(this.getCell(i, i), result);
+      result = this.getOp(Operator.ADD).apply(this.getCell(i, i), result);
     
     return result;
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void calcInverseMatrixPhase1(Matrix<E> M) {
+  
+    for (int i = 0; i < this.getRowSize(); i++) {
+      if (this.getRop(RelationalOperator.EQ).apply(M.getCell(i, i), this.getInitializer().zero())) {
+        final E[] vertical = M.getColumn(i);
+        for (int j = 0; j < vertical.length; j++) {
+          if (j != i && this.getRop(RelationalOperator.NE).apply(vertical[j], this.getInitializer().zero())) {
+            M.multiAndAddRow(this.getInitializer().one(), j, i);
+            break;
+          }
+        }
+      }
+    }
+    
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void calcInverseMatrixPhase2(Matrix<E> M) {
+  
+    for (int j = 0; j < this.getColumnSize(); j++) {
+      for (int i = 0; i < this.getRowSize(); i++) {
+        final E targetCell = M.getCell(i, j);
+        final E[] vertical = M.getColumn(j);
+        if (j != i && this.getRop(RelationalOperator.NE).apply(vertical[j], this.getInitializer().zero())) {
+          int kk = 0;
+          int max = Integer.MIN_VALUE;
+          for (int k = 0; k < vertical.length; k++) {
+            int cntZero = 0;
+            final E[] horizontal = M.getRow(k);
+            for (int l = 0; l < this.getColumnSize(); l++) {
+              if (this.getRop(RelationalOperator.EQ).apply(horizontal[l], this.getInitializer().zero())) {
+                cntZero++;
+              }
+            }
+          
+            if (i != k && this.getRop(RelationalOperator.NE).apply(vertical[k], this.getInitializer().zero())) {
+              if (max < cntZero) {
+                max = cntZero;
+                kk = k;
+              }
+            }
+          }
+          E scalar = this.getOp(Operator.DIV).apply(targetCell, vertical[kk]);
+          scalar = this.getOp(Operator.MULTI).apply(scalar, this.getInitializer().minusOne());
+          M.multiAndAddRow(scalar, kk, i);
+        }
+      }
+    }
+    
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void calcInverseMatrixPhase3(Matrix<E> M) {
+  
+    for (int i = 0; i < this.getRowSize(); i++) {
+      if (this.getRop(RelationalOperator.NE).apply(
+          M.getCell(i, i),
+          this.getInitializer().one())) {
+        
+        M.multiRow(this.getOp(Operator.DIV).apply(
+            this.getInitializer().one(),
+            M.getCell(i, i)), i);
+      }
+    }
   }
 }

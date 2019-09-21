@@ -18,15 +18,44 @@
 package com.mickey305.foundation.v4.lang.math.operator;
 
 public interface IElementInitializer<E extends Number> {
+  /**
+   * 総称型{@link E}の初期値を生成します。
+   * @return 初期値（0）
+   */
   E zero();
   
+  /**
+   * 総称型{@link E}の初期値を生成します。
+   * @return 初期値（1）
+   */
   E one();
   
+  /**
+   * 総称型{@link E}の初期値を生成します。
+   * @return 初期値（-1）
+   */
   E minusOne();
   
+  /**
+   * 総称型{@link E}を要素とする配列を生成します。
+   * @param size 配列サイズ
+   * @return 新規配列
+   */
   E[] array(int size);
   
+  /**
+   * 総称型{@link E}を要素とするテーブル配列を生成します。
+   * @param r 配列サイズ（行サイズ）
+   * @param c 配列サイズ（列サイズ）
+   * @return 新規配列
+   */
   E[][] table(int r, int c);
   
+  /**
+   * 変換元要素から総称型{@link E}の要素を生成します。生成ができない場合は、{@link RuntimeException}をスローします。
+   * @param n 変換元要素
+   * @return 変換後要素。総称型{@link E}の要素です。
+   * @throws RuntimeException 例外
+   */
   E convertFrom(Number n) throws RuntimeException;
 }

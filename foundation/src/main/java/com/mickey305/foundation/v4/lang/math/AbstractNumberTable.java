@@ -28,13 +28,12 @@ import javax.annotation.Nonnull;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 import static com.mickey305.foundation.v4.lang.math.MathConst.ABS_NUM_TBL_CAPTURE_INI;
 import static com.mickey305.foundation.v4.lang.math.MathConst.ABS_NUM_TBL_CAPTURE_TABLE_IO;
 
 public abstract class AbstractNumberTable<E extends Number> implements Serializable {
-  private static final long serialVersionUID = 8308276733720098446L;
+  private static final long serialVersionUID = 6078171550155201724L;
   private final int rowSize;
   private final int columnSize;
   private final E[][] table;
@@ -48,7 +47,7 @@ public abstract class AbstractNumberTable<E extends Number> implements Serializa
   public enum Operator implements IOperator {
     ADD, SUB, MULTI, DIV, MAX, MIN
   }
-  
+
   public enum RelationalOperator implements IOperator {
     EQ, NE, LT, LE, GT, GE
   }
@@ -287,7 +286,8 @@ public abstract class AbstractNumberTable<E extends Number> implements Serializa
     return this.countCellIf(new Function<E, Boolean>() {
       @Override
       public Boolean apply(E number) {
-        return Objects.equals(number, cell);
+        if (number == null) return false;
+        return rop.get(RelationalOperator.EQ).apply(number, cell);
       }
     });
   }
@@ -486,9 +486,17 @@ public abstract class AbstractNumberTable<E extends Number> implements Serializa
   public Map<Operator, AbstractNumberOperation<E, E>> getOp() {
     return op;
   }
-  
+
   public Map<RelationalOperator, AbstractNumberOperation<E, Boolean>> getRop() {
     return rop;
+  }
+  
+  public AbstractNumberOperation<E, E> getOp(Operator O) {
+    return op.get(O);
+  }
+  
+  public AbstractNumberOperation<E, Boolean> getRop(RelationalOperator RO) {
+    return rop.get(RO);
   }
   
   protected IElementInitializer<E> getInitializer() {
