@@ -62,20 +62,16 @@ public class ElementInitializerFactory {
   public static <E extends Number> AbstractElementInitializer<E> getSharedFactory(E... dummyElementType) {
     final Class<E> type = (Class<E>) dummyElementType.getClass().getComponentType();
   
-    if (type.equals(BigDecimal.class))
-      return (AbstractElementInitializer<E>) ElementInitializerBigDecimalFactory.getInstance();
-    if (type.equals(BigFraction.class))
-      return (AbstractElementInitializer<E>) ElementInitializerBigFractionFactory.getInstance();
-    if (type.equals(BigInteger.class))
-      return (AbstractElementInitializer<E>) ElementInitializerBigIntFactory.getInstance();
-    if (type.equals(Byte.class)) return (AbstractElementInitializer<E>) ElementInitializerByteFactory.getInstance();
-    if (type.equals(Double.class)) return (AbstractElementInitializer<E>) ElementInitializerDoubleFactory.getInstance();
-    if (type.equals(Float.class)) return (AbstractElementInitializer<E>) ElementInitializerFloatFactory.getInstance();
-    if (type.equals(Fraction.class))
-      return (AbstractElementInitializer<E>) ElementInitializerFractionFactory.getInstance();
-    if (type.equals(Integer.class)) return (AbstractElementInitializer<E>) ElementInitializerIntFactory.getInstance();
-    if (type.equals(Long.class)) return (AbstractElementInitializer<E>) ElementInitializerLongFactory.getInstance();
-    if (type.equals(Short.class)) return (AbstractElementInitializer<E>) ElementInitializerShortFactory.getInstance();
+    if (type.equals(BigDecimal.class))  return (AbstractElementInitializer<E>) ElementInitializerBigDecimalFactory.getInstance();
+    if (type.equals(BigFraction.class)) return (AbstractElementInitializer<E>) ElementInitializerBigFractionFactory.getInstance();
+    if (type.equals(BigInteger.class))  return (AbstractElementInitializer<E>) ElementInitializerBigIntFactory.getInstance();
+    if (type.equals(Byte.class))        return (AbstractElementInitializer<E>) ElementInitializerByteFactory.getInstance();
+    if (type.equals(Double.class))      return (AbstractElementInitializer<E>) ElementInitializerDoubleFactory.getInstance();
+    if (type.equals(Float.class))       return (AbstractElementInitializer<E>) ElementInitializerFloatFactory.getInstance();
+    if (type.equals(Fraction.class))    return (AbstractElementInitializer<E>) ElementInitializerFractionFactory.getInstance();
+    if (type.equals(Integer.class))     return (AbstractElementInitializer<E>) ElementInitializerIntFactory.getInstance();
+    if (type.equals(Long.class))        return (AbstractElementInitializer<E>) ElementInitializerLongFactory.getInstance();
+    if (type.equals(Short.class))       return (AbstractElementInitializer<E>) ElementInitializerShortFactory.getInstance();
   
     // exception: element-type analyze unreached
     throw new UnsupportedOperationException();
