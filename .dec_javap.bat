@@ -7,11 +7,9 @@
 
 @rem decompile target class list
 set VAR_1=com.mickey305.foundation.v3.gen.R
-set VAR_20=com.mickey305.foundation.v3.lang.ConsoleSnatcher
 set VAR_2=com.mickey305.foundation.v3.lang.math.MathFun
 set VAR_3=com.mickey305.foundation.v3.lang.ref.SecureObjectTaskManager
 set VAR_4=com.mickey305.foundation.v3.util.AbstractCryptoManager
-set VAR_21=com.mickey305.foundation.v3.util.ArrayUtil
 set VAR_5=com.mickey305.foundation.v3.util.Assert
 set VAR_6=com.mickey305.foundation.v3.util.ByteConverter
 set VAR_7=com.mickey305.foundation.v3.util.CollectionUtil
@@ -27,6 +25,9 @@ set VAR_16=com.mickey305.foundation.v3.util.concurrent.NaturalObjectHashId
 set VAR_17=com.mickey305.foundation.v4.lang.math.AbstractNumberTable
 set VAR_18=com.mickey305.foundation.v4.lang.math.MathConst
 set VAR_19=com.mickey305.foundation.v4.lang.math.SquareMatrix
+set VAR_20=com.mickey305.foundation.v3.lang.ConsoleSnatcher
+set VAR_21=com.mickey305.foundation.v3.util.ArrayUtil
+set VAR_22=com.mickey305.foundation.v4.lang.math.handler.AbstractMatrixHandler
 
 @REM UTF-8
 chcp 65001

@@ -19,22 +19,19 @@ package com.mickey305.foundation.v4.lang.math;
 
 import com.mickey305.foundation.v3.util.Log;
 import com.mickey305.foundation.v3.util.collections.Permutation;
-import com.mickey305.foundation.v4.lang.math.builder.AbstractMatrixBuilder;
-import com.mickey305.foundation.v4.lang.math.builder.BuilderSquareMatrix;
 import com.mickey305.foundation.v4.lang.math.factory.ElementInitializerFactory;
 import com.mickey305.foundation.v4.lang.math.factory.OperationFactory;
 import com.mickey305.foundation.v4.lang.math.operator.IOperationFactory;
 import com.mickey305.foundation.v4.lang.math.operator.AbstractNumberOperation;
 import com.mickey305.foundation.v4.lang.math.operator.IElementInitializer;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 
 import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;
 
-public class SquareMatrix<E extends Number> extends Matrix<E> implements ICalculationPhaseInverseMatrix<E> {
-  private static final long serialVersionUID = 6483478985678717273L;
+public class SquareMatrix<E extends Number> extends Matrix<E> {
+  private static final long serialVersionUID = -826829608095297048L;
   
   public SquareMatrix(int size, IElementInitializer<E> initializer,
                       Map<Operator, AbstractNumberOperation<E, E>> op,
@@ -91,42 +88,6 @@ public class SquareMatrix<E extends Number> extends Matrix<E> implements ICalcul
       }
     }
     return matrix;
-  }
-  
-  @Deprecated
-  public <T extends Number> SquareMatrix<E> createInverseMatrix(final IOperationFactory<T> opFactory,
-                                                                final IElementInitializer<T> ini) {
-    SquareMatrix<T> tmpMatrix = new BuilderSquareMatrix<T>()
-        .initializer(ini).operator(opFactory).cookbook(new AbstractMatrixBuilder.CookBook<T>() {
-          /**
-           * {@inheritDoc}
-           */
-          @Override
-          public T[][] tableDef() {
-            T[][] table = ini.table(getRowSize(), getColumnSize());
-            for (int i = 0; i < getRowSize(); i++)
-              for (int j = 0; j < getColumnSize(); j++)
-                table[i][j] = ini.convertFrom(getCell(i, j));
-            return table;
-          }
-        }).build();
-
-    if (IS_DEBUG_MODE) Log.d("bef tmpMatrix: " + Arrays.deepToString(tmpMatrix.getTable()));
-
-    // invoke method
-    tmpMatrix = tmpMatrix.createInverseMatrix();
-
-    if (IS_DEBUG_MODE) Log.d("aft tmpMatrix: " + Arrays.deepToString(tmpMatrix.getTable()));
-
-    final SquareMatrix<E> resultMatrix = new SquareMatrix<>(
-        tmpMatrix.getSize(), this.getInitializer(), this.getOp(), this.getRop());
-    for (int i = 0; i < getRowSize(); i++)
-      for (int j = 0; j < getColumnSize(); j++)
-        resultMatrix.putCell(i, j, this.getInitializer().convertFrom(tmpMatrix.getCell(i, j)));
-
-    if (IS_DEBUG_MODE) Log.d("resultMatrix: " + Arrays.deepToString(resultMatrix.getTable()));
-
-    return resultMatrix;
   }
   
   /**
@@ -223,10 +184,11 @@ public class SquareMatrix<E extends Number> extends Matrix<E> implements ICalcul
   }
   
   /**
-   * {@inheritDoc}
+   * matrix(row=i,column=i) <==> NE ZERO transformation
+   * 掃き出し法の第１段階実装メソッドです。同じ行/列番号上の要素がゼロ以外になるように行基本変形を行います。
+   * @param M 拡大係数行列
    */
-  @Override
-  public void calcInverseMatrixPhase1(Matrix<E> M) {
+  protected void calcInverseMatrixPhase1(Matrix<E> M) {
   
     for (int i = 0; i < this.getRowSize(); i++) {
       if (this.getRop(RelationalOperator.EQ).apply(M.getCell(i, i), this.getInitializer().zero())) {
@@ -243,10 +205,11 @@ public class SquareMatrix<E extends Number> extends Matrix<E> implements ICalcul
   }
   
   /**
-   * {@inheritDoc}
+   * matrix(row=i,column=j), i != j <==> EQ ZERO transformation
+   * 掃き出し法の第２段階実装メソッドです。異なる行/列番号上の要素がゼロになるように行基本変形を行います。
+   * @param M 拡大係数行列
    */
-  @Override
-  public void calcInverseMatrixPhase2(Matrix<E> M) {
+  protected void calcInverseMatrixPhase2(Matrix<E> M) {
   
     for (int j = 0; j < this.getColumnSize(); j++) {
       for (int i = 0; i < this.getRowSize(); i++) {
@@ -281,10 +244,12 @@ public class SquareMatrix<E extends Number> extends Matrix<E> implements ICalcul
   }
   
   /**
-   * {@inheritDoc}
+   * matrix(row=i,column=i) <==> EQ ONE transformation
+   * 掃き出し法の第３段階実装メソッドです。同じ行/列番号上の要素が１になるように行基本変形を行います。
+   * このメソッドの実装が完了した段階で、horizontalExtensionMatrixの左部分が単位行列になります。
+   * @param M 拡大係数行列
    */
-  @Override
-  public void calcInverseMatrixPhase3(Matrix<E> M) {
+  protected void calcInverseMatrixPhase3(Matrix<E> M) {
   
     for (int i = 0; i < this.getRowSize(); i++) {
       if (this.getRop(RelationalOperator.NE).apply(

@@ -1,4 +1,4 @@
-[HEADER MODULE:foundation, BUILD-DATETIME:2019-08-06 16:53:43.902]
+[HEADER MODULE:foundation, BUILD-DATETIME:2019-09-22 11:12:17.664]
 com.mickey305.foundation.v3.gen.R
 com.mickey305.foundation.v3.lang.ConsoleSnatcher
 com.mickey305.foundation.v3.lang.math.MathFun
@@ -20,3 +20,4 @@ com.mickey305.foundation.v3.util.concurrent.NaturalObjectHashId
 com.mickey305.foundation.v4.lang.math.AbstractNumberTable
 com.mickey305.foundation.v4.lang.math.MathConst
 com.mickey305.foundation.v4.lang.math.SquareMatrix
+com.mickey305.foundation.v4.lang.math.handler.AbstractMatrixHandler
