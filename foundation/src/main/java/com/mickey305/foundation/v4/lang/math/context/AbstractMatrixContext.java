@@ -20,22 +20,56 @@ package com.mickey305.foundation.v4.lang.math.context;
 import com.mickey305.foundation.v4.lang.math.operator.IOperationFactory;
 import com.mickey305.foundation.v4.lang.math.operator.IElementInitializer;
 
-public abstract class AbstractMatrixContext<T extends Number> {
+public abstract class AbstractMatrixContext<T extends Number> implements IMatrixContext<T> {
+  private final MatrixContextType matrixContextType;
   private final IOperationFactory<T> operationFactory;
   private final IElementInitializer<T> elementInitializer;
   
-  public AbstractMatrixContext(
-      IOperationFactory<T> operationFactory,
-      IElementInitializer<T> elementInitializer) {
-    this.operationFactory = operationFactory;
-    this.elementInitializer = elementInitializer;
+  public AbstractMatrixContext(MatrixContextType type) {
+    this.matrixContextType = type;
+    this.operationFactory = this.createOperationFactory(type);
+    this.elementInitializer = this.createElementInitializer(type);
   }
   
+  protected AbstractMatrixContext() {
+    this(MatrixContextType.Default);
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
   public IOperationFactory<T> getOperationFactory() {
     return operationFactory;
   }
   
+  /**
+   * {@inheritDoc}
+   */
+  @Override
   public IElementInitializer<T> getElementInitializer() {
     return elementInitializer;
   }
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public MatrixContextType getMatrixContextType() {
+    return matrixContextType;
+  }
+  
+  /**
+   * 引数で指定された{@link MatrixContextType}のオペレーションファクトリーオブジェクトを生成／取得し、返却します。
+   * @param type コンテキストの種類
+   * @return オペレーションファクトリーオブジェクト
+   */
+  protected abstract IOperationFactory<T> createOperationFactory(MatrixContextType type);
+  
+  /**
+   * 引数で指定された{@link MatrixContextType}の要素初期化ファクトリーオブジェクトを生成／取得し、返却します。
+   * @param type コンテキストの種類
+   * @return 要素初期化ファクトリーオブジェクト
+   */
+  protected abstract IElementInitializer<T> createElementInitializer(MatrixContextType type);
 }

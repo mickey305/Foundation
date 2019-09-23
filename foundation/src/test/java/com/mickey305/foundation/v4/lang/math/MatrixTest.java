@@ -18,11 +18,9 @@
 package com.mickey305.foundation.v4.lang.math;
 
 import com.mickey305.foundation.v3.util.Log;
-import com.mickey305.foundation.v4.lang.math.builder.AbstractMatrixBuilder;
 import com.mickey305.foundation.v4.lang.math.builder.BuilderSquareMatrix;
+import com.mickey305.foundation.v4.lang.math.context.MatrixContextFactory;
 import com.mickey305.foundation.v4.lang.math.factory.ElementInitializerFactory;
-import com.mickey305.foundation.v4.lang.math.context.MatrixContextBigFraction;
-import com.mickey305.foundation.v4.lang.math.context.MatrixContextDouble;
 import com.mickey305.foundation.v4.lang.math.factory.OperationBigDecimalFactory;
 import org.apache.commons.math3.fraction.BigFraction;
 import org.junit.After;
@@ -145,53 +143,42 @@ public class MatrixTest {
 //        IElementInitializer<Integer> initializer = ElementInitializerFactory.intIni();
 //        Log.i(Arrays.deepToString(initializer.table(3, 4)));
     SquareMatrix<Double> matrix21 = new BuilderSquareMatrix<Double>()
-        .context(new MatrixContextDouble())
-        .cookbook(new AbstractMatrixBuilder.CookBook<Double>() {
-          @Override
-          public Double[][] tableDef() {
-            return new Double[][]{
-                {5.1d, 2.5d, 1.2d},
-                {1.1d, 1.5d, 1.2d},
-                {2.3d, 2.5d, 6.2d}
-            };
-          }
+        .context(MatrixContextFactory.getSharedFactory())
+        .cookbook(() -> new Double[][]{
+            {5.1d, 2.5d, 1.2d},
+            {1.1d, 1.5d, 1.2d},
+            {2.3d, 2.5d, 6.2d}
         })
         .build();
     SquareMatrix<Double> matrix22, matrix23;
     SquareMatrix<BigDecimal> matrix01 = new BuilderSquareMatrix<BigDecimal>()
         .operator(OperationBigDecimalFactory.getInstance().scale(3))
-        .initializer(ElementInitializerFactory.<BigDecimal>getFactory())
-        .cookbook(new AbstractMatrixBuilder.CookBook<BigDecimal>() {
-          @Override
-          public BigDecimal[][] tableDef() {
-            return new BigDecimal[][]{
-                {new BigDecimal("5.1"), new BigDecimal("2.5"), new BigDecimal("1.2")},
-                {new BigDecimal("1.1"), new BigDecimal("1.5"), new BigDecimal("1.2")},
-                {new BigDecimal("2.3"), new BigDecimal("2.5"), new BigDecimal("6.2")}
-            };
+        .initializer(ElementInitializerFactory.getFactory())
+        .cookbook(() -> {
+          return new BigDecimal[][]{
+              {new BigDecimal("5.1"), new BigDecimal("2.5"), new BigDecimal("1.2")},
+              {new BigDecimal("1.1"), new BigDecimal("1.5"), new BigDecimal("1.2")},
+              {new BigDecimal("2.3"), new BigDecimal("2.5"), new BigDecimal("6.2")}
+          };
 //                    IElementInitializer<BigDecimal> ini = ElementInitializerFactory.bigDcmlIni();
 //                    BigDecimal[][] table = ini.table(4, 4);
 //                    ArrayUtil.fill(table, ini.one());
 //                    return table;
-          }
         })
         .build();
     Matrix<BigDecimal> matrix02, matrix03;
     SquareMatrix<BigFraction> matrix11 = new BuilderSquareMatrix<BigFraction>()
-        .context(new MatrixContextBigFraction())
-        .cookbook(new AbstractMatrixBuilder.CookBook<BigFraction>() {
-          @Override
-          public BigFraction[][] tableDef() {
-            return new BigFraction[][]{
-                {new BigFraction(51, 10), new BigFraction(25, 10), new BigFraction(12, 10)},
-                {new BigFraction(11, 10), new BigFraction(15, 10), new BigFraction(12, 10)},
-                {new BigFraction(23, 10), new BigFraction(25, 10), new BigFraction(62, 10)}
-            };
+        .context(MatrixContextFactory.getFactory())
+        .cookbook(() -> {
+          return new BigFraction[][]{
+              {new BigFraction(51, 10), new BigFraction(25, 10), new BigFraction(12, 10)},
+              {new BigFraction(11, 10), new BigFraction(15, 10), new BigFraction(12, 10)},
+              {new BigFraction(23, 10), new BigFraction(25, 10), new BigFraction(62, 10)}
+          };
 //                    IElementInitializer<BigDecimal> ini = ElementInitializerFactory.bigDcmlIni();
 //                    BigDecimal[][] table = ini.table(4, 4);
 //                    ArrayUtil.fill(table, ini.one());
 //                    return table;
-          }
         })
         .build();
     Matrix<BigFraction> matrix12, matrix13;

@@ -17,10 +17,12 @@
 
 package com.mickey305.foundation.v4.lang.math.factory;
 
+import com.mickey305.foundation.v3.util.Assert;
 import com.mickey305.foundation.v4.lang.math.operator.AbstractOperationFactory;
 import org.apache.commons.math3.fraction.BigFraction;
 import org.apache.commons.math3.fraction.Fraction;
 
+import javax.annotation.Nonnull;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -34,8 +36,11 @@ public class OperationFactory {
    * @return ファクトリーオブジェクト
    */
   @SuppressWarnings("unchecked")
+  @Nonnull
   public static <E extends Number> AbstractOperationFactory<E> getFactory(E... dummyElementType) {
     final Class<E> type = (Class<E>) dummyElementType.getClass().getComponentType();
+  
+    Assert.requireNonNull(type);
     
     if (type.equals(BigDecimal.class))  return (AbstractOperationFactory<E>) new OperationBigDecimalFactory();
     if (type.equals(BigFraction.class)) return (AbstractOperationFactory<E>) new OperationBigFractionFactory();
@@ -59,8 +64,11 @@ public class OperationFactory {
    * @return ファクトリーオブジェクト
    */
   @SuppressWarnings("unchecked")
+  @Nonnull
   public static <E extends Number> AbstractOperationFactory<E> getSharedFactory(E... dummyElementType) {
     final Class<E> type = (Class<E>) dummyElementType.getClass().getComponentType();
+  
+    Assert.requireNonNull(type);
     
     if (type.equals(BigDecimal.class))  return (AbstractOperationFactory<E>) OperationBigDecimalFactory.getInstance();
     if (type.equals(BigFraction.class)) return (AbstractOperationFactory<E>) OperationBigFractionFactory.getInstance();

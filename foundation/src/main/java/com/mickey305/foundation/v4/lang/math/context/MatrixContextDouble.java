@@ -19,11 +19,38 @@ package com.mickey305.foundation.v4.lang.math.context;
 
 import com.mickey305.foundation.v4.lang.math.factory.ElementInitializerFactory;
 import com.mickey305.foundation.v4.lang.math.factory.OperationFactory;
+import com.mickey305.foundation.v4.lang.math.operator.IElementInitializer;
+import com.mickey305.foundation.v4.lang.math.operator.IOperationFactory;
 
 public class MatrixContextDouble extends AbstractMatrixContext<Double> {
+  
+  public MatrixContextDouble(MatrixContextType type) {
+    super(type);
+  }
+  
   public MatrixContextDouble() {
-    super(
-        OperationFactory.<Double>getFactory(),
-        ElementInitializerFactory.<Double>getFactory());
+    super();
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  protected IOperationFactory<Double> createOperationFactory(MatrixContextType type) {
+    if (type == MatrixContextType.Default) return OperationFactory.getFactory();
+    if (type == MatrixContextType.Shared)  return OperationFactory.getSharedFactory();
+  
+    throw new UnsupportedOperationException();
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  protected IElementInitializer<Double> createElementInitializer(MatrixContextType type) {
+    if (type == MatrixContextType.Default) return ElementInitializerFactory.getFactory();
+    if (type == MatrixContextType.Shared)  return ElementInitializerFactory.getSharedFactory();
+  
+    throw new UnsupportedOperationException();
   }
 }

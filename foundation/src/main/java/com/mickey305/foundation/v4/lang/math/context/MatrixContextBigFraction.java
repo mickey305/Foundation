@@ -19,12 +19,39 @@ package com.mickey305.foundation.v4.lang.math.context;
 
 import com.mickey305.foundation.v4.lang.math.factory.ElementInitializerFactory;
 import com.mickey305.foundation.v4.lang.math.factory.OperationFactory;
+import com.mickey305.foundation.v4.lang.math.operator.IElementInitializer;
+import com.mickey305.foundation.v4.lang.math.operator.IOperationFactory;
 import org.apache.commons.math3.fraction.BigFraction;
 
 public class MatrixContextBigFraction extends AbstractMatrixContext<BigFraction> {
+  
+  public MatrixContextBigFraction(MatrixContextType type) {
+    super(type);
+  }
+  
   public MatrixContextBigFraction() {
-    super(
-        OperationFactory.<BigFraction>getFactory(),
-        ElementInitializerFactory.<BigFraction>getFactory());
+    super();
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  protected IOperationFactory<BigFraction> createOperationFactory(MatrixContextType type) {
+    if (type == MatrixContextType.Default) return OperationFactory.getFactory();
+    if (type == MatrixContextType.Shared)  return OperationFactory.getSharedFactory();
+  
+    throw new UnsupportedOperationException();
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  protected IElementInitializer<BigFraction> createElementInitializer(MatrixContextType type) {
+    if (type == MatrixContextType.Default) return ElementInitializerFactory.getFactory();
+    if (type == MatrixContextType.Shared)  return ElementInitializerFactory.getSharedFactory();
+  
+    throw new UnsupportedOperationException();
   }
 }

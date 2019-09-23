@@ -20,7 +20,7 @@ package com.mickey305.foundation.v4.lang.math.handler;
 import com.mickey305.foundation.v3.util.Log;
 import com.mickey305.foundation.v4.lang.math.SquareMatrix;
 import com.mickey305.foundation.v4.lang.math.builder.BuilderSquareMatrix;
-import com.mickey305.foundation.v4.lang.math.context.MatrixContextBigFraction;
+import com.mickey305.foundation.v4.lang.math.context.MatrixContextFactory;
 import com.mickey305.foundation.v4.lang.math.factory.ElementInitializerFactory;
 import com.mickey305.foundation.v4.lang.math.factory.OperationBigDecimalFactory;
 import com.mickey305.foundation.v4.lang.math.factory.OperationFactory;
@@ -52,7 +52,7 @@ public class HandlerSquareMatrixTest {
     SquareMatrix<BigFraction> matrixResult1;
     SquareMatrix<BigFraction> matrixSeed;
     SquareMatrix<BigFraction> matrixSeed1 = new BuilderSquareMatrix<BigFraction>()
-        .context(new MatrixContextBigFraction())
+        .context(MatrixContextFactory.getSharedFactory())
         .cookbook(() -> new BigFraction[][]{
             {new BigFraction(51, 10), new BigFraction(25, 10), new BigFraction(12, 10)},
             {new BigFraction(11, 10), new BigFraction(15, 10), new BigFraction(12, 10)},

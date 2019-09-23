@@ -17,10 +17,12 @@
 
 package com.mickey305.foundation.v4.lang.math.factory;
 
+import com.mickey305.foundation.v3.util.Assert;
 import com.mickey305.foundation.v4.lang.math.operator.AbstractElementInitializer;
 import org.apache.commons.math3.fraction.BigFraction;
 import org.apache.commons.math3.fraction.Fraction;
 
+import javax.annotation.Nonnull;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -34,9 +36,12 @@ public class ElementInitializerFactory {
    * @return ファクトリーオブジェクト
    */
   @SuppressWarnings("unchecked")
+  @Nonnull
   public static <E extends Number> AbstractElementInitializer<E> getFactory(E... dummyElementType) {
     final Class<E> type = (Class<E>) dummyElementType.getClass().getComponentType();
   
+    Assert.requireNonNull(type);
+    
     if (type.equals(BigDecimal.class))  return (AbstractElementInitializer<E>) new ElementInitializerBigDecimalFactory();
     if (type.equals(BigFraction.class)) return (AbstractElementInitializer<E>) new ElementInitializerBigFractionFactory();
     if (type.equals(BigInteger.class))  return (AbstractElementInitializer<E>) new ElementInitializerBigIntFactory();
@@ -59,9 +64,12 @@ public class ElementInitializerFactory {
    * @return ファクトリーオブジェクト
    */
   @SuppressWarnings("unchecked")
+  @Nonnull
   public static <E extends Number> AbstractElementInitializer<E> getSharedFactory(E... dummyElementType) {
     final Class<E> type = (Class<E>) dummyElementType.getClass().getComponentType();
   
+    Assert.requireNonNull(type);
+    
     if (type.equals(BigDecimal.class))  return (AbstractElementInitializer<E>) ElementInitializerBigDecimalFactory.getInstance();
     if (type.equals(BigFraction.class)) return (AbstractElementInitializer<E>) ElementInitializerBigFractionFactory.getInstance();
     if (type.equals(BigInteger.class))  return (AbstractElementInitializer<E>) ElementInitializerBigIntFactory.getInstance();
