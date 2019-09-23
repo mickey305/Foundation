@@ -25,6 +25,10 @@ import org.apache.commons.lang3.tuple.Triple;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * 行列演算用クラスです
+ * @param <E> 行列の要素の総称型です
+ */
 public class Matrix<E extends Number> extends AbstractNumberTable<E> {
   private static final long serialVersionUID = -7165282387150597347L;
   

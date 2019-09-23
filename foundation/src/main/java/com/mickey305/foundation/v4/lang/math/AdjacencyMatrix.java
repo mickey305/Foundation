@@ -22,6 +22,10 @@ import com.mickey305.foundation.v4.lang.math.operator.IElementInitializer;
 
 import java.util.Map;
 
+/**
+ * 隣接行列演算用のクラスです
+ * @param <E> 行列の要素の総称型です
+ */
 public class AdjacencyMatrix<E extends Number> extends SquareMatrix<E> {
   private static final long serialVersionUID = 7454505265628784889L;
   

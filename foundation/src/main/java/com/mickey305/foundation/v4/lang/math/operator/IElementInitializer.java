@@ -17,6 +17,10 @@
 
 package com.mickey305.foundation.v4.lang.math.operator;
 
+/**
+ * {@link Number}オブジェクト初期化用インターフェース
+ * @param <E> 数値クラスの総称型です
+ */
 public interface IElementInitializer<E extends Number> {
   /**
    * 総称型{@link E}の初期値を生成します。

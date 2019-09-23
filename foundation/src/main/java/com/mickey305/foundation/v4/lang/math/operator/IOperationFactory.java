@@ -17,6 +17,11 @@
 
 package com.mickey305.foundation.v4.lang.math.operator;
 
+/**
+ * 数値演算インターフェース群。
+ * 数値オブジェクトの加算、減算、乗算、除算、最大、最小および、比較演算処理を提供します。
+ * @param <E> 数値クラスの総称型です
+ */
 public interface IOperationFactory<E extends Number> {
   ///////////////////////////////////
   // Operator

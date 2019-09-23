@@ -18,15 +18,24 @@
 package com.mickey305.foundation.v4.lang.math.handler;
 
 import com.mickey305.foundation.v3.compat.util.Function;
+import com.mickey305.foundation.v3.util.IObjectWrapper;
 import com.mickey305.foundation.v3.util.Log;
 import com.mickey305.foundation.v4.lang.math.Matrix;
 import com.mickey305.foundation.v4.lang.math.operator.IElementInitializer;
 import com.mickey305.foundation.v4.lang.math.operator.IOperationFactory;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;
 
+/**
+ * 行列操作用クラス
+ * @param <M1> 演算対象行列オブジェクトの総称型
+ * @param <T1> 演算対象行列オブジェクト{@link M1}の要素の総称型
+ * @param <M2> 演算結果行列オブジェクトの総称型
+ * @param <T2> 演算結果行列オブジェクト{@link M2}の要素の総称型
+ */
 public abstract class AbstractMatrixHandler<
     M1 extends Matrix<T1>, T1 extends Number, M2 extends Matrix<T2>, T2 extends Number> {
   private IOperationFactory<T2> OPF;
@@ -78,6 +87,23 @@ public abstract class AbstractMatrixHandler<
   }
   
   /**
+   * 計算処理実行メソッド
+   * @param function 計算処理実装ファンクションオブジェクト
+   * @param resultObject 計算結果の格納用オブジェクト
+   * @param <T> 計算結果の総称型
+   */
+  public <T> void execute(Function<M2, T> function, IObjectWrapper<T> resultObject) {
+    if (function == null) return;
+    if (tmpMatrix == null) return;
+    
+    T result = function.apply(tmpMatrix);
+    
+    if (IS_DEBUG_MODE) Log.d("aft:execute" + Objects.toString(result));
+    
+    resultObject.set(result);
+  }
+  
+  /**
    * 後処理実行メソッド
    * @return 計算結果行列オブジェクト
    */
@@ -95,8 +121,8 @@ public abstract class AbstractMatrixHandler<
   /**
    * 作業用行列オブジェクト生成処理
    * @param orgMatrix 計算対象の行列オブジェクト
-   * @param op 計算時に使用する初期化オブジェクト
-   * @param ini 計算時に使用するオペレーションファクトリーオブジェクト
+   * @param op 計算時に使用するオペレーションファクトリーオブジェクト
+   * @param ini 計算時に使用する初期化オブジェクト
    * @return 作業用行列オブジェクト
    */
   protected abstract M2 createTemporaryMatrix(M1 orgMatrix, IOperationFactory<T2> op, IElementInitializer<T2> ini);

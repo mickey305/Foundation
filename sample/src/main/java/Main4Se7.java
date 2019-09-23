@@ -24,7 +24,7 @@ import com.mickey305.foundation.v4.lang.math.SquareMatrix;
 import com.mickey305.foundation.v4.lang.math.builder.AbstractMatrixBuilder;
 import com.mickey305.foundation.v4.lang.math.builder.BuilderSquareMatrix;
 import com.mickey305.foundation.v4.lang.math.factory.ElementInitializerFactory;
-import com.mickey305.foundation.v4.lang.math.factory.OperationBigFractionFactory;
+import com.mickey305.foundation.v4.lang.math.factory.OperationFactory;
 import org.apache.commons.math3.fraction.BigFraction;
 
 import java.util.ArrayDeque;
@@ -53,8 +53,8 @@ public class Main4Se7 {
   
   
       SquareMatrix<BigFraction> matrix11 = new BuilderSquareMatrix<BigFraction>()
-          .operator(OperationBigFractionFactory.getInstance())
-          .initializer(ElementInitializerFactory.bigFractionIni())
+          .operator(OperationFactory.getFactory())
+          .initializer(ElementInitializerFactory.getFactory())
           .cookbook(new AbstractMatrixBuilder.CookBook<BigFraction>() {
             @Override
             public BigFraction[][] tableDef() {

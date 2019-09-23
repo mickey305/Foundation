@@ -26,6 +26,11 @@ import com.mickey305.foundation.v4.lang.math.operator.IOperationFactory;
 
 import java.util.Map;
 
+/**
+ * 行列の操作用クラス
+ * @param <T> 演算対象行列{@link Matrix<T>}の要素の総称型
+ * @param <U> 演算結果行列{@link Matrix<U>}の要素の総称型
+ */
 public class HandlerMatrix<T extends Number, U extends Number>
     extends AbstractMatrixHandler<Matrix<T>, T, Matrix<U>, U> {
   

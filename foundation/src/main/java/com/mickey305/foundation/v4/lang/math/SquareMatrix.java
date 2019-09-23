@@ -30,6 +30,10 @@ import java.util.Map;
 
 import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;
 
+/**
+ * 正方行列演算用のクラスです
+ * @param <E> 行列の要素の総称型です
+ */
 public class SquareMatrix<E extends Number> extends Matrix<E> {
   private static final long serialVersionUID = -826829608095297048L;
   

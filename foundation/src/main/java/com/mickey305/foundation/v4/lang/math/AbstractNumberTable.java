@@ -32,6 +32,10 @@ import java.util.Map;
 import static com.mickey305.foundation.v4.lang.math.MathConst.ABS_NUM_TBL_CAPTURE_INI;
 import static com.mickey305.foundation.v4.lang.math.MathConst.ABS_NUM_TBL_CAPTURE_TABLE_IO;
 
+/**
+ * 数値演算用の抽象テーブルクラスです
+ * @param <E> テーブルの要素の総称型
+ */
 public abstract class AbstractNumberTable<E extends Number> implements Serializable {
   private static final long serialVersionUID = 6078171550155201724L;
   private final int rowSize;
