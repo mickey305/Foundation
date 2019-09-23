@@ -31,6 +31,7 @@ public class AdjacencyMatrixTest {
   }
 
   @Test
+  @SuppressWarnings("deprecation")
   public void testCase_01_01() throws Exception {
     Integer[][] t1 = {
         {0, 1, 0, 0, 1},

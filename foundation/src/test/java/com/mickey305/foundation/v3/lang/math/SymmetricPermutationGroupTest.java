@@ -35,6 +35,7 @@ public class SymmetricPermutationGroupTest {
   }
 
   @Test
+  @SuppressWarnings("deprecation")
   public void testCase_01_01() throws Exception {
     Integer[][] t1 = {
         {1, 2, 3},
@@ -64,6 +65,7 @@ public class SymmetricPermutationGroupTest {
   }
 
   @Test
+  @SuppressWarnings("deprecation")
   public void testCase_01_02() throws Exception {
 //        Integer[][] t1 = {
 //                {1, 2, 3, 4, 5, 6},

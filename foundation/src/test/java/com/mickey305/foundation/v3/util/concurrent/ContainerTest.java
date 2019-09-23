@@ -27,12 +27,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class ContainerTest {
   private static final int CMD_CNT = 100;
-  private List<Executable<?>> commands;
+  private List<Executable<Integer>> commands;
   
   @Before
   public void setUp() throws Exception {
@@ -47,19 +46,16 @@ public class ContainerTest {
   
   @Test
   public void testCase_01_01() throws Exception {
-    Container container = new Container(commands);
-    container.setOnFinishEventListener(new Container.OnFinishEventListener() {
-      @Override
-      public void onFinish(Collection<Executable> timeOverCommands, Container.ResultManager resultManager) {
-        Log.i("main: result1...");
-        for (Pair<Executable, Object> entry : resultManager.getResultPool()) {
-          Log.i("key=" + entry.getKey() + ", value=" + entry.getValue());
-        }
-        Assert.assertEquals(CMD_CNT, timeOverCommands.size() + resultManager.getResultPool().size());
-        Assert.assertEquals(0, resultManager.findBy(commands.get(0)));
-        Assert.assertEquals(1, resultManager.findBy(commands.get(1)));
-        Assert.assertEquals(0, resultManager.findBy(commands.get(2)));
+    Container<Integer> container = new Container<>(commands);
+    container.setOnFinishEventListener((timeOverCommands, resultManager) -> {
+      Log.i("main: result1...");
+      for (Pair<Executable<Integer>, Integer> entry : resultManager.getResultPool()) {
+        Log.i("key=" + entry.getKey() + ", value=" + entry.getValue());
       }
+      Assert.assertEquals(CMD_CNT, timeOverCommands.size() + resultManager.getResultPool().size());
+      Assert.assertEquals(Integer.valueOf(0), resultManager.findBy(commands.get(0)));
+      Assert.assertEquals(Integer.valueOf(1), resultManager.findBy(commands.get(1)));
+      Assert.assertEquals(Integer.valueOf(0), resultManager.findBy(commands.get(2)));
     });
     Thread th = new Thread(container);
     Log.i("main: tread1 start");
@@ -71,23 +67,15 @@ public class ContainerTest {
     Log.i("main: tread1 end");
     th = new Thread(container);
     container.reactivation();
-    container.setOnStepFinishEventListener(new Container.OnStepFinishEventListener() {
-      @Override
-      public boolean nextStepExecutionJudge(Container.ResultManager results) {
-        return results.last().equals(1);
+    container.setOnStepFinishEventListener(results -> results.last().equals(1));
+    container.setOnFinishEventListener((timeOverCommands, resultManager) -> {
+      Log.i("main: result2...");
+      for (Pair<Executable<Integer>, Integer> entry : resultManager.getResultPool()) {
+        Log.i("key=" + entry.getKey() + ", value=" + entry.getValue());
       }
-    });
-    container.setOnFinishEventListener(new Container.OnFinishEventListener() {
-      @Override
-      public void onFinish(Collection<Executable> timeOverCommands, Container.ResultManager resultManager) {
-        Log.i("main: result2...");
-        for (Pair<Executable, Object> entry : resultManager.getResultPool()) {
-          Log.i("key=" + entry.getKey() + ", value=" + entry.getValue());
-        }
-        Assert.assertEquals(CMD_CNT - execCnt,
-            timeOverCommands.size() + resultManager.getResultPool().size());
-        Assert.assertEquals(execCnt % 2, resultManager.findBy(commands.get(execCnt)));
-      }
+      Assert.assertEquals(CMD_CNT - execCnt,
+          timeOverCommands.size() + resultManager.getResultPool().size());
+      Assert.assertEquals(Integer.valueOf(execCnt % 2), resultManager.findBy(commands.get(execCnt)));
     });
     Log.i("main: tread2 start");
     th.start();

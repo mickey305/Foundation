@@ -33,6 +33,7 @@ public class MatrixTest {
   }
 
   @Test
+  @SuppressWarnings("deprecation")
   public void testCase_01_01() throws Exception {
     Float[][] t1 = {
         {1.2f, 1.1f, 1.3f, 1.0f, 1.4f},

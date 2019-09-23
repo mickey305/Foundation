@@ -50,7 +50,7 @@ public class ValidationInvoker {
   void validateMethod(
       T object, String methodName, Pair<Class<?>, Object>... arguments) throws NoSuchMethodException {
     ExecutableValidator validator = ValidatorProvider.get().forExecutables();
-    Class<?>[] types = new Class[arguments.length];
+    Class<?>[] types = new Class<?>[arguments.length];
     Object[] parameter = new Object[arguments.length];
     for (int i = 0; i < arguments.length; i++) {
       types[i] = arguments[i].getLeft();

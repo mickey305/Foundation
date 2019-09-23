@@ -3,8 +3,6 @@ plugins {
     id "com.github.spotbugs" version "1.6.9"
 }
 
-import com.github.spotbugs.SpotBugsTask
-
 group 'com.mickey305'
 version '0.6.40-beta'
 
@@ -14,6 +12,8 @@ apply plugin: 'jacoco'
 apply plugin: 'com.novoda.bintray-release'
 apply plugin: 'com.github.spotbugs'
 
+import com.github.spotbugs.SpotBugsTask
+
 def defaultEncoding = 'UTF-8'
 
 sourceCompatibility = JavaVersion.VERSION_1_7
@@ -21,8 +21,9 @@ targetCompatibility = JavaVersion.VERSION_1_7
 
 gradle.projectsEvaluated {
     tasks.withType(JavaCompile) {
-        //options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
         options.compilerArgs << "-Xlint:none"
+        //options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+        //options.compilerArgs << "-Xlint:all"
         options.encoding = defaultEncoding
     }
     tasks.withType(Test) {

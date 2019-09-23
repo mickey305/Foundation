@@ -37,14 +37,14 @@ public class AutoUnlockTest {
   @Test
   public void testCase_01_01() throws Exception {
     try(AutoUnlock ignored = new AutoUnlock.ReadLock(LOCK_OBJ)) {
-      Log.i("Read lock task");
+      Log.i("Read lock task: " + ignored.toString());
     }
   }
   
   @Test
   public void testCase_02_01() throws Exception {
     try(AutoUnlock ignored = new AutoUnlock.WriteLock(LOCK_OBJ)) {
-      Log.i("Write lock task");
+      Log.i("Write lock task: " + ignored.toString());
     }
   }
 }

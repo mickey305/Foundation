@@ -28,30 +28,30 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Container implements Runnable, Killable, Destroyable {
+public class Container<R> implements Runnable, Killable, Destroyable {
   private volatile boolean doneSignal;
   private volatile boolean finish;
-  private Collection<Executable> commands;
-  private Collection<Pair<Executable, Object>> resultPool;
-  private OnFinishEventListener onFinishEventListener;
-  private OnStepFinishEventListener onStepFinishEventListener;
-  private ResultManager resultManager;
+  private Collection<Executable<R>> commands;
+  private Collection<Pair<Executable<R>, R>> resultPool;
+  private OnFinishEventListener<R> onFinishEventListener;
+  private OnStepFinishEventListener<R> onStepFinishEventListener;
+  private ResultManager<R> resultManager;
   
   //===----------------------------------------------------------------------------------------------------------===//
   // Constructor                                                                                                    //
   //===----------------------------------------------------------------------------------------------------------===//
-  public Container(Collection<? extends Executable> commands) {
+  public Container(Collection<? extends Executable<R>> commands) {
     this.activation(commands);
   }
   
   //===----------------------------------------------------------------------------------------------------------===//
   // Methods                                                                                                        //
   //===----------------------------------------------------------------------------------------------------------===//
-  public void activation(Collection<? extends Executable> commands) {
+  public void activation(Collection<? extends Executable<R>> commands) {
     this.setDoneSignal(false);
     this.setFinish(false);
     this.setCommands(Collections.synchronizedCollection(new LinkedList<>(commands)));
-    this.setResultPool(Collections.synchronizedCollection(new LinkedList<Pair<Executable, Object>>()));
+    this.setResultPool(Collections.synchronizedCollection(new LinkedList<Pair<Executable<R>, R>>()));
     this.setOnFinishEventListener(null);
     this.setOnStepFinishEventListener(null);
     this.setResultManager(null);
@@ -90,14 +90,14 @@ public class Container implements Runnable, Killable, Destroyable {
   public synchronized void run() {
     if (this.isFinish()) return;
     // ---> Main task
-    final Iterator<Executable> commandItr = this.getCommands().iterator();
-    final ResultManager resultManager = new ResultManager(null);
-    final OnStepFinishEventListener stpFinListener = this.getOnStepFinishEventListener();
+    final Iterator<Executable<R>> commandItr = this.getCommands().iterator();
+    final ResultManager<R> resultManager = new ResultManager<>(null);
+    final OnStepFinishEventListener<R> stpFinListener = this.getOnStepFinishEventListener();
     boolean judge = true;
     while (judge && !this.isDoneSignal() && commandItr.hasNext()) {
-      Executable command = commandItr.next();
+      Executable<R> command = commandItr.next();
       // invoke command
-      final Object result = command.execute(); // Executable<R>#execute():R method calling
+      final R result = command.execute(); // Executable<R><R>#execute():R method calling
       this.getResultPool().add(Pair.of(command, result));
       commandItr.remove();
       // Step finish event task
@@ -107,8 +107,8 @@ public class Container implements Runnable, Killable, Destroyable {
       }
     }
     // ---> Finish event task
-    final OnFinishEventListener finListener = this.getOnFinishEventListener();
-    this.setResultManager(new ResultManager(this.getResultPool()));
+    final OnFinishEventListener<R> finListener = this.getOnFinishEventListener();
+    this.setResultManager(new ResultManager<>(this.getResultPool()));
     if (finListener != null && !this.getResultPool().isEmpty())
       finListener.onFinish(this.getCommands(), this.getResultManager());
     // ---> Signal update
@@ -134,19 +134,19 @@ public class Container implements Runnable, Killable, Destroyable {
     }
   }
   
-  public Collection<Executable> timeOverCommands() {
+  public Collection<Executable<R>> timeOverCommands() {
     if (!this.isFinish())
       return new LinkedList<>();
     return this.getCommands();
   }
   
-  public List<Executable> timeOverCommandsToList() {
+  public List<Executable<R>> timeOverCommandsToList() {
     return ListUtil.downCastFrom(this.timeOverCommands());
   }
   
-  public ResultManager resultManager() {
+  public ResultManager<R> resultManager() {
     if (!this.isFinish())
-      return new ResultManager(new LinkedList<Pair<Executable, Object>>());
+      return new ResultManager<>(new LinkedList<Pair<Executable<R>, R>>());
     return this.getResultManager();
   }
   
@@ -169,171 +169,171 @@ public class Container implements Runnable, Killable, Destroyable {
     this.finish = finish;
   }
   
-  private Collection<Executable> getCommands() {
+  private Collection<Executable<R>> getCommands() {
     return commands;
   }
   
-  private void setCommands(Collection<Executable> commands) {
+  private void setCommands(Collection<Executable<R>> commands) {
     this.commands = commands;
   }
   
-  private Collection<Pair<Executable, Object>> getResultPool() {
+  private Collection<Pair<Executable<R>, R>> getResultPool() {
     return resultPool;
   }
   
-  private void setResultPool(Collection<Pair<Executable, Object>> resultPool) {
+  private void setResultPool(Collection<Pair<Executable<R>, R>> resultPool) {
     this.resultPool = resultPool;
   }
   
-  protected OnFinishEventListener getOnFinishEventListener() {
+  protected OnFinishEventListener<R> getOnFinishEventListener() {
     return onFinishEventListener;
   }
   
-  public void setOnFinishEventListener(OnFinishEventListener onFinishEventListener) {
+  public void setOnFinishEventListener(OnFinishEventListener<R> onFinishEventListener) {
     this.onFinishEventListener = onFinishEventListener;
   }
   
-  protected OnStepFinishEventListener getOnStepFinishEventListener() {
+  protected OnStepFinishEventListener<R> getOnStepFinishEventListener() {
     return onStepFinishEventListener;
   }
   
-  public void setOnStepFinishEventListener(OnStepFinishEventListener onStepFinishEventListener) {
+  public void setOnStepFinishEventListener(OnStepFinishEventListener<R> onStepFinishEventListener) {
     this.onStepFinishEventListener = onStepFinishEventListener;
   }
   
-  private ResultManager getResultManager() {
+  private ResultManager<R> getResultManager() {
     return resultManager;
   }
   
-  private void setResultManager(ResultManager resultManager) {
+  private void setResultManager(ResultManager<R> resultManager) {
     this.resultManager = resultManager;
   }
   
   //===----------------------------------------------------------------------------------------------------------===//
   // Innerclass                                                                                                     //
   //===----------------------------------------------------------------------------------------------------------===//
-  public interface OnFinishEventListener {
-    void onFinish(Collection<Executable> timeOverCommands, ResultManager resultManager);
+  public interface OnFinishEventListener<R> {
+    void onFinish(Collection<Executable<R>> timeOverCommands, ResultManager<R> resultManager);
   }
   
-  public interface OnStepFinishEventListener {
-    boolean nextStepExecutionJudge(ResultManager resultManager);
+  public interface OnStepFinishEventListener<R> {
+    boolean nextStepExecutionJudge(ResultManager<R> resultManager);
   }
   
-  public class ResultManager {
-    private Collection<Pair<Executable, Object>> resultPool;
+  public static class ResultManager<R> {
+    private Collection<Pair<Executable<R>, R>> resultPool;
     
-    ResultManager(Collection<Pair<Executable, Object>> resultPool) {
+    ResultManager(Collection<Pair<Executable<R>, R>> resultPool) {
       this.setResultPool(resultPool);
     }
     
-    public Object findBy(Executable key) {
+    public R findBy(Executable<R> key) {
       return this.getResultFirstValue(key);
     }
     
-    public Object first(Executable key) {
+    public R first(Executable<R> key) {
       return this.getResultFirstValue(key);
     }
     
-    public Object first() {
+    public R first() {
       return this.getResultFirstValue();
     }
     
-    public List getResultValues(Executable key) {
-      Collection<Pair<Executable, Object>> resultPool = this.getResultPool();
-      List<Object> results = new LinkedList<>();
-      for (Pair<Executable, Object> result : resultPool) {
+    public List<R> getResultValues(Executable<R> key) {
+      Collection<Pair<Executable<R>, R>> resultPool = this.getResultPool();
+      List<R> results = new LinkedList<>();
+      for (Pair<Executable<R>, R> result : resultPool) {
         if (result.getKey().equals(key))
           results.add(result.getValue());
       }
       return results;
     }
     
-    public Object getResultFirstValue(Executable key) {
-      List results = this.getResultValues(key);
+    public R getResultFirstValue(Executable<R> key) {
+      List<R> results = this.getResultValues(key);
       if (results.isEmpty())
         return null;
       return results.get(0);
     }
     
-    public Object getResultFirstValue() {
-      List<Pair<Executable, Object>> resultPool = this.getResultPoolToList();
+    public R getResultFirstValue() {
+      List<Pair<Executable<R>, R>> resultPool = this.getResultPoolToList();
       if (resultPool.isEmpty())
         return null;
       return resultPool.get(0).getValue();
     }
     
-    public Object getResultLastValue(Executable key) {
-      List results = this.getResultValues(key);
+    public R getResultLastValue(Executable<R> key) {
+      List<R> results = this.getResultValues(key);
       if (results.isEmpty())
         return null;
       return results.get(results.size() - 1);
     }
     
-    public Object getResultLastValue() {
-      List<Pair<Executable, Object>> resultPool = this.getResultPoolToList();
+    public R getResultLastValue() {
+      List<Pair<Executable<R>, R>> resultPool = this.getResultPoolToList();
       if (resultPool.isEmpty())
         return null;
       return resultPool.get(resultPool.size() - 1).getValue();
     }
     
-    public List<Executable> keys() {
-      Collection<Pair<Executable, Object>> resultPool = this.getResultPool();
-      List<Executable> commands = new LinkedList<>();
-      for (Pair<Executable, Object> result : resultPool)
+    public List<Executable<R>> keys() {
+      Collection<Pair<Executable<R>, R>> resultPool = this.getResultPool();
+      List<Executable<R>> commands = new LinkedList<>();
+      for (Pair<Executable<R>, R> result : resultPool)
         commands.add(result.getKey());
       return commands;
     }
     
-    public Object last(Executable key) {
+    public R last(Executable<R> key) {
       return this.getResultLastValue(key);
     }
     
-    public Object last() {
+    public R last() {
       return this.getResultLastValue();
     }
     
-    public Object latest(Executable key) {
+    public R latest(Executable<R> key) {
       return this.newest(key);
     }
     
-    public Object latest() {
+    public R latest() {
       return this.newest();
     }
     
-    public Object newest(Executable key) {
+    public R newest(Executable<R> key) {
       return this.getResultLastValue(key);
     }
     
-    public Object newest() {
+    public R newest() {
       return this.getResultLastValue();
     }
     
-    public Object oldest() {
+    public R oldest() {
       return this.getResultFirstValue();
     }
     
-    public Object oldest(Executable key) {
+    public R oldest(Executable<R> key) {
       return this.getResultFirstValue(key);
     }
     
-    public List values() {
-      Collection<Pair<Executable, Object>> resultPool = this.getResultPool();
-      List<Object> values = new LinkedList<>();
-      for (Pair<Executable, Object> result : resultPool)
+    public List<R> values() {
+      Collection<Pair<Executable<R>, R>> resultPool = this.getResultPool();
+      List<R> values = new LinkedList<>();
+      for (Pair<Executable<R>, R> result : resultPool)
         values.add(result.getValue());
       return values;
     }
     
-    public List<Pair<Executable, Object>> getResultPoolToList() {
+    public List<Pair<Executable<R>, R>> getResultPoolToList() {
       return ListUtil.downCastFrom(this.getResultPool());
     }
     
-    public Collection<Pair<Executable, Object>> getResultPool() {
+    public Collection<Pair<Executable<R>, R>> getResultPool() {
       return resultPool;
     }
     
-    void setResultPool(Collection<Pair<Executable, Object>> resultPool) {
+    void setResultPool(Collection<Pair<Executable<R>, R>> resultPool) {
       this.resultPool = resultPool;
     }
   }

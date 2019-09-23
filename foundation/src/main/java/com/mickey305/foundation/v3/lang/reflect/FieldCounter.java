@@ -43,7 +43,7 @@ public class FieldCounter implements Serializable {
     this.target = target;
   }
 
-  public FieldCounter(Class target) {
+  public FieldCounter(Class<?> target) {
     setTarget(target);
   }
 

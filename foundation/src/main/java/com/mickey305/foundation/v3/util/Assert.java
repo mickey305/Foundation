@@ -33,7 +33,7 @@ public class Assert<E> {
     result = new ArrayList<>();
   }
   
-  public Assert nonNull(final E object) {
+  public Assert<E> nonNull(final E object) {
     try {
       final E nonNullObject = Assert.requireNonNull(object);
       result.add(nonNullObject);

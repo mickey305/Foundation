@@ -17,7 +17,7 @@
 
 package com.mickey305.foundation.v3.util.pattern;
 
-public interface SearchLogic<T extends Component> {
+public interface SearchLogic<T extends Component<?>> {
   /**
    * 二要素ノード検索ロジック
    *

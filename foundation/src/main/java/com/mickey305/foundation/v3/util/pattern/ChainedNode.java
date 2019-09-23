@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
  * Single parent and some children node interface
  * @param <T> node type
  */
-public interface ChainedNode<T extends ChainedNode> {
+public interface ChainedNode<T extends ChainedNode<T>> {
   /**
    * 親オブジェクト取得メソッド
    * @return 親オブジェクト

@@ -369,6 +369,8 @@ public abstract class AbstractCryptoManager implements AutoCloseable {
   // inner class
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   public final class CryptoException extends UnsupportedOperationException {
+    private static final long serialVersionUID = -834877014326829758L;
+  
     public CryptoException(Throwable cause) {
       super(cause);
     }

@@ -67,9 +67,13 @@ public abstract class AutoUnlock implements AutoCloseable {
    * {@inheritDoc}
    */
   @Override
-  public void close() throws Exception {
-    // lock end
-    lockable.unlock(type);
+  public void close() {
+    try {
+      // lock end
+      lockable.unlock(type);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
   
     if (IS_DEBUG_MODE) {
       Log.d(((type == LockType.Read)? "[R]" : "[W]") + " unlocked");

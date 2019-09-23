@@ -45,9 +45,9 @@ public class StringUtilTest {
   @Test
   public void testCase_01_01() throws Exception {
     this.createData(new String[]{"D:", "path1", "path2", "path3"});
-    Assert.assertEquals(testPathElements, StringUtil.separateWithPath(testPathData1));
+    Assert.assertArrayEquals(testPathElements, StringUtil.separateWithPath(testPathData1));
     Assert.assertEquals(testPathElements.length, StringUtil.separateWithPath(testPathData1).length);
-    Assert.assertEquals(testPathElements, StringUtil.separateWithPath(testPathData2));
+    Assert.assertArrayEquals(testPathElements, StringUtil.separateWithPath(testPathData2));
     Assert.assertEquals(testPathElements.length, StringUtil.separateWithPath(testPathData2).length);
   }
   
