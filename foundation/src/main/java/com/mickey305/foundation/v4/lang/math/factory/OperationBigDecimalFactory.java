@@ -21,19 +21,28 @@ import com.mickey305.foundation.v4.lang.math.operator.AbstractNumberOperation;
 import com.mickey305.foundation.v4.lang.math.operator.AbstractOperationFactory;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Objects;
 
 public class OperationBigDecimalFactory extends AbstractOperationFactory<BigDecimal> {
-  private static final int DEFAULT_SCALE = 3;
+  private static final int          DEFAULT_SCALE = 3;
+  private static final RoundingMode DEFAULT_ROUND = RoundingMode.DOWN;
   private int scale;
+  private RoundingMode roundingMode;
   
   public OperationBigDecimalFactory scale(int scale) {
     this.scale = scale;
     return this;
   }
   
+  public OperationBigDecimalFactory round(RoundingMode roundingMode) {
+    this.roundingMode = roundingMode;
+    return this;
+  }
+  
   public OperationBigDecimalFactory() {
-    this.scale = DEFAULT_SCALE;
+    this.scale        = DEFAULT_SCALE;
+    this.roundingMode = DEFAULT_ROUND;
   }
   
   private static final class OperationBigDecimalFactoryHolder {
@@ -98,13 +107,14 @@ public class OperationBigDecimalFactory extends AbstractOperationFactory<BigDeci
   @Override
   public AbstractNumberOperation<BigDecimal, BigDecimal> div() {
     final int scale = this.scale;
+    final RoundingMode roundingMode = this.roundingMode;
     return new AbstractNumberOperation<BigDecimal, BigDecimal>() {
       /**
        * {@inheritDoc}
        */
       @Override
       protected BigDecimal operationDefault(BigDecimal l, BigDecimal r) {
-        return l.divide(r, scale, BigDecimal.ROUND_DOWN);
+        return l.divide(r, scale, roundingMode);
       }
     };
   }
