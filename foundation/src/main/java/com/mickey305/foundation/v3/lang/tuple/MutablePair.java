@@ -21,12 +21,12 @@ public class MutablePair<L, R> extends Pair<L, R> {
   /**
    * use serialVersionUID for interoperability
    */
-  private static final long serialVersionUID = 3488116292685483870L;
+  private static final long serialVersionUID = 6959345132974695874L;
 
-  private org.apache.commons.lang3.tuple.ImmutablePair<L, R> pair;
+  private org.apache.commons.lang3.tuple.MutablePair<L, R> pair;
 
   private MutablePair(final L left, final R right) {
-    this.setPair(org.apache.commons.lang3.tuple.ImmutablePair.of(left, right));
+    this.setPair(org.apache.commons.lang3.tuple.MutablePair.of(left, right));
   }
 
   public static <L, R> MutablePair<L, R> of(final L left, final R right) {
@@ -59,23 +59,28 @@ public class MutablePair<L, R> extends Pair<L, R> {
 
   /**
    * 要素入れ替え処理
-   * <p>要素を入れ替えたイミュータブルなペアオブジェクトのインスタンスを生成し、返却する</p>
+   * <p>要素を入れ替えたミュータブルなペアオブジェクトのインスタンスを生成し、返却する</p>
    *
    * @return 入れ替え後のペアオブジェクト
    * <p>
    * {@inheritDoc}
    */
+//  @SuppressWarnings("unchecked")
+//  @Override
+//  public MutablePair<R, L> swap() {
+//    return new MutablePair<>(this.getRight(), this.getLeft());
+//  }
   @SuppressWarnings("unchecked")
   @Override
-  public MutablePair<R, L> swap() {
-    return new MutablePair<>(this.getRight(), this.getLeft());
+  public <T extends org.apache.commons.lang3.tuple.Pair<R, L> & Swappable<R, L>> T swap() {
+    return (T) new MutablePair<>(this.getRight(), this.getLeft());
   }
 
-  private org.apache.commons.lang3.tuple.ImmutablePair<L, R> getPair() {
+  private org.apache.commons.lang3.tuple.MutablePair<L, R> getPair() {
     return pair;
   }
 
-  private void setPair(org.apache.commons.lang3.tuple.ImmutablePair<L, R> pair) {
+  private void setPair(org.apache.commons.lang3.tuple.MutablePair<L, R> pair) {
     this.pair = pair;
   }
 }

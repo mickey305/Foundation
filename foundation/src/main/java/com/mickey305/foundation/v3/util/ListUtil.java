@@ -62,7 +62,7 @@ public class ListUtil {
    * @param <E>      要素の総称型
    * @return 変換後の配列
    */
-  @SafeVarargs
+  @SuppressWarnings("unchecked")
   public static <E> E[] toArray(List<E> elements, E... dummy) {
     return CollectionUtil.toArray(elements, dummy);
   }

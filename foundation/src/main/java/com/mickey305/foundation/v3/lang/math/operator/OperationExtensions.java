@@ -19,7 +19,6 @@ package com.mickey305.foundation.v3.lang.math.operator;
 
 import com.mickey305.foundation.v3.compat.util.BinaryFunction;
 
-@Deprecated
 public interface OperationExtensions<T, U, R> {
   
   /**
@@ -27,5 +26,6 @@ public interface OperationExtensions<T, U, R> {
    *
    * @param extension 注入対象演算処理
    */
+  @Deprecated
   void setExtension(BinaryFunction<T, U, R> extension);
 }

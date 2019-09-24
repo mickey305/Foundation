@@ -24,16 +24,17 @@ import org.apache.commons.math3.fraction.Fraction;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-@Deprecated
 public abstract class AbstractNumberOperation<R> implements
     BinaryFunction<Number, Number, R>,
     OperationExtensions<Number, Number, R> {
   private BinaryFunction<Number, Number, R> extension;
   
+  @Deprecated
   public AbstractNumberOperation() {
     this(null);
   }
   
+  @Deprecated
   public AbstractNumberOperation(BinaryFunction<Number, Number, R> extension) {
     this.setExtension(extension);
   }
@@ -45,6 +46,7 @@ public abstract class AbstractNumberOperation<R> implements
   /**
    * {@inheritDoc}
    */
+  @Deprecated
   @Override
   public void setExtension(BinaryFunction<Number, Number, R> extension) {
     this.extension = extension;

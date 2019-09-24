@@ -34,10 +34,9 @@ public class MutablePairTest {
 
   @Test
   public void testCase_01_01() throws Exception {
-    Swappable<Integer, String> swappable = Pair.of(1, "test");
-    Pair<String, Integer> pair;
+    final Swappable<Integer, String> swappable = Pair.of(1, "test");
 
-    pair = swappable.swap(); // test target logic
+    final Pair<String, Integer> pair = swappable.swap(); // test target logic
     Log.i("left: " + pair.getLeft());
     Log.i("right: " + pair.getRight());
     Assert.assertEquals("test", pair.getLeft());
@@ -45,12 +44,82 @@ public class MutablePairTest {
     Assert.assertEquals("test", pair.getKey());
     Assert.assertEquals(Integer.valueOf(1), pair.getValue());
 
-    pair = swappable.swap().swap().swap().swap().swap();
-    Log.i("left: " + pair.getLeft());
-    Log.i("right: " + pair.getRight()); // test target logic
-    Assert.assertEquals("test", pair.getLeft());
-    Assert.assertEquals(Integer.valueOf(1), pair.getRight());
-    Assert.assertEquals("test", pair.getKey());
-    Assert.assertEquals(Integer.valueOf(1), pair.getValue());
+    final MutablePair<String, Integer> pair2 = swappable.swap().swap().swap().swap().swap();
+    Log.i("left: " + pair2.getLeft());
+    Log.i("right: " + pair2.getRight()); // test target logic
+    Assert.assertEquals("test", pair2.getLeft());
+    Assert.assertEquals(Integer.valueOf(1), pair2.getRight());
+    Assert.assertEquals("test", pair2.getKey());
+    Assert.assertEquals(Integer.valueOf(1), pair2.getValue());
+    
+    final Swappable<Integer, String> swappable2 = MutablePairEx1.of(1, "test");
+  
+    final Pair<Integer, String> nonErrPair = swappable2.swap().swap(); // test target logic
+    try {
+      final MutablePair<Integer, String> errPair = swappable2.swap().swap(); // test target logic
+      Assert.fail();
+    } catch (ClassCastException e) {
+      Log.d(e);
+    }
+  }
+  
+  private static class MutablePairEx1<L, R> extends Pair<L, R> {
+    private static final long serialVersionUID = 8775417255962555640L;
+  
+    private org.apache.commons.lang3.tuple.MutablePair<L, R> pair;
+  
+    private MutablePairEx1(final L left, final R right) {
+      this.setPair(org.apache.commons.lang3.tuple.MutablePair.of(left, right));
+    }
+  
+    public static <L, R> MutablePairEx1<L, R> of(final L left, final R right) {
+      return new MutablePairEx1<>(left, right);
+    }
+  
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public L getLeft() {
+      return this.getPair().getLeft();
+    }
+  
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public R getRight() {
+      return this.getPair().getRight();
+    }
+  
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public R setValue(R value) {
+      return this.getPair().setValue(value);
+    }
+  
+    /**
+     * 要素入れ替え処理
+     * <p>要素を入れ替えたミュータブルなペアオブジェクトのインスタンスを生成し、返却する</p>
+     *
+     * @return 入れ替え後のペアオブジェクト
+     * <p>
+     * {@inheritDoc}
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T extends org.apache.commons.lang3.tuple.Pair<R, L> & Swappable<R, L>> T swap() {
+      return (T) new MutablePairEx1<>(this.getRight(), this.getLeft());
+    }
+  
+    private org.apache.commons.lang3.tuple.MutablePair<L, R> getPair() {
+      return pair;
+    }
+  
+    private void setPair(org.apache.commons.lang3.tuple.MutablePair<L, R> pair) {
+      this.pair = pair;
+    }
   }
 }
