@@ -64,7 +64,7 @@ public class Matrix<E extends Number> extends AbstractNumberTable<E> {
    * @return 演算結果行列
    */
   public Matrix<E> add(Matrix<E> rightMatrix) {
-    return Matrix.simplyOperate(this, rightMatrix, Operator.ADD);
+    return Matrix.simplyOperate(this, rightMatrix, Operator.Add);
   }
   
   /**
@@ -74,7 +74,7 @@ public class Matrix<E extends Number> extends AbstractNumberTable<E> {
    * @return 演算結果行列
    */
   public Matrix<E> sub(Matrix<E> rightMatrix) {
-    return Matrix.simplyOperate(this, rightMatrix, Operator.SUB);
+    return Matrix.simplyOperate(this, rightMatrix, Operator.Sub);
   }
   
   /**
@@ -88,7 +88,7 @@ public class Matrix<E extends Number> extends AbstractNumberTable<E> {
     final Matrix<E> resultMatrix = new Matrix<>(this);
     for (int i = 0; i < this.getRowSize(); i++) {
       for (int j = 0; j < this.getColumnSize(); j++) {
-        resultCell = resultMatrix.getOp(Operator.MULTI).apply(this.getCell(i, j), scalar);
+        resultCell = resultMatrix.getOp(Operator.Multi).apply(this.getCell(i, j), scalar);
         resultMatrix.putCell(i, j, resultCell);
       }
     }
@@ -118,11 +118,11 @@ public class Matrix<E extends Number> extends AbstractNumberTable<E> {
         
         E[] multiRec = this.getInitializer().array(leftRec.length);
         for (int k = 0; k < multiRec.length; k++)
-          multiRec[k] = this.getOp(Operator.MULTI).apply(leftRec[k], rightRec[k]);
+          multiRec[k] = this.getOp(Operator.Multi).apply(leftRec[k], rightRec[k]);
         
         E resultCell = this.getInitializer().zero();
         for (E cell : multiRec)
-          resultCell = this.getOp(Operator.ADD).apply(cell, resultCell);
+          resultCell = this.getOp(Operator.Add).apply(cell, resultCell);
         
         resultMatrix.putCell(i, j, resultCell);
       }

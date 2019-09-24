@@ -327,7 +327,7 @@ public class SymmetricPermutationGroup<E extends Number> extends AbstractNumberT
     final E[][] table = this.getTable();
     List<Integer> result = new ArrayList<>();
     for (int i = 0; i < this.getColumnSize(); i++) {
-      if (this.getRop(RelationalOperator.EQ).apply(table[0][i], table[1][i])) {
+      if (this.getRop(RelationalOperator.Eq).apply(table[0][i], table[1][i])) {
         result.add(i);
       }
     }
@@ -343,7 +343,7 @@ public class SymmetricPermutationGroup<E extends Number> extends AbstractNumberT
   public Integer getColumnIndexOf(E num) {
     final E[][] table = this.getTable();
     for (int i = 0; i < this.getColumnSize(); i++) {
-      if (this.getRop(RelationalOperator.EQ).apply(table[0][i], num)) {
+      if (this.getRop(RelationalOperator.Eq).apply(table[0][i], num)) {
         return i;
       }
     }

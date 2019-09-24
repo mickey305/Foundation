@@ -147,13 +147,13 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
           initializer,
           Collections.<Operator, AbstractNumberOperation<Integer, Integer>>emptyMap(),
           Collections.<RelationalOperator, AbstractNumberOperation<Integer, Boolean>>emptyMap());
-      permutationGroup.getOp().put(Operator.ADD, factory.add());
-      permutationGroup.getOp().put(Operator.SUB, factory.sub());
-      permutationGroup.getOp().put(Operator.MULTI, factory.multi());
-      permutationGroup.getOp().put(Operator.DIV, factory.div());
-      permutationGroup.getOp().put(Operator.MAX, factory.max());
-      permutationGroup.getOp().put(Operator.MIN, factory.min());
-      permutationGroup.getRop().put(RelationalOperator.EQ, factory.eq());
+      permutationGroup.getOp().put(Operator.Add, factory.add());
+      permutationGroup.getOp().put(Operator.Sub, factory.sub());
+      permutationGroup.getOp().put(Operator.Multi, factory.multi());
+      permutationGroup.getOp().put(Operator.Div, factory.div());
+      permutationGroup.getOp().put(Operator.Max, factory.max());
+      permutationGroup.getOp().put(Operator.Min, factory.min());
+      permutationGroup.getRop().put(RelationalOperator.Eq, factory.eq());
       permutationGroup.getRop().put(RelationalOperator.NE, factory.ne());
       permutationGroup.getRop().put(RelationalOperator.LT, factory.lt());
       permutationGroup.getRop().put(RelationalOperator.LE, factory.le());
@@ -164,11 +164,11 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
       final int sgn = permutationGroup.sgn();
       for (int j = 0; j < permutationGroup.getColumnSize(); j++) {
         final E data = this.getCell(j, permutationGroup.getPairOf(j));
-        multiResult = this.getOp(Operator.MULTI).apply(data, multiResult);
+        multiResult = this.getOp(Operator.Multi).apply(data, multiResult);
       }
-      multiResult = this.getOp(Operator.MULTI).apply(multiResult, this.getInitializer().convertFrom(sgn));
+      multiResult = this.getOp(Operator.Multi).apply(multiResult, this.getInitializer().convertFrom(sgn));
       
-      result = this.getOp(Operator.ADD).apply(multiResult, result);
+      result = this.getOp(Operator.Add).apply(multiResult, result);
     } while (rowPermutation.next());
     
     return result;
@@ -182,7 +182,7 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
   public E trace() {
     E result = this.getInitializer().zero();
     for (int i = 0; i < this.getSize(); i++)
-      result = this.getOp(Operator.ADD).apply(this.getCell(i, i), result);
+      result = this.getOp(Operator.Add).apply(this.getCell(i, i), result);
     
     return result;
   }
@@ -195,7 +195,7 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
   protected void calcInverseMatrixPhase1(Matrix<E> M) {
   
     for (int i = 0; i < this.getRowSize(); i++) {
-      if (this.getRop(RelationalOperator.EQ).apply(M.getCell(i, i), this.getInitializer().zero())) {
+      if (this.getRop(RelationalOperator.Eq).apply(M.getCell(i, i), this.getInitializer().zero())) {
         final E[] vertical = M.getColumn(i);
         for (int j = 0; j < vertical.length; j++) {
           if (j != i && this.getRop(RelationalOperator.NE).apply(vertical[j], this.getInitializer().zero())) {
@@ -226,7 +226,7 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
             int cntZero = 0;
             final E[] horizontal = M.getRow(k);
             for (int l = 0; l < this.getColumnSize(); l++) {
-              if (this.getRop(RelationalOperator.EQ).apply(horizontal[l], this.getInitializer().zero())) {
+              if (this.getRop(RelationalOperator.Eq).apply(horizontal[l], this.getInitializer().zero())) {
                 cntZero++;
               }
             }
@@ -238,8 +238,8 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
               }
             }
           }
-          E scalar = this.getOp(Operator.DIV).apply(targetCell, vertical[kk]);
-          scalar = this.getOp(Operator.MULTI).apply(scalar, this.getInitializer().minusOne());
+          E scalar = this.getOp(Operator.Div).apply(targetCell, vertical[kk]);
+          scalar = this.getOp(Operator.Multi).apply(scalar, this.getInitializer().minusOne());
           M.multiAndAddRow(scalar, kk, i);
         }
       }
@@ -260,7 +260,7 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
           M.getCell(i, i),
           this.getInitializer().one())) {
         
-        M.multiRow(this.getOp(Operator.DIV).apply(
+        M.multiRow(this.getOp(Operator.Div).apply(
             this.getInitializer().one(),
             M.getCell(i, i)), i);
       }

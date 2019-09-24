@@ -66,37 +66,37 @@ public abstract class AbstractMatrixBuilder<M extends Matrix<T>, T extends Numbe
   }
   
   public AbstractMatrixBuilder<M, T> opeAdd(final AbstractNumberOperation<T, T> operator) {
-    Operators.put(AbstractNumberTable.Operator.ADD, operator);
+    Operators.put(AbstractNumberTable.Operator.Add, operator);
     return this;
   }
   
   public AbstractMatrixBuilder<M, T> opeSub(final AbstractNumberOperation<T, T> operator) {
-    Operators.put(AbstractNumberTable.Operator.SUB, operator);
+    Operators.put(AbstractNumberTable.Operator.Sub, operator);
     return this;
   }
   
   public AbstractMatrixBuilder<M, T> opeMlt(final AbstractNumberOperation<T, T> operator) {
-    Operators.put(AbstractNumberTable.Operator.MULTI, operator);
+    Operators.put(AbstractNumberTable.Operator.Multi, operator);
     return this;
   }
   
   public AbstractMatrixBuilder<M, T> opeDiv(final AbstractNumberOperation<T, T> operator) {
-    Operators.put(AbstractNumberTable.Operator.DIV, operator);
+    Operators.put(AbstractNumberTable.Operator.Div, operator);
     return this;
   }
   
   public AbstractMatrixBuilder<M, T> opeMax(final AbstractNumberOperation<T, T> operator) {
-    Operators.put(AbstractNumberTable.Operator.MAX, operator);
+    Operators.put(AbstractNumberTable.Operator.Max, operator);
     return this;
   }
   
   public AbstractMatrixBuilder<M, T> opeMin(final AbstractNumberOperation<T, T> operator) {
-    Operators.put(AbstractNumberTable.Operator.MIN, operator);
+    Operators.put(AbstractNumberTable.Operator.Min, operator);
     return this;
   }
   
   public AbstractMatrixBuilder<M, T> opeEQ(final AbstractNumberOperation<T, Boolean> operator) {
-    ROperators.put(AbstractNumberTable.RelationalOperator.EQ, operator);
+    ROperators.put(AbstractNumberTable.RelationalOperator.Eq, operator);
     return this;
   }
   

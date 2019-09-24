@@ -37,7 +37,7 @@ import static com.mickey305.foundation.v4.lang.math.MathConst.ABS_NUM_TBL_CAPTUR
  * @param <E> テーブルの要素の総称型
  */
 public abstract class AbstractNumberTable<E extends Number> implements Serializable {
-  private static final long serialVersionUID = 6078171550155201724L;
+  private static final long serialVersionUID = 3969403997674978199L;
   private final int rowSize;
   private final int columnSize;
   private final E[][] table;
@@ -49,11 +49,11 @@ public abstract class AbstractNumberTable<E extends Number> implements Serializa
   }
   
   public enum Operator implements IOperator {
-    ADD, SUB, MULTI, DIV, MAX, MIN
+    Add, Sub, Multi, Div, Max, Min
   }
 
   public enum RelationalOperator implements IOperator {
-    EQ, NE, LT, LE, GT, GE
+    Eq, NE, LT, LE, GT, GE
   }
   
   protected AbstractNumberTable(@Nonnull E[][] initialTable,
@@ -239,7 +239,7 @@ public abstract class AbstractNumberTable<E extends Number> implements Serializa
     for (int i = 0; i < this.getRowSize(); i++) {
       for (int j = 0; j < this.getColumnSize(); j++) {
         target = this.getCell(i, j);
-        max = this.op.get(Operator.MAX).apply(target, max);
+        max = this.op.get(Operator.Max).apply(target, max);
       }
     }
     return max;
@@ -256,7 +256,7 @@ public abstract class AbstractNumberTable<E extends Number> implements Serializa
     for (int i = 0; i < this.getRowSize(); i++) {
       for (int j = 0; j < this.getColumnSize(); j++) {
         target = this.getCell(i, j);
-        min = this.op.get(Operator.MIN).apply(target, min);
+        min = this.op.get(Operator.Min).apply(target, min);
       }
     }
     return min;
@@ -291,7 +291,7 @@ public abstract class AbstractNumberTable<E extends Number> implements Serializa
       @Override
       public Boolean apply(E number) {
         if (number == null) return false;
-        return rop.get(RelationalOperator.EQ).apply(number, cell);
+        return rop.get(RelationalOperator.Eq).apply(number, cell);
       }
     });
   }
@@ -368,7 +368,7 @@ public abstract class AbstractNumberTable<E extends Number> implements Serializa
     final E[] record = this.getRow(row);
     E sum = this.initializer.zero();
     for (E cell : record)
-      sum = op.get(Operator.ADD).apply(cell, sum);
+      sum = op.get(Operator.Add).apply(cell, sum);
     return sum;
   }
   
@@ -392,7 +392,7 @@ public abstract class AbstractNumberTable<E extends Number> implements Serializa
    */
   public E averageOfRow(int row) {
     E sum = this.sumOfRow(row);
-    return op.get(Operator.DIV).apply(sum, this.initializer.convertFrom(this.getColumnSize()));
+    return op.get(Operator.Div).apply(sum, this.initializer.convertFrom(this.getColumnSize()));
   }
   
   /**
@@ -417,7 +417,7 @@ public abstract class AbstractNumberTable<E extends Number> implements Serializa
     final E[] record = this.getColumn(column);
     E sum = this.initializer.zero();
     for (E cell : record)
-      sum = op.get(Operator.ADD).apply(cell, sum);
+      sum = op.get(Operator.Add).apply(cell, sum);
     return sum;
   }
   
@@ -441,7 +441,7 @@ public abstract class AbstractNumberTable<E extends Number> implements Serializa
    */
   public E averageOfColumn(int column) {
     E sum = this.sumOfColumn(column);
-    return op.get(Operator.DIV).apply(sum, this.initializer.convertFrom(this.getRowSize()));
+    return op.get(Operator.Div).apply(sum, this.initializer.convertFrom(this.getRowSize()));
   }
   
   /**
@@ -487,19 +487,19 @@ public abstract class AbstractNumberTable<E extends Number> implements Serializa
     return columnSize;
   }
   
-  public Map<Operator, AbstractNumberOperation<E, E>> getOp() {
+  protected Map<Operator, AbstractNumberOperation<E, E>> getOp() {
     return op;
   }
 
-  public Map<RelationalOperator, AbstractNumberOperation<E, Boolean>> getRop() {
+  protected Map<RelationalOperator, AbstractNumberOperation<E, Boolean>> getRop() {
     return rop;
   }
   
-  public AbstractNumberOperation<E, E> getOp(Operator O) {
+  protected AbstractNumberOperation<E, E> getOp(Operator O) {
     return op.get(O);
   }
   
-  public AbstractNumberOperation<E, Boolean> getRop(RelationalOperator RO) {
+  protected AbstractNumberOperation<E, Boolean> getRop(RelationalOperator RO) {
     return rop.get(RO);
   }
   
