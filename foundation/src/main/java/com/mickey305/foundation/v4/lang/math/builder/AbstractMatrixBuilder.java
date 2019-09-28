@@ -57,73 +57,61 @@ public abstract class AbstractMatrixBuilder<M extends Matrix<T>, T extends Numbe
     return this;
   }
   
-  @Deprecated
   public AbstractMatrixBuilder<M, T> opeAdd(final AbstractNumberOperation<T, T> operator) {
     Operators.put(AbstractNumberTable.Operator.Add, operator);
     return this;
   }
   
-  @Deprecated
   public AbstractMatrixBuilder<M, T> opeSub(final AbstractNumberOperation<T, T> operator) {
     Operators.put(AbstractNumberTable.Operator.Sub, operator);
     return this;
   }
   
-  @Deprecated
   public AbstractMatrixBuilder<M, T> opeMlt(final AbstractNumberOperation<T, T> operator) {
     Operators.put(AbstractNumberTable.Operator.Multi, operator);
     return this;
   }
   
-  @Deprecated
   public AbstractMatrixBuilder<M, T> opeDiv(final AbstractNumberOperation<T, T> operator) {
     Operators.put(AbstractNumberTable.Operator.Div, operator);
     return this;
   }
   
-  @Deprecated
   public AbstractMatrixBuilder<M, T> opeMax(final AbstractNumberOperation<T, T> operator) {
     Operators.put(AbstractNumberTable.Operator.Max, operator);
     return this;
   }
   
-  @Deprecated
   public AbstractMatrixBuilder<M, T> opeMin(final AbstractNumberOperation<T, T> operator) {
     Operators.put(AbstractNumberTable.Operator.Min, operator);
     return this;
   }
   
-  @Deprecated
   public AbstractMatrixBuilder<M, T> opeEQ(final AbstractNumberOperation<T, Boolean> operator) {
     ROperators.put(AbstractNumberTable.RelationalOperator.Eq, operator);
     return this;
   }
   
-  @Deprecated
   public AbstractMatrixBuilder<M, T> opeNE(final AbstractNumberOperation<T, Boolean> operator) {
     ROperators.put(AbstractNumberTable.RelationalOperator.NE, operator);
     return this;
   }
   
-  @Deprecated
   public AbstractMatrixBuilder<M, T> opeLT(final AbstractNumberOperation<T, Boolean> operator) {
     ROperators.put(AbstractNumberTable.RelationalOperator.LT, operator);
     return this;
   }
   
-  @Deprecated
   public AbstractMatrixBuilder<M, T> opeLE(final AbstractNumberOperation<T, Boolean> operator) {
     ROperators.put(AbstractNumberTable.RelationalOperator.LE, operator);
     return this;
   }
   
-  @Deprecated
   public AbstractMatrixBuilder<M, T> opeGT(final AbstractNumberOperation<T, Boolean> operator) {
     ROperators.put(AbstractNumberTable.RelationalOperator.GT, operator);
     return this;
   }
   
-  @Deprecated
   public AbstractMatrixBuilder<M, T> opeGE(final AbstractNumberOperation<T, Boolean> operator) {
     ROperators.put(AbstractNumberTable.RelationalOperator.GE, operator);
     return this;

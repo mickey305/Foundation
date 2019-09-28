@@ -83,12 +83,13 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
    * @return 単位行列
    */
   public SquareMatrix<E> createIdentityMatrix() {
+    final IElementInitializer<E> INI = this.getInitializer();
     final SquareMatrix<E> matrix = new SquareMatrix<>(this);
     for (int i = 0; i < this.getRowSize(); i++) {
       for (int j = 0; j < this.getColumnSize(); j++) {
-        matrix.putCell(i, j, this.getInitializer().zero());
+        matrix.putCell(i, j, INI.zero());
         if (i == j)
-          matrix.putCell(i, j, this.getInitializer().one());
+          matrix.putCell(i, j, INI.one());
       }
     }
     return matrix;
@@ -133,7 +134,8 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
    * @return 計算結果
    */
   public E determinant() {
-    E result = this.getInitializer().zero();
+    final IElementInitializer<E> INI = this.getInitializer();
+    E result = INI.zero();
     final Integer[] rowIndexes = new Integer[this.getColumnSize()];
     for (int i = 0; i < rowIndexes.length; i++)
       rowIndexes[i] = i;
@@ -147,15 +149,16 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
           initializer,
           Collections.<Operator, AbstractNumberOperation<Integer, Integer>>emptyMap(),
           Collections.<RelationalOperator, AbstractNumberOperation<Integer, Boolean>>emptyMap());
+      
       OperatorRegistryUtil.registerAll(permutationGroup.getOp(), permutationGroup.getRop(), factory);
       
-      E multiResult = this.getInitializer().one();
+      E multiResult = INI.one();
       final int sgn = permutationGroup.sgn();
       for (int j = 0; j < permutationGroup.getColumnSize(); j++) {
         final E data = this.getCell(j, permutationGroup.getPairOf(j));
         multiResult = this.getOp(Operator.Multi).apply(data, multiResult);
       }
-      multiResult = this.getOp(Operator.Multi).apply(multiResult, this.getInitializer().convertFrom(sgn));
+      multiResult = this.getOp(Operator.Multi).apply(multiResult, INI.convertFrom(sgn));
       
       result = this.getOp(Operator.Add).apply(multiResult, result);
     } while (rowPermutation.next());
@@ -182,13 +185,14 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
    * @param M 拡大係数行列
    */
   protected void calcInverseMatrixPhase1(Matrix<E> M) {
+    final IElementInitializer<E> INI = this.getInitializer();
   
     for (int i = 0; i < this.getRowSize(); i++) {
-      if (this.getRop(RelationalOperator.Eq).apply(M.getCell(i, i), this.getInitializer().zero())) {
+      if (this.getRop(RelationalOperator.Eq).apply(M.getCell(i, i), INI.zero())) {
         final E[] vertical = M.getColumn(i);
         for (int j = 0; j < vertical.length; j++) {
-          if (j != i && this.getRop(RelationalOperator.NE).apply(vertical[j], this.getInitializer().zero())) {
-            M.multiAndAddRow(this.getInitializer().one(), j, i);
+          if (j != i && this.getRop(RelationalOperator.NE).apply(vertical[j], INI.zero())) {
+            M.multiAndAddRow(INI.one(), j, i);
             break;
           }
         }
@@ -203,24 +207,25 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
    * @param M 拡大係数行列
    */
   protected void calcInverseMatrixPhase2(Matrix<E> M) {
+    final IElementInitializer<E> INI = this.getInitializer();
   
     for (int j = 0; j < this.getColumnSize(); j++) {
       for (int i = 0; i < this.getRowSize(); i++) {
         final E targetCell = M.getCell(i, j);
         final E[] vertical = M.getColumn(j);
-        if (j != i && this.getRop(RelationalOperator.NE).apply(vertical[j], this.getInitializer().zero())) {
+        if (j != i && this.getRop(RelationalOperator.NE).apply(vertical[j], INI.zero())) {
           int kk = 0;
           int max = Integer.MIN_VALUE;
           for (int k = 0; k < vertical.length; k++) {
             int cntZero = 0;
             final E[] horizontal = M.getRow(k);
             for (int l = 0; l < this.getColumnSize(); l++) {
-              if (this.getRop(RelationalOperator.Eq).apply(horizontal[l], this.getInitializer().zero())) {
+              if (this.getRop(RelationalOperator.Eq).apply(horizontal[l], INI.zero())) {
                 cntZero++;
               }
             }
           
-            if (i != k && this.getRop(RelationalOperator.NE).apply(vertical[k], this.getInitializer().zero())) {
+            if (i != k && this.getRop(RelationalOperator.NE).apply(vertical[k], INI.zero())) {
               if (max < cntZero) {
                 max = cntZero;
                 kk = k;
@@ -228,7 +233,7 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
             }
           }
           E scalar = this.getOp(Operator.Div).apply(targetCell, vertical[kk]);
-          scalar = this.getOp(Operator.Multi).apply(scalar, this.getInitializer().minusOne());
+          scalar = this.getOp(Operator.Multi).apply(scalar, INI.minusOne());
           M.multiAndAddRow(scalar, kk, i);
         }
       }
@@ -243,14 +248,15 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
    * @param M 拡大係数行列
    */
   protected void calcInverseMatrixPhase3(Matrix<E> M) {
+    final IElementInitializer<E> INI = this.getInitializer();
   
     for (int i = 0; i < this.getRowSize(); i++) {
       if (this.getRop(RelationalOperator.NE).apply(
           M.getCell(i, i),
-          this.getInitializer().one())) {
+          INI.one())) {
         
         M.multiRow(this.getOp(Operator.Div).apply(
-            this.getInitializer().one(),
+            INI.one(),
             M.getCell(i, i)), i);
       }
     }

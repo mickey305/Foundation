@@ -105,9 +105,10 @@ public class Matrix<E extends Number> extends AbstractNumberTable<E> {
     if (this.getColumnSize() != rightMatrix.getRowSize())
       throw new UnsupportedOperationException();
     
+    final IElementInitializer<E> INI = this.getInitializer();
     final Matrix<E> resultMatrix = new Matrix<>(
-        this.getInitializer().table(this.getRowSize(), rightMatrix.getColumnSize()),
-        this.getInitializer(), this.getOp(), this.getRop());
+        INI.table(this.getRowSize(), rightMatrix.getColumnSize()),
+        INI, this.getOp(), this.getRop());
     for (int i = 0; i < this.getRowSize(); i++) {
       E[] leftRec = this.getRow(i);
       for (int j = 0; j < rightMatrix.getColumnSize(); j++) {
@@ -116,11 +117,11 @@ public class Matrix<E extends Number> extends AbstractNumberTable<E> {
         //assert leftRec.length == rightRec.length;
         Assert.requireEquals(leftRec.length, rightRec.length);
         
-        E[] multiRec = this.getInitializer().array(leftRec.length);
+        E[] multiRec = INI.array(leftRec.length);
         for (int k = 0; k < multiRec.length; k++)
           multiRec[k] = this.getOp(Operator.Multi).apply(leftRec[k], rightRec[k]);
         
-        E resultCell = this.getInitializer().zero();
+        E resultCell = INI.zero();
         for (E cell : multiRec)
           resultCell = this.getOp(Operator.Add).apply(cell, resultCell);
         
@@ -254,12 +255,13 @@ public class Matrix<E extends Number> extends AbstractNumberTable<E> {
    */
   public Matrix<E> createLogicalMatrix() {
     final Matrix<E> matrix = new Matrix<>(this);
+    final IElementInitializer<E> INI = this.getInitializer();
     for (int i = 0; i < this.getRowSize(); i++) {
       for (int j = 0; j < this.getColumnSize(); j++) {
         final E cell = matrix.getCell(i, j);
-        matrix.putCell(i, j, this.getRop(RelationalOperator.LE).apply(cell, this.getInitializer().zero())
-            ? this.getInitializer().zero()
-            : this.getInitializer().one());
+        matrix.putCell(i, j, this.getRop(RelationalOperator.LE).apply(cell, INI.zero())
+            ? INI.zero()
+            : INI.one());
       }
     }
     return matrix;
@@ -303,9 +305,10 @@ public class Matrix<E extends Number> extends AbstractNumberTable<E> {
    * @return result
    */
   public E[] multiRow(E scalar, int row) {
-    final E[][] tmpTable = this.getInitializer().table(1, this.getRow(row).length);
+    final IElementInitializer<E> INI = this.getInitializer();
+    final E[][] tmpTable = INI.table(1, this.getRow(row).length);
     tmpTable[0] = this.getRow(row);
-    final Matrix<E> matrix = new Matrix<>(tmpTable, this.getInitializer(), this.getOp(), this.getRop());
+    final Matrix<E> matrix = new Matrix<>(tmpTable, INI, this.getOp(), this.getRop());
     final E[] rowData = matrix.multi(scalar).getRow(0);
     this.putRow(row, rowData);
     return rowData;
@@ -319,9 +322,10 @@ public class Matrix<E extends Number> extends AbstractNumberTable<E> {
    * @return result
    */
   public E[] multiColumn(E scalar, int column) {
-    final E[][] tmpTable = this.getInitializer().table(1, this.getColumn(column).length);
+    final IElementInitializer<E> INI = this.getInitializer();
+    final E[][] tmpTable = INI.table(1, this.getColumn(column).length);
     tmpTable[0] = this.getColumn(column);
-    final Matrix<E> matrix = new Matrix<>(tmpTable, this.getInitializer(), this.getOp(), this.getRop());
+    final Matrix<E> matrix = new Matrix<>(tmpTable, INI, this.getOp(), this.getRop());
     final E[] columnData = matrix.multi(scalar).getRow(0);
     this.putColumn(column, columnData);
     return columnData;
@@ -337,12 +341,13 @@ public class Matrix<E extends Number> extends AbstractNumberTable<E> {
    */
   public void multiAndAddRow(E scalar, int multiRow, int addRow) {
     Matrix<E> matrix;
-    final E[][] tmpTable = this.getInitializer().table(1, this.getRow(multiRow).length);
+    final IElementInitializer<E> INI = this.getInitializer();
+    final E[][] tmpTable = INI.table(1, this.getRow(multiRow).length);
     tmpTable[0] = this.getRow(multiRow);
-    matrix = new Matrix<>(tmpTable, this.getInitializer(), this.getOp(), this.getRop());
+    matrix = new Matrix<>(tmpTable, INI, this.getOp(), this.getRop());
     final Matrix<E> multiMatrix = matrix.multi(scalar);
     tmpTable[0] = this.getRow(addRow);
-    matrix = new Matrix<>(tmpTable, this.getInitializer(), this.getOp(), this.getRop());
+    matrix = new Matrix<>(tmpTable, INI, this.getOp(), this.getRop());
     final Matrix<E> addMatrix = multiMatrix.add(matrix);
     final E[] rowData = addMatrix.getRow(0);
     this.putRow(addRow, rowData);
@@ -358,12 +363,13 @@ public class Matrix<E extends Number> extends AbstractNumberTable<E> {
    */
   public void multiAndAddColumn(E scalar, int multiColumn, int addColumn) {
     Matrix<E> matrix;
-    final E[][] tmpTable = this.getInitializer().table(1, this.getColumn(multiColumn).length);
+    final IElementInitializer<E> INI = this.getInitializer();
+    final E[][] tmpTable = INI.table(1, this.getColumn(multiColumn).length);
     tmpTable[0] = this.getColumn(multiColumn);
-    matrix = new Matrix<>(tmpTable, this.getInitializer(), this.getOp(), this.getRop());
+    matrix = new Matrix<>(tmpTable, INI, this.getOp(), this.getRop());
     final Matrix<E> multiMatrix = matrix.multi(scalar);
     tmpTable[0] = this.getColumn(addColumn);
-    matrix = new Matrix<>(tmpTable, this.getInitializer(), this.getOp(), this.getRop());
+    matrix = new Matrix<>(tmpTable, INI, this.getOp(), this.getRop());
     final Matrix<E> addMatrix = multiMatrix.add(matrix);
     final E[] columnData = addMatrix.getRow(0);
     this.putColumn(addColumn, columnData);
@@ -434,11 +440,12 @@ public class Matrix<E extends Number> extends AbstractNumberTable<E> {
    * @return 計算結果行列
    */
   public Matrix<E> sumOfRow() {
+    final IElementInitializer<E> INI = this.getInitializer();
     final E[] ary = this.sumArrayOfRow();
-    final E[][] table = this.getInitializer().table(this.getRowSize(), 1);
+    final E[][] table = INI.table(this.getRowSize(), 1);
     for (int i = 0; i < this.getRowSize(); i++)
       table[i][0] = ary[i];
-    return new Matrix<>(table, this.getInitializer(), this.getOp(), this.getRop());
+    return new Matrix<>(table, INI, this.getOp(), this.getRop());
   }
   
   /**
@@ -447,11 +454,12 @@ public class Matrix<E extends Number> extends AbstractNumberTable<E> {
    * @return 計算結果行列
    */
   public Matrix<E> averageOfRow() {
+    final IElementInitializer<E> INI = this.getInitializer();
     final E[] ary = this.averageArrayOfRow();
-    final E[][] table = this.getInitializer().table(this.getRowSize(), 1);
+    final E[][] table = INI.table(this.getRowSize(), 1);
     for (int i = 0; i < this.getRowSize(); i++)
       table[i][0] = ary[i];
-    return new Matrix<>(table, this.getInitializer(), this.getOp(), this.getRop());
+    return new Matrix<>(table, INI, this.getOp(), this.getRop());
   }
   
   /**
@@ -460,10 +468,11 @@ public class Matrix<E extends Number> extends AbstractNumberTable<E> {
    * @return 計算結果行列
    */
   public Matrix<E> sumOfColumn() {
+    final IElementInitializer<E> INI = this.getInitializer();
     final E[] ary = this.sumArrayOfColumn();
-    final E[][] table = this.getInitializer().table(1, this.getColumnSize());
+    final E[][] table = INI.table(1, this.getColumnSize());
     System.arraycopy(ary, 0, table[0], 0, this.getColumnSize());
-    return new Matrix<>(table, this.getInitializer(), this.getOp(), this.getRop());
+    return new Matrix<>(table, INI, this.getOp(), this.getRop());
   }
   
   /**
@@ -472,9 +481,10 @@ public class Matrix<E extends Number> extends AbstractNumberTable<E> {
    * @return 計算結果行列
    */
   public Matrix<E> averageOfColumn() {
+    final IElementInitializer<E> INI = this.getInitializer();
     final E[] ary = this.averageArrayOfColumn();
-    final E[][] table = this.getInitializer().table(1, this.getColumnSize());
+    final E[][] table = INI.table(1, this.getColumnSize());
     System.arraycopy(ary, 0, table[0], 0, this.getColumnSize());
-    return new Matrix<>(table, this.getInitializer(), this.getOp(), this.getRop());
+    return new Matrix<>(table, INI, this.getOp(), this.getRop());
   }
 }
