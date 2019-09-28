@@ -244,7 +244,7 @@ public class SymmetricPermutationGroup<E extends Number> extends AbstractNumberT
    * @return 巡回置換リスト
    */
   public List<? extends SymmetricCycleGroup<E>> convertCycle() {
-    List<SymmetricCycleGroup<E>> resultCycle = new ArrayList<>();
+    List<SymmetricCycleGroup<E>> R = new ArrayList<>();
     Set<E> checkedElms = new HashSet<>();
     
     for (E tpData : this.getRow(0)) {
@@ -260,10 +260,10 @@ public class SymmetricPermutationGroup<E extends Number> extends AbstractNumberT
         tmpData = this.getPairOf(tmpData);
       } while (this.getRop(RelationalOperator.NE).apply(tmpData, tpData));
       
-      resultCycle.add(new SymmetricCycleGroup<>(list, this.getInitializer(), this.getOp(), this.getRop()));
+      R.add(new SymmetricCycleGroup<>(list, this.getInitializer(), this.getOp(), this.getRop()));
     }
     
-    return resultCycle;
+    return R;
   }
   
   /**
@@ -272,11 +272,11 @@ public class SymmetricPermutationGroup<E extends Number> extends AbstractNumberT
    * @return 互換リスト
    */
   public List<? extends SymmetricTransPositionGroup<E>> convertTransPosition() {
-    List<SymmetricTransPositionGroup<E>> resultTransPosition = new ArrayList<>();
+    List<SymmetricTransPositionGroup<E>> R = new ArrayList<>();
     final List<? extends SymmetricCycleGroup<E>> cycles = this.convertCycle();
     for (SymmetricCycleGroup<E> cycle : cycles) {
       if (cycle.getColumnSize() == 2) {
-        resultTransPosition.add(new SymmetricTransPositionGroup<>(
+        R.add(new SymmetricTransPositionGroup<>(
             cycle.getTable(), cycle.getInitializer(), cycle.getOp(), cycle.getRop()));
       } else {
         E suffix = null;
@@ -288,14 +288,14 @@ public class SymmetricPermutationGroup<E extends Number> extends AbstractNumberT
             numbers.offerFirst(data);
         }
         while (!numbers.isEmpty()) {
-          resultTransPosition.add(
+          R.add(
               new SymmetricTransPositionGroup<>(
                   Pair.of(suffix, numbers.pollFirst()), cycle.getInitializer(), cycle.getOp(), cycle.getRop())
           );
         }
       }
     }
-    return resultTransPosition;
+    return R;
   }
   
   /**

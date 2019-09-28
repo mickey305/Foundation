@@ -84,15 +84,15 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
    */
   public SquareMatrix<E> createIdentityMatrix() {
     final IElementInitializer<E> INI = this.getInitializer();
-    final SquareMatrix<E> matrix = new SquareMatrix<>(this);
+    final SquareMatrix<E> R = new SquareMatrix<>(this);
     for (int i = 0; i < this.getRowSize(); i++) {
       for (int j = 0; j < this.getColumnSize(); j++) {
-        matrix.putCell(i, j, INI.zero());
+        R.putCell(i, j, INI.zero());
         if (i == j)
-          matrix.putCell(i, j, INI.one());
+          R.putCell(i, j, INI.one());
       }
     }
-    return matrix;
+    return R;
   }
   
   /**
@@ -112,11 +112,11 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
     this.calcInverseMatrixPhase2(extMatrix);
     this.calcInverseMatrixPhase3(extMatrix);
     
-    final SquareMatrix<E> result = new SquareMatrix<>(this);
-    for (int i = 0; i < result.getRowSize(); i++)
-      for (int j = 0; j < result.getColumnSize(); j++)
-        result.putCell(i, j, extMatrix.getCell(i, this.getColumnSize() + j));
-    return result;
+    final SquareMatrix<E> R = new SquareMatrix<>(this);
+    for (int i = 0; i < R.getRowSize(); i++)
+      for (int j = 0; j < R.getColumnSize(); j++)
+        R.putCell(i, j, extMatrix.getCell(i, this.getColumnSize() + j));
+    return R;
   }
   
   /**
@@ -135,35 +135,35 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
    */
   public E determinant() {
     final IElementInitializer<E> INI = this.getInitializer();
-    E result = INI.zero();
+    E R = INI.zero();
     final Integer[] rowIndexes = new Integer[this.getColumnSize()];
     for (int i = 0; i < rowIndexes.length; i++)
       rowIndexes[i] = i;
-    final Permutation<Integer> rowPermutation = new Permutation<>(rowIndexes);
+    final Permutation<Integer> RP = new Permutation<>(rowIndexes);
   
     IOperationFactory<Integer> factory = OperationFactory.getFactory();
-    IElementInitializer<Integer> initializer = ElementInitializerFactory.getFactory();
+    IElementInitializer<Integer> ini = ElementInitializerFactory.getFactory();
     do {
-      final SymmetricPermutationGroup<Integer> permutationGroup = new SymmetricPermutationGroup<>(
-          new Integer[][]{rowIndexes, rowPermutation.getElements()},
-          initializer,
+      final Integer[][] tbl = new Integer[][]{rowIndexes, RP.getElements()};
+      final SymmetricPermutationGroup<Integer> PG = new SymmetricPermutationGroup<>(
+          tbl, ini,
           Collections.<Operator, AbstractNumberOperation<Integer, Integer>>emptyMap(),
           Collections.<RelationalOperator, AbstractNumberOperation<Integer, Boolean>>emptyMap());
       
-      OperatorRegistryUtil.registerAll(permutationGroup.getOp(), permutationGroup.getRop(), factory);
+      OperatorRegistryUtil.registerAll(PG.getOp(), PG.getRop(), factory);
       
       E multiResult = INI.one();
-      final int sgn = permutationGroup.sgn();
-      for (int j = 0; j < permutationGroup.getColumnSize(); j++) {
-        final E data = this.getCell(j, permutationGroup.getPairOf(j));
+      final int sgn = PG.sgn();
+      for (int j = 0; j < PG.getColumnSize(); j++) {
+        final E data = this.getCell(j, PG.getPairOf(j));
         multiResult = this.getOp(Operator.Multi).apply(data, multiResult);
       }
       multiResult = this.getOp(Operator.Multi).apply(multiResult, INI.convertFrom(sgn));
       
-      result = this.getOp(Operator.Add).apply(multiResult, result);
-    } while (rowPermutation.next());
+      R = this.getOp(Operator.Add).apply(multiResult, R);
+    } while (RP.next());
     
-    return result;
+    return R;
   }
   
   /**

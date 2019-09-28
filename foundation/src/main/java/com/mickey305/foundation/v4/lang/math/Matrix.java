@@ -85,14 +85,14 @@ public class Matrix<E extends Number> extends AbstractNumberTable<E> {
    */
   public Matrix<E> multi(E scalar) {
     E resultCell;
-    final Matrix<E> resultMatrix = new Matrix<>(this);
+    final Matrix<E> R = new Matrix<>(this);
     for (int i = 0; i < this.getRowSize(); i++) {
       for (int j = 0; j < this.getColumnSize(); j++) {
-        resultCell = resultMatrix.getOp(Operator.Multi).apply(this.getCell(i, j), scalar);
-        resultMatrix.putCell(i, j, resultCell);
+        resultCell = R.getOp(Operator.Multi).apply(this.getCell(i, j), scalar);
+        R.putCell(i, j, resultCell);
       }
     }
-    return resultMatrix;
+    return R;
   }
   
   /**
@@ -106,7 +106,7 @@ public class Matrix<E extends Number> extends AbstractNumberTable<E> {
       throw new UnsupportedOperationException();
     
     final IElementInitializer<E> INI = this.getInitializer();
-    final Matrix<E> resultMatrix = new Matrix<>(
+    final Matrix<E> R = new Matrix<>(
         INI.table(this.getRowSize(), rightMatrix.getColumnSize()),
         INI, this.getOp(), this.getRop());
     for (int i = 0; i < this.getRowSize(); i++) {
@@ -125,10 +125,10 @@ public class Matrix<E extends Number> extends AbstractNumberTable<E> {
         for (E cell : multiRec)
           resultCell = this.getOp(Operator.Add).apply(cell, resultCell);
         
-        resultMatrix.putCell(i, j, resultCell);
+        R.putCell(i, j, resultCell);
       }
     }
-    return resultMatrix;
+    return R;
   }
   
   /**
@@ -145,14 +145,14 @@ public class Matrix<E extends Number> extends AbstractNumberTable<E> {
       throw new UnsupportedOperationException();
     
     E resultCell;
-    final Matrix<E> resultMatrix = new Matrix<>(leftMatrix);
+    final Matrix<E> R = new Matrix<>(leftMatrix);
     for (int i = 0; i < leftMatrix.getRowSize(); i++) {
       for (int j = 0; j < leftMatrix.getColumnSize(); j++) {
         resultCell = leftMatrix.getOp(operator).apply(leftMatrix.getCell(i, j), rightMatrix.getCell(i, j));
-        resultMatrix.putCell(i, j, resultCell);
+        R.putCell(i, j, resultCell);
       }
     }
-    return resultMatrix;
+    return R;
   }
   
   /**
@@ -182,12 +182,13 @@ public class Matrix<E extends Number> extends AbstractNumberTable<E> {
     if (this.getRowSize() != r.getRowSize())
       throw new UnsupportedOperationException();
     
-    final Matrix<E> resultMatrix = new Matrix<>(
+    final Matrix<E> R = new Matrix<>(
         this.getRowSize(),
         this.getColumnSize() + r.getColumnSize(),
         this.getInitializer(), this.getOp(), this.getRop());
-    for (int i = 0; i < resultMatrix.getRowSize(); i++) {
-      for (int j = 0; j < resultMatrix.getColumnSize(); j++) {
+    
+    for (int i = 0; i < R.getRowSize(); i++) {
+      for (int j = 0; j < R.getColumnSize(); j++) {
         Matrix<E> targetMatrix = r;
         int jj = j - this.getColumnSize();
         if (j < this.getColumnSize()) {
@@ -195,10 +196,10 @@ public class Matrix<E extends Number> extends AbstractNumberTable<E> {
           jj = j;
         }
         final E cell = targetMatrix.getCell(i, jj);
-        resultMatrix.putCell(i, j, cell);
+        R.putCell(i, j, cell);
       }
     }
-    return resultMatrix;
+    return R;
   }
   
   /**
@@ -211,23 +212,24 @@ public class Matrix<E extends Number> extends AbstractNumberTable<E> {
     if (this.getColumnSize() != b.getColumnSize())
       throw new UnsupportedOperationException();
     
-    final Matrix<E> resultMatrix = new Matrix<>(
+    final Matrix<E> R = new Matrix<>(
         this.getRowSize() + b.getRowSize(),
         this.getColumnSize(),
         this.getInitializer(), this.getOp(), this.getRop());
-    for (int i = 0; i < resultMatrix.getRowSize(); i++) {
+    
+    for (int i = 0; i < R.getRowSize(); i++) {
       Matrix<E> targetMatrix = b;
       int ii = i - this.getRowSize();
       if (i < this.getRowSize()) {
         targetMatrix = this;
         ii = i;
       }
-      for (int j = 0; j < resultMatrix.getColumnSize(); j++) {
+      for (int j = 0; j < R.getColumnSize(); j++) {
         final E cell = targetMatrix.getCell(ii, j);
-        resultMatrix.putCell(i, j, cell);
+        R.putCell(i, j, cell);
       }
     }
-    return resultMatrix;
+    return R;
   }
   
   /**
@@ -236,12 +238,12 @@ public class Matrix<E extends Number> extends AbstractNumberTable<E> {
    * @return 零行列
    */
   public Matrix<E> createZeroMatrix() {
-    final Matrix<E> matrix = new Matrix<>(this);
+    final Matrix<E> R = new Matrix<>(this);
     for (int i = 0; i < this.getRowSize(); i++)
       for (int j = 0; j < this.getColumnSize(); j++)
-        matrix.putCell(i, j, this.getInitializer().zero());
+        R.putCell(i, j, this.getInitializer().zero());
     
-    return matrix;
+    return R;
   }
   
   /**
@@ -254,17 +256,17 @@ public class Matrix<E extends Number> extends AbstractNumberTable<E> {
    * @return 2値行列
    */
   public Matrix<E> createLogicalMatrix() {
-    final Matrix<E> matrix = new Matrix<>(this);
+    final Matrix<E> R = new Matrix<>(this);
     final IElementInitializer<E> INI = this.getInitializer();
     for (int i = 0; i < this.getRowSize(); i++) {
       for (int j = 0; j < this.getColumnSize(); j++) {
-        final E cell = matrix.getCell(i, j);
-        matrix.putCell(i, j, this.getRop(RelationalOperator.LE).apply(cell, INI.zero())
+        final E cell = R.getCell(i, j);
+        R.putCell(i, j, this.getRop(RelationalOperator.LE).apply(cell, INI.zero())
             ? INI.zero()
             : INI.one());
       }
     }
-    return matrix;
+    return R;
   }
   
   /**
