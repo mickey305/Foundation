@@ -112,6 +112,7 @@ public abstract class AbstractMatrixHandler<
     if (resultMatrix == null) throw new UnsupportedOperationException();
     
     M1 res = this.createResultMatrix(orgMatrix, resultMatrix);
+    resultMatrix = null;
   
     if (IS_DEBUG_MODE) Log.d("aft:finalizer" + Arrays.deepToString(res.getTable()));
     

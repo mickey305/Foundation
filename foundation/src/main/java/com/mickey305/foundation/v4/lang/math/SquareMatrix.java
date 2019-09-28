@@ -147,18 +147,7 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
           initializer,
           Collections.<Operator, AbstractNumberOperation<Integer, Integer>>emptyMap(),
           Collections.<RelationalOperator, AbstractNumberOperation<Integer, Boolean>>emptyMap());
-      permutationGroup.getOp().put(Operator.Add, factory.add());
-      permutationGroup.getOp().put(Operator.Sub, factory.sub());
-      permutationGroup.getOp().put(Operator.Multi, factory.multi());
-      permutationGroup.getOp().put(Operator.Div, factory.div());
-      permutationGroup.getOp().put(Operator.Max, factory.max());
-      permutationGroup.getOp().put(Operator.Min, factory.min());
-      permutationGroup.getRop().put(RelationalOperator.Eq, factory.eq());
-      permutationGroup.getRop().put(RelationalOperator.NE, factory.ne());
-      permutationGroup.getRop().put(RelationalOperator.LT, factory.lt());
-      permutationGroup.getRop().put(RelationalOperator.LE, factory.le());
-      permutationGroup.getRop().put(RelationalOperator.GT, factory.gt());
-      permutationGroup.getRop().put(RelationalOperator.GE, factory.ge());
+      OperatorRegistryUtil.registerAll(permutationGroup.getOp(), permutationGroup.getRop(), factory);
       
       E multiResult = this.getInitializer().one();
       final int sgn = permutationGroup.sgn();
