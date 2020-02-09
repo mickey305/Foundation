@@ -289,12 +289,14 @@ public class Regexp {
   public static String wrap(@Nonnull String regexp, @Nonnull CompileType compileType) {
     Assert.requireNonNull(regexp);
     Assert.requireNonNull(compileType);
-    if (compileType == CompileType.Exact  ) regexp = "^"   + regexp + "$";
-    if (compileType == CompileType.Partial) regexp = "^.*" + regexp + ".*$";
-    if (compileType == CompileType.Prefix ) regexp = "^"   + regexp + ".*$";
-    if (compileType == CompileType.Suffix ) regexp = "^.*" + regexp + "$";
-    if (compileType == CompileType.Plain  ) regexp = ""    + regexp + "";
-    return regexp;
+    if (compileType == CompileType.Exact  ) return "^"   + regexp + "$";
+    if (compileType == CompileType.Partial) return "^.*" + regexp + ".*$";
+    if (compileType == CompileType.Prefix ) return "^"   + regexp + ".*$";
+    if (compileType == CompileType.Suffix ) return "^.*" + regexp + "$";
+    if (compileType == CompileType.Plain  ) return ""    + regexp + "";
+    
+    // compileType analyze unreached
+    throw new IllegalArgumentException("compileType analyze unreached.");
   }
   
   /**
