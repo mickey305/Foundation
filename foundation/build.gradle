@@ -4,7 +4,8 @@ plugins {
 }
 
 group 'com.mickey305'
-version '0.6.41-beta'
+//version '0.6.41-beta'
+version '0.6.50'
 
 apply plugin: 'java'
 apply plugin: 'maven'

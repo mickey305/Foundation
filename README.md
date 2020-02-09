@@ -55,6 +55,7 @@ The following table shows status of external CI service.
 - [install-jdk.sh on GitHub](https://github.com/sormuras/bach)
 
 # <a name="history"> History
+ * version [0.6.50](https://github.com/mickey305/Foundation/releases/tag/0.6.50) deploy - 2020-02-10
  * version [0.6.0](https://github.com/mickey305/Foundation/releases/tag/0.6.0) deploy - 2018-12-08
  * version [0.5.0](https://github.com/mickey305/Foundation/releases/tag/0.5.0) deploy - 2017-11-11
  * version [0.0.1-SNAPSHOT](https://github.com/mickey305/Foundation/releases/tag/0.0.1-SNAPSHOT) deploy(Test version) - 2017-10-09
