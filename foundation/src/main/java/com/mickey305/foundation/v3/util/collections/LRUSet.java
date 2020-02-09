@@ -36,7 +36,7 @@ public class LRUSet<E> extends AbstractLinkedHashSet<E, LinkedHashMap<E, Object>
   }
   
   private LRUSet(int capacity) {
-    map = LRUMap.of(capacity);
+    map = LRUMap.<E, Object>of(capacity);
   }
   
   /**

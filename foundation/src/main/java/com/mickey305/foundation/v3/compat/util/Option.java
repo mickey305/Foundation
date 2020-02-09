@@ -86,7 +86,7 @@ public final class Option<T> {
     if (!isPresent()) {
       return empty();
     } else {
-      return Option.of(mapper.apply(value));
+      return Option.<U>of(mapper.apply(value));
     }
   }
   

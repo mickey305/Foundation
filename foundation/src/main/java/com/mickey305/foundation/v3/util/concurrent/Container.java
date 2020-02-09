@@ -97,8 +97,8 @@ public class Container<R> implements Runnable, Killable, Destroyable {
     while (judge && !this.isDoneSignal() && commandItr.hasNext()) {
       Executable<R> command = commandItr.next();
       // invoke command
-      final R result = command.execute(); // Executable<R><R>#execute():R method calling
-      this.getResultPool().add(Pair.of(command, result));
+      final R result = command.execute(); // Executable<R>#execute():R method calling
+      this.getResultPool().add(Pair.<Executable<R>, R>of(command, result));
       commandItr.remove();
       // Step finish event task
       if (stpFinListener != null) {

@@ -32,8 +32,8 @@ class LinkedHashSetFactory {
    * @return
    */
   public static <K> LinkedHashSet<K> newCache(CacheType type, int capacity) {
-    if (type == CacheType.FIFO) return FIFOSet.of(capacity);
-    if (type == CacheType.LRU) return LRUSet.of(capacity);
+    if (type == CacheType.FIFO) return FIFOSet.<K>of(capacity);
+    if (type == CacheType.LRU) return LRUSet.<K>of(capacity);
     // throwing exception
     throw new RuntimeException("cacheType analyze unreached.");
   }

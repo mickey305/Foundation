@@ -26,7 +26,7 @@ public class MutablePair<L, R> extends Pair<L, R> {
   private org.apache.commons.lang3.tuple.MutablePair<L, R> pair;
 
   private MutablePair(final L left, final R right) {
-    this.setPair(org.apache.commons.lang3.tuple.MutablePair.of(left, right));
+    this.setPair(org.apache.commons.lang3.tuple.MutablePair.<L, R>of(left, right));
   }
 
   public static <L, R> MutablePair<L, R> of(final L left, final R right) {

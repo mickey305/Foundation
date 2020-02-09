@@ -58,7 +58,7 @@ public class CacheFactory {
    * @return
    */
   public static <K, V> ILRUMap<K, V> newLRUMap(int capacity) {
-    return LRUMap.of(capacity);
+    return LRUMap.<K, V>of(capacity);
   }
   
   /**
@@ -68,7 +68,7 @@ public class CacheFactory {
    * @return
    */
   public static <K> ILRUSet<K> newLRUSet(int capacity) {
-    return LRUSet.of(capacity);
+    return LRUSet.<K>of(capacity);
   }
   
   /**

@@ -32,7 +32,7 @@ public class FIFOSet<E> extends AbstractLinkedHashSet<E, LinkedHashMap<E, Object
   }
   
   private FIFOSet(int capacity) {
-    map = FIFOMap.of(capacity);
+    map = FIFOMap.<E, Object>of(capacity);
   }
   
   /**

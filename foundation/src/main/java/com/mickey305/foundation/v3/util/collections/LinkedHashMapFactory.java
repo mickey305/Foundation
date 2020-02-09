@@ -33,8 +33,8 @@ class LinkedHashMapFactory {
    * @return
    */
   public static <K, V> LinkedHashMap<K, V> newCache(CacheType type, int capacity) {
-    if (type == CacheType.FIFO) return FIFOMap.of(capacity);
-    if (type == CacheType.LRU) return LRUMap.of(capacity);
+    if (type == CacheType.FIFO) return FIFOMap.<K, V>of(capacity);
+    if (type == CacheType.LRU) return LRUMap.<K, V>of(capacity);
     // throwing exception
     throw new RuntimeException("cacheType analyze unreached.");
   }

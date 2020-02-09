@@ -101,7 +101,7 @@ public class SymmetricPermutationGroup extends AbstractNumberTable {
    */
   public static Pair<SymmetricPermutationGroup, SymmetricPermutationGroup> extension(SymmetricPermutationGroup l, SymmetricPermutationGroup r) {
     if (l.getColumnSize() == r.getColumnSize())
-      return Pair.of(l, r);
+      return Pair.<SymmetricPermutationGroup, SymmetricPermutationGroup>of(l, r);
     
     l = new SymmetricPermutationGroup(l);
     r = new SymmetricPermutationGroup(r);
@@ -122,16 +122,16 @@ public class SymmetricPermutationGroup extends AbstractNumberTable {
     for (int i = 0; i < big.getColumnSize(); i++) {
       if (small.dataSet.contains(bigTopAry[i])) {
         final int index = small.getColumnIndexOf(bigTopAry[i]);
-        result.add(Pair.of(smallTopAry[index], small.getPairOf(smallTopAry[index])));
+        result.add(Pair.<Number, Number>of(smallTopAry[index], small.getPairOf(smallTopAry[index])));
       } else {
-        result.add(Pair.of(bigTopAry[i], bigTopAry[i]));
+        result.add(Pair.<Number, Number>of(bigTopAry[i], bigTopAry[i]));
       }
     }
     final SymmetricPermutationGroup newPermutation = new SymmetricPermutationGroup(result);
     
     return (isLeftSmall)
-        ? Pair.of(newPermutation, big)
-        : Pair.of(big, newPermutation);
+        ? Pair.<SymmetricPermutationGroup, SymmetricPermutationGroup>of(newPermutation, big)
+        : Pair.<SymmetricPermutationGroup, SymmetricPermutationGroup>of(big, newPermutation);
   }
   
   /**
@@ -155,7 +155,7 @@ public class SymmetricPermutationGroup extends AbstractNumberTable {
     for (int i = 0; i < l.getColumnSize(); i++) {
       final Number rightBottom = r.getPairOf(leftAry[i]);
       final Number leftBottom = l.getPairOf(rightBottom);
-      result.add(Pair.of(leftAry[i], leftBottom));
+      result.add(Pair.<Number, Number>of(leftAry[i], leftBottom));
     }
     return new SymmetricPermutationGroup(result);
   }
@@ -170,7 +170,7 @@ public class SymmetricPermutationGroup extends AbstractNumberTable {
     final Number[] ary = permutation.getRow(0);
     final List<Pair<Number, Number>> result = new ArrayList<>();
     for (int i = 0; i < permutation.getColumnSize(); i++) {
-      result.add(Pair.of(ary[i], ary[i]));
+      result.add(Pair.<Number, Number>of(ary[i], ary[i]));
     }
     return new SymmetricPermutationGroup(result);
   }
@@ -256,7 +256,7 @@ public class SymmetricPermutationGroup extends AbstractNumberTable {
       Number tmpData = tpData;
       do {
         checkedElms.add(tmpData);
-        list.add(Pair.of(tmpData, this.getPairOf(tmpData)));
+        list.add(Pair.<Number, Number>of(tmpData, this.getPairOf(tmpData)));
         tmpData = this.getPairOf(tmpData);
       } while (!tmpData.equals(tpData));
       
@@ -288,7 +288,7 @@ public class SymmetricPermutationGroup extends AbstractNumberTable {
         }
         while (!numbers.isEmpty()) {
           resultTransPosition.add(
-              new SymmetricTransPositionGroup(Pair.of(suffix, numbers.pollFirst())));
+              new SymmetricTransPositionGroup(Pair.<Number, Number>of(suffix, numbers.pollFirst())));
         }
       }
     }
@@ -309,7 +309,7 @@ public class SymmetricPermutationGroup extends AbstractNumberTable {
     final List<Pair<Number, Number>> result = new ArrayList<>();
     for (int i = 0; i < this.getColumnSize(); i++) {
       if (!samePairRowIndexes.contains(i)) {
-        result.add(Pair.of(table[0][i], table[1][i]));
+        result.add(Pair.<Number, Number>of(table[0][i], table[1][i]));
       }
     }
     return new SymmetricPermutationGroup(result);
