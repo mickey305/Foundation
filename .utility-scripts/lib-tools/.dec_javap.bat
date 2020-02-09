@@ -35,43 +35,55 @@ chcp 65001
 @rem 遅延環境変数(!i!)の有効化
 setlocal ENABLEDELAYEDEXPANSION
 
-call func console ######## Javadecompile実行処理を開始します...
+@rem this batch file placed directory path
+set TMP_THIS_DIR=%~dp0
+set TMP_THIS_DIR=%TMP_THIS_DIR:~0,-1%
+@rem path info
+set TMP_LIB_COMMON=%TMP_THIS_DIR%\..\common
+set TMP_LIB_TOOL=%TMP_THIS_DIR%
+set TMP_LIB_TOOL_VENDOR=%TMP_THIS_DIR%\..\lib-tools-vendor
+set TMP_PROJECT_ROOT=%TMP_THIS_DIR%\..\..
+
+cd %TMP_PROJECT_ROOT%
+
+call %TMP_LIB_COMMON%\func console ######## Javadecompile実行処理を開始します...
 
 pause
 
-call datetime.bat
+call %TMP_LIB_COMMON%\datetime.bat
 set LOGNAME=%yyyy%-%mm%-%dd%_%hh%%mi%%ss%_dec_javap
-set CLASS_ROOT=foundation\build\classes\java\main
+set LOGFILE_PATH=%TMP_THIS_DIR%\..\..\.log\%LOGNAME%
+set CLASS_ROOT=%TMP_PROJECT_ROOT%\foundation\build\classes\java\main
 
 @rem foreach
 set i=1
 :BEGIN
 call set it=%%VAR_!i!%%
 if defined it (
-  call func console %i%: Javadecの実行 - 開始
-  call func console %i%: class root - %CLASS_ROOT%
-  call func console %i%: target package - !it!
-  call func console [[%i%. task invoke start]] >> .log\%LOGNAME%_[%i%]!it!.txt 2>&1
+  call %TMP_LIB_COMMON%\func console %i%: Javadecの実行 - 開始
+  call %TMP_LIB_COMMON%\func console %i%: class root - %CLASS_ROOT%
+  call %TMP_LIB_COMMON%\func console %i%: target package - !it!
+  call %TMP_LIB_COMMON%\func console [[%i%. task invoke start]] >> %LOGFILE_PATH%_[%i%]!it!.txt 2>&1
 
   @rem decompile result output
-  javap -c -cp %CLASS_ROOT% !it! >> .log\%LOGNAME%_[%i%]!it!.txt 2>&1
+  javap -c -cp %CLASS_ROOT% !it! >> %LOGFILE_PATH%_[%i%]!it!.txt 2>&1
 
   if not "!ERRORLEVEL!" == "0" (
-      call func console %i%: [E] build javadec command failed status="!ERRORLEVEL!"
+      call %TMP_LIB_COMMON%\func console %i%: [E] build javadec command failed status="!ERRORLEVEL!"
       pause
       exit
   ) else (
-      call func console %i%: [I] build javadec command success status="!ERRORLEVEL!"
+      call %TMP_LIB_COMMON%\func console %i%: [I] build javadec command success status="!ERRORLEVEL!"
   )
-  call func console %i%: Javadecの実行 - 終了
-  call func console [[%i%. task invoke end]] >> .log\%LOGNAME%_[%i%]!it!.txt 2>&1
+  call %TMP_LIB_COMMON%\func console %i%: Javadecの実行 - 終了
+  call %TMP_LIB_COMMON%\func console [[%i%. task invoke end]] >> %LOGFILE_PATH%_[%i%]!it!.txt 2>&1
   
   
   set /A i+=1
   goto :BEGIN
 )
 
-call func console ######## Javadecompile実行処理が正常終了しました...
+call %TMP_LIB_COMMON%\func console ######## Javadecompile実行処理が正常終了しました...
 
 timeout 60
 endlocal

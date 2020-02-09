@@ -6,6 +6,14 @@ exit /b
 :console
     setlocal
 
+    @rem this batch file placed directory path
+    set TMP_THIS_DIR=%~dp0
+    set TMP_THIS_DIR=%TMP_THIS_DIR:~0,-1%
+    @rem path info
+    set TMP_LIB_COMMON=%TMP_THIS_DIR%
+    set TMP_LIB_TOOL=%TMP_THIS_DIR%\..\lib-tools
+    set TMP_LIB_TOOL_VENDOR=%TMP_THIS_DIR%\..\lib-tools-vendor
+
     @rem argument is %2~%n
     shift
     set TARG=
@@ -16,7 +24,7 @@ exit /b
         goto check
     :final
 
-    call datetime.bat
+    call %TMP_LIB_COMMON%\datetime.bat
     @rem console output
     echo [%yyyy%-%mm%-%dd% %hh%:%mi%:%ss%.%sss%]%TARG%
 

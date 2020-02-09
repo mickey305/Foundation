@@ -5,6 +5,14 @@ chcp 65001
 
 setlocal
 
+@rem this batch file placed directory path
+set TMP_THIS_DIR=%~dp0
+set TMP_THIS_DIR=%TMP_THIS_DIR:~0,-1%
+@rem path info
+@rem set TMP_LIB_COMMON=%TMP_THIS_DIR%\common
+set TMP_LIB_TOOL=%TMP_THIS_DIR%\lib-tools
+set TMP_LIB_TOOL_VENDOR=%TMP_THIS_DIR%\lib-tools-vendor
+
 cls
 
 :keyinput
@@ -24,29 +32,29 @@ echo ###########################################################################
 set /p answer="select parameter : %answer%"
 if "%answer%"=="1" (
   cls
-  call .make.bat
+  call %TMP_LIB_TOOL%\.make.bat
 
 ) else if "%answer%"=="2" (
   cls
-  call .create_javadoc.bat
+  call %TMP_LIB_TOOL%\.create_javadoc.bat
 
 ) else if "%answer%"=="3" (
   cls
-  call .dec_javap.bat
+  call %TMP_LIB_TOOL%\.dec_javap.bat
 
 ) else if "%answer%"=="4" (
   cls
-  call .release_bintray.bat
+  call %TMP_LIB_TOOL%\.release_bintray.bat
 
 ) else if "%answer%"=="all" (
   cls
-  call .make.bat
+  call %TMP_LIB_TOOL%\.make.bat
   cls
-  call .create_javadoc.bat
+  call %TMP_LIB_TOOL%\.create_javadoc.bat
   cls
-  call .dec_javap.bat
+  call %TMP_LIB_TOOL%\.dec_javap.bat
   cls
-  call .release_bintray.bat
+  call %TMP_LIB_TOOL%\.release_bintray.bat
 
 ) else if "%answer%"=="9" (
   exit /b 1
