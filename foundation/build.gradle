@@ -12,8 +12,6 @@ apply plugin: 'jacoco'
 apply plugin: 'com.novoda.bintray-release'
 apply plugin: 'com.github.spotbugs'
 
-import com.github.spotbugs.SpotBugsTask
-
 def defaultEncoding = 'UTF-8'
 
 sourceCompatibility = JavaVersion.VERSION_1_7
@@ -30,7 +28,7 @@ gradle.projectsEvaluated {
         systemProperty "file.encoding", defaultEncoding
     }
     // To generate an HTML report instead of XML
-    tasks.withType(SpotBugsTask) {
+    tasks.withType(com.github.spotbugs.SpotBugsTask) {
         reports {
             xml.enabled = false
             html.enabled = true

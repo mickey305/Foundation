@@ -17,6 +17,8 @@
 
 package com.mickey305.foundation.v3.util.concurrent;
 
+import javax.annotation.Nonnull;
+
 public interface ILockable<L extends LockType> {
   /**
    * ロック開始処理
@@ -24,7 +26,7 @@ public interface ILockable<L extends LockType> {
    * </p>
    * @param lockType ロック方法
    */
-  void lock(L lockType);
+  void lock(@Nonnull L lockType);
   
   /**
    * ロック解除処理
@@ -32,5 +34,5 @@ public interface ILockable<L extends LockType> {
    * </p>
    * @param lockType ロック方法
    */
-  void unlock(L lockType);
+  void unlock(@Nonnull L lockType);
 }
