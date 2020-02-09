@@ -17,6 +17,14 @@
 
 package com.mickey305.foundation.v3.util;
 
+/**
+ * 日本語抽出オブジェクト生成用ファクトリ
+ * @deprecated 当クラスは、以下の二つの理由から、近い将来削除される予定です。
+ * <ul>
+ *   <li>アプレケーション固有に実装すべき内容が多く含まれるため</li>
+ *   <li>品質が低く、かつ処理内容がブラックブックス化しやすいため</li>
+ * </ul>
+ */
 public class JapanesePickerFactory {
   private static final String EXT_DEFAULT_LHS_PATTERN = "[\"\\.\\?\\$\\+\\\\ </>!&,a-zA-Z0-9℀-⅏⅐-\u218B←-⇿∀-⋿①-⓿〇〆ａ-ｚＡ-Ｚ０-９　〒＄￥％〝【︗『《≪〈〔［（「｛＜]*";
   private static final String EXT_DEFAULT_RHS_PATTERN = "([\"\\.\\?\\$\\\\</>!a-zA-Z0-9℀-⅏⅐-\u218B←-⇿∀-⋿①-⓿〇〆ａ-ｚＡ-Ｚ０-９＄￥％〟〞】︘』》≫〉〕］）」｝＞…︙]*[。︒！？]?)";
