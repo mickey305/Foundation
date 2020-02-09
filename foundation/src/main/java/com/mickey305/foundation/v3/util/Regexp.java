@@ -289,9 +289,11 @@ public class Regexp {
   public static String wrap(@Nonnull String regexp, @Nonnull CompileType compileType) {
     Assert.requireNonNull(regexp);
     Assert.requireNonNull(compileType);
-    if (compileType == CompileType.Exact) regexp = "^" + regexp + "$";
+    if (compileType == CompileType.Exact  ) regexp = "^"   + regexp + "$";
     if (compileType == CompileType.Partial) regexp = "^.*" + regexp + ".*$";
-    if (compileType == CompileType.Plain) regexp = "" + regexp + "";
+    if (compileType == CompileType.Prefix ) regexp = "^"   + regexp + ".*$";
+    if (compileType == CompileType.Suffix ) regexp = "^.*" + regexp + "$";
+    if (compileType == CompileType.Plain  ) regexp = ""    + regexp + "";
     return regexp;
   }
   
@@ -334,6 +336,16 @@ public class Regexp {
      * 部分一致
      */
     Partial,
+  
+    /**
+     * 前方一致
+     */
+    Prefix,
+    
+    /**
+     * 後方一致
+     */
+    Suffix,
     
     /**
      * オリジナル
