@@ -33,13 +33,13 @@ public class SymmetricTransPositionGroup<E extends Number> extends SymmetricCycl
                                         Map<RelationalOperator, AbstractNumberOperation<E, Boolean>> rop) {
     super(initialTable, initializer, op, rop);
     if (!this.checkTransPosition())
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("symmetricTransPositionGroup-check failed.");
   }
   
   protected SymmetricTransPositionGroup(SymmetricTransPositionGroup<E> table) {
     super(table);
     if (!this.checkTransPosition())
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("symmetricTransPositionGroup-check failed.");
   }
   
   protected SymmetricTransPositionGroup(List<Pair<E, E>> list, IElementInitializer<E> initializer,
@@ -47,7 +47,7 @@ public class SymmetricTransPositionGroup<E extends Number> extends SymmetricCycl
                                         Map<RelationalOperator, AbstractNumberOperation<E, Boolean>> rop) {
     super(list, initializer, op, rop);
     if (!this.checkTransPosition())
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("symmetricTransPositionGroup-check failed.");
   }
   
   protected SymmetricTransPositionGroup(Pair<E, E> row, IElementInitializer<E> initializer,

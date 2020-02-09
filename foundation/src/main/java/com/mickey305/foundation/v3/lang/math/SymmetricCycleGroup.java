@@ -29,19 +29,19 @@ public class SymmetricCycleGroup extends SymmetricPermutationGroup {
   protected SymmetricCycleGroup(Number[][] initialTable) {
     super(initialTable);
     if (!this.checkCycle())
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("symmetricCycleGroup-check failed.");
   }
   
   protected SymmetricCycleGroup(SymmetricCycleGroup table) {
     super(table);
     if (!this.checkCycle())
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("symmetricCycleGroup-check failed.");
   }
   
   protected SymmetricCycleGroup(List<Pair<Number, Number>> list) {
     super(list);
     if (!this.checkCycle())
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("symmetricCycleGroup-check failed.");
   }
   
   /**

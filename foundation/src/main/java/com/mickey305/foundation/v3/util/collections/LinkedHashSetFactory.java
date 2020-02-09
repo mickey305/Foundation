@@ -35,6 +35,6 @@ class LinkedHashSetFactory {
     if (type == CacheType.FIFO) return FIFOSet.of(capacity);
     if (type == CacheType.LRU) return LRUSet.of(capacity);
     // throwing exception
-    throw new RuntimeException();
+    throw new RuntimeException("cacheType analyze unreached.");
   }
 }

@@ -31,7 +31,7 @@ public class SquareMatrix extends Matrix {
   protected SquareMatrix(Number[][] initialTable) {
     super(initialTable);
     if (!super.isSquare())
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException("isSquare-check failed.");
   }
   
   protected SquareMatrix(SquareMatrix matrix) {
@@ -115,7 +115,7 @@ public class SquareMatrix extends Matrix {
    */
   public SquareMatrix createInverseMatrix() {
     if (!this.isRegular())
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException("isRegular-check failed.");
     
     final BigFraction bigFractionZero = BigFraction.ZERO;
     final BigFraction bigFractionOne = BigFraction.ONE;

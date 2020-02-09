@@ -102,8 +102,10 @@ public class Matrix<E extends Number> extends AbstractNumberTable<E> {
    * @return 演算結果行列
    */
   public Matrix<E> multi(Matrix<E> rightMatrix) {
-    if (this.getColumnSize() != rightMatrix.getRowSize())
-      throw new UnsupportedOperationException();
+    if (this.getColumnSize() != rightMatrix.getRowSize()) {
+      throw new UnsupportedOperationException("multi-table-size-check failed. lhs-size=" + this.getColumnSize()
+          + " rhs-size=" + rightMatrix.getRowSize());
+    }
     
     final IElementInitializer<E> INI = this.getInitializer();
     final Matrix<E> R = new Matrix<>(
@@ -141,8 +143,9 @@ public class Matrix<E extends Number> extends AbstractNumberTable<E> {
    */
   private static <E extends Number> Matrix<E> simplyOperate(Matrix<E> leftMatrix, Matrix<E> rightMatrix, Operator operator) {
     if (leftMatrix.getRowSize() != rightMatrix.getRowSize()
-        || leftMatrix.getColumnSize() != rightMatrix.getColumnSize())
-      throw new UnsupportedOperationException();
+        || leftMatrix.getColumnSize() != rightMatrix.getColumnSize()) {
+      throw new UnsupportedOperationException("operation-target-tableData-size-check failed.");
+    }
     
     E resultCell;
     final Matrix<E> R = new Matrix<>(leftMatrix);
@@ -162,8 +165,9 @@ public class Matrix<E extends Number> extends AbstractNumberTable<E> {
    * @return 演算結果行列
    */
   public Matrix<E> exp(int index) {
-    if (index <= 0)
-      throw new UnsupportedOperationException();
+    if (index <= 0) {
+      throw new UnsupportedOperationException("exp-argument-check failed.");
+    }
     
     Matrix<E> resultMatrix = this;
     for (int i = 0; i < index - 1; i++)
@@ -179,8 +183,9 @@ public class Matrix<E extends Number> extends AbstractNumberTable<E> {
    * @return 連結行列
    */
   public Matrix<E> horizontalBind(Matrix<E> r) {
-    if (this.getRowSize() != r.getRowSize())
-      throw new UnsupportedOperationException();
+    if (this.getRowSize() != r.getRowSize()) {
+      throw new UnsupportedOperationException("bindData-size-check failed.");
+    }
     
     final Matrix<E> R = new Matrix<>(
         this.getRowSize(),
@@ -209,8 +214,9 @@ public class Matrix<E extends Number> extends AbstractNumberTable<E> {
    * @return 連結行列
    */
   public Matrix<E> verticalBind(Matrix<E> b) {
-    if (this.getColumnSize() != b.getColumnSize())
-      throw new UnsupportedOperationException();
+    if (this.getColumnSize() != b.getColumnSize()) {
+      throw new UnsupportedOperationException("bindData-size-check failed.");
+    }
     
     final Matrix<E> R = new Matrix<>(
         this.getRowSize() + b.getRowSize(),
@@ -382,8 +388,9 @@ public class Matrix<E extends Number> extends AbstractNumberTable<E> {
    */
   @Override
   protected void putRow(int row, E[] rowData) {
-    if (rowData.length != this.getColumnSize())
-      throw new IllegalArgumentException();
+    if (rowData.length != this.getColumnSize()) {
+      throw new IllegalArgumentException("rowData-size-check failed.");
+    }
     
     int i = 0;
     for (E cell : rowData)
@@ -395,8 +402,9 @@ public class Matrix<E extends Number> extends AbstractNumberTable<E> {
    */
   @Override
   protected void putColumn(int column, E[] columnData) {
-    if (columnData.length != this.getRowSize())
-      throw new IllegalArgumentException();
+    if (columnData.length != this.getRowSize()) {
+      throw new IllegalArgumentException("columnData-size-check failed.");
+    }
     
     int i = 0;
     for (E cell : columnData)

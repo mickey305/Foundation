@@ -37,7 +37,7 @@ public class Matrix extends AbstractNumberTable {
     // inject element data
     for (int i = 0; i < this.getRowSize(); i++) {
       if (initialTable[i].length != this.getColumnSize())
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("matrix-initializeTable-size-check failed.");
       System.arraycopy(initialTable[i], 0, this.getTable()[i], 0, this.getColumnSize());
     }
     AbstractNumberTable.putSameValueTable(CONTAINS_SIGNATURE, this.getSignatureTable());
@@ -142,7 +142,7 @@ public class Matrix extends AbstractNumberTable {
    */
   public static Matrix multi(Matrix leftMatrix, Matrix rightMatrix) {
     if (leftMatrix.getColumnSize() != rightMatrix.getRowSize())
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException("multi-target-data-size-check failed.");
     
     final Matrix resultMatrix = Matrix.of(new Number[leftMatrix.getRowSize()][rightMatrix.getColumnSize()]);
     for (int i = 0; i < leftMatrix.getRowSize(); i++) {
@@ -178,7 +178,7 @@ public class Matrix extends AbstractNumberTable {
   private static Matrix simplyOperate(Matrix leftMatrix, Matrix rightMatrix, Operator operator) {
     if (leftMatrix.getRowSize() != rightMatrix.getRowSize()
         || leftMatrix.getColumnSize() != rightMatrix.getColumnSize())
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException("operation-table-size-check failed.");
     
     Number resultCell;
     final Matrix resultMatrix = Matrix.of(leftMatrix);
@@ -200,7 +200,7 @@ public class Matrix extends AbstractNumberTable {
    */
   public static Matrix exp(Matrix matrix, int index) {
     if (index <= 0)
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException("exp-argument-check failed.");
     
     Matrix resultMatrix = matrix;
     for (int i = 0; i < index - 1; i++)
@@ -218,7 +218,7 @@ public class Matrix extends AbstractNumberTable {
    */
   public static Matrix horizontalBind(Matrix l, Matrix r) {
     if (l.getRowSize() != r.getRowSize())
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException("bindData-size-check failed.");
     
     final Matrix resultMatrix = Matrix.of(l.getRowSize(), l.getColumnSize() + r.getColumnSize());
     for (int i = 0; i < resultMatrix.getRowSize(); i++) {
@@ -245,7 +245,7 @@ public class Matrix extends AbstractNumberTable {
    */
   public static Matrix verticalBind(Matrix t, Matrix b) {
     if (t.getColumnSize() != b.getColumnSize())
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException("bindData-size-check failed.");
     
     final Matrix resultMatrix = Matrix.of(t.getRowSize() + b.getRowSize(), t.getColumnSize());
     for (int i = 0; i < resultMatrix.getRowSize(); i++) {
@@ -399,7 +399,7 @@ public class Matrix extends AbstractNumberTable {
   @Override
   protected void putRowForcibly(int row, Number[] rowData) {
     if (rowData.length != this.getColumnSize())
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("rowData-size-check failed.");
     
     int i = 0;
     for (Number cell : rowData)
@@ -412,7 +412,7 @@ public class Matrix extends AbstractNumberTable {
   @Override
   protected void putColumnForcibly(int column, Number[] columnData) {
     if (columnData.length != this.getRowSize())
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("columnData-size-check failed.");
     
     int i = 0;
     for (Number cell : columnData)

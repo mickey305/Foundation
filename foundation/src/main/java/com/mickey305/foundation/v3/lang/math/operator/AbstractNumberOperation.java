@@ -73,7 +73,7 @@ public abstract class AbstractNumberOperation<R> implements
       return result;
     
     // throwing exception
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException("unSupported binary function.");
   }
   
   /**
@@ -102,7 +102,7 @@ public abstract class AbstractNumberOperation<R> implements
       return (BigInteger) data;
     
     // throwing exception
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException("elementData-convert failed.");
   }
   
   /**
@@ -137,7 +137,7 @@ public abstract class AbstractNumberOperation<R> implements
       return (Fraction) data;
     
     // throwing exception
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException("elementData-convert failed.");
   }
   
   /**
@@ -189,7 +189,7 @@ public abstract class AbstractNumberOperation<R> implements
       return (BigFraction) data;
     
     // throwing exception
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException("elementData-convert failed.");
   }
   
   /**

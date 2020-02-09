@@ -103,7 +103,7 @@ abstract class AbstractNumberTable implements Serializable {
     // inject element data
     for (int i = 0; i < this.getRowSize(); i++) {
       if (initialTable[i].length != this.getColumnSize())
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("initializeTable-size-check failed.");
       System.arraycopy(initialTable[i], 0, this.table[i], 0, this.getColumnSize());
     }
     AbstractNumberTable.putSameValueTable(CONTAINS_SIGNATURE, this.signatureTable);
@@ -128,7 +128,7 @@ abstract class AbstractNumberTable implements Serializable {
    */
   private void checkArgument(int row, int column) {
     if (row <= 0 || column <= 0)
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("table-sizeParameter-check failed.");
   }
   
   /**
@@ -183,7 +183,7 @@ abstract class AbstractNumberTable implements Serializable {
    */
   protected void putRowForcibly(int row, Number[] rowData) {
     if (rowData.length != this.getRowSize())
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("rowData-size-check failed.");
     
     int i = 0;
     for (Number cell : rowData)
@@ -201,7 +201,7 @@ abstract class AbstractNumberTable implements Serializable {
    */
   protected void putColumnForcibly(int column, Number[] columnData) {
     if (columnData.length != this.getColumnSize())
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("columnData-size-check failed.");
     
     int i = 0;
     for (Number cell : columnData)

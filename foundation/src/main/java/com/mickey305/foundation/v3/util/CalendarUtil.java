@@ -73,6 +73,6 @@ public class CalendarUtil {
       case Calendar.FRIDAY: return DayOfWeek.Friday;
       case Calendar.SATURDAY: return DayOfWeek.Saturday;
     }
-    throw new IllegalStateException();
+    throw new IllegalStateException("dayOfWeek-check failed.");
   }
 }

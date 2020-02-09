@@ -47,11 +47,11 @@ public class SymmetricPermutationGroup<E extends Number> extends AbstractNumberT
     // permutation data-structure check
     final Set<E> dataSet = new HashSet<>();
     if (!this.checkPermutation())
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("symmetricPermutationGroup-check failed.");
     for (E data : table[0]) {
       final boolean status = dataSet.add(data);
       if (!status)
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("symmetricPermutationGroup-check failed.");
     }
     this.dataSet.addAll(dataSet);
     dataSet.clear();
@@ -152,7 +152,7 @@ public class SymmetricPermutationGroup<E extends Number> extends AbstractNumberT
    */
   public SymmetricPermutationGroup<E> multi(SymmetricPermutationGroup<E> r) {
     if (!(r.dataSet.containsAll(this.dataSet) || this.dataSet.containsAll(r.dataSet)))
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException("multi-target-data-check failed.");
     
     // extension logic impl
     Pair<SymmetricPermutationGroup<E>, SymmetricPermutationGroup<E>> pair = SymmetricPermutationGroup.extension(this, r);
@@ -219,7 +219,7 @@ public class SymmetricPermutationGroup<E extends Number> extends AbstractNumberT
    */
   @Override
   public void putRow(int row, E[] data) {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException("unSupported method.");
   }
   
   /**
@@ -227,7 +227,7 @@ public class SymmetricPermutationGroup<E extends Number> extends AbstractNumberT
    */
   @Override
   public void putColumn(int column, E[] data) {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException("unSupported method.");
   }
   
   /**
@@ -235,7 +235,7 @@ public class SymmetricPermutationGroup<E extends Number> extends AbstractNumberT
    */
   @Override
   public void putCell(int row, int column, E data) {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException("unSupported method.");
   }
   
   /**

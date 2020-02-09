@@ -284,7 +284,7 @@ public class CollectionUtil {
      */
     @Override
     public Iterator<E> iterator() {
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException("unSupported method.");
     }
     
     /**
@@ -292,7 +292,7 @@ public class CollectionUtil {
      */
     @Override
     public Object[] toArray() {
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException("unSupported method.");
     }
     
     /**
@@ -300,7 +300,7 @@ public class CollectionUtil {
      */
     @Override
     public <T> T[] toArray(T[] a) {
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException("unSupported method.");
     }
     
     /**
@@ -308,7 +308,7 @@ public class CollectionUtil {
      */
     @Override
     public boolean add(E e) {
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException("unSupported method.");
     }
     
     /**
@@ -316,7 +316,7 @@ public class CollectionUtil {
      */
     @Override
     public boolean remove(Object o) {
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException("unSupported method.");
     }
     
     /**
@@ -324,7 +324,7 @@ public class CollectionUtil {
      */
     @Override
     public boolean addAll(Collection<? extends E> c) {
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException("unSupported method.");
     }
     
     /**
@@ -332,7 +332,7 @@ public class CollectionUtil {
      */
     @Override
     public boolean removeAll(Collection<?> c) {
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException("unSupported method.");
     }
     
     /**
@@ -340,7 +340,7 @@ public class CollectionUtil {
      */
     @Override
     public boolean retainAll(Collection<?> c) {
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException("unSupported method.");
     }
     
     /**
@@ -348,7 +348,7 @@ public class CollectionUtil {
      */
     @Override
     public void clear() {
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException("unSupported method.");
     }
     
     Collection<? extends E> getCollection() {
@@ -389,7 +389,7 @@ public class CollectionUtil {
      */
     @Override
     public boolean addAll(int index, Collection<? extends E> c) {
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException("unSupported method.");
     }
     
     /**
@@ -397,7 +397,7 @@ public class CollectionUtil {
      */
     @Override
     public E get(int index) {
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException("unSupported method.");
     }
     
     /**
@@ -405,7 +405,7 @@ public class CollectionUtil {
      */
     @Override
     public E set(int index, E element) {
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException("unSupported method.");
     }
     
     /**
@@ -413,7 +413,7 @@ public class CollectionUtil {
      */
     @Override
     public void add(int index, E element) {
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException("unSupported method.");
     }
     
     /**
@@ -421,7 +421,7 @@ public class CollectionUtil {
      */
     @Override
     public E remove(int index) {
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException("unSupported method.");
     }
     
     /**
@@ -429,7 +429,7 @@ public class CollectionUtil {
      */
     @Override
     public ListIterator<E> listIterator() {
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException("unSupported method.");
     }
     
     /**
@@ -437,7 +437,7 @@ public class CollectionUtil {
      */
     @Override
     public ListIterator<E> listIterator(int index) {
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException("unSupported method.");
     }
     
     /**
@@ -445,7 +445,7 @@ public class CollectionUtil {
      */
     @Override
     public List<E> subList(int fromIndex, int toIndex) {
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException("unSupported method.");
     }
     
     List<? extends E> getList() {
@@ -507,7 +507,7 @@ public class CollectionUtil {
      */
     @Override
     public V get(Object key) {
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException("unSupported method.");
     }
     
     /**
@@ -515,7 +515,7 @@ public class CollectionUtil {
      */
     @Override
     public V put(K key, V value) {
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException("unSupported method.");
     }
     
     /**
@@ -523,7 +523,7 @@ public class CollectionUtil {
      */
     @Override
     public V remove(Object key) {
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException("unSupported method.");
     }
     
     /**
@@ -531,7 +531,7 @@ public class CollectionUtil {
      */
     @Override
     public void putAll(Map<? extends K, ? extends V> m) {
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException("unSupported method.");
     }
     
     /**
@@ -539,7 +539,7 @@ public class CollectionUtil {
      */
     @Override
     public void clear() {
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException("unSupported method.");
     }
     
     /**
@@ -547,7 +547,7 @@ public class CollectionUtil {
      */
     @Override
     public Set<K> keySet() {
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException("unSupported method.");
     }
     
     /**
@@ -555,7 +555,7 @@ public class CollectionUtil {
      */
     @Override
     public Collection<V> values() {
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException("unSupported method.");
     }
     
     /**
@@ -563,7 +563,7 @@ public class CollectionUtil {
      */
     @Override
     public Set<Entry<K, V>> entrySet() {
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException("unSupported method.");
     }
     
     ProtectedMap(Map<? extends K, ? extends V> map) {

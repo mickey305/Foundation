@@ -40,7 +40,7 @@ public class MatrixContextLong extends AbstractMatrixContext<Long> {
     if (type == MatrixContextType.Default) return OperationFactory.getFactory();
     if (type == MatrixContextType.Shared)  return OperationFactory.getSharedFactory();
   
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException("contextType-data analyze unreached.");
   }
   
   /**
@@ -51,6 +51,6 @@ public class MatrixContextLong extends AbstractMatrixContext<Long> {
     if (type == MatrixContextType.Default) return ElementInitializerFactory.getFactory();
     if (type == MatrixContextType.Shared)  return ElementInitializerFactory.getSharedFactory();
   
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException("contextType-data analyze unreached.");
   }
 }

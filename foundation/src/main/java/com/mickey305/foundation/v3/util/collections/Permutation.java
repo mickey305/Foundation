@@ -33,7 +33,7 @@ public final class Permutation<T extends Serializable> {
   
   private Permutation(int baseIndex, int index, T[] elements) {
     if (elements == null || elements.length == 0)
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("elements is empty.");
     
     // initialization
     this.baseIndex = baseIndex;

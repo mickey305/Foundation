@@ -36,6 +36,6 @@ class LinkedHashMapFactory {
     if (type == CacheType.FIFO) return FIFOMap.of(capacity);
     if (type == CacheType.LRU) return LRUMap.of(capacity);
     // throwing exception
-    throw new RuntimeException();
+    throw new RuntimeException("cacheType analyze unreached.");
   }
 }

@@ -29,19 +29,19 @@ public class SymmetricTransPositionGroup extends SymmetricCycleGroup {
   protected SymmetricTransPositionGroup(Number[][] initialTable) {
     super(initialTable);
     if (!this.checkTransPosition())
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("symmetricTransPosition-object-check failed.");
   }
   
   protected SymmetricTransPositionGroup(SymmetricTransPositionGroup table) {
     super(table);
     if (!this.checkTransPosition())
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("symmetricTransPosition-object-check failed.");
   }
   
   protected SymmetricTransPositionGroup(List<Pair<Number, Number>> list) {
     super(list);
     if (!this.checkTransPosition())
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("symmetricTransPosition-object-check failed.");
   }
   
   protected SymmetricTransPositionGroup(Pair<Number, Number> row) {

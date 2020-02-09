@@ -33,7 +33,7 @@ public abstract class AbstractNumberOperation<E extends Number, R> implements Bi
     if (result != null) return result;
     
     // throwing exception
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException("unSupported binary function.");
   }
   
   /**

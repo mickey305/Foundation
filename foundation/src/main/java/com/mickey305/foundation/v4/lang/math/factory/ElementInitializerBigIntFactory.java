@@ -79,6 +79,6 @@ public class ElementInitializerBigIntFactory extends AbstractElementInitializer<
     if (n instanceof BigFraction) return new BigInteger(String.valueOf(n.doubleValue()));
     
     // throwing exception
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException("elementData-convert failed.");
   }
 }

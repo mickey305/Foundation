@@ -85,6 +85,6 @@ public class MatrixContextFactory {
     if (type.equals(Short.class))       return (IMatrixContext<E>) new MatrixContextShort      (contextType);
   
     // exception: element-type analyze unreached
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException("element-type analyze unreached.");
   }
 }

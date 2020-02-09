@@ -48,7 +48,7 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
                       Map<RelationalOperator, AbstractNumberOperation<E, Boolean>> rop) {
     super(initialTable, initializer, op, rop);
     if (!super.isSquare())
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException("isSquare-check failed.");
   }
   
   public SquareMatrix(SquareMatrix<E> matrix) {
@@ -103,7 +103,7 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
   public SquareMatrix<E> createInverseMatrix() {
     if (IS_DEBUG_MODE) Log.d("inverse matrix creating...");
     if (!this.isRegular())
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException("isRegular-check failed.");
     
     final Matrix<E> extMatrix = this.horizontalBind(this.createIdentityMatrix());
     

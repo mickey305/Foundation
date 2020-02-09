@@ -54,7 +54,7 @@ public class ElementInitializerFactory {
     if (type.equals(Short.class))       return (AbstractElementInitializer<E>) new ElementInitializerShortFactory();
   
     // exception: element-type analyze unreached
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException("element-type analyze unreached. type=" + type);
   }
   
   /**
@@ -82,6 +82,6 @@ public class ElementInitializerFactory {
     if (type.equals(Short.class))       return (AbstractElementInitializer<E>) ElementInitializerShortFactory.getInstance();
   
     // exception: element-type analyze unreached
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException("element-type analyze unreached. type=" + type);
   }
 }

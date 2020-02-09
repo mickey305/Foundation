@@ -108,8 +108,8 @@ public abstract class AbstractMatrixHandler<
    * @return 計算結果行列オブジェクト
    */
   public M1 finalizer() {
-    if (orgMatrix    == null) throw new UnsupportedOperationException();
-    if (resultMatrix == null) throw new UnsupportedOperationException();
+    if (orgMatrix    == null) throw new UnsupportedOperationException("null data.");
+    if (resultMatrix == null) throw new UnsupportedOperationException("null data.");
     
     M1 res = this.createResultMatrix(orgMatrix, resultMatrix);
     resultMatrix = null;

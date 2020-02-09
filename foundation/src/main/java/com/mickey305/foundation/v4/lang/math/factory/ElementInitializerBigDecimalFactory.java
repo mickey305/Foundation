@@ -79,6 +79,6 @@ public class ElementInitializerBigDecimalFactory extends AbstractElementInitiali
     if (n instanceof BigFraction) return new BigDecimal(String.valueOf(n.doubleValue()));
     
     // throwing exception
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException("elementData-convert failed.");
   }
 }

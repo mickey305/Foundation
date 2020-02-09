@@ -44,11 +44,11 @@ public class SymmetricPermutationGroup extends AbstractNumberTable {
     // permutation data-structure check
     final Set<Number> dataSet = new HashSet<>();
     if (!this.checkPermutation())
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("symmetricPermutationGroup-check failed.");
     for (Number data : table[0]) {
       final boolean status = dataSet.add(data);
       if (!status)
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("symmetricPermutationGroup-check failed.");
     }
     this.dataSet.addAll(dataSet);
     dataSet.clear();
@@ -143,7 +143,7 @@ public class SymmetricPermutationGroup extends AbstractNumberTable {
    */
   public static SymmetricPermutationGroup multi(SymmetricPermutationGroup l, SymmetricPermutationGroup r) {
     if (!(r.dataSet.containsAll(l.dataSet) || l.dataSet.containsAll(r.dataSet)))
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException("multi-data-check failed.");
     
     // extension logic impl
     Pair<SymmetricPermutationGroup, SymmetricPermutationGroup> pair = SymmetricPermutationGroup.extension(l, r);
@@ -211,7 +211,7 @@ public class SymmetricPermutationGroup extends AbstractNumberTable {
    */
   @Override
   public void putRowForcibly(int row, Number[] data) {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException("unSupported method.");
   }
   
   /**
@@ -219,7 +219,7 @@ public class SymmetricPermutationGroup extends AbstractNumberTable {
    */
   @Override
   public void putColumnForcibly(int column, Number[] data) {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException("unSupported method.");
   }
   
   /**
@@ -227,7 +227,7 @@ public class SymmetricPermutationGroup extends AbstractNumberTable {
    */
   @Override
   public void putCellForcibly(int row, int column, Number data) {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException("unSupported method.");
   }
   
   /**
@@ -235,7 +235,7 @@ public class SymmetricPermutationGroup extends AbstractNumberTable {
    */
   @Override
   public boolean putCell(int row, int column, Number data) {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException("unSupported method.");
   }
   
   /**

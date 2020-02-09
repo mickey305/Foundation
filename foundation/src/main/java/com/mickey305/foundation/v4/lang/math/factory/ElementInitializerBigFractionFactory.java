@@ -90,6 +90,6 @@ public class ElementInitializerBigFractionFactory extends AbstractElementInitial
     }
     
     // throwing exception
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException("elementData-convert failed.");
   }
 }

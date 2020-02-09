@@ -61,6 +61,6 @@ class LockImpl<T extends LockType> implements ILockable<T> {
     if (lockType == LockType.Write) return lock.writeLock();
     
     // throwing RuntimeException
-    throw new IllegalArgumentException("unsupported lockType-value.");
+    throw new IllegalArgumentException("unsupported lockType-value. lockType=" + lockType);
   }
 }

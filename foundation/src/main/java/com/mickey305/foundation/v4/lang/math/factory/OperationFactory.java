@@ -54,7 +54,7 @@ public class OperationFactory {
     if (type.equals(Short.class))       return (AbstractOperationFactory<E>) new OperationShortFactory();
  
     // exception: element-type analyze unreached
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException("element-type analyze unreached.");
   }
   
   /**
@@ -82,6 +82,6 @@ public class OperationFactory {
     if (type.equals(Short.class))       return (AbstractOperationFactory<E>) OperationShortFactory.getInstance();
   
     // exception: element-type analyze unreached
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException("element-type analyze unreached.");
   }
 }

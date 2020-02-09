@@ -87,7 +87,7 @@ public abstract class AbstractNumberTable<E extends Number> implements Serializa
     
     for (int i = 0; i < this.getRowSize(); i++) {
       if (initialTable[i].length != this.getColumnSize())
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("column-size-check failed of all rows.");
       System.arraycopy(initialTable[i], 0, this.table[i], 0, this.getColumnSize());
     }
     if (ABS_NUM_TBL_CAPTURE_TABLE_IO) Log.d("table<=" + ToStringBuilder.reflectionToString(this.table));
@@ -123,7 +123,7 @@ public abstract class AbstractNumberTable<E extends Number> implements Serializa
    */
   private void checkArgument(int row, int column) {
     if (row <= 0 || column <= 0)
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("argument-check failed. row=" + row + " column=" + column);
   }
   
   /**
@@ -161,7 +161,7 @@ public abstract class AbstractNumberTable<E extends Number> implements Serializa
    */
   protected void putRow(int row, E[] rowData) {
     if (rowData.length != this.getRowSize())
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("rowData-size-check failed.");
     
     int i = 0;
     for (E cell : rowData)
@@ -179,7 +179,7 @@ public abstract class AbstractNumberTable<E extends Number> implements Serializa
    */
   protected void putColumn(int column, E[] columnData) {
     if (columnData.length != this.getColumnSize())
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("columnData-size-check failed.");
     
     int i = 0;
     for (E cell : columnData)
