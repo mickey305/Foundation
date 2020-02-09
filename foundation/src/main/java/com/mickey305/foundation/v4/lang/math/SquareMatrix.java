@@ -180,7 +180,7 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
   }
   
   /**
-   * matrix(row=i,column=i) <==> NE ZERO transformation
+   * matrix(row=i,column=i) &lt;==&gt; NE ZERO transformation
    * 掃き出し法の第１段階実装メソッドです。同じ行/列番号上の要素がゼロ以外になるように行基本変形を行います。
    * @param M 拡大係数行列
    */
@@ -202,7 +202,7 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
   }
   
   /**
-   * matrix(row=i,column=j), i != j <==> EQ ZERO transformation
+   * matrix(row=i,column=j), i != j &lt;==&gt; EQ ZERO transformation
    * 掃き出し法の第２段階実装メソッドです。異なる行/列番号上の要素がゼロになるように行基本変形を行います。
    * @param M 拡大係数行列
    */
@@ -242,7 +242,7 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
   }
   
   /**
-   * matrix(row=i,column=i) <==> EQ ONE transformation
+   * matrix(row=i,column=i) &lt;==&gt; EQ ONE transformation
    * 掃き出し法の第３段階実装メソッドです。同じ行/列番号上の要素が１になるように行基本変形を行います。
    * このメソッドの実装が完了した段階で、horizontalExtensionMatrixの左部分が単位行列になります。
    * @param M 拡大係数行列
