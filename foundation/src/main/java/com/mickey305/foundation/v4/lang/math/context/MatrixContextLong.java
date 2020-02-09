@@ -37,8 +37,8 @@ public class MatrixContextLong extends AbstractMatrixContext<Long> {
    */
   @Override
   protected IOperationFactory<Long> createOperationFactory(MatrixContextType type) {
-    if (type == MatrixContextType.Default) return OperationFactory.getFactory();
-    if (type == MatrixContextType.Shared)  return OperationFactory.getSharedFactory();
+    if (type == MatrixContextType.Default) return OperationFactory.<Long>getFactory();
+    if (type == MatrixContextType.Shared)  return OperationFactory.<Long>getSharedFactory();
   
     throw new UnsupportedOperationException("contextType-data analyze unreached.");
   }
@@ -48,8 +48,8 @@ public class MatrixContextLong extends AbstractMatrixContext<Long> {
    */
   @Override
   protected IElementInitializer<Long> createElementInitializer(MatrixContextType type) {
-    if (type == MatrixContextType.Default) return ElementInitializerFactory.getFactory();
-    if (type == MatrixContextType.Shared)  return ElementInitializerFactory.getSharedFactory();
+    if (type == MatrixContextType.Default) return ElementInitializerFactory.<Long>getFactory();
+    if (type == MatrixContextType.Shared)  return ElementInitializerFactory.<Long>getSharedFactory();
   
     throw new UnsupportedOperationException("contextType-data analyze unreached.");
   }

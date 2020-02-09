@@ -45,7 +45,7 @@ public class Main4Se7 {
 
       List<String> list = new ArrayList<String>();
       list.add("hoge");
-      list = CollectionUtil.protectedList(list);
+      list = CollectionUtil.<String>protectedList(list);
 //        for(String str: list) {
 //            Log.i(str);
 //        }
@@ -53,8 +53,8 @@ public class Main4Se7 {
   
   
       SquareMatrix<BigFraction> matrix11 = new BuilderSquareMatrix<BigFraction>()
-          .operator(OperationFactory.getFactory())
-          .initializer(ElementInitializerFactory.getFactory())
+          .operator(OperationFactory.<BigFraction>getFactory())
+          .initializer(ElementInitializerFactory.<BigFraction>getFactory())
           .cookbook(new AbstractMatrixBuilder.CookBook<BigFraction>() {
             @Override
             public BigFraction[][] tableDef() {

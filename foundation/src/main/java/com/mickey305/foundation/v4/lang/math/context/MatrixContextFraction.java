@@ -38,8 +38,8 @@ public class MatrixContextFraction extends AbstractMatrixContext<Fraction> {
    */
   @Override
   protected IOperationFactory<Fraction> createOperationFactory(MatrixContextType type) {
-    if (type == MatrixContextType.Default) return OperationFactory.getFactory();
-    if (type == MatrixContextType.Shared)  return OperationFactory.getSharedFactory();
+    if (type == MatrixContextType.Default) return OperationFactory.<Fraction>getFactory();
+    if (type == MatrixContextType.Shared)  return OperationFactory.<Fraction>getSharedFactory();
   
     throw new UnsupportedOperationException("contextType-data analyze unreached.");
   }
@@ -49,8 +49,8 @@ public class MatrixContextFraction extends AbstractMatrixContext<Fraction> {
    */
   @Override
   protected IElementInitializer<Fraction> createElementInitializer(MatrixContextType type) {
-    if (type == MatrixContextType.Default) return ElementInitializerFactory.getFactory();
-    if (type == MatrixContextType.Shared)  return ElementInitializerFactory.getSharedFactory();
+    if (type == MatrixContextType.Default) return ElementInitializerFactory.<Fraction>getFactory();
+    if (type == MatrixContextType.Shared)  return ElementInitializerFactory.<Fraction>getSharedFactory();
   
     throw new UnsupportedOperationException("contextType-data analyze unreached.");
   }

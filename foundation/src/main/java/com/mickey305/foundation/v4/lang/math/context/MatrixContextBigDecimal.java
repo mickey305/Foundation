@@ -39,8 +39,8 @@ public class MatrixContextBigDecimal extends AbstractMatrixContext<BigDecimal> {
    */
   @Override
   protected IOperationFactory<BigDecimal> createOperationFactory(MatrixContextType type) {
-    if (type == MatrixContextType.Default) return OperationFactory.getFactory();
-    if (type == MatrixContextType.Shared)  return OperationFactory.getSharedFactory();
+    if (type == MatrixContextType.Default) return OperationFactory.<BigDecimal>getFactory();
+    if (type == MatrixContextType.Shared)  return OperationFactory.<BigDecimal>getSharedFactory();
     
     throw new UnsupportedOperationException("contextType-data analyze unreached.");
   }
@@ -50,8 +50,8 @@ public class MatrixContextBigDecimal extends AbstractMatrixContext<BigDecimal> {
    */
   @Override
   protected IElementInitializer<BigDecimal> createElementInitializer(MatrixContextType type) {
-    if (type == MatrixContextType.Default) return ElementInitializerFactory.getFactory();
-    if (type == MatrixContextType.Shared)  return ElementInitializerFactory.getSharedFactory();
+    if (type == MatrixContextType.Default) return ElementInitializerFactory.<BigDecimal>getFactory();
+    if (type == MatrixContextType.Shared)  return ElementInitializerFactory.<BigDecimal>getSharedFactory();
     
     throw new UnsupportedOperationException("contextType-data analyze unreached.");
   }

@@ -38,8 +38,8 @@ public class MatrixContextBigFraction extends AbstractMatrixContext<BigFraction>
    */
   @Override
   protected IOperationFactory<BigFraction> createOperationFactory(MatrixContextType type) {
-    if (type == MatrixContextType.Default) return OperationFactory.getFactory();
-    if (type == MatrixContextType.Shared)  return OperationFactory.getSharedFactory();
+    if (type == MatrixContextType.Default) return OperationFactory.<BigFraction>getFactory();
+    if (type == MatrixContextType.Shared)  return OperationFactory.<BigFraction>getSharedFactory();
   
     throw new UnsupportedOperationException("contextType-data analyze unreached.");
   }
@@ -49,8 +49,8 @@ public class MatrixContextBigFraction extends AbstractMatrixContext<BigFraction>
    */
   @Override
   protected IElementInitializer<BigFraction> createElementInitializer(MatrixContextType type) {
-    if (type == MatrixContextType.Default) return ElementInitializerFactory.getFactory();
-    if (type == MatrixContextType.Shared)  return ElementInitializerFactory.getSharedFactory();
+    if (type == MatrixContextType.Default) return ElementInitializerFactory.<BigFraction>getFactory();
+    if (type == MatrixContextType.Shared)  return ElementInitializerFactory.<BigFraction>getSharedFactory();
   
     throw new UnsupportedOperationException("contextType-data analyze unreached.");
   }

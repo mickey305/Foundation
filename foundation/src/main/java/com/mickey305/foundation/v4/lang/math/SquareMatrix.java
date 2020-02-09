@@ -141,8 +141,8 @@ public class SquareMatrix<E extends Number> extends Matrix<E> {
       rowIndexes[i] = i;
     final Permutation<Integer> RP = new Permutation<>(rowIndexes);
   
-    IOperationFactory<Integer> factory = OperationFactory.getFactory();
-    IElementInitializer<Integer> ini = ElementInitializerFactory.getFactory();
+    IOperationFactory<Integer> factory = OperationFactory.<Integer>getFactory();
+    IElementInitializer<Integer> ini = ElementInitializerFactory.<Integer>getFactory();
     do {
       final Integer[][] tbl = new Integer[][]{rowIndexes, RP.getElements()};
       final SymmetricPermutationGroup<Integer> PG = new SymmetricPermutationGroup<>(
