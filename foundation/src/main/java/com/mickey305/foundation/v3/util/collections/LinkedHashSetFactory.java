@@ -19,6 +19,8 @@ package com.mickey305.foundation.v3.util.collections;
 
 import java.util.LinkedHashSet;
 
+import com.mickey305.foundation.v3.compat.exception.wrap.RuntimeException;
+
 class LinkedHashSetFactory {
   private LinkedHashSetFactory() {
     // nop

@@ -17,6 +17,7 @@
 
 package com.mickey305.foundation.v4.lang.math.factory;
 
+import com.mickey305.foundation.v3.compat.exception.wrap.UnsupportedOperationException;
 import com.mickey305.foundation.v3.util.Assert;
 import com.mickey305.foundation.v4.lang.math.operator.AbstractElementInitializer;
 import org.apache.commons.math3.fraction.BigFraction;

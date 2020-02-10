@@ -19,6 +19,9 @@ package com.mickey305.foundation.v3.lang.math;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import com.mickey305.foundation.v3.compat.exception.wrap.UnsupportedOperationException;
+import com.mickey305.foundation.v3.compat.exception.wrap.IllegalArgumentException;
+
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;

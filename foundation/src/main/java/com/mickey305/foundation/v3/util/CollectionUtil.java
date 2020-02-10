@@ -21,6 +21,11 @@ import com.mickey305.foundation.v3.gen.R;
 import com.mickey305.foundation.v3.util.collections.NonNullElementList;
 import com.rits.cloning.Cloner;
 
+import com.mickey305.foundation.v3.compat.exception.wrap.UnsupportedOperationException;
+import com.mickey305.foundation.v3.compat.exception.wrap.NullPointerException;
+import com.mickey305.foundation.v3.compat.exception.wrap.ClassCastException;
+import com.mickey305.foundation.v3.compat.exception.wrap.IllegalArgumentException;
+
 import javax.annotation.Nonnull;
 import java.lang.reflect.Array;
 import java.util.Collection;

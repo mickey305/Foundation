@@ -17,6 +17,7 @@
 
 package com.mickey305.foundation.v3.util;
 
+import com.mickey305.foundation.v3.compat.exception.wrap.CryptoException;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -368,18 +369,6 @@ public abstract class AbstractCryptoManager implements AutoCloseable {
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // inner class
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  public final class CryptoException extends UnsupportedOperationException {
-    private static final long serialVersionUID = -834877014326829758L;
-  
-    public CryptoException(Throwable cause) {
-      super(cause);
-    }
-    
-    public CryptoException(String msg) {
-      super(msg);
-    }
-  }
-  
   public static final class Info {
     private Algorithm algorithm;
     private CryptMode cryptMode;

@@ -17,6 +17,7 @@
 
 package com.mickey305.foundation.v3.validation;
 
+import com.mickey305.foundation.v3.compat.exception.wrap.BeanValidationException;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.validation.ConstraintViolation;

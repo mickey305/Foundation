@@ -17,6 +17,7 @@
 
 package com.mickey305.foundation.v3.lang.math.operator;
 
+import com.mickey305.foundation.v3.compat.exception.wrap.UnsupportedOperationException;
 import com.mickey305.foundation.v3.compat.util.BinaryFunction;
 import org.apache.commons.math3.fraction.BigFraction;
 import org.apache.commons.math3.fraction.Fraction;

@@ -17,7 +17,7 @@
 
 package com.mickey305.foundation.v3.lang;
 
-class FoundationThrowingMessageConst {
+public class FoundationThrowingMessageConst {
   public static final String HeaderString;
   public static final String LocalizedHeaderString;
   

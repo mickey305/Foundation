@@ -20,6 +20,8 @@ package com.mickey305.foundation.v3.util;
 import javax.annotation.Nonnull;
 import java.util.regex.Pattern;
 
+import com.mickey305.foundation.v3.compat.exception.wrap.IllegalArgumentException;
+
 import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;
 
 public class Regexp {

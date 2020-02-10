@@ -1,4 +1,4 @@
-[HEADER MODULE:foundation, BUILD-DATETIME:2020-02-10 02:23:44.660]
+[HEADER MODULE:foundation, BUILD-DATETIME:2020-02-10 11:56:49.075]
 com.mickey305.foundation.v3.gen.R
 com.mickey305.foundation.v3.lang.ConsoleSnatcher
 com.mickey305.foundation.v3.lang.math.MathFun
@@ -7,8 +7,11 @@ com.mickey305.foundation.v3.util.AbstractCryptoManager
 com.mickey305.foundation.v3.util.ArrayUtil
 com.mickey305.foundation.v3.util.Assert
 com.mickey305.foundation.v3.util.ByteConverter
+com.mickey305.foundation.v3.util.ClassUtil
 com.mickey305.foundation.v3.util.CollectionUtil
 com.mickey305.foundation.v3.util.DateUtil
+com.mickey305.foundation.v3.util.FileUtil
+com.mickey305.foundation.v3.util.HashGenerator
 com.mickey305.foundation.v3.util.Regexp
 com.mickey305.foundation.v3.util.ResFile
 com.mickey305.foundation.v3.util.collections.LRUMap

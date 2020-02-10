@@ -83,6 +83,7 @@ public abstract class InstanceHasOneTransactionTemplate implements Transactional
       if (IS_DEBUG_MODE) {
         Log.e(e.getMessage());
       }
+      // re-throw
       throw e;
     } finally {
       l.unlock(type);

@@ -17,7 +17,7 @@
 
 package com.mickey305.foundation.v3.ansi.code;
 
-import com.mickey305.foundation.v3.validation.BeanValidationException;
+import com.mickey305.foundation.v3.compat.exception.wrap.BeanValidationException;
 import com.mickey305.foundation.v3.validation.ValidationInvoker;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.After;

@@ -19,6 +19,8 @@ package com.mickey305.foundation.v3.util.concurrent;
 
 import com.mickey305.foundation.v3.util.Log;
 
+import com.mickey305.foundation.v3.compat.exception.wrap.RuntimeException;
+
 import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;
 
 /**

@@ -19,6 +19,8 @@ package com.mickey305.foundation.v3.util.collections;
 
 import com.mickey305.foundation.v3.util.ArrayUtil;
 
+import com.mickey305.foundation.v3.compat.exception.wrap.IllegalArgumentException;
+
 import java.io.Serializable;
 
 public final class Permutation<T extends Serializable> {

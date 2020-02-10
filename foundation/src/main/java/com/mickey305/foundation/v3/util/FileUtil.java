@@ -30,6 +30,10 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
 
+import com.mickey305.foundation.v3.compat.exception.wrap.RuntimeException;
+
+import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;
+
 public class FileUtil {
   
   /**
@@ -84,7 +88,7 @@ public class FileUtil {
         string = reader.readLine();
       }
     } catch (IOException e) {
-      Log.e(e.getMessage());
+      if(IS_DEBUG_MODE) Log.e(e.getMessage());
       throw new RuntimeException(e);
     }
     
@@ -104,7 +108,7 @@ public class FileUtil {
         writer.println(line);
       }
     } catch (IOException e) {
-      Log.e(e.getMessage());
+      if(IS_DEBUG_MODE) Log.e(e.getMessage());
       throw new RuntimeException(e);
     }
   }

@@ -26,6 +26,7 @@ import static com.mickey305.foundation.v3.lang.FoundationThrowingMessageConst.Lo
 
 public final class FoundationRuntimeExceptionProxy extends RuntimeException implements IThrowableProxyObject<RuntimeException> {
   private final static RuntimeException Dummy = new RuntimeException();
+  private static final long serialVersionUID = 2954433959216820884L;
   private final Option<RuntimeException> exOrgOpt;
   private IThrowableMessageOverWriter overWriter = null;
   

@@ -17,6 +17,7 @@
 
 package com.mickey305.foundation.v3.lang.math;
 
+import com.mickey305.foundation.v3.compat.exception.wrap.UnsupportedOperationException;
 import com.mickey305.foundation.v3.util.collections.Permutation;
 import org.apache.commons.math3.fraction.BigFraction;
 

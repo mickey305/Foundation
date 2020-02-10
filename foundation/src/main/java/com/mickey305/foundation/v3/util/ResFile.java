@@ -21,6 +21,8 @@ import javax.annotation.Nonnull;
 import java.io.File;
 import java.net.URL;
 
+import com.mickey305.foundation.v3.compat.exception.wrap.RuntimeException;
+
 import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;
 
 public class ResFile {

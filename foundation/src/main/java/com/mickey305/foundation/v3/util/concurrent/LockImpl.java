@@ -19,6 +19,8 @@ package com.mickey305.foundation.v3.util.concurrent;
 
 import com.mickey305.foundation.v3.util.Assert;
 
+import com.mickey305.foundation.v3.compat.exception.wrap.IllegalArgumentException;
+
 import javax.annotation.Nonnull;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
