@@ -24,7 +24,7 @@ The following table shows status of external CI service.
 
 # Features
 
-![Library Version](https://img.shields.io/badge/Foundation%20library-v0.6.0-green.svg?style=flat)
+![Library Version](https://img.shields.io/badge/Foundation%20library-v0.6.51-green.svg?style=flat)
 ![Java Version](https://img.shields.io/badge/JDK-1.7-yellowgreen.svg?style=flat)
 [![Apache License](http://img.shields.io/badge/license-Apache2.0-blue.svg?style=flat)](LICENSE)
 [![Maintainability](https://api.codeclimate.com/v1/badges/97b4705656277130b8f3/maintainability)](https://codeclimate.com/github/mickey305/Foundation/maintainability)
@@ -55,7 +55,7 @@ The following table shows status of external CI service.
 - [install-jdk.sh on GitHub](https://github.com/sormuras/bach)
 
 # <a name="history"> History
- * version [0.6.50](https://github.com/mickey305/Foundation/releases/tag/0.6.50) deploy - 2020-02-10
+ * version [0.6.51](https://github.com/mickey305/Foundation/releases/tag/0.6.51) deploy - 2020-02-10
  * version [0.6.0](https://github.com/mickey305/Foundation/releases/tag/0.6.0) deploy - 2018-12-08
  * version [0.5.0](https://github.com/mickey305/Foundation/releases/tag/0.5.0) deploy - 2017-11-11
  * version [0.0.1-SNAPSHOT](https://github.com/mickey305/Foundation/releases/tag/0.0.1-SNAPSHOT) deploy(Test version) - 2017-10-09
