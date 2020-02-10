@@ -20,6 +20,10 @@ package com.mickey305.foundation.v3.util.concurrent;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+/**
+ * ロック制御用インターインターフェース
+ * @deprecated ネーミングを修正する予定のため、近い将来使用不可になる予定です。
+ */
 public interface Transactional {
   /**
    * ロックコールバック処理実行メソッド

@@ -25,7 +25,7 @@ The following table shows status of external CI service.
 # Features
 
 ![Library Version](https://img.shields.io/badge/Foundation%20library-v0.6.51-green.svg?style=flat)
-![Java Version](https://img.shields.io/badge/JDK-1.7-yellowgreen.svg?style=flat)
+![Java Version](https://img.shields.io/badge/JRE-1.7-yellowgreen.svg?style=flat)
 [![Apache License](http://img.shields.io/badge/license-Apache2.0-blue.svg?style=flat)](LICENSE)
 [![Maintainability](https://api.codeclimate.com/v1/badges/97b4705656277130b8f3/maintainability)](https://codeclimate.com/github/mickey305/Foundation/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/97b4705656277130b8f3/test_coverage)](https://codeclimate.com/github/mickey305/Foundation/test_coverage)
@@ -48,7 +48,8 @@ The following table shows status of external CI service.
 # <a name="usage"> Usage
 
 # <a name="requirements"> Requirements
-- JDK `>= 1.7`
+- JDK `>= 10`
+- JRE `>= 1.7`
 
 # <a name="references"> References
 - [Windows JDK環境切替バッチファイル](http://www.torutk.com/projects/swe/wiki/Windows_JDK%E7%92%B0%E5%A2%83%E5%88%87%E6%9B%BF%E3%83%90%E3%83%83%E3%83%81%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)

@@ -26,6 +26,10 @@ import javax.annotation.Nullable;
 
 import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;
 
+/**
+ * ロック制御用テンプレートクラス
+ * @deprecated ネーミングを修正する予定のため、近い将来使用不可になる予定です。
+ */
 @Template
 public abstract class InstanceHasOneTransactionTemplate implements Transactional {
   private final ILockableCache<LockType> cache;
