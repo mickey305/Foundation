@@ -26,7 +26,7 @@ public interface IThrowableMessageOverWriter {
   
   /**
    * ローカライズされたヘッダーメッセージとして設定する文字列を返却する
-   * @return ヘッダメッセージ
+   * @return ヘッダーメッセージ
    */
   String getHeaderOfLocalizedMessage();
 }
