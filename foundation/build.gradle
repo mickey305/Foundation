@@ -67,7 +67,7 @@ publish {
     groupId = this.getGroup()
     artifactId = 'foundation'
     publishVersion  = this.getVersion()
-    desc = 'The "Foundation" library is part of infrastructure component for Java.'
+    desc = 'The "Foundation" library is part of infrastructure component and personal-library for Java.'
     website = 'https://github.com/mickey305/Foundation'
     licences = ['Apache-2.0']
 }
