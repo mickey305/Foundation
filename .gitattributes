@@ -20,7 +20,7 @@
 *.yml         text
 *.keep        text
 
-# Ensure that line endings for files are not modified.
+# Ensure that line endings for files are not modified. (-text)
 *.bat        -text
 *.bin        -text
 *.dat        -text
@@ -31,7 +31,7 @@
 *.options    -text
 *.svg        -text
 
-# Ensure the following are treated as binary.
+# Ensure the following are treated as binary. (-diff -text)
 *.class       binary
 *.jar         binary
 *.war         binary
