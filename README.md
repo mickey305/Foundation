@@ -51,7 +51,7 @@ The following table shows status of external CI service.
   - [User settings](#requirements-user)
   - [Developer settings](#requirements-dev)
 - [References](#references)
-- [License information of dependent library](#license-info4deplib)
+- [License information of dependent library](#license-info-deplib)
 - [History](#history)
 
 # <a name="usage"> Usage
@@ -143,7 +143,7 @@ The following table shows status of external CI service.
 - [Windows JDK環境切替バッチファイル](http://www.torutk.com/projects/swe/wiki/Windows_JDK%E7%92%B0%E5%A2%83%E5%88%87%E6%9B%BF%E3%83%90%E3%83%83%E3%83%81%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
 - [install-jdk.sh on GitHub](https://github.com/sormuras/bach)
 
-# <a name="#license-info4deplib"> License information of dependent library
+# <a name="#license-info-deplib"> License information of dependent library
 - module `foundation`
 
   | **library name** | **license** | **link** |
