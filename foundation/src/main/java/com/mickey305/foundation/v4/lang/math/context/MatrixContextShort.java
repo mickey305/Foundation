@@ -17,6 +17,7 @@
 
 package com.mickey305.foundation.v4.lang.math.context;
 
+import com.mickey305.foundation.v3.compat.exception.wrap.UnsupportedOperationException;
 import com.mickey305.foundation.v4.lang.math.factory.ElementInitializerFactory;
 import com.mickey305.foundation.v4.lang.math.factory.OperationFactory;
 import com.mickey305.foundation.v4.lang.math.operator.IElementInitializer;

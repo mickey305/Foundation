@@ -28,6 +28,8 @@ import com.mickey305.foundation.v4.lang.math.operator.IElementInitializer;
 import java.util.Collections;
 import java.util.Map;
 
+import com.mickey305.foundation.v3.compat.exception.wrap.UnsupportedOperationException;
+
 import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;
 
 /**

@@ -20,6 +20,10 @@ package com.mickey305.foundation.v3.util;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 
+import com.mickey305.foundation.v3.compat.exception.wrap.RuntimeException;
+import com.mickey305.foundation.v3.compat.exception.wrap.IllegalStateException;
+import com.mickey305.foundation.v3.compat.exception.wrap.IllegalArgumentException;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -73,7 +77,7 @@ public class ByteConverter {
       Assert.requireNonNull(result);
       return result;
     } catch (DecoderException e) {
-      Log.e(e.getMessage());
+      if(IS_DEBUG_MODE) Log.e(e.getMessage());
       throw new RuntimeException(e);
     }
   }
@@ -118,7 +122,7 @@ public class ByteConverter {
       Assert.requireNonNull(result);
       return result;
     } catch (DecoderException e) {
-      Log.e(e.getMessage());
+      if (IS_DEBUG_MODE) Log.e(e.getMessage());
       throw new RuntimeException(e);
     }
   }

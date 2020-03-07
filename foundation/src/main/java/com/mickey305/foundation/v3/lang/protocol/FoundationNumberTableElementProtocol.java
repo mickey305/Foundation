@@ -15,12 +15,11 @@
  *
  */
 
-package com.mickey305.foundation.v3.validation;
+package com.mickey305.foundation.v3.lang.protocol;
 
-public class BeanValidationException extends RuntimeException {
-  private static final long serialVersionUID = -4388099256593712746L;
-  
-  public BeanValidationException(String msg) {
-    super(msg);
-  }
+import com.mickey305.foundation.v3.lang.extension.FoundationNumberTableElementExtension;
+
+public interface FoundationNumberTableElementProtocol<T extends Number>
+    extends BaseProtocol<T>, JavaNumberProtocol<T>, JavaSerializableProtocol<T>, FoundationNumberTableElementExtension<T> {
+  // nop
 }

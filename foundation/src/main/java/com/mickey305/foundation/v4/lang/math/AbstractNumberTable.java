@@ -17,6 +17,7 @@
 
 package com.mickey305.foundation.v4.lang.math;
 
+import com.mickey305.foundation.v3.compat.exception.wrap.IllegalArgumentException;
 import com.mickey305.foundation.v3.compat.util.Function;
 import com.mickey305.foundation.v3.util.Assert;
 import com.mickey305.foundation.v3.util.Log;

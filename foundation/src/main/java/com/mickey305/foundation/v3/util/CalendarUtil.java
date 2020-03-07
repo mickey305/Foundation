@@ -17,6 +17,7 @@
 
 package com.mickey305.foundation.v3.util;
 
+import com.mickey305.foundation.v3.compat.exception.wrap.IllegalStateException;
 import com.mickey305.foundation.v3.compat.util.DayOfWeek;
 import com.mickey305.foundation.v3.util.constant.LocaleConst;
 

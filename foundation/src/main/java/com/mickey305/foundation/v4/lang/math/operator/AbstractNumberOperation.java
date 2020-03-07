@@ -17,6 +17,7 @@
 
 package com.mickey305.foundation.v4.lang.math.operator;
 
+import com.mickey305.foundation.v3.compat.exception.wrap.UnsupportedOperationException;
 import com.mickey305.foundation.v3.compat.util.BinaryFunction;
 
 public abstract class AbstractNumberOperation<E extends Number, R> implements BinaryFunction<E, E, R> {

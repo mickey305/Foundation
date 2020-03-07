@@ -17,6 +17,7 @@
 
 package com.mickey305.foundation.v3.lang.math;
 
+import com.mickey305.foundation.v3.compat.exception.wrap.IllegalArgumentException;
 import com.mickey305.foundation.v3.compat.util.BinaryFunction;
 import com.mickey305.foundation.v3.compat.util.Function;
 import com.mickey305.foundation.v3.lang.math.operator.AbstractNumberOperation;

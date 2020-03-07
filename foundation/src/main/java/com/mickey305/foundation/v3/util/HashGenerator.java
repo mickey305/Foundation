@@ -30,6 +30,10 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.mickey305.foundation.v3.compat.exception.wrap.UnsupportedOperationException;
+
+import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;
+
 public class HashGenerator {
   private static final Charset CHARSET = StandardCharsets.UTF_8;
   private static final Algorithm DEFAULT_ALGORITHM = Algorithm.SHA256;
@@ -54,7 +58,7 @@ public class HashGenerator {
         DIGEST_CACHE.put(Algorithm.SHA256, md);
       }
     } catch (NoSuchAlgorithmException e) {
-      Log.e(e.getMessage());
+      if(IS_DEBUG_MODE) Log.e(e.getMessage());
       throw new UnsupportedOperationException(e);
     }
   }
