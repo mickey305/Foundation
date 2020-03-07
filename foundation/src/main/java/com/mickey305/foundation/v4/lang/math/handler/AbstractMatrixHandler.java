@@ -17,6 +17,7 @@
 
 package com.mickey305.foundation.v4.lang.math.handler;
 
+import com.mickey305.foundation.v3.compat.exception.wrap.UnsupportedOperationException;
 import com.mickey305.foundation.v3.compat.util.Function;
 import com.mickey305.foundation.v3.util.IObjectWrapper;
 import com.mickey305.foundation.v3.util.Log;

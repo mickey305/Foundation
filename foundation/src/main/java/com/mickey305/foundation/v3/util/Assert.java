@@ -17,6 +17,7 @@
 
 package com.mickey305.foundation.v3.util;
 
+import com.mickey305.foundation.v3.compat.exception.wrap.AssertionException;
 import com.mickey305.foundation.v3.lang.StackFinder;
 
 import java.util.ArrayList;
@@ -38,7 +39,8 @@ public class Assert<E> {
       final E nonNullObject = Assert.requireNonNull(object);
       result.add(nonNullObject);
     } catch (Exception e) {
-      Log.e(e.getMessage());
+      if(IS_DEBUG_MODE) Log.e(e.getMessage());
+      // re-throw
       throw e;
     }
     return this;
@@ -191,19 +193,4 @@ public class Assert<E> {
     }
   }
   
-  public static class AssertionException extends RuntimeException {
-    private static final long serialVersionUID = 6466366065807358619L;
-  
-    public AssertionException(String msg) {
-      super(msg);
-    }
-    
-    public AssertionException(Throwable t) {
-      super(t);
-    }
-    
-    public AssertionException(String msg, Throwable t) {
-      super(msg, t);
-    }
-  }
 }

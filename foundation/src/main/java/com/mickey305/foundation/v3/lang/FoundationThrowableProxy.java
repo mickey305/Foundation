@@ -26,6 +26,7 @@ import static com.mickey305.foundation.v3.lang.FoundationThrowingMessageConst.Lo
 
 public final class FoundationThrowableProxy extends Throwable implements IThrowableProxyObject<Throwable> {
   private static final Throwable Dummy = new Throwable();
+  private static final long serialVersionUID = -8830644095906702201L;
   private final Option<Throwable> thOrgOpt;
   private IThrowableMessageOverWriter overWriter = null;
   

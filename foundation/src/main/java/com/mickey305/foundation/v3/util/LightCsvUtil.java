@@ -20,6 +20,8 @@ package com.mickey305.foundation.v3.util;
 import com.mickey305.foundation.v3.util.bean.LightCsvDto;
 import org.apache.commons.lang3.StringUtils;
 
+import com.mickey305.foundation.v3.compat.exception.wrap.IllegalArgumentException;
+
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;

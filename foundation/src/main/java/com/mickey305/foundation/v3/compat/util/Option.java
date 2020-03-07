@@ -17,11 +17,11 @@
 
 package com.mickey305.foundation.v3.compat.util;
 
+import com.mickey305.foundation.v3.compat.exception.wrap.NoSuchElementException;
 import com.mickey305.foundation.v3.compat.stream.Consumer;
 import com.mickey305.foundation.v3.compat.stream.Supplier;
 import com.mickey305.foundation.v3.util.Assert;
 
-import java.util.NoSuchElementException;
 import java.util.Objects;
 
 // JDK1.8 以降は標準APIを参照 base: java.util.Optional

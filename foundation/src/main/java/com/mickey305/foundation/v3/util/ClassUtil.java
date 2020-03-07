@@ -21,6 +21,10 @@ import java.io.IOException;
 import java.net.URLConnection;
 import java.util.Date;
 
+import com.mickey305.foundation.v3.compat.exception.wrap.RuntimeException;
+
+import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;
+
 public class ClassUtil {
   
   private ClassUtil() {
@@ -67,7 +71,7 @@ public class ClassUtil {
           targetClass.getSimpleName() + ".class").openConnection();
       return new Date(conn.getLastModified());
     } catch (IOException e) {
-      Log.e(e.getMessage());
+      if(IS_DEBUG_MODE) Log.e(e.getMessage());
       throw new RuntimeException(e);
     }
   }

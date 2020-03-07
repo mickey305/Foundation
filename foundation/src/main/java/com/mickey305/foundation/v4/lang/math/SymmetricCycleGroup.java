@@ -17,6 +17,7 @@
 
 package com.mickey305.foundation.v4.lang.math;
 
+import com.mickey305.foundation.v3.compat.exception.wrap.IllegalArgumentException;
 import com.mickey305.foundation.v4.lang.math.operator.AbstractNumberOperation;
 import com.mickey305.foundation.v4.lang.math.operator.IElementInitializer;
 import org.apache.commons.lang3.tuple.Pair;

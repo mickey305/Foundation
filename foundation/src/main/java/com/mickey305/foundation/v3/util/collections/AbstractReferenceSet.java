@@ -26,6 +26,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import com.mickey305.foundation.v3.compat.exception.wrap.RuntimeException;
+
 public abstract class AbstractReferenceSet<E, M extends Map<E, Object>> extends AbstractSet<E>
     implements Set<E>, Serializable, Cloneable {
   private static final long serialVersionUID = -6946699353161557573L;

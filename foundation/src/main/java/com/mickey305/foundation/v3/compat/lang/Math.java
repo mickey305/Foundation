@@ -17,6 +17,8 @@
 
 package com.mickey305.foundation.v3.compat.lang;
 
+import com.mickey305.foundation.v3.compat.exception.wrap.ArithmeticException;
+
 // JDK1.8 以降は標準API(java.lang.Math)を参照
 /**
  * compatible util class
