@@ -5,23 +5,23 @@
 *.css         text
 *.gradle      text
 *.html        text
-*.kt          text
-*.scala       text
-*.java        text
 *.js          text
-*.jsh         text
 *.json        text
 *.md          text
 *.properties  text
-*.sh          text
 *.txt         text
 *.text        text
 *.xml         text
 *.yml         text
 *.keep        text
+*.kt          text eol=lf
+*.scala       text eol=lf
+*.java        text eol=lf
+*.jsh         text eol=lf
+*.sh          text eol=lf
+*.bat         text eol=crlf
 
 # Ensure that line endings for files are not modified. (-text)
-*.bat        -text
 *.bin        -text
 *.dat        -text
 *.exec       -text
