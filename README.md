@@ -41,21 +41,98 @@ The following table shows status of external CI service.
 
 # Contents
 - [Usage](#usage)
+  - [Matrix calculation](#usage-matrix)
+  - [String utilities](#usage-string)
+  - [Date/Time covert utilities](#usage-datetime)
+  - [Read/Write lock utilities](#usage-rw-lock)
+  - [Collection utilities](#usage-collection)
+  - [SystemLog capture](#usage-syslog)
 - [Requirements](#requirements)
+  - [User settings](#requirements-user)
+  - [Developer settings](#requirements-dev)
 - [References](#references)
 - [History](#history)
 
 # <a name="usage"> Usage
 
+### <a name="usage-matrix"> Matrix calculation
+- sample1-title
+  
+  sentence1
+  ```java
+  final JavaSample1 sample = new JavaSample1();
+  ```
+  long - sentence1: This is a sample sentence. As soon as the actual description is completed, this part of the description will be replaced.
+
+- sample2-title
+  
+  sentence2
+  ```java
+  final JavaSample2 sample = new JavaSample2();
+  final int rt = sample.execute();
+  System.out.println("exection result=" + rt + ".");
+  ```
+  long - sentence1: This is a sample sentence. As soon as the actual description is completed, this part of the description will be replaced.
+   - sample pattern1
+   - sample pattern2
+   - sample pattern3
+   - sample pattern4
+   - sample pattern5
+  
+  long - sentence1: This is a sample sentence. As soon as the actual description is completed, this part of the description will be replaced.
+
+- sample3-title
+  
+  sentence3
+  ```java
+  final JavaSample3 sample = new JavaSample3();
+  ```
+  long - sentence1: This is a sample sentence. As soon as the actual description is completed, this part of the description will be replaced.
+  
+  | **col1** | **col2** | **col3** | **col4** | **col5** |
+  |:---:|:---:|:---:|:---:|:---:|
+  | -      | data12 | data13 | data14 | data15 |
+  | data21 | -      | data23 | data24 | data25 |
+  | data31 | data32 | -      | data34 | data35 |
+  | data41 | data42 | data43 | -      | data45 |
+  | data51 | data52 | data53 | data54 | -      |
+  | data61 | data62 | data63 | data64 | data65 |
+
+  long - sentence2: This is a sample sentence. As soon as the actual description is completed, this part of the description will be replaced.
+
+### <a name="usage-string"> String utilities
+- sample1-title
+- sample2-title
+
+### <a name="usage-datetime"> Date/Time covert utilities
+- sample1-title
+- sample2-title
+
+### <a name="usage-rw-lock"> Read/Write lock utilities
+- sample1-title
+- sample2-title
+
+### <a name="usage-collection"> Collection utilities
+##### sample1-theme
+- sample11-title
+- sample12-title
+##### sample2-theme
+- sample21-title
+- sample22-title
+
+### <a name="usage-syslog"> SystemLog capture
+- sample1-title
+- sample2-title
+
 # <a name="requirements"> Requirements
 
-### User settings
+### <a name="requirements-user"> User settings
 - Install JRE (version`>= 1.7`)
 - Add settings to the build tool for projects that use this library
   - write build script (via [JitPack](https://jitpack.io/#mickey305/Foundation))
   - download jar (via [release list](https://github.com/mickey305/Foundation/releases/)) and set `lib` directory
 
-### Developer settings
+### <a name="requirements-dev"> Developer settings
 - Install JDK (version`>= 10`)
 - clone this repository
 - run script in this repository: shell-`init.sh` or batch-`init.bat`
