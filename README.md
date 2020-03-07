@@ -22,6 +22,11 @@ The following table shows status of external CI service.
 | JitPack | [![](https://jitpack.io/v/mickey305/Foundation.svg)](https://jitpack.io/#mickey305/Foundation) |
 | Bintray | [![Download](https://api.bintray.com/packages/mickey305/maven/foundation/images/download.svg)](https://bintray.com/mickey305/maven/foundation/_latestVersion) |
 
+### Develop settings
+
+- clone this repository
+- run script in this repository: shell-`init.sh` or batch-`init.bat`
+
 # Features
 
 ![Library Version](https://img.shields.io/badge/Foundation%20library-v0.6.51-green.svg?style=flat)
