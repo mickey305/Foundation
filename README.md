@@ -51,6 +51,7 @@ The following table shows status of external CI service.
   - [User settings](#requirements-user)
   - [Developer settings](#requirements-dev)
 - [References](#references)
+- [License information of dependent library](#liccense-info4deplib)
 - [History](#history)
 
 # <a name="usage"> Usage
@@ -113,10 +114,10 @@ The following table shows status of external CI service.
 - sample2-title
 
 ### <a name="usage-collection"> Collection utilities
-##### sample1-theme
+#### sample1-theme
 - sample11-title
 - sample12-title
-##### sample2-theme
+#### sample2-theme
 - sample21-title
 - sample22-title
 
@@ -141,6 +142,36 @@ The following table shows status of external CI service.
 # <a name="references"> References
 - [Windows JDK環境切替バッチファイル](http://www.torutk.com/projects/swe/wiki/Windows_JDK%E7%92%B0%E5%A2%83%E5%88%87%E6%9B%BF%E3%83%90%E3%83%83%E3%83%81%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
 - [install-jdk.sh on GitHub](https://github.com/sormuras/bach)
+
+# <a name="#liccense-info4deplib"> License information of dependent library
+- module `foundation`
+
+  | **library name** | **license** | **link** |
+  |:---|:---|:---|
+  | junit                        | Eclipse Public License 1.0 | https://junit.org/junit4/license.html |
+  | apache commons-lang3         | Apache License Version 2.0 | https://github.com/apache/commons-lang/blob/master/LICENSE.txt |
+  | apache commons-math3         | Apache License Version 2.0 | https://github.com/apache/commons-math/blob/master/LICENSE.txt |
+  | apache commons-collections4  | Apache License Version 2.0 | https://github.com/apache/commons-collections/blob/master/LICENSE.txt |
+  | apache commons-codec         | Apache License Version 2.0 | https://mvnrepository.com/artifact/commons-codec/commons-codec |
+  | hibernate validator          | Apache License Version 2.0 | https://github.com/hibernate/hibernate-validator/blob/master/license.txt |
+  | google.code findbugs-jsr305  | Apache License Version 2.0 | https://mvnrepository.com/artifact/com.google.code.findbugs/jsr305/1.3.9 |
+  | robust-it cloning            | Apache License Version 2.0 | https://mvnrepository.com/artifact/uk.com.robust-it/cloning/1.9.2 |
+  | glassfish javax.el           | CDDL, GPL, GPL2.0          | https://mvnrepository.com/artifact/org.glassfish/javax.el/3.0.0 |
+  
+- module `maintenance`
+
+  | **library name** | **license** | **link** |
+  |:---|:---|:---|
+  | junit                | same module `foundation`   | - |
+  | apache commons-lang3 | same module `foundation`   | - |
+  | reflections          | WTFPL                      | https://github.com/ronmamo/reflections |
+  | squareup javapoet    | Apache License Version 2.0 | https://github.com/square/javapoet/blob/master/LICENSE.txt
+  
+- module `sample`
+
+  | **library name** | **license** | **link** |
+  |:---|:---|:---|
+  | junit | same module `foundation` | - |
 
 # <a name="history"> History
  * version [0.6.51](https://github.com/mickey305/Foundation/releases/tag/0.6.51) deploy - 2020-02-10
