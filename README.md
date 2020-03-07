@@ -22,11 +22,6 @@ The following table shows status of external CI service.
 | JitPack | [![](https://jitpack.io/v/mickey305/Foundation.svg)](https://jitpack.io/#mickey305/Foundation) |
 | Bintray | [![Download](https://api.bintray.com/packages/mickey305/maven/foundation/images/download.svg)](https://bintray.com/mickey305/maven/foundation/_latestVersion) |
 
-### Develop settings
-
-- clone this repository
-- run script in this repository: shell-`init.sh` or batch-`init.bat`
-
 # Features
 
 ![Library Version](https://img.shields.io/badge/Foundation%20library-v0.6.51-green.svg?style=flat)
@@ -53,8 +48,18 @@ The following table shows status of external CI service.
 # <a name="usage"> Usage
 
 # <a name="requirements"> Requirements
-- JDK `>= 10`
-- JRE `>= 1.7`
+
+### User settings
+- Install JRE (version`>= 1.7`)
+- Add settings to the build tool for projects that use this library
+  - write build script (via [JitPack](https://jitpack.io/#mickey305/Foundation))
+  - download jar (via [release list](https://github.com/mickey305/Foundation/releases/)) and set `lib` directory
+
+### Developer settings
+- Install JDK (version`>= 10`)
+- clone this repository
+- run script in this repository: shell-`init.sh` or batch-`init.bat`
+- import IDE([Eclipse](https://www.eclipse.org/downloads/), [IntelliJ](https://www.jetbrains.com/idea/) etc.) via [Gradle](https://gradle.org/)
 
 # <a name="references"> References
 - [Windows JDK環境切替バッチファイル](http://www.torutk.com/projects/swe/wiki/Windows_JDK%E7%92%B0%E5%A2%83%E5%88%87%E6%9B%BF%E3%83%90%E3%83%83%E3%83%81%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB)
