@@ -146,17 +146,17 @@ The following table shows status of external CI service.
 # <a name="license-info-deplib"> License information of dependent library
 - module `foundation`
 
-  | **library name** | **license** | **link** |
-  |:---|:---|:---|
-  | junit                        | Eclipse Public License 1.0 | https://junit.org/junit4/license.html |
-  | apache commons-lang3         | Apache License Version 2.0 | https://github.com/apache/commons-lang/blob/master/LICENSE.txt |
-  | apache commons-math3         | Apache License Version 2.0 | https://github.com/apache/commons-math/blob/master/LICENSE.txt |
-  | apache commons-collections4  | Apache License Version 2.0 | https://github.com/apache/commons-collections/blob/master/LICENSE.txt |
-  | apache commons-codec         | Apache License Version 2.0 | https://mvnrepository.com/artifact/commons-codec/commons-codec |
-  | hibernate validator          | Apache License Version 2.0 | https://github.com/hibernate/hibernate-validator/blob/master/license.txt |
-  | google.code findbugs-jsr305  | Apache License Version 2.0 | https://mvnrepository.com/artifact/com.google.code.findbugs/jsr305/1.3.9 |
-  | robust-it cloning            | Apache License Version 2.0 | https://mvnrepository.com/artifact/uk.com.robust-it/cloning/1.9.2 |
-  | glassfish javax.el           | CDDL, GPL, GPL2.0          | https://mvnrepository.com/artifact/org.glassfish/javax.el/3.0.0 |
+  | **api** | **library name** | **license** | **link** |
+  |:---:|:---|:---|:---|
+  |   | junit                        | Eclipse Public License 1.0 | https://junit.org/junit4/license.html |
+  | * | apache commons-lang3         | Apache License Version 2.0 | https://github.com/apache/commons-lang/blob/master/LICENSE.txt |
+  | * | apache commons-math3         | Apache License Version 2.0 | https://github.com/apache/commons-math/blob/master/LICENSE.txt |
+  | * | apache commons-collections4  | Apache License Version 2.0 | https://github.com/apache/commons-collections/blob/master/LICENSE.txt |
+  | * | apache commons-codec         | Apache License Version 2.0 | https://mvnrepository.com/artifact/commons-codec/commons-codec |
+  | * | hibernate validator          | Apache License Version 2.0 | https://github.com/hibernate/hibernate-validator/blob/master/license.txt |
+  | * | google.code findbugs-jsr305  | Apache License Version 2.0 | https://mvnrepository.com/artifact/com.google.code.findbugs/jsr305/1.3.9 |
+  |   | robust-it cloning            | Apache License Version 2.0 | https://mvnrepository.com/artifact/uk.com.robust-it/cloning/1.9.2 |
+  | * | glassfish javax.el           | CDDL, GPL, GPL2.0          | https://mvnrepository.com/artifact/org.glassfish/javax.el/3.0.0 |
   
 - module `maintenance`
 

@@ -38,7 +38,7 @@ sourceSets {
 }
 
 configurations {
-    vendorCompile.extendsFrom compile
+    vendorCompile.extendsFrom implementation
 }
 
 dependencies {
