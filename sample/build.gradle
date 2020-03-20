@@ -2,6 +2,7 @@ group 'com.mickey305'
 version '0.0.1-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'java-library'
 
 sourceCompatibility = JavaVersion.VERSION_1_10
 targetCompatibility = JavaVersion.VERSION_1_10
@@ -36,10 +37,14 @@ sourceSets {
     }
 }
 
+configurations {
+    vendorCompile.extendsFrom compile
+}
+
 dependencies {
-    vendorCompile project(':foundation')
-    compile project(':foundation')
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    //vendorApi project(':foundation')
+    implementation project(':foundation')
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
 }
 
 task collectDependenciesJar {

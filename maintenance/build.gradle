@@ -2,6 +2,7 @@ group 'com.mickey305'
 version '0.0.1'
 
 apply plugin: 'java'
+apply plugin: 'java-library'
 apply plugin: 'application'
 
 sourceCompatibility = JavaVersion.VERSION_1_10
@@ -54,19 +55,23 @@ sourceSets {
     }
 }
 
+configurations {
+    vendorCompile.extendsFrom compile
+}
+
 dependencies {
-    vendorCompile project(':foundation')
-    compile project(':foundation')
+    //vendorApi project(':foundation')
+    implementation project(':foundation')
 
     // - Maven repository hosting
     //  URL: https://mvnrepository.com/
-    testCompile group: 'junit'                   , name: 'junit'              , version: '4.12'
-    compile     group: 'org.apache.commons'      , name: 'commons-lang3'      , version: '3.8.1'
-    compile     group: 'org.reflections'         , name: 'reflections'        , version: '0.9.11'
+    testImplementation group: 'junit'                   , name: 'junit'              , version: '4.12'
+    implementation     group: 'org.apache.commons'      , name: 'commons-lang3'      , version: '3.8.1'
+    implementation     group: 'org.reflections'         , name: 'reflections'        , version: '0.9.11'
 
     // -- OSS repository
     //  URL: https://github.com/square/javapoet
-    compile     group: 'com.squareup'            , name: 'javapoet'           , version: '1.11.1'
+    implementation     group: 'com.squareup'            , name: 'javapoet'           , version: '1.11.1'
 }
 
 task collectDependenciesJar {
