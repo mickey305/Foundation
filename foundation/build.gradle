@@ -116,7 +116,7 @@ dependencies {
 
 task collectDependenciesJar {
     project.copy {
-        from project.configurations.compile
+        from project.configurations.runtimeClasspath
         into "${project.buildDir}/dependencies/compile" as Object
     }
 }
