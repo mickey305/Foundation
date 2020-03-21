@@ -27,6 +27,9 @@ echo # 4. release batch(require: load bintray access user information env)
 echo #--------------------------------------------------------------------------
 echo # all. 1 to 4 task invoke
 echo #--------------------------------------------------------------------------
+echo # 1-dbg. make batch(debug mode)
+echo # 1-trc. make batch(stacktrace mode)
+echo #--------------------------------------------------------------------------
 echo # 9. exit
 echo ###########################################################################
 set /p answer="select parameter : %answer%"
@@ -55,6 +58,14 @@ if "%answer%"=="1" (
   call %TMP_LIB_TOOL%\.dec_javap.bat
   cls
   call %TMP_LIB_TOOL%\.release_bintray.bat
+
+) else if "%answer%"=="1-dbg" (
+  cls
+  call %TMP_LIB_TOOL%\.make_debug.bat
+
+) else if "%answer%"=="1-trc" (
+  cls
+  call %TMP_LIB_TOOL%\.make_stacktrace.bat
 
 ) else if "%answer%"=="9" (
   exit /b 1

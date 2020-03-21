@@ -90,15 +90,20 @@ dependencies {
     // - Maven repository hosting
     //  URL: https://mvnrepository.com/
     testImplementation group: 'junit'                   , name: 'junit'               , version: '4.12'
+
     api                group: 'org.apache.commons'      , name: 'commons-lang3'       , version: '3.8.1'
     api                group: 'org.apache.commons'      , name: 'commons-math3'       , version: '3.6.1'
     api                group: 'org.apache.commons'      , name: 'commons-collections4', version: '4.2'
-    api                group: 'org.hibernate'           , name: 'hibernate-validator' , version: '5.4.3.Final'
-    api                group: 'org.glassfish'           , name: 'javax.el'            , version: '3.0.1-b10'
     api                group: 'commons-codec'           , name: 'commons-codec'       , version: '1.13'
+
     api                group: 'com.google.code.findbugs', name: 'jsr305'              , version: '3.0.2'
     //compile     group: 'com.github.spotbugs'     , name: 'spotbugs'            , version: '3.1.9'
     //compileOnly group: 'com.github.spotbugs'     , name: 'spotbugs-annotations', version: '3.1.9'
+
+    //Bean Validation 1.1
+    api                group: 'javax.validation'        , name: 'validation-api'      , version: '1.1.0.Final'
+    runtimeOnly        group: 'org.hibernate'           , name: 'hibernate-validator' , version: '5.4.3.Final'
+    runtimeOnly        group: 'org.glassfish'           , name: 'javax.el'            , version: '3.0.1-b10'
 
     def jreVersion = Double.parseDouble(System.getProperty("java.specification.version"))
     if (jreVersion >= 9) {
