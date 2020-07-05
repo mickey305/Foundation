@@ -11,6 +11,31 @@ println("APPVEYOR_ENV="       + varEnv.avCI)
 println("LOCAL_COMPUTER_ENV=" + varEnv.local)
 //*/
 
+//===--- grammar extension ----------------------------------------------------------------------------------------===//
+// 拡張構文（doloop-while, doloop-until）
+// ex.
+// doloop {
+//   ...
+// }.while { [expression] }
+//
+Object.metaClass.doloop = { proc ->
+    [  // whileの実装
+       'while': { cond ->
+           proc()
+           while(cond()) {
+               proc()
+           }
+       },
+       // untilの実装
+       'until': { cond ->
+           proc()
+           while(!cond()) {
+               proc()
+           }
+       }
+    ]
+}
+
 //===--- module include -------------------------------------------------------------------------------------------===//
 rootProject.name = 'Foundation'
 include ':foundation'

@@ -153,6 +153,7 @@ The following table shows status of external CI service.
   | api         | apache commons-math3            | Apache License Version 2.0 | https://github.com/apache/commons-math/blob/master/LICENSE.txt |
   | api         | apache commons-collections4     | Apache License Version 2.0 | https://github.com/apache/commons-collections/blob/master/LICENSE.txt |
   | api         | apache commons-codec            | Apache License Version 2.0 | https://mvnrepository.com/artifact/commons-codec/commons-codec |
+  | api         | javax.annotation-api            | CDDL, GPL 2.0              | https://mvnrepository.com/artifact/javax.annotation/javax.annotation-api |
   | api         | google.code findbugs-jsr305     | Apache License Version 2.0 | https://mvnrepository.com/artifact/com.google.code.findbugs/jsr305/1.3.9 |
   | -           | robust-it cloning               | Apache License Version 2.0 | https://mvnrepository.com/artifact/uk.com.robust-it/cloning/1.9.2 |
   | api         | javax.validation validation-api | Apache License Version 2.0 | https://mvnrepository.com/artifact/javax.validation/validation-api/1.1.0.Final |

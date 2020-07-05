@@ -74,9 +74,61 @@ dependencies {
     implementation     group: 'com.squareup'            , name: 'javapoet'           , version: '1.11.1'
 }
 
+// 依存ライブラリのJarファイルをコピーする
 task collectDependenciesJar {
-    project.copy {
-        from project.configurations.runtimeClasspath
-        into "${project.buildDir}/dependencies/compile" as Object
+    doFirst {
+        project.copy {
+            from project.configurations.runtimeClasspath
+            into "${project.buildDir}/dependencies/compile" as Object
+        }
+    }
+    doLast {
+        println 'collectDependenciesJar completed!'
+    }
+}
+
+// jdeps:人間がそれなりに見やすい出力を吐いてくれる
+task deps(type: Exec, dependsOn: [jar, collectDependenciesJar]){
+    environment "_JAVA_OPTIONS", "-Duser.language=en -Duser.country=US"
+    commandLine "jdeps", "-dotoutput", "${project.buildDir}/reports/deps", "-cp", "${project.buildDir}/dependencies/compile/*", "-R" ,"${project.buildDir}/libs/${project.name}-${project.version}.jar"
+    doLast {
+        println 'deps completed!'
+    }
+}
+
+// jdeps:graphviz形式のサマリーを指定のフォルダに吐いてくれる
+task depsSummary(type: Exec, dependsOn: [jar, collectDependenciesJar]){
+    environment "_JAVA_OPTIONS", "-Duser.language=en -Duser.country=US"
+    commandLine "jdeps", "-dotoutput", "${project.buildDir}/reports/deps", "-s", "-cp", "${project.buildDir}/dependencies/compile/*", "-R" ,"${project.buildDir}/libs/${project.name}-${project.version}.jar"
+    doLast {
+        println 'depsSummary completed!'
+    }
+}
+
+// Graphvizコマンドで依存パッケージのイメージを作成する
+task genDepsImg(dependsOn: [deps, depsSummary]){
+    doFirst {
+        def dir = file("${project.buildDir}/reports/deps");
+        def files = dir.listFiles()
+        for (int i = 0; i < files.length; i++) {
+            File file = files[i]
+            String filename = file.getName()
+            if (filename.endsWith(".dot")) {
+                if (filename.contains("summary")) {
+                    exec {
+                        workingDir = dir.getCanonicalPath()
+                        commandLine "dot.exe", "-Kdot", "-Tpng", "${filename}", "-o#img_${filename}.png"
+                    }
+                } else {
+                    exec {
+                        workingDir = dir.getCanonicalPath()
+                        commandLine "dot.exe", "-Ksfdp", "-Tpng", "${filename}", "-o#img_${filename}.png"
+                    }
+                }
+            }
+        }
+    }
+    doLast {
+        println 'genDepsImg completed!'
     }
 }
