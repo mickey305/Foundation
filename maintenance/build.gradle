@@ -117,12 +117,12 @@ task genDepsImg(dependsOn: [deps, depsSummary]){
                 if (filename.contains("summary")) {
                     exec {
                         workingDir = dir.getCanonicalPath()
-                        commandLine "dot.exe", "-Kdot", "-Tpng", "${filename}", "-o#img_${filename}.png"
+                        commandLine "dot", "-Kdot", "-Tpng", "${filename}", "-o#img_${filename}.png"
                     }
                 } else {
                     exec {
                         workingDir = dir.getCanonicalPath()
-                        commandLine "dot.exe", "-Ksfdp", "-Tpng", "${filename}", "-o#img_${filename}.png"
+                        commandLine "dot", "-Ksfdp", "-Tpng", "${filename}", "-o#img_${filename}.png"
                     }
                 }
             }
