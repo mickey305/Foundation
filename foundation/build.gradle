@@ -119,9 +119,20 @@ dependencies {
     spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.7.1'
 }
 
+// 依存ライブラリのJarファイルをコピーする
 task collectDependenciesJar {
     project.copy {
         from project.configurations.runtimeClasspath
         into "${project.buildDir}/dependencies/compile" as Object
     }
+}
+
+// jdeps:人間がそれなりに見やすい出力を吐いてくれる
+task deps(type: Exec, dependsOn: jar){
+    commandLine "jdeps", "-dotoutput", "${project.buildDir}/reports/deps",       "-cp", sourceSets.main.runtimeClasspath.asPath, "-R" ,"${project.buildDir}/libs/${project.name}-${project.version}.jar"
+}
+
+// jdeps:graphviz形式のサマリーを指定のフォルダに吐いてくれる
+task depsSummary(type: Exec, dependsOn: jar){
+    commandLine "jdeps", "-dotoutput", "${project.buildDir}/reports/deps", "-s", "-cp", sourceSets.main.runtimeClasspath.asPath, "-R" ,"${project.buildDir}/libs/${project.name}-${project.version}.jar"
 }
