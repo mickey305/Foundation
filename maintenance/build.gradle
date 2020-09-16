@@ -108,11 +108,11 @@ task depsSummary(type: Exec, dependsOn: [jar, collectDependenciesJar]){
 // Graphvizコマンドで依存パッケージのイメージを作成する
 task genDepsImg(dependsOn: [deps, depsSummary]){
     doFirst {
-        def dir = file("${project.buildDir}/reports/deps");
+        def dir = file("${project.buildDir}/reports/deps")
         def files = dir.listFiles()
         for (int i = 0; i < files.length; i++) {
-            File file = files[i]
-            String filename = file.getName()
+            def file = files[i]
+            def filename = file.getName()
             if (filename.endsWith(".dot")) {
                 if (filename.contains("summary")) {
                     exec {
