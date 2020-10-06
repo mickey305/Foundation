@@ -73,7 +73,7 @@ public class LRUMap<K, V> extends LinkedHashMap<K, V> implements ILRU<K, V>, ILR
    * {@inheritDoc}
    */
   @Override
-  protected boolean removeEldestEntry(Map.Entry<K, V> eldest)  {
+  protected final boolean removeEldestEntry(Map.Entry<K, V> eldest)  {
     return size() > capacity;
   }
   
