@@ -22,7 +22,6 @@ import com.mickey305.foundation.v3.util.Log;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import static com.mickey305.foundation.EnvConfigConst.IS_DEBUG_MODE;
@@ -61,7 +60,7 @@ public class LRUSet<E> extends AbstractLinkedHashSet<E, LinkedHashMap<E, Object>
   @Override
   public Object refreshData(E key, Object dummy) {
     if (IS_DEBUG_MODE) {
-      Log.d("element references method called. key=" + Objects.toString(key));
+      Log.d("element references method called. key=" + key);
     }
     map.remove(key);
     return map.put(key, DUMMY_VAL);

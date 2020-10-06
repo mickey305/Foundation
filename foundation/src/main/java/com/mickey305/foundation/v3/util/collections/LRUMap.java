@@ -73,7 +73,7 @@ public class LRUMap<K, V> extends LinkedHashMap<K, V> implements ILRU<K, V>, ILR
    * {@inheritDoc}
    */
   @Override
-  protected boolean removeEldestEntry(Map.Entry<K, V> eldest)  {
+  protected final boolean removeEldestEntry(Map.Entry<K, V> eldest)  {
     return size() > capacity;
   }
   
@@ -134,7 +134,7 @@ public class LRUMap<K, V> extends LinkedHashMap<K, V> implements ILRU<K, V>, ILR
   public boolean containsValue(Object value) {
     for (Map.Entry<K,V> e : super.entrySet()) {
       final V v = e.getValue();
-      if (v == value || (value != null && value.equals(v))) {
+      if (Objects.equals(value, v)) {
         return true;
       }
     }
@@ -152,8 +152,8 @@ public class LRUMap<K, V> extends LinkedHashMap<K, V> implements ILRU<K, V>, ILR
     for (Map.Entry<K,V> e : super.entrySet()) {
       final K k = e.getKey();
       final V v = e.getValue();
-      if ((k == key || (key != null && key.equals(k)))
-          && (v == oldValue || (oldValue != null && oldValue.equals(v)))) {
+      if ((Objects.equals(key, k))
+          && (Objects.equals(oldValue, v))) {
         refreshData(key, newValue);
         return true;
       }
@@ -189,12 +189,12 @@ public class LRUMap<K, V> extends LinkedHashMap<K, V> implements ILRU<K, V>, ILR
   @Override
   public V refreshData(K key, V value) {
     if (IS_DEBUG_MODE) {
-      Log.d("element references method called. key=" + Objects.toString(key));
+      Log.d("element references method called. key=" + key);
     }
     final V v = remove(key);
     put(key, value);
     if (IS_DEBUG_MODE && !Objects.equals(value, v)) {
-      Log.d("value changed. from " + Objects.toString(v) + " to " + Objects.toString(value));
+      Log.d("value changed. from " + v + " to " + value);
     }
     return v;
   }
@@ -316,7 +316,6 @@ public class LRUMap<K, V> extends LinkedHashMap<K, V> implements ILRU<K, V>, ILR
      * {@inheritDoc}
      */
     @Override
-    @SuppressWarnings("unchecked")
     public final boolean contains(Object o) {
       if (o instanceof Map.Entry) {
         final Map.Entry<?, ?> e = (Map.Entry<?, ?>) o;
